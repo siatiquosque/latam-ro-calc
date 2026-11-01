@@ -517,11 +517,11 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const monster = aims[0].monster;
     const more = aims.slice(1);
     const baseline = evaluate(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
-    // The search is capped by time as well as by calculations, and a calculation costs 6 ms or 45 ms depending on the build (a
-    // rotation solves every step). Size the budget to what fits, so the effort is spread over the slots instead of the clock
+    // The search is capped by time as well as by calculations, and a calculation costs 6 ms or 20 ms depending on the build (the
+    // search itself ranks by the chosen skill's DPS, so a rotation does not multiply it). Size the budget to what fits, so the effort is spread over the slots instead of the clock
     // cutting the walk short after the first ones.
     const probeStart = Date.now();
-    evaluate(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+    evaluate(base, undefined, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs);
     const msPerCalculation = Math.max(1, Date.now() - probeStart);
     const budget = Math.min(requestedBudget, Math.max(80, Math.floor((0.8 * config.limits.maxSearchMs) / msPerCalculation)));
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);

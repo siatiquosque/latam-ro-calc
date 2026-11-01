@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.203-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "O `optimize_build` do MCP agora dimensiona o orçamento de cálculos pelo custo real de cada cálculo no servidor, para a busca terminar em vez de parar no meio."
+    ],
+    "logs_es": [
+      "El `optimize_build` del MCP ahora dimensiona el presupuesto de cálculos según el costo real de cada cálculo en el servidor, para que la búsqueda termine en vez de detenerse a la mitad."
+    ],
+    "logs_en": [
+      "The MCP `optimize_build` now sizes its calculation budget to the real cost of each calculation on the server, so the search finishes instead of stopping halfway."
+    ]
+  },
+  {
     "v": "0.1.202-beta",
     "date": "01-11-2026",
     "logs": [
