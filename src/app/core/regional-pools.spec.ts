@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { cataloguedRandomItemIds, randomOptionCatalogFor } from './random-option-catalog';
+import { loadRandomPools, cataloguedRandomItemIds, randomOptionCatalogFor } from './random-option-catalog';
 import { ExtraOptionMap } from '../utils/create-extra-option-list';
+
+await loadRandomPools();
 
 /** Every pool anyone adds to regional-pools.json has to be one the picker and the engine can use. */
 describe('catalogued random-option pools', () => {

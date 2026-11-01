@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import browiki from '../../../data/random-options/browiki-pools.json';
-import { randomOptionCatalogFor } from './random-option-catalog';
+import { loadRandomPools, randomOptionCatalogFor } from './random-option-catalog';
+
+await loadRandomPools();
 
 type Rule = [string, number, number];
 const combiner = (name: string) => browiki.combiners.find(c => c.name === name)!;

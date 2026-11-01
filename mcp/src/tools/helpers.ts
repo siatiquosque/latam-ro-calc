@@ -1,5 +1,6 @@
 /** Shared plumbing for tool handlers. */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { loadRandomPools } from 'src/app/core/random-option-catalog';
 import { config } from '../config';
 import { Shortener, shortenShareUrl } from '../engine/share';
 
@@ -46,6 +47,7 @@ export function registerJsonTool<A>(
 ): void {
   server.registerTool(name, config as any, (async (args: A) => {
     try {
+      await loadRandomPools();
       return await shortenShares(await handler(args), shorteners.get(server));
     } catch (error) {
       return fail(error);

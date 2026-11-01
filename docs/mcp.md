@@ -41,9 +41,9 @@ melhores pares com cálculo real e reduz N (8, 4, 2, 1). Resposta: `changes` (de
 
 A fila de itens cujo pool de bônus aleatório ainda não foi confirmado no LATAM. Sem `itemId`, lista (com `query`,
 `slot`, `policy`, paginação), os que têm referência no rAthena primeiro. Com `itemId`, devolve um **rascunho** de
-pool no formato de `data/random-options/regional-pools.json`, com as opções do rAthena que têm chave no simulador
-e as `unmapped`. O rascunho não é confirmação: veja o item no jogo e só então acrescente o pool ao JSON
-(`"<id>": { source, confidence, profiles }`). O seletor de bônus da tela e a busca do `optimize_build` passam a
+pool (`profiles`), com as opções do rAthena que têm chave no simulador
+e as `unmapped`. O rascunho não é confirmação: veja o item no jogo e só então grave o pool com
+`python tools/add-regional-pool.py <ids> <arquivo> --source ... --confidence ...`. O seletor de bônus da tela e a busca do `optimize_build` passam a
 usar o pool na hora, e `regional-pools.spec.ts` valida o formato. Sem pool, a tela fica aberta a qualquer bônus
 e a busca ignora o item.
 

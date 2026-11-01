@@ -1,8 +1,10 @@
 import { expect, it } from 'vitest';
 import { loadDatasetFromDisk } from '../data/dataset.node';
-import { randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
+import { loadRandomPools, randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
 import { complementChoices, searchComplements } from './complements';
 import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
+
+await loadRandomPools();
 
 const dataset = loadDatasetFromDisk();
 

@@ -2,10 +2,6 @@
  * Source: https://browiki.org/wiki/Bônus_Aleatórios#Elmo_-_Meio
  * Both middle rolls must come from the SAME Loki coin. Lower seals use distinct positions.
  */
-import regionalPools from '../../../data/random-options/regional-pools.json';
-import browiki from '../../../data/random-options/browiki-pools.json';
-import rathena from '../../../data/random-options/rathena-pools.json';
-
 type Range = { key: string; min: number; max: number };
 const r = (key: string, min: number, max: number): Range => ({ key, min, max });
 const resources = [r('hp', 300, 1000), r('sp', 300, 1000), r('hpPercent', 1, 5), r('spPercent', 1, 5)];
@@ -40,35 +36,50 @@ const aces: Record<number, typeof loki> = {
 export type RandomOptionPool = typeof loki;
 
 /**
- * Pools confirmed in game, kept as data (`data/random-options/regional-pools.json`) so adding one is an edit
- * to a JSON file, not to code. Built once; the code-defined pools above win on a collision.
+ * The three data tiers below code. They are separate JSON files (`data/random-options/*-pools.json`, one document
+ * format, see tools/pool_document.py) loaded on demand: they are about 100 KB and grow with every research round, so
+ * they stay out of the startup bundle. `loadRandomPools()` fetches them once; until it resolves the lookups below find
+ * no pool, so the picker stays open and nothing is validated. The app starts the load when the equipment card is
+ * created and the MCP awaits it before every tool.
  */
-const regional = new Map<number, RandomOptionPool>(Object.entries(regionalPools.pools as Record<string, RandomOptionPool>)
-  .map(([id, pool]) => [Number(id), pool]));
+type PoolDocument = {
+  source: string; confidence?: string;
+  combiners: { name: string; source?: string; confidence?: string; positions: [string, number, number][][] }[];
+  items: Record<string, number[]>;
+};
 
-type PoolDocument = { source: string; combiners: { name: string; positions: unknown }[]; items: unknown };
+/** Pools written once as combiners and pointed at by items. A combiner may carry its own source/confidence. */
+const fromDocument = (document: PoolDocument) => new Map<number, RandomOptionPool>(Object.entries(document.items).map(([id, rolling]) => {
+  const first = document.combiners[rolling[0]];
+  return [Number(id), {
+    source: first.source ?? document.source,
+    confidence: first.confidence ?? document.confidence ?? '',
+    profiles: rolling.map(index => ({
+      combiner: document.combiners[index].name,
+      positions: document.combiners[index].positions.map(position => position.map(([key, min, max]) => r(key, min, max))),
+    })),
+  }];
+}));
 
-/** Pools written once as combiners and pointed at by items, as the two generated files store them. */
-const fromDocument = (document: PoolDocument, confidence: string) => new Map<number, RandomOptionPool>(Object.entries(document.items as Record<string, number[]>).map(([id, rolling]) => [Number(id), {
-  source: document.source,
-  confidence,
-  profiles: rolling.map(index => ({
-    combiner: document.combiners[index].name,
-    positions: (document.combiners[index].positions as [string, number, number][][]).map(position => position.map(([key, min, max]) => r(key, min, max))),
-  })),
-}]));
+const empty = new Map<number, RandomOptionPool>();
+/** In order of authority: confirmed in game or read from a regional page, the bROWiki page, and rAthena (kRO) as the last
+ *  resort. An item no regional source covers is narrowed to rAthena's pool instead of being left open to every bonus; it is
+ *  not confirmed for LATAM, which is why `randomPoolTier` tells it apart and roll validation does not enforce it. */
+let regional = empty;
+let wiki = empty;
+let upstream = empty;
+let loading: Promise<void> | undefined;
 
-/**
- * Pools read from the bROWiki page by `tools/import-browiki-pools.py`: reference ranges for the Brazilian server,
- * not measured by us. They sit below the code and regional-pools.json, so a pool confirmed in game always wins.
- */
-const wiki = fromDocument(browiki, 'bROWiki; faixas de referência, não medidas no LATAM');
-/**
- * The last resort: what rAthena (the kRO server) rolls for the item. LATAM tends to follow kRO, so an item no regional
- * source covers is narrowed to this instead of being left open to every bonus. Not confirmed for LATAM, which is why
- * `randomPoolTier` tells it apart and the roll validation of a shared build does not enforce it.
- */
-const upstream = fromDocument(rathena, 'rAthena (kRO); o LATAM tende a seguir o kRO, mas não está confirmado');
+export const randomPoolsLoaded = (): boolean => regional !== empty;
+export const loadRandomPools = (): Promise<void> => loading ??= Promise.all([
+  import('../../../data/random-options/regional-pools.json'),
+  import('../../../data/random-options/browiki-pools.json'),
+  import('../../../data/random-options/rathena-pools.json'),
+]).then(([a, b, c]) => {
+  wiki = fromDocument(b.default as unknown as PoolDocument);
+  upstream = fromDocument(c.default as unknown as PoolDocument);
+  regional = fromDocument(a.default as unknown as PoolDocument);
+}, (error) => { loading = undefined; throw error; });
 
 export type RandomPoolTier = 'code' | 'regional' | 'wiki' | 'rathena';
 export const randomPoolTier = (itemId: number): RandomPoolTier | undefined =>

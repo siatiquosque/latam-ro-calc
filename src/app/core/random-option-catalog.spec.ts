@@ -1,6 +1,8 @@
 import { expect, it } from 'vitest';
-import { randomOptionCatalogFor, randomPoolTier, restrictToPool, validateCataloguedRolls } from './random-option-catalog';
+import { loadRandomPools, randomOptionCatalogFor, randomPoolTier, restrictToPool, validateCataloguedRolls } from './random-option-catalog';
 import { createExtraOptionList, ExtraOptionMap } from '../utils/create-extra-option-list';
+
+await loadRandomPools();
 
 it('links every Loki lower seal with distinct attribute and effect positions', () => {
   expect(validateCataloguedRolls(420210, ['str:5', 'melee:7'])).toBeNull();

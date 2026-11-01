@@ -2,6 +2,13 @@
 
 O catálogo regional validado e a referência do rAthena são camadas distintas.
 
+Os três arquivos de dados (`regional`, `browiki` e `rathena-pools.json`) têm **o mesmo formato**
+(`tools/pool_document.py`): cada pool é escrito uma vez como combinador e os itens apontam para ele, então um pool
+compartilhado (as seis Cotas Dracônicas, as quatro capas) nunca é duplicado, de qualquer fonte. Eles não ficam no
+bundle inicial: `loadRandomPools()` os carrega sob demanda (chunk separado), a tela dispara o carregamento ao criar o
+cartão de equipamento e o MCP o aguarda antes de cada ferramenta. Para acrescentar um pool confirmado:
+`python tools/add-regional-pool.py` (veja a skill `random-pools`).
+
 Quatro fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais fraca (`randomPoolTier` diz de qual veio):
 
 1. **Código** (`random-option-catalog.ts`): Selo de Loki e os selos de elmo inferior, escritos à mão.

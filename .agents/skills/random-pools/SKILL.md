@@ -25,7 +25,7 @@ Only after `rathena-audit.json` changes (`python tools/audit-random-options.py -
 
 ## Review the queue, promote a confirmed pool
 1. MCP `uncatalogued_pools` (`pool:"rathena"` or `"nenhum"`, filter by `query`/`slot`); with `itemId` it returns the rAthena draft in file format.
-2. The user confirms in game. Copy the draft into `regional-pools.json` as `"<itemId>": {"source":"jogo LATAM <date>","confidence":"confirmado","profiles":[{"combiner":"…","positions":[[{"key":"atk","min":1,"max":20}]]}]}` — one `profiles` entry per combiner; one array per position.
+2. The user confirms in game. Save the draft's `profiles` to a file (fix the ranges seen in game) and run `python tools/add-regional-pool.py <id,id> <file> --source "jogo LATAM <date>" --confidence "confirmado"`. It writes the shared format (`tools/pool_document.py`: each pool once as a combiner, items point at it), so never paste pools into the JSON by hand and never duplicate one per item. All pool files (regional, bROWiki, rAthena) use that one format and are loaded on demand (lazy chunk), not bundled at startup.
 3. `regional-pools.spec.ts` validates keys/ranges. A key must exist in `ExtraOptionMap` (leaf prefix such as `atk`, `p_race_demon`).
 
 Docs: `docs/random-options-audit.md`. Never edit the generated files by hand.

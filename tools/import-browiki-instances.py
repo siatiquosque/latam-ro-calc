@@ -23,6 +23,9 @@ from collections import Counter
 from html.parser import HTMLParser
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from pool_document import drop_owned, dump, load, put  # noqa: E402
+
 spec = importlib.util.spec_from_file_location('browiki', Path(__file__).with_name('import-browiki-pools.py'))
 browiki = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(browiki)
@@ -209,20 +212,15 @@ def main():
     pages = {
         'Lago_do_Abismo': lago(unmapped), 'Torneio_de_Magia': tournament(unmapped), 'Arena_Noturna': arena(unmapped),
     }
-    document = json.loads(Path(OUT).read_text(encoding='utf8'))
-    pools = {id_: pool_ for id_, pool_ in document['pools'].items() if OWNED not in pool_.get('source', '')}
+    document = load(OUT)
+    drop_owned(document, OWNED)
     for page, items in pages.items():
+        source = f'https://browiki.org/wiki/{page} ({OWNED})'
+        confidence = f'bROWiki ({page.replace("_", " ")}); faixas de referência, não medidas por nós'
         for item, profiles in items.items():
-            pools[str(item)] = {
-                'source': f'https://browiki.org/wiki/{page} ({OWNED})',
-                'confidence': f'bROWiki ({page.replace("_", " ")}); faixas de referência, não medidas por nós',
-                'profiles': profiles,
-            }
-    document['pools'] = dict(sorted(pools.items(), key=lambda kv: int(kv[0])))
-    # One line per item keeps the file diffable and about half the size (it ships in the app bundle).
-    body = ',\n'.join(f'  {json.dumps(i)}: {json.dumps(p, ensure_ascii=False, separators=(",", ":"))}' for i, p in document['pools'].items())
-    head = json.dumps({'_readme': document['_readme']}, ensure_ascii=False)[:-1]
-    Path(OUT).write_text(f'{head},\n "pools": {{\n{body}\n }}\n}}\n', encoding='utf8')
+            for profile in profiles:
+                put(document, [item], profile['combiner'], profile['positions'], source, confidence)
+    dump(OUT, document)
     for page, items in pages.items():
         print(f'{page}: {len(items)} itens', sorted(items))
     for text, count in unmapped.most_common():

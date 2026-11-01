@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ExtraOptionTable } from '../constants/extra-option-table';
-import { randomPoolTier } from './random-option-catalog';
+import { loadRandomPools, randomPoolTier } from './random-option-catalog';
+
+await loadRandomPools();
 
 /**
  * Every LATAM item that rolls random bonuses (the ones in ExtraOptionTable) has to be covered by some pool source, or be

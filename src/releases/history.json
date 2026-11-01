@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.198-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "Os dados dos bônus aleatórios passaram a carregar sob demanda, deixando o carregamento inicial da calculadora mais leve."
+    ],
+    "logs_es": [
+      "Los datos de las bonificaciones aleatorias ahora se cargan bajo demanda, haciendo más ligera la carga inicial de la calculadora."
+    ],
+    "logs_en": [
+      "The random bonus data now loads on demand, making the calculator's initial load lighter."
+    ]
+  },
+  {
     "v": "0.1.197-beta",
     "date": "01-11-2026",
     "logs": [

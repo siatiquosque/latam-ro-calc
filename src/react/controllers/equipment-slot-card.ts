@@ -3,7 +3,7 @@ import { ViewState } from '../state/view-state';
 import { Events } from '../services/events';
 import { EquipmentSlotDescriptor, comparableKeysOf } from 'src/app/app-config/equipment-slots';
 import { DescriptionStore as ItemDescriptionStore } from '../services/data-client';
-import { restrictToPool } from 'src/app/core/random-option-catalog';
+import { loadRandomPools, restrictToPool } from 'src/app/core/random-option-catalog';
 import { Chip, buildChipRows } from 'src/app/core/equipment-chips';
 import { SlotDerivation } from 'src/app/core/equipment-slot-derivation';
 import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
@@ -89,7 +89,11 @@ export class EquipmentSlotCardComponent extends ViewState {
     private readonly layoutService: LayoutService,
 public readonly itemDescriptions: ItemDescriptionStore,
     private readonly text: Translate,
-  ) { super();}
+  ) {
+    super();
+    // The pools of random bonuses are a lazy chunk; by the time a picker opens they are almost always there.
+    void loadRandomPools().catch(() => undefined);
+  }
 
   refreshInputs(): void {
     this.comparable = comparableKeysOf(this.descriptor).length > 0;

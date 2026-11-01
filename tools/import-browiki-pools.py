@@ -19,6 +19,9 @@ from collections import Counter, defaultdict
 from html.parser import HTMLParser
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent))
+from pool_document import dump  # noqa: E402
+
 URL = 'https://browiki.org/wiki/B%C3%B4nus_Aleat%C3%B3rios'
 RACES = ['formless', 'undead', 'brute', 'plant', 'insect', 'fish', 'demon', 'demihuman', 'angel', 'dragon']
 ELEMENTS = ['neutral', 'water', 'earth', 'fire', 'wind', 'poison', 'holy', 'dark', 'ghost', 'undead']
@@ -222,9 +225,9 @@ def main():
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     document = {
         '_readme': 'Gerado por tools/import-browiki-pools.py a partir do bROWiki. Não edite à mão: confirmações do jogo vão em regional-pools.json.',
-        'source': URL, 'combiners': combiners, 'items': items, 'unmapped': dict(unmapped.most_common()),
+        'source': URL, 'confidence': 'bROWiki; faixas de referência, não medidas no LATAM', 'combiners': combiners, 'items': items, 'unmapped': dict(unmapped.most_common()),
     }
-    Path(args.out).write_text(json.dumps(document, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf8')
+    dump(args.out, document)
     sys.stdout.reconfigure(encoding='utf-8')
     skipped = sorted({c['name'] for c in page.combiners} - {c['name'] for c in combiners})
     print(f'{len(combiners)} grupos de combinador, {len(items)} itens com pool, {sum(unmapped.values())} linhas sem chave')

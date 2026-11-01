@@ -11,7 +11,11 @@ and the bROWiki pools.
 """
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from pool_document import dump  # noqa: E402
 
 
 # Items rAthena does not link to a combiner but that the players' wiki/guild confirm roll the same as a sibling:
@@ -62,10 +66,10 @@ def main():
             items[str(alias)] = list(items[str(original)])
     document = {
         '_readme': 'Gerado por tools/build-rathena-pools.py a partir de rathena-audit.json. Referência do kRO via rAthena, não confirmada no LATAM.',
-        'source': f"rAthena {audit['revision']}", 'combiners': combiners,
+        'source': f"rAthena {audit['revision']}", 'confidence': 'rAthena (kRO); o LATAM tende a seguir o kRO, mas não está confirmado', 'combiners': combiners,
         'items': dict(sorted(items.items(), key=lambda kv: int(kv[0]))),
     }
-    Path(args.out).write_text(json.dumps(document, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf8')
+    dump(args.out, document)
     print(f'{len(combiners)} grupos, {len(items)} itens com pool')
 
 

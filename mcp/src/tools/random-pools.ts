@@ -14,7 +14,7 @@ export function registerRandomPoolTools(server: McpServer, dataset: Dataset): vo
     description:
       'Lista os itens LATAM que rolam bônus aleatórios e nenhuma fonte regional (código, regional-pools.json, bROWiki) confirma. ' +
       '`pool: "rathena"` = usam o pool do kRO como substituto (o LATAM tende a seguir o kRO, sem confirmação); `pool: "nenhum"` = ficam abertos e fora da busca de rolagens. ' +
-      'Com `itemId`, devolve o pool do rAthena no formato de `data/random-options/regional-pools.json`: ' +
+      'Com `itemId`, devolve o pool do rAthena como rascunho de `profiles` para `tools/add-regional-pool.py` (grava em `data/random-options/regional-pools.json`): ' +
       'confira no jogo e só então copie para o arquivo, o que o torna confirmado. ' +
       '`policy` padrão `explicit-table` (itens que realmente rolam); `all` inclui armas e sombrios genéricos.',
     inputSchema: {
@@ -34,7 +34,7 @@ export function registerRandomPoolTools(server: McpServer, dataset: Dataset): vo
       return json({
         id: itemId, name: item.name, catalogued: false,
         ...(draft ?? { note: 'O rAthena não tem pool para este item; nada a rascunhar.' }),
-        ...(draft ? { howTo: `Confirme no jogo e acrescente "${itemId}": <pool> em data/random-options/regional-pools.json (docs/random-options-audit.md).` } : {}),
+        ...(draft ? { howTo: `Confirme no jogo e grave os profiles em um arquivo e rode python tools/add-regional-pool.py ${itemId} <arquivo> --source ... --confidence ... (docs/random-options-audit.md).` } : {}),
       });
     }
     const needle = (query ?? '').trim().toLowerCase();
