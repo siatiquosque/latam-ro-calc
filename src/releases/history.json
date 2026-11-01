@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.201-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "Correção no MCP: `scan_slot` agora acha peças cujo valor está nos soquetes (como a Soqueira Vil Invernal), `optimize_build` passa a testar a versão de nível maior da peça atual, e `evaluate_variants` avisa quando uma peça trocada fica com cartas e encantamentos vazios."
+    ],
+    "logs_es": [
+      "Corrección en el MCP: `scan_slot` ahora encuentra piezas cuyo valor está en los engarces (como la Soqueira Vil Invernal), `optimize_build` prueba la versión de nivel superior de la pieza actual, y `evaluate_variants` avisa cuando una pieza cambiada queda con cartas y encantamientos vacíos."
+    ],
+    "logs_en": [
+      "MCP fix: `scan_slot` now finds pieces whose value is in their sockets (like the Soqueira Vil Invernal), `optimize_build` tests the higher-level version of the worn piece, and `evaluate_variants` warns when a swapped piece is left with empty cards and enchants."
+    ]
+  },
+  {
     "v": "0.1.200-beta",
     "date": "01-11-2026",
     "logs": [

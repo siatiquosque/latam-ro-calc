@@ -211,6 +211,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
           metrics: roundMetrics(entry.metrics, shown),
           deltaPct: Object.fromEntries(shown.map((k) => [k, deltaPct(entry.metrics[k], baseline.metrics[k])])),
           warnings: entry.rb.warnings.length ? entry.rb.warnings : undefined,
+          emptySockets: emptySocketsOf(dataset, baseline.rb, entry.rb),
           // A link costs a compression pass, so only the front of the ranking gets one.
           share: rank < 3 ? shareOf(entry.rb) : undefined,
         }),
@@ -304,25 +305,50 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     }
     bare.sort((a, b) => b.value - a.value);
 
-    // 2) The best of them, with the best cards, enchants and catalogued rolls.
-    const tune = (id: number, patch: BuildPatch, value: number) => {
+    // 2) Sockets. Ranking the bare pieces cannot see a piece whose value is in its cards and enchants (a Soqueira Vil Invernal is
+    //    "equal" to the Invernal until it is enchanted), so it is done in two stages: a quick pass over every piece that has
+    //    sockets or enchants and is not hopeless bare, then the full search on the best of those.
+    const tune = (id: number, patch: BuildPatch, value: number, effort: number) => {
       const first = run(patch);
       if (!first) return { patch, value, result: undefined };
-      const tuned = searchComplements({ patch, result: first }, complementChoices(dataset, slot, id, keys, new Set()), objective, (candidate) => run(candidate), 24);
+      const tuned = searchComplements({ patch, result: first }, complementChoices(dataset, slot, id, keys, new Set()), objective, (candidate) => run(candidate), effort);
 
       return { patch: tuned.patch, value: tuned.result.metrics[objective] ?? value, result: tuned.result };
     };
-    const finalists = bare.slice(0, topSockets);
+    const hasSockets = (id: number) => {
+      const item = dataset.items[id];
+      const pools = enchantPoolsFor(item) as (string[] | null | undefined)[] | undefined;
+
+      return (item?.slots ?? 0) > 0 || !!pools?.some((pool) => pool?.length);
+    };
+    const bestBare = bare[0]?.value ?? 0;
+    const QUICK_LIMIT = 60;
+    const quickPool = [...new Map([
+      ...bare.slice(0, topSockets),
+      ...bare.filter((entry) => hasSockets(entry.id) && entry.value >= 0.4 * bestBare).slice(0, QUICK_LIMIT),
+    ].map((entry) => [entry.id, entry])).values()];
+    let finalists = bare.slice(0, topSockets);
+    if (topSockets > 0) {
+      const quick: { id: number; patch: BuildPatch; value: number }[] = [];
+      for (const entry of quickPool) {
+        await pace.breathe();
+        const out = tune(entry.id, entry.patch, entry.value, 8);
+        quick.push({ id: entry.id, patch: entry.patch, value: out.value });
+      }
+      quick.sort((a, b) => b.value - a.value);
+      finalists = quick.slice(0, topSockets);
+    }
     if (worn > 0 && !finalists.some((entry) => entry.id === worn)) {
       const wornPatch = swapPatch(dataset, rb, slot, worn, { refine, maxGrade });
       const first = run(wornPatch);
       if (first && first.metrics[objective] !== undefined) finalists.push({ id: worn, patch: wornPatch, value: first.metrics[objective]! });
     }
+    const bareOf = new Map(bare.map((entry) => [entry.id, entry.value]));
     const tunedRows: { id: number; patch: BuildPatch; value: number; bare: number }[] = [];
     for (const entry of finalists) {
       await pace.breathe();
-      const out = topSockets > 0 ? tune(entry.id, entry.patch, entry.value) : { patch: entry.patch, value: entry.value };
-      tunedRows.push({ id: entry.id, patch: out.patch, value: out.value, bare: entry.value });
+      const out = topSockets > 0 ? tune(entry.id, bare.find((candidate) => candidate.id === entry.id)?.patch ?? entry.patch, entry.value, 24) : { patch: entry.patch, value: entry.value };
+      tunedRows.push({ id: entry.id, patch: out.patch, value: out.value, bare: bareOf.get(entry.id) ?? entry.value });
     }
     const wornRow = tunedRows.find((row) => row.id === worn);
     const reference = baseMode === 'tuned' && wornRow ? wornRow.value : baseValue;
@@ -542,6 +568,17 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         .sort((a, b) => matches(b.id) - matches(a.id) || (b.reqLv ?? 0) - (a.reqLv ?? 0))
         .slice(0, candidatesPerSlot)
         .map((row) => row.id);
+      // Upgrades of the worn piece: the same script at a higher level (Soqueira Invernal → Vil Invernal) differs only in sockets and
+      // enchants, which no script key shows, so the keyword search never offers it.
+      const wornScript = worn > 0 ? JSON.stringify(dataset.items[worn]?.script ?? {}) : '';
+      if (wornScript && wornScript !== '{}') {
+        const wornLevel = dataset.items[worn]?.requiredLevel ?? 0;
+        const siblings = dataset.itemIndex.search({ ...common, limit: 4000 }, baseline.rb.char).rows
+          .filter((row) => row.id !== worn && !ranked.includes(row.id) && !banned.has(row.id) && (row.reqLv ?? 0) >= wornLevel
+            && JSON.stringify(dataset.items[row.id]?.script ?? {}) === wornScript && dataset.items[row.id]?.attack === dataset.items[worn]?.attack)
+          .sort((a, b) => (b.reqLv ?? 0) - (a.reqLv ?? 0)).slice(0, 3).map((row) => row.id);
+        ranked.push(...siblings);
+      }
       pools.set(slot, ranked);
       if ((maxGrade === undefined || canGradeItem(dataset.items[worn])) && worn > 0 && !banned.has(worn)) ranked.unshift(worn);
     }
@@ -1034,6 +1071,27 @@ function contributions(
     rows: rows.slice(0, limit),
     ...(all.length > rows.length ? { truncated: `${all.length - rows.length} itens ficaram de fora do limite de ${config.limits.maxContributions}` } : {}),
   };
+}
+
+/**
+ * Pieces a variant put in that have card slots or enchant sockets left empty. Two pieces can tie bare and differ a lot once
+ * socketed (a Soqueira Vil Invernal against the Invernal), so a variant that swaps one in without filling it understates it.
+ */
+function emptySocketsOf(dataset: Dataset, before: ResolvedBuild, after: ResolvedBuild): string[] | undefined {
+  const model = after.model as Record<string, any>;
+  const rows = MAIN_ITEM_SLOTS.flatMap((slot) => {
+    const id = model[slot];
+    if (typeof id !== 'number' || id <= 0 || id === (before.model as Record<string, any>)[slot]) return [];
+    const item = dataset.items[id];
+    const keys = relatedItemKeys(slot);
+    const cardsFree = Math.max(0, (item?.slots ?? 0) - keys.filter((key) => /Card\d?$/.test(key) && model[key] > 0).length);
+    const pools = (enchantPoolsFor(item) as (string[] | null | undefined)[] | undefined) ?? [];
+    const enchantsFree = Math.max(0, pools.filter((pool) => pool?.length).length - keys.filter((key) => /Enchant\d$/.test(key) && model[key] > 0).length);
+
+    return cardsFree || enchantsFree ? [`${slot} (${dataset.itemIndex.get(id)?.name}): ${cardsFree} slot(s) de carta e ${enchantsFree} encantamento(s) vazios`] : [];
+  });
+
+  return rows.length ? rows : undefined;
 }
 
 /** The same enchant at other levels ("Cristal Invernal (Grau Físico 4)", "Thanos Spell (Fighter) Lv.2"), by name stem. */

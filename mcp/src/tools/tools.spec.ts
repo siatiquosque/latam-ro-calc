@@ -390,6 +390,28 @@ describe('regressions', () => {
     expect(data.context.undefendedNote).toBeTruthy();
   });
 
+  it('scan_slot finds a piece whose value is in its sockets, not in its bare stats', async () => {
+    // Soqueira Vil Invernal has the same ATK and script as the Invernal: bare it ties with dozens of weapons, with sockets it wins.
+    const { data } = await call('scan_slot', { build: { ...inquisitor, rotation: undefined }, slot: 'weapon', limit: 6 });
+    const vil = data.ranking.findIndex((row: any) => row.id === 560037);
+    expect(vil).toBeGreaterThanOrEqual(0);
+    expect(vil).toBeLessThanOrEqual(1);
+    expect(data.ranking[vil].sockets.length).toBeGreaterThan(0);
+  }, 60_000);
+
+  it('optimize_build offers the higher-level sibling of the worn piece, which no script key would find', async () => {
+    const { data } = await call('optimize_build', { build: { ...inquisitor, rotation: undefined }, slots: ['weapon'], maxSolves: 400, detail: true });
+    expect(data.candidateIds.weapon).toContain(560037);
+  }, 60_000);
+
+  it('evaluate_variants warns when a swapped-in piece is left with empty sockets', async () => {
+    const { data } = await call('evaluate_variants', { build: { ...inquisitor, rotation: undefined }, variants: [{ label: 'vil', patch: { gear: { weapon: 560037 } } }, { label: 'base', patch: {} }] });
+    const vil = data.results.find((row: any) => row.label === 'vil');
+    const base = data.results.find((row: any) => row.label === 'base');
+    expect(vil.emptySockets.join(' ')).toMatch(/Vil Invernal.*carta.*encantamento/);
+    expect(base.emptySockets).toBeUndefined();
+  }, 60_000);
+
   it('scan_slot skips items LATAM has not shipped and rejects a slot that is not equipment', async () => {
     const { data } = await call('scan_slot', { build: inquisitor, slot: 'boot', limit: 40, topSockets: 0 });
     expect(data.ranking.map((row: any) => row.id)).not.toContain(470328);
