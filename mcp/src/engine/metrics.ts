@@ -10,7 +10,7 @@ import { ResolvedBuild } from './build-input';
 import { solveController } from './solve';
 
 export const METRICS = [
-  'max', 'min', 'dps', 'rotationDps', 'hitsToKill', 'critRate',
+  'max', 'min', 'dps', 'avgHit', 'rotationDps', 'burstDps', 'hitsToKill', 'critRate',
   'hp', 'sp', 'atk', 'def', 'softDef', 'mdef', 'flee', 'hit', 'aspd', 'crit',
 ] as const;
 
@@ -37,7 +37,7 @@ const num = (v: unknown): number | undefined => (typeof v === 'number' && Number
  * from one solve per distinct step, so the number is the one the player would read there. The calculator is put back on the
  * selected skill afterwards: the caller reads the other metrics off the same instance.
  */
-function rotationDps({ calc, input, rb, effects }: Solved): number | undefined {
+function rotationCycle({ calc, input, rb, effects }: Solved): { cycle: ReturnType<typeof simulateRotationOf>; unknownTiming: boolean } | undefined {
   const rotation: string[] = (rb.model as any).rotation ?? [];
   if (!rotation.length) return undefined;
 
@@ -51,8 +51,31 @@ function rotationDps({ calc, input, rb, effects }: Solved): number | undefined {
   const cycle = simulateRotationOf({ rotation, summaryByValue, baseSummary: calc.getTotalSummary(), hasSelectedChances: effects.length > 0 });
   const unknownTiming = rotation.some((value) => !isBasicAttack(value) && (summaryByValue.get(value) as any)?.calcSkill?.timingUnknown);
 
-  return unknownTiming ? undefined : num(cycle.sustainedDps);
+  return { cycle, unknownTiming };
 }
+
+/** Sustained: the steady cycle, with every recarga paid. */
+const rotationDps = (solved: Solved): number | undefined => {
+  const result = rotationCycle(solved);
+
+  return result && !result.unknownTiming ? num(result.cycle.sustainedDps) : undefined;
+};
+
+/** Burst: the first pass of the rotation, with every recarga clear (the opening, before the cooldowns bite). */
+const burstDps = (solved: Solved): number | undefined => {
+  const result = rotationCycle(solved);
+
+  return result && !result.unknownTiming ? num(result.cycle.firstCycleDps) : undefined;
+};
+
+export type Profile = 'sustained' | 'burst';
+
+/**
+ * The metric a build is judged on for a profile. Sustained is what the rotation settles into (or the chosen skill's DPS
+ * with no rotation); burst is the opening pass of the rotation (or the average hit of the chosen skill with none).
+ */
+export const objectiveFor = (profile: Profile, hasRotation: boolean): Metric =>
+  profile === 'burst' ? (hasRotation ? 'burstDps' : 'avgHit') : (hasRotation ? 'rotationDps' : 'dps');
 
 /** Read the requested numbers off a solved build. Only the rotation costs extra solves. */
 export function readMetrics(solved: Solved, wanted: readonly Metric[]): Metrics {
@@ -71,7 +94,10 @@ export function readMetrics(solved: Solved, wanted: readonly Metric[]): Metrics 
       case 'max': value = num(effected ? dmg.effectedSkillDamageMax : dmg.skillMaxDamage); break;
       case 'min': value = num(min); break;
       case 'dps': value = num(effected ? dmg.effectedSkillDps : dmg.skillDps); break;
+      // Damage per hit averaged over the chance to hit and to crit: `dps` divided by the hits per second it was made with.
+      case 'avgHit': { const perSecond = num(effected ? dmg.effectedSkillHitsPerSec : dmg.skillDpsInputHitsPerSec); const dps = num(effected ? dmg.effectedSkillDps : dmg.skillDps); value = perSecond && dps !== undefined ? dps / perSecond : undefined; break; }
       case 'rotationDps': value = rotationDps(solved); break;
+      case 'burstDps': value = burstDps(solved); break;
       case 'hitsToKill': value = effected ? (hp && num(min) ? Math.ceil(hp / min) : undefined) : num(dmg.skillHitKill); break;
       case 'critRate': value = num(effected ? dmg.effectedSkillCriRateToMonster : dmg.skillCriRateToMonster); break;
       case 'hp': value = num(c.maxHp); break;

@@ -19,6 +19,7 @@ import { costumeSlotDescriptor } from 'src/app/core/costume-slot-descriptor';
 import { OFF_HAND_RIVAL, OffHandSlot } from 'src/app/core/off-hand-slots';
 import { SLOT_COLOR_BY_ID, SlotColor } from 'src/app/core/slot-colors';
 import { ItemModel } from 'src/app/models/item.model';
+import { HEAD_SLOTS, getHeadGearSlots } from 'src/app/utils/head-gear-slots';
 import { CalculatorLayout, SlotColorPreferences } from '../services/calculator-services';
 import { ChipPick } from './equipment-slot-card';
 import { SlotListBag } from '../../app/layout/pages/ro-calculator/equipment-grid/slot-list-bag.model';
@@ -268,9 +269,22 @@ private readonly colorPicker: SlotColorPreferences,
 
   // ── compare ──────────────────────────────────────────────────────────────────
 
+  /**
+   * The slot that holds the spanning head gear (a Meio + Baixo mask) taking this one, if any. Comparing the occupied slot means
+   * "what if I wore separate pieces here instead of the mask", which also puts the mask's own slot in the comparison.
+   */
+  private headHolderOf(slot: EquipmentSlotDescriptor): EquipmentSlotDescriptor | undefined {
+    if (!this.occupiedBy(slot)) return undefined;
+    const holder = HEAD_SLOTS.find((held) => held !== slot.key && getHeadGearSlots(this.items?.[this.model?.[held]]).includes(slot.key));
+
+    return holder ? SLOTS_BY_KEY.get(holder) : undefined;
+  }
+
   onToggleCompare(slot: EquipmentSlotDescriptor): void {
     slot = this.renderedSlot(slot);
-    const keys = comparableKeysOf(slot);
+    const holder = this.headHolderOf(slot);
+    const together = holder ? [slot, holder] : [slot];
+    const keys = together.flatMap((entry) => comparableKeysOf(entry));
     const isOn = keys.some((key) => this.compareItemNames.includes(key));
 
     if (isOn) {
@@ -280,7 +294,7 @@ private readonly colorPicker: SlotColorPreferences,
         if (!this.compareItemNames.includes(key)) this.compareItemNames.push(key);
         this.justEnabled.add(key);
       }
-      this.seedComparison(slot);
+      for (const entry of together) this.seedComparison(entry);
     }
 
     this.compareSlotsChange.emit(false);

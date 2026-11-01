@@ -10,6 +10,9 @@ import { parseShare } from './share';
 export const patchSchema = buildInputSchema.omit({ share: true, preset: true }).partial();
 export type BuildPatch = z.infer<typeof patchSchema>;
 
+/** The patch as the tools advertise it: the fields of `calculate.build` (no `share`/`preset`), validated against the full schema. */
+export const compactPatchSchema = z.looseObject({}).pipe(patchSchema);
+
 /**
  * Resolve `share`/`preset` into a plain preset once, so each variant does not decompress the
  * link again. The result has no `share`, and carries the custom items the link embedded.

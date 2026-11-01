@@ -167,7 +167,7 @@ public readonly itemDescriptions: ItemDescriptionStore,
 
   get compareTitle(): string {
     return this.occupiedBy
-      ? this.text('eq.compareLocked', { holder: this.occupiedBy })
+      ? this.text('eq.compareOccupied', { holder: this.occupiedBy })
       : this.text('eq.compareToggle');
   }
 
@@ -176,7 +176,6 @@ public readonly itemDescriptions: ItemDescriptionStore,
   trackChip = (_: number, view: ChipView) => `${view.chip.slotKey}:${view.chip.kind}:${view.chip.index}`;
 
   onToggleCompare(): void {
-    if (this.occupiedBy) return;
     this.toggleCompare.emit();
   }
 

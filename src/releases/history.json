@@ -1,5 +1,36 @@
 [
   {
+    "v": "0.1.200-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "Agora é possível comparar uma máscara que ocupa Meio e Baixo (como a Máscara de Pesar) com peças separadas: o botão Comparar do slot ocupado leva o slot da máscara junto.",
+      "O MCP passou a ajustar a peça que a build já usa (cartas, encantamentos e rolagens catalogadas) antes de compará-la com outras, a usar refino +12 e grau A como padrão, e a mostrar, por peça trocada, se ela vence no refino e grau atuais ou só evoluída (`levelCheck`).",
+      "O MCP também mostra o resultado contra cada alvo (normal e chefe) e a média esperada dos procs (chance, duração e ganho por ataques por segundo), para decidir entre uma peça com proc e uma mais estável.",
+      "O MCP agora tem dummies com defesa de chefe (ids 9000001 a 9000004), avisa quando o alvo não tem defesa e repete o resultado neles, ganhou a métrica `avgHit` (dano médio por golpe com crítico), mostra ASPD e ACERTO contra seus limites e sugere a melhor poção de velocidade de ataque.",
+      "O MCP ganhou a ferramenta `scan_slot`, que mede todos os itens do LATAM que a classe usa em um slot (e afina os melhores com cartas, encantamentos e rolagens), e o parâmetro `profile` para buscar builds de abertura (burst) ou de ciclo sustentado.",
+      "A lista de ferramentas do MCP ficou cerca de 38% menor (menos tokens por conversa) e cada ferramenta passou a dizer quando usar e quando não usar.",
+      "O MCP ganhou a ferramenta `guide`, com receitas por tarefa, e `optimize_build` agora responde de forma curta por padrão (a resposta completa vem com `detail`)."
+    ],
+    "logs_es": [
+      "Ahora se puede comparar una máscara que ocupa Medio e Inferior (como la Máscara de Pesar) con piezas separadas: el botón Comparar de la ranura ocupada incluye la ranura de la máscara.",
+      "El MCP ahora ajusta la pieza que la build ya usa (cartas, encantamientos y tiradas catalogadas) antes de compararla con otras, usa refinamiento +12 y grado A por defecto, y muestra, por pieza cambiada, si gana con el refinamiento y grado actuales o solo mejorada (`levelCheck`).",
+      "El MCP también muestra el resultado contra cada objetivo (normal y jefe) y el promedio esperado de los procs (probabilidad, duración y ganancia por ataques por segundo), para elegir entre una pieza con proc y otra más estable.",
+      "El MCP ahora tiene dummies con defensa de jefe (ids 9000001 a 9000004), avisa cuando el objetivo no tiene defensa y repite el resultado en ellos, incorpora la métrica `avgHit` (daño medio por golpe con crítico), muestra ASPD y PRECISIÓN frente a sus límites y sugiere la mejor poción de velocidad de ataque.",
+      "El MCP incorporó la herramienta `scan_slot`, que mide todos los ítems de LATAM que la clase puede usar en una ranura (y afina los mejores con cartas, encantamientos y tiradas), y el parámetro `profile` para buscar builds de apertura (burst) o de ciclo sostenido.",
+      "La lista de herramientas del MCP quedó aproximadamente un 38% más pequeña (menos tokens por conversación) y cada herramienta ahora indica cuándo usarla y cuándo no.",
+      "El MCP incorporó la herramienta `guide`, con recetas por tarea, y `optimize_build` ahora responde de forma corta por defecto (la respuesta completa llega con `detail`)."
+    ],
+    "logs_en": [
+      "You can now compare a mask that takes Middle and Lower (like the Máscara de Pesar) with separate pieces: the Compare button on the occupied slot brings the mask's slot in with it.",
+      "The MCP now tunes the piece the build already wears (cards, enchants and catalogued rolls) before comparing it with others, uses refine +12 and grade A by default, and shows, for each swapped piece, whether it wins at the current refine and grade or only once upgraded (`levelCheck`).",
+      "The MCP also shows the result against each target (normal and boss) and the expected average of procs (chance, duration and gain per attacks per second), to choose between a piece with a proc and a steadier one.",
+      "The MCP now has boss-defense dummies (ids 9000001 to 9000004), warns when the target has no defense and repeats the result on them, gained the `avgHit` metric (average hit with crits), shows ASPD and HIT against their limits and suggests the best attack speed potion.",
+      "The MCP gained the `scan_slot` tool, which measures every LATAM item the class can use in a slot (and tunes the best ones with cards, enchants and rolls), and the `profile` parameter to look for opening (burst) or sustained-cycle builds.",
+      "The MCP tool list is about 38% smaller (fewer tokens per conversation) and each tool now says when to use it and when not to.",
+      "The MCP gained the `guide` tool, with recipes per task, and `optimize_build` now answers briefly by default (the full answer comes with `detail`)."
+    ]
+  },
+  {
     "v": "0.1.199-beta",
     "date": "01-11-2026",
     "logs": [

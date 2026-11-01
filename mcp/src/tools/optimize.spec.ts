@@ -127,6 +127,10 @@ describe('explain_damage', () => {
     // The VIT boot's proc is not in the number; the warning says how much it would add.
     const proc = data.warnings.find((w: any) => w.type === 'proc' && /Vitality|VIT/.test(w.name));
     expect(proc.gainMaxPct).toBeGreaterThan(0);
+    // The average accounts for the chance and the duration: never more than the gain with the proc always on.
+    expect(proc.average.chancePct).toBeGreaterThan(0);
+    expect(proc.average.expectedGainPct['5/s']).toBeLessThanOrEqual(proc.gainMaxPct);
+    expect(proc.average.expectedGainPct['1/s']).toBeLessThan(proc.average.expectedGainPct['5/s']);
   });
 
   it('can be asked for the stages alone', async () => {
@@ -208,7 +212,6 @@ describe('optimize_build', () => {
       build: base, slots: ['headMiddle'], candidates: { headMiddle: [] }, objective: 'max', maxSolves: 100,
     });
     expect(isError).toBe(false);
-    expect(data.complementSearch.enabled).toBe(true);
     expect(Object.keys(data.patch.options ?? {}).length).toBeGreaterThan(0);
     expect(data.final.max).toBeGreaterThan(data.baseline.max);
     const reread = (await call('calculate', { build: { share: data.share } })).data;
@@ -285,7 +288,7 @@ describe('optimize_build', () => {
     expect(data.steps.length).toBeGreaterThan(0);
     expect(data.final.max).toBeGreaterThan(data.baseline.max);
     expect(data.deltaPct.max).toBeGreaterThan(0);
-    expect(data.stopped).toBe('convergiu');
+    expect(data.stopped).toBeUndefined();
     expect(Object.keys(data.patch.gear).every((slot) => ['boot', 'garment'].some(parent => slot.startsWith(parent)))).toBe(true);
 
     // What the search reported is what `calculate` reads off the build it handed back.
@@ -351,11 +354,11 @@ describe('optimize_build pairs and procs', () => {
     const procBuild = { ...BUILD, gear: { ...BUILD.gear, boot: 470073, bootRefine: 15 } };
     const args = { complements: false, build: procBuild, slots: ['garment'], objective: 'max', candidatesPerSlot: 1 };
     const { data } = await call('optimize_build', args);
-    expect(data.procs.options.length).toBeGreaterThan(0);
-    for (const proc of data.procs.options) expect(typeof proc.effect).toBe('string');
-    const first = data.procs.options[0].effect;
+    expect(data.procs.length).toBeGreaterThan(0);
+    for (const proc of data.procs) expect(typeof proc.effect).toBe('string');
+    const first = data.procs[0].effect;
     const counted = (await call('optimize_build', { ...args, effects: [first] })).data;
-    expect(counted.procs?.options.map((p: any) => p.effect) ?? []).not.toContain(first);
+    expect(counted.procs?.map((p: any) => p.effect) ?? []).not.toContain(first);
   });
   it('counts the procs every tested build offers when asked, and says which', async () => {
     const procBuild = { ...BUILD, gear: { ...BUILD.gear, boot: 470073, bootRefine: 15 } };
@@ -434,7 +437,11 @@ describe('answers stay short by default', () => {
     const { data } = await call('optimize_build', { complements: false, build: BUILD, slots: ['boot'], candidatesPerSlot: 2 });
     expect(data.candidateIds).toBeUndefined();
     expect(data.alternatives).toBeUndefined();
-    expect(data.complementSearch.uncataloguedRandomItems.count).toBeGreaterThanOrEqual(0);
+    expect(data.complementSearch).toBeUndefined();
+    expect(data.context).toBeUndefined();
+    const full = (await call('optimize_build', { complements: false, build: BUILD, slots: ['boot'], candidatesPerSlot: 2, detail: true })).data;
+    expect(full.complementSearch.uncataloguedRandomItems.count).toBeGreaterThanOrEqual(0);
+    expect(full.context.target.name).toBeTruthy();
     expect(typeof (data.steps[0]?.to ?? data.steps[0]?.combo?.[0]?.to ?? '')).toBe('string');
   });
   it('merges sockets that offer the same enchants and sends compact JSON', async () => {

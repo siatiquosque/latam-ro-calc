@@ -10,6 +10,7 @@
  * stores the map and `getItem()` only reads, so there is nothing to copy — which is what
  * keeps a multi-megabyte parse off the per-request path.
  */
+import { defendedDummyRecords } from '../engine/dummies';
 import { ClassRegistry } from './class-registry';
 import { ItemIndex } from './item-index';
 import { MonsterIndex } from './monster-index';
@@ -64,15 +65,16 @@ export interface Dataset {
  */
 export function buildDataset(src: DatasetSources, loadDescriptions: () => Promise<Record<string, string>>): Dataset {
   let descriptions: Promise<Record<string, string>> | undefined;
+  const monsters = { ...src.monsters, ...defendedDummyRecords(src.monsters) };
 
   return {
     items: src.items,
     latamExtra: src.latamExtra,
-    monsters: src.monsters,
+    monsters,
     hpSpTable: src.hpSpTable,
     classes: new ClassRegistry(src.classes),
     itemIndex: new ItemIndex(src.items, src.latamExtra),
-    monsterIndex: new MonsterIndex(src.monsters, src.latamMonsters),
+    monsterIndex: new MonsterIndex(monsters, src.latamMonsters),
     async description(id: number): Promise<string | undefined> {
       descriptions ??= loadDescriptions();
       return (await descriptions)[id];

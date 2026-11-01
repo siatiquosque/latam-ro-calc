@@ -204,3 +204,21 @@ describe('swapping a compared slot', () => {
     expect(seen.compareItem).toBe(1);
   });
 });
+
+describe('comparing a head slot that a spanning mask occupies', () => {
+  it('compares the occupied slot together with the slot that holds the mask, so separate pieces can be tried', () => {
+    const { grid } = makeGrid({ headMiddle: 7 }, {}, []);
+    grid.items = { ...grid.items, 7: item(7, { itemSubTypeId: 512, location: 'Middle', locations: ['Middle', 'Lower'] } as Partial<ItemModel>) };
+    grid.headSlotOccupiedBy = { [ItemTypeEnum.headLower]: 'item 7' };
+
+    grid.onToggleCompare(SLOTS_BY_KEY.get(ItemTypeEnum.headLower)!);
+
+    expect(grid.compareItemNames).toEqual(expect.arrayContaining([ItemTypeEnum.headLower, ItemTypeEnum.headMiddle]));
+    // The mask is copied into the compared side to start from; the occupied slot starts empty.
+    expect(grid.model2['headMiddle']).toBe(7);
+
+    grid.onToggleCompare(SLOTS_BY_KEY.get(ItemTypeEnum.headLower)!);
+    expect(grid.compareItemNames).not.toContain(ItemTypeEnum.headLower);
+    expect(grid.compareItemNames).not.toContain(ItemTypeEnum.headMiddle);
+  });
+});

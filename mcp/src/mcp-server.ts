@@ -5,6 +5,7 @@ import { registerBridgeTools, registerCalculationTools } from './tools/calculate
 import { registerCustomItemTools } from './tools/custom-items';
 import { registerOptimizationTools } from './tools/optimize';
 import { registerStatTools } from './tools/optimize-stats';
+import { registerGuideTool } from './tools/guide';
 import { registerRandomPoolTools } from './tools/random-pools';
 import { Shortener } from './engine/share';
 import { useShortener } from './tools/helpers';
@@ -46,18 +47,17 @@ export function createMcpServer(dataset: Dataset, shortener?: Shortener): McpSer
     {
       jsonSchemaValidator: unreachableValidator as any,
       instructions:
-        'Simulador de dano de Ragnarok Online LATAM. Fluxo típico: list_classes → list_skills → search_items → calculate. ' +
-        'Toda ferramenta que recebe uma build aceita um link do simulador em `build.share`, com overrides esparsos por cima — ' +
-        'então, se a pessoa colar um link, use-o direto em vez de remontar a build. ' +
-        'Devolva sempre o `share` do resultado para que ela possa abrir e conferir no simulador. ' +
-        'Ao sugerir melhorias, penetração de DEF/TEN e penalidade de tamanho do alvo contam tanto quanto ATQ: confira `context` (tamanho do alvo, penalidade da arma, penetração atual) e, se a pessoa caça monstros de portes diferentes, passe `targets` com um Médio e um Grande. ' +
-        'Para procurar melhorias: `explain_damage` mostra onde está o dano e o que o número não conta, `slot_options` lista os encantamentos que uma peça aceita, ' +
-        '`evaluate_variants` testa dezenas de variações de uma vez, em vez de uma chamada por teste; `optimize_stats` redistribui os pontos de atributo e ' +
-        '`uncatalogued_pools` lista os itens cujo pool de bônus aleatório ainda não foi confirmado.',
+        'Simulador de dano de Ragnarok Online LATAM. Toda ferramenta que recebe uma build aceita o link do simulador em `build.share`, com overrides esparsos ' +
+        'por cima: se a pessoa colar um link, use-o direto. Devolva sempre o `share` do resultado. Fluxo: list_classes → list_skills → search_items → calculate. ' +
+        'Para melhorar uma build: `optimize_build` (build inteira), `scan_slot` (achar a peça improvável de um slot), `optimize_slot`, `evaluate_variants`, ' +
+        '`explain_damage`, `optimize_stats`. Três cuidados: o alvo padrão (Dummy - Neutro) não tem defesa, então prefira um chefe real ou os dummies 9000001 a 9000004; ' +
+        'passe `targets` com normal e chefe (e Médio e Grande) quando a build serve a mais de um; e não use `max` como objetivo (ignora crítico). ' +
+        'Em dúvida sobre qual ferramenta usar, o alvo, burst contra DPS sustentado, proc contra peça estável ou como ler a resposta, chame `guide`.',
     },
   );
 
   useShortener(server, shortener);
+  registerGuideTool(server);
   registerDiscoveryTools(server, dataset);
   registerCalculationTools(server, dataset, shortener);
   registerBridgeTools(server, dataset, shortener);

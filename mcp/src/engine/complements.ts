@@ -6,6 +6,10 @@ import { Dataset } from '../data/dataset';
 import { BuildPatch, applyPatch } from './variants';
 import { partnerIndex } from './item-partners';
 import { relatedItemKeys, ResolvedBuild } from './build-input';
+import { ItemOptionMap } from 'src/app/constants/item-options-table';
+import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
+import { canGradeItem } from 'src/app/utils/can-grade';
+import { isUndefended } from './dummies';
 
 const indexes = new WeakMap<Dataset, { byAegis: Map<string, number>; cards: Map<string, number[]> }>();
 function indexFor(dataset: Dataset) {
@@ -113,6 +117,9 @@ const SIZE_INITIAL: Record<string, string> = { SMALL: 's', MEDIUM: 'm', LARGE: '
  * plus the race, size and element keys of the monster. An item whose script has none of them cannot
  * matter, so it is never solved.
  */
+/** The refine a build can realistically reach; above it is high endgame, so it is only tested when asked for. */
+export const REACHABLE_REFINE = 12;
+
 export function relevantKeys(calc: any, targets: any[] = []): string[] {
   const summary = calc.getTotalSummary() as any;
   const keys = new Set<string>(COMMON_DAMAGE_KEYS);
@@ -150,6 +157,24 @@ export function relevantKeys(calc: any, targets: any[] = []): string[] {
   return [...keys];
 }
 
+const ASPD_CAP = 193;
+
+/** Limits the build can sit short of, read off the same solve: ASPD against its cap and HIT against what the target needs for 100%. */
+function breakpointsOf(summary: any, monster: any) {
+  const calc = summary.calc ?? {};
+  const aspd = calc.totalAspd;
+  const hit = calc.totalHit;
+  const required = monster.hitRequireFor100;
+  const notes: string[] = [];
+  if (typeof aspd === 'number' && aspd >= ASPD_CAP) notes.push(`ASPD no teto (${ASPD_CAP}): mais velocidade de ataque não rende.`);
+  if (typeof hit === 'number' && typeof required === 'number' && hit < required) notes.push(`Faltam ${required - hit} de ACERTO para acertar 100% neste alvo.`);
+
+  return {
+    aspd, aspdCap: ASPD_CAP, hit, hitRequiredFor100: required, hitRatePct: calc.hitRate, hitsPerSecond: calc.hitPerSecs,
+    ...(notes.length ? { notes } : {}),
+  };
+}
+
 /**
  * What the target does to this build, for the answer: the penalty its weapon takes against the target's size and how
  * much DEF the build ignores. They are inputs to every number the search ranks, so the caller should see them.
@@ -163,6 +188,13 @@ export function damageContext(calc: any) {
     target: { name: monster.name, race: monster.raceUpper ?? monster.race, size: monster.sizeFullUpper ?? monster.size, class: monster.type, element: monster.elementName, def: monster.def, res: monster.res, mdef: monster.mdef, mres: monster.mres },
     ...(typeof sizePenalty === 'number' ? { sizePenaltyPct: sizePenalty } : {}),
     ...(typeof penetration === 'number' ? { penetrationPct: penetration } : {}),
+    // A build's bonuses against normal monsters and against bosses differ (p_class_*, penetration by class): one target is one answer.
+    classNote: monster.type === 'boss' || monster.type === 'normal'
+      ? `O alvo é ${monster.type === 'boss' ? 'chefe' : 'monstro normal'}: a build pode render diferente contra ${monster.type === 'boss' ? 'normais' : 'chefes'} (bônus e penetração por classe). Passe \`targets\` com um de cada para ver os dois.` : undefined,
+    // A target without defenses hides penetration, TEN reduction and size penalty, and makes every hit look bigger than it is.
+    ...(isUndefended({ def: monster.def, mdef: monster.mdef, res: monster.res, mres: monster.mres })
+      ? { undefendedNote: 'O alvo não tem DEF, DEFM, TEN nem TENM: penetração e redução de TEN não aparecem e o dano parece maior do que é. Use um chefe real ou os dummies com defesa (ids 9000001 a 9000004).' } : {}),
+    breakpoints: breakpointsOf(summary, monster),
     ...(typeof sizePenalty === 'number' && sizePenalty < 100
       ? { hint: `A arma causa só ${sizePenalty}% contra o tamanho do alvo: itens que ignoram a penalidade de tamanho (ignore_size_penalty) ou fixam sizePenalty valem mais aqui.` } : {}),
   };
@@ -200,3 +232,24 @@ export function keptSockets(dataset: Dataset, rb: ResolvedBuild, slot: string, i
 }
 
 
+
+/**
+ * The patch that puts `itemId` in `slot` for a comparison: the new piece at the ideal refine and grade (or the caller's cap),
+ * the old piece's cards and enchants it cannot hold taken out, its random rolls cleared. For the piece already worn only the
+ * refine and grade move. Shared by `optimize_slot` and `scan_slot`, so both rank on the same footing.
+ */
+export function swapPatch(dataset: Dataset, rb: ResolvedBuild, slot: string, itemId: number, caps: { refine?: number; maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A' } = {}): BuildPatch {
+  const model = rb.model as Record<string, any>;
+  const worn = model[slot] === itemId;
+  const grade = canGradeItem(dataset.items[itemId]) ? (caps.maxGrade === undefined ? 'A' : caps.maxGrade === 'none' ? '' : caps.maxGrade) : worn ? undefined : '';
+  const refineTo = caps.refine ?? (`${slot}Refine` in model ? (worn ? Math.max(REACHABLE_REFINE, model[`${slot}Refine`] ?? 0) : REACHABLE_REFINE) : undefined);
+
+  return {
+    gear: Object.fromEntries([
+      ...(worn ? [] : [[slot, itemId], ...keptSockets(dataset, rb, slot, itemId).clear.map((key) => [key, null])]),
+      ...(refineTo !== undefined ? [[`${slot}Refine`, refineTo]] : []),
+      ...(grade !== undefined && (`${slot}Grade` in model || canGradeItem(dataset.items[itemId])) ? [[`${slot}Grade`, grade]] : []),
+    ]),
+    ...(worn ? {} : { options: Object.fromEntries((ItemOptionMap.get(slot as ItemTypeEnum) ?? []).map((index) => [String(index), null])) }),
+  };
+}

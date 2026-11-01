@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Render, displayPipe, interpolate, parseStyle, normalizeStyle, identityKey } from '../render';
+import { Render, displayPipe, interpolate, normalizeStyle, identityKey } from '../render';
 import { useText } from '../../state/use-text';
 export function Content({vm, services}: {vm: any; services: any}) {
 const t = useText();
@@ -37,10 +37,8 @@ const compare = context["compare"]; return <><Render tag="div" props={{"classNam
 "tooltipPosition": "top",
 "aria-pressed": vm.comparingHere,
 "click": (event: any) => vm.action(() => { const $event = event; vm.onToggleCompare() }),
-"className": ["eq-card__compare",(vm.comparingHere ? "eq-card__compare--on" : ''),(!(!(vm.occupiedBy)) ? "eq-card__compare--locked" : '')].filter(Boolean).join(' '),
-"tooltip": {text: vm.compareTitle, position: "top", className: '', showDelay: 300, hideDelay: 0, escape: true, disabled: false}}}>{(() => { const __condition7 = vm.occupiedBy;  return __condition7 ? <><Render tag="app-icon" props={{"name": "lock",
-"style": normalizeStyle(Object.assign({}, parseStyle("font-size: 11px")))}}></Render></> : null; })()}
-{(() => { const __condition8 = !(vm.occupiedBy);  return __condition8 ? <><Render tag="span" props={{"aria-hidden": "true"}}>{"⇄"}</Render></> : null; })()}
+"className": ["eq-card__compare",(vm.comparingHere ? "eq-card__compare--on" : '')].filter(Boolean).join(' '),
+"tooltip": {text: vm.compareTitle, position: "top", className: '', showDelay: 300, hideDelay: 0, escape: true, disabled: false}}}><Render tag="span" props={{"aria-hidden": "true"}}>{"⇄"}</Render>
 {interpolate([" "," "], [(vm.comparingHere ? t('eq.comparing') : t('eq.compare'))])}</Render></> : null; })()}
 {(() => { const __condition9 = vm.hasContent;  return __condition9 ? <><Render tag="button" props={{"type": "button",
 "aria-label": t('eq.clearSlot'),

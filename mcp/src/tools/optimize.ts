@@ -25,14 +25,17 @@ import { Dataset } from '../data/dataset';
 import { compactCatalog, compactUpstream, randomOptionReferencesFor } from '../data/random-options';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
-import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, resolveBuild, ResolvedBuild } from '../engine/build-input';
-import { DEFAULT_METRICS, Metric, METRICS, Metrics, readMetrics } from '../engine/metrics';
+import { BuildInput, compactBuildSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
+import { DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile, readMetrics } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
 import { solveWithInput } from '../engine/solve';
-import { applyPatch, BuildPatch, decodeOnce, patchSchema } from '../engine/variants';
-import { complementChoices, damageContext, keptSockets, relevantKeys, searchComplements } from '../engine/complements';
+import { applyPatch, BuildPatch, compactPatchSchema, decodeOnce } from '../engine/variants';
+import { complementChoices, damageContext, keptSockets, REACHABLE_REFINE, relevantKeys, searchComplements, swapPatch } from '../engine/complements';
 import { partnerIndex } from '../engine/item-partners';
 import { pacing } from '../engine/pacing';
+import { procData, procEstimate } from '../engine/proc';
+import { CHECK_DUMMIES, isUndefended } from '../engine/dummies';
+import { AspdPotionList, AspdPotionStackable } from 'src/app/constants/aspd-potion-list';
 import { normalizeShare, resolveTarget, targetSchema } from './calculate';
 import { compact, json, registerJsonTool } from './helpers';
 
@@ -42,7 +45,7 @@ const metricEnum = z.enum(METRICS);
 
 const variantSchema = z.object({
   label: z.string().min(1).max(80).describe('Nome curto para reconhecer a variante na resposta.'),
-  patch: patchSchema.describe('Só o que muda em relação à build base. Mapas (gear, stats, skills, options) mesclam por chave.'),
+  patch: compactPatchSchema.describe('Só o que muda em relação à build base. Mapas (gear, stats, skills, options) mesclam por chave.'),
 });
 
 export const requireSchema = z.object({
@@ -157,12 +160,13 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'evaluate_variants', {
     title: 'Avaliar variantes de uma build',
     description:
+      'USE para testar hipóteses que você já tem (dezenas de trocas de uma vez, em uma chamada). NÃO use para descobrir candidatos: para isso `scan_slot` ou `optimize_build`. ' +
       'Resolve de uma vez várias variações de uma mesma build (trocar peça, carta, encantamento, buff, atributo, habilidade) e devolve as métricas de cada uma, ordenadas. ' +
       'Cada variante é só o que muda: `patch` tem o mesmo formato dos overrides de `build` e mescla por chave sobre a base. ' +
       '`require` descarta quem não cumpre um piso ou teto (ex.: hp mínimo). `rotationDps` usa a `rotation` da build. ' +
       `Máximo de ${config.limits.maxVariants} variantes por chamada.`,
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional().describe('Efeitos de proc a ativar em todas as variantes (veja `availableEffects` de `calculate`).'),
       variants: z.array(variantSchema).min(1),
@@ -217,6 +221,149 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     });
   });
 
+
+  registerJsonTool<{
+    build: BuildInput;
+    slot: string;
+    target?: TargetArg;
+    effects?: string[];
+    objective?: Metric;
+    profile?: Profile;
+    base?: 'current' | 'tuned';
+    query?: string;
+    limit?: number;
+    topSockets?: number;
+    refine?: number;
+    maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
+    maxSolves?: number;
+  }>(server, 'scan_slot', {
+    title: 'Varrer um slot inteiro',
+    description:
+      'USE para achar a peça improvável de um slot ou conferir se algo fora do óbvio vence. NÃO use para montar a build inteira (`optimize_build`) nem para comparar poucos ids (`optimize_slot`). ' +
+      'Mede, com o motor real, TODOS os itens do LATAM que a classe e o nível podem usar naquele slot (centenas, em segundos), sem filtrar por palavra-chave: ' +
+      'serve para achar a peça improvável que nenhuma busca por bônus traria. O resto da build fica como está no link. ' +
+      '`base: "tuned"` (padrão) compara contra a peça atual já com os melhores cartas, encantamentos e rolagens; `"current"` compara contra ela como veio. ' +
+      'Os `topSockets` melhores da varredura nua recebem a busca de cartas, encantamentos e rolagens catalogadas e o ranking final usa esses valores. ' +
+      'Cada linha traz os parceiros de conjunto (outros slots) para testar em `evaluate_variants`. Refino e grau seguem o padrão ideal (+12, A) ou os tetos passados.',
+    inputSchema: {
+      build: compactBuildSchema,
+      slot: z.string().describe('Slot a varrer, ex.: "weapon", "armor", "boot", "accLeft", "headMiddle".'),
+      target: targetSchema,
+      effects: z.array(z.string()).optional(),
+      objective: metricEnum.optional().describe('O que maximizar. Padrão: o do `profile`.'),
+      profile: z.enum(['sustained', 'burst']).optional().describe('`sustained` (padrão) ou `burst`; veja `optimize_build`.'),
+      base: z.enum(['current', 'tuned']).optional().default('tuned'),
+      query: z.string().optional().describe('Restringe a varredura a itens cujo nome contém o texto.'),
+      limit: z.number().int().min(1).max(40).optional().default(15),
+      topSockets: z.number().int().min(0).max(25).optional().default(12).describe('Quantos dos melhores recebem a busca de soquetes e rolagens. 0 = só a varredura nua.'),
+      refine: z.number().int().min(0).max(20).optional().describe('Refino testado. Padrão +12.'),
+      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau testado. Padrão A.'),
+      maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
+    },
+  }, async ({ build, slot, target, effects = [], objective: objectiveArg, profile = 'sustained', base: baseMode = 'tuned', query, limit = 15, topSockets = 12, refine, maxGrade, maxSolves }) => {
+    if (!MAIN_ITEM_SLOTS.includes(slot)) throw new Error(`"${slot}" não é um slot de equipamento. Use um destes: ${MAIN_ITEM_SLOTS.join(', ')}.`);
+    const budget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
+    const pace = pacing(config.limits.maxSearchMs);
+    const input = decodeOnce(await normalizeShare(build, shortener));
+    const { monster } = resolveTarget(dataset, target?.monsterId);
+    const hasRotation = (((resolveBuild(input, dataset).model as { rotation?: string[] }).rotation) ?? []).length > 0;
+    const objective: Metric = objectiveArg ?? objectiveFor(profile, hasRotation);
+    const wanted: Metric[] = [objective, 'dps', 'max'];
+    const baseline = evaluate(input, undefined, dataset, monster, effects, wanted);
+    const baseValue = baseline.metrics[objective];
+    if (!baseValue) throw new Error(`A build não produz ${objective} para varrer.`);
+
+    const rb = baseline.rb;
+    const worn = (rb.model as Record<string, any>)[slot] as number;
+    const canWear = canUsedByClass(rb.char);
+    const found = dataset.itemIndex.search({ slot: slot as SlotTag, maxLevel: rb.model.level, inCalcDb: true, limit: 4000, query }, rb.char).rows
+      .map((row) => row.id)
+      .filter((id) => dataset.items[id] && canWear(dataset.items[id]) && (dataset.items[id].requiredLevel ?? 0) <= rb.model.level);
+
+    const keys = relevantKeys(baseline.solved.calc);
+    const skillId = SKILL_ID_BY_NAME[String(rb.model.selectedAtkSkill ?? '').split('==')[0] as keyof typeof SKILL_ID_BY_NAME];
+    if (skillId) keys.push(String(skillId), `cd__${skillId}`, `chance__${skillId}`);
+
+    let solves = 1;
+    let stopped = false;
+    const run = (patch: BuildPatch) => {
+      if (solves >= budget || pace.timeUp()) { stopped = true; return null; }
+      solves++;
+      try { return evaluate(input, patch, dataset, monster, effects, wanted); } catch { return null; }
+    };
+
+    // 1) Every candidate, bare (the ideal refine and grade, no sockets).
+    const bare: { id: number; patch: BuildPatch; value: number }[] = [];
+    for (const id of found) {
+      await pace.breathe();
+      const patch = swapPatch(dataset, rb, slot, id, { refine, maxGrade });
+      const result = run(patch);
+      const value = result?.metrics[objective];
+      if (result && value !== undefined) bare.push({ id, patch, value });
+      if (stopped) break;
+    }
+    bare.sort((a, b) => b.value - a.value);
+
+    // 2) The best of them, with the best cards, enchants and catalogued rolls.
+    const tune = (id: number, patch: BuildPatch, value: number) => {
+      const first = run(patch);
+      if (!first) return { patch, value, result: undefined };
+      const tuned = searchComplements({ patch, result: first }, complementChoices(dataset, slot, id, keys, new Set()), objective, (candidate) => run(candidate), 24);
+
+      return { patch: tuned.patch, value: tuned.result.metrics[objective] ?? value, result: tuned.result };
+    };
+    const finalists = bare.slice(0, topSockets);
+    if (worn > 0 && !finalists.some((entry) => entry.id === worn)) {
+      const wornPatch = swapPatch(dataset, rb, slot, worn, { refine, maxGrade });
+      const first = run(wornPatch);
+      if (first && first.metrics[objective] !== undefined) finalists.push({ id: worn, patch: wornPatch, value: first.metrics[objective]! });
+    }
+    const tunedRows: { id: number; patch: BuildPatch; value: number; bare: number }[] = [];
+    for (const entry of finalists) {
+      await pace.breathe();
+      const out = topSockets > 0 ? tune(entry.id, entry.patch, entry.value) : { patch: entry.patch, value: entry.value };
+      tunedRows.push({ id: entry.id, patch: out.patch, value: out.value, bare: entry.value });
+    }
+    const wornRow = tunedRows.find((row) => row.id === worn);
+    const reference = baseMode === 'tuned' && wornRow ? wornRow.value : baseValue;
+    tunedRows.sort((a, b) => b.value - a.value);
+    const partners = partnerIndex(dataset);
+
+    const top = tunedRows.slice(0, limit).map((row) => {
+      const gear = (row.patch.gear ?? {}) as Record<string, unknown>;
+      const sockets = relatedItemKeys(slot).flatMap((key) => typeof gear[key] === 'number' ? [`${key}: ${dataset.itemIndex.get(gear[key] as number)?.name ?? gear[key]}`] : []);
+      const setPartners = partners.of(row.id).flatMap((partner) => {
+        const partnerSlot = partners.slotOf(partner);
+        return partnerSlot && partnerSlot !== slot ? [{ id: partner, name: dataset.itemIndex.get(partner)?.name, slot: partnerSlot }] : [];
+      }).slice(0, 3);
+
+      return compact({
+        id: row.id,
+        name: dataset.itemIndex.get(row.id)?.name,
+        value: round(row.value, 2),
+        deltaPct: deltaPct(row.value, reference),
+        bare: topSockets > 0 ? round(row.bare, 2) : undefined,
+        worn: row.id === worn ? true : undefined,
+        sockets: sockets.length ? sockets : undefined,
+        partners: setPartners.length ? setPartners : undefined,
+      });
+    });
+
+    return json({
+      slot,
+      objective,
+      reference: { item: worn ? itemLabel(dataset, worn) : null, value: round(reference, 2), basis: baseMode === 'tuned' && wornRow ? 'peça atual com os melhores soquetes' : 'build como veio no link' },
+      scanned: bare.length,
+      eligible: found.length,
+      ranking: top,
+      share: shareOf(rb),
+      context: damageContext(baseline.solved.calc),
+      solves,
+      ...(stopped ? { stopped: `orçamento de cálculos ou de tempo esgotado (${solves} de ${budget}): ${found.length - bare.length} itens não foram medidos. Use \`query\` para restringir ou aumente \`maxSolves\`.` } : {}),
+      note: 'Cada item entra no resto da build como ela está; conjuntos que dependem de outro slot aparecem em `partners` e só valem testados juntos (`evaluate_variants` ou `optimize_build` com `pairs`).',
+    });
+  });
+
   registerJsonTool<{
     build: BuildInput;
     target?: TargetArg;
@@ -227,13 +374,14 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'explain_damage', {
     title: 'Explicar o dano de uma build',
     description:
+      'USE para entender uma build antes de mexer nela: onde está o dano, o que cada peça vale, o que o número não conta e, com `upgrades`, onde investir refino, grau ou encantamento. NÃO use para buscar trocas. ' +
       'Mostra de onde vem o dano: `stages` são as etapas da fórmula com o valor depois de cada uma; `contributions` diz quanto a métrica cai se cada peça, carta, buff, passiva ou consumível sair ' +
       '(retirar uma peça também desfaz os conjuntos e combos dela); `warnings` aponta efeitos que o número não conta — itens com script vazio e procs não ativados, com o ganho de ativá-los.',
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional(),
-      parts: z.array(z.enum(['stages', 'contributions', 'warnings', 'refine'])).optional().describe('Padrão: stages, contributions e warnings. `refine` mostra o ganho de +1 e +2 refinos em cada peça (custo: uma conta por peça e nível).'),
+      parts: z.array(z.enum(['stages', 'contributions', 'warnings', 'refine', 'upgrades'])).optional().describe('Padrão: stages, contributions e warnings. `upgrades` ordena o que vale mais investir: refino, grau, nível de cada encantamento e encantar um soquete vazio. `refine` mostra o ganho de +1 e +2 refinos em cada peça (custo: uma conta por peça e nível).'),
       metric: z.enum(['dps', 'max', 'rotationDps']).optional().describe('Em que medir as contribuições. Padrão: dps.'),
       maxContributions: z.number().int().min(1).max(100).optional().default(25),
     },
@@ -254,7 +402,9 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
 
     if (want.has('refine')) out['refine'] = refineGains(base, baseline.rb, baseline.metrics[metric], metric, monster, effects, dataset);
 
-    if (want.has('warnings')) out['warnings'] = notModelled(baseline.rb, baseline.solved.calc, baseline.metrics['max'], base, dataset, monster, effects);
+    if (want.has('upgrades')) out['upgrades'] = upgradeGains(base, baseline.rb, baseline.metrics[metric], metric, monster, effects, dataset, relevantKeys(baseline.solved.calc));
+
+    if (want.has('warnings')) out['warnings'] = await notModelled(baseline.rb, baseline.solved.calc, baseline.metrics['max'], base, dataset, monster, effects);
 
     return json(out);
   });
@@ -265,6 +415,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     targets?: { monsterId: number; weight?: number }[];
     effects?: string[];
     objective?: Metric;
+    profile?: Profile;
     slots?: string[];
     lock?: string[];
     exclude?: number[];
@@ -272,6 +423,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     combos?: boolean;
     pairs?: string[][];
     countProcs?: boolean;
+    procHitsPerSecond?: number;
+    levelChecks?: boolean;
     detail?: boolean;
     complements?: boolean;
     refine?: number;
@@ -283,6 +436,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'optimize_build', {
     title: 'Procurar uma build melhor',
     description:
+      'USE como primeira resposta para melhorar uma build inteira (peças, cartas, encantamentos, rolagens, refino e grau). NÃO use para um slot só com candidatos conhecidos (`optimize_slot`), nem para varrer tudo de um slot (`scan_slot`), nem para atributos (`optimize_stats`). ' +
       'Percorre os slots de equipamento trocando a peça que mais melhora a métrica e repete até nada melhorar (subida de encosta). ' +
       'Testa equipamentos e seus complementos legais: cartas por categoria, encantamentos por posição e bônus aleatórios de catálogos regionais. ' +
       'Com `combos` (padrão) também testa trocas de **duas peças juntas** quando o script de uma cita a outra (conjuntos), que uma troca isolada não enxerga. ' +
@@ -291,35 +445,41 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       '`pairs` testa dois slots trocados juntos mesmo sem conjunto que os ligue. `procs` na resposta mostra o ganho de cada proc ainda não contado (passe-o em `effects` para a busca contá-lo). '
       + 'Busca heurística limitada pelo orçamento, sem garantia global. Pools aleatórios desconhecidos não são inventados. Confira a cobertura e o orçamento retornados.',
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       target: targetSchema,
       targets: z.array(z.object({ monsterId: z.number().int(), weight: z.number().positive().optional() })).min(1).max(5).optional()
         .describe('Alvos com peso (padrão 1). Vale para max, min e dps; as demais métricas não dependem do alvo.'),
       effects: z.array(z.string()).optional(),
-      objective: metricEnum.optional().describe('O que maximizar. Padrão: dps.'),
+      objective: metricEnum.optional().describe('O que maximizar. Padrão: o do `profile`.'),
+      profile: z.enum(['sustained', 'burst']).optional().describe('Que tipo de build buscar. `sustained` (padrão): o ciclo da rotação em regime, onde ASPD, conjuração e pós-conjuração contam (`rotationDps`, ou `dps` sem rotação). `burst`: a abertura da rotação com as recargas livres (`burstDps`, ou `avgHit` sem rotação). A resposta traz os dois perfis para a build base e a final.'),
       slots: z.array(z.string()).optional().describe('Slots a percorrer. Padrão: equipamentos e peças sombrias.'),
       lock: z.array(z.string()).optional().describe('Slots que não mudam.'),
       exclude: z.array(z.number().int()).optional().describe('Ids de itens que não podem entrar.'),
       candidates: z.record(z.string(), z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
       combos: z.boolean().optional().default(true).describe('Testar também trocas de duas peças ligadas por um conjunto.'),
       pairs: z.array(z.tuple([z.string(), z.string()])).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),
-      detail: z.boolean().optional().default(false).describe('Inclui também os ids de candidatos por slot e as alternativas que perderam (várias centenas de tokens a mais).'),
+      detail: z.boolean().optional().default(false).describe('Resposta completa: contexto do alvo, candidatos por slot (ids), alternativas que perderam, as notas que explicam cada bloco e o resumo da busca de complementos (centenas de tokens a mais). O padrão traz só os números, o caminho e os `alerts`.'),
+      levelChecks: z.boolean().optional().default(true).describe('Para as peças que mudaram, compara a nova com a atual no refino e grau que você tem hoje e também nos ideais (`levelCheck`): mostra a peça que só vence evoluída, ou que vence agora e perde depois. false economiza cálculos.'),
+      procHitsPerSecond: z.number().min(0.1).max(30).optional().describe('Ataques por segundo para estimar a média dos procs (cada ataque rola a chance). Sem isso, mostra 1, 3 e 5 por segundo; mais alvos atingidos por habilidade em área contam como mais ataques.'),
       countProcs: z.boolean().optional().default(false).describe('Conta, em cada build testada, todos os procs que ela oferece (inclusive os de peças recém-trocadas), em vez de só os de `effects`. Dobra o custo dos cálculos de builds com procs.'),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas, encantamentos e rolagens catalogadas. false preserva a busca somente de peças.'),
-      refine: z.number().int().min(0).max(20).optional().describe('Refino das peças novas. Padrão: o refino atual do slot.'),
-      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau: testa sem grau e todos os graus até o limite. A build base também deve respeitar o teto. Sem este parâmetro, peças novas ficam sem grau.'),
+      refine: z.number().int().min(0).max(20).optional().describe('Refino das peças testadas (inclusive as que a build já usa). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
+      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau. Padrão: grau A, o ideal, nas peças que aceitam grau (inclusive as que a build já usa). Informe só para limitar: então testa sem grau e todos os graus até o teto, e a build base também deve respeitá-lo.'),
       candidatesPerSlot: z.number().int().min(1).max(60).optional().default(12),
       rounds: z.number().int().min(1).max(4).optional().default(2),
       maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
       require: z.array(requireSchema).optional(),
     },
-  }, async ({ build, target, targets, effects = [], objective = 'dps', slots, lock = [], exclude = [], candidates, combos = true, pairs = [], countProcs = false, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }) => {
+  }, async ({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], candidates, combos = true, pairs = [], countProcs = false, procHitsPerSecond, levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }) => {
     const budget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
+    const base = decodeOnce(await normalizeShare(build, shortener));
+    const hasRotation = (((resolveBuild(base, dataset).model as { rotation?: string[] }).rotation) ?? []).length > 0;
+    const objective: Metric = objectiveArg ?? objectiveFor(profile, hasRotation);
+    const profileObjectives = { sustained: objectiveFor('sustained', hasRotation), burst: objectiveFor('burst', hasRotation) };
     const shown: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp'])];
     const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric)])];
 
-    const base = decodeOnce(await normalizeShare(build, shortener));
     const aims = (targets ?? [{ monsterId: target?.monsterId ?? config.defaultTargetId }]).map((aim) => ({
       monster: resolveTarget(dataset, aim.monsterId).monster,
       weight: (aim as { weight?: number }).weight ?? 1,
@@ -367,7 +527,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       const worn = baseline.rb.model[slot];
       if (candidates?.[slot]) {
         skippedNotInLatam.push(...candidates[slot].filter((id) => !dataset.itemIndex.get(id)?.latam));
-        pools.set(slot, candidates[slot].filter((id) => (id !== worn || (maxGrade !== undefined && canGradeItem(dataset.items[id]))) && !banned.has(id) && eligible(id, slot)));
+        pools.set(slot, candidates[slot].filter((id) => (id !== worn || maxGrade === undefined || canGradeItem(dataset.items[id])) && !banned.has(id) && eligible(id, slot)));
         continue;
       }
       const common = { slot: slot as SlotTag, maxLevel: baseline.rb.model.level, inCalcDb: true, limit: 400 };
@@ -383,7 +543,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         .slice(0, candidatesPerSlot)
         .map((row) => row.id);
       pools.set(slot, ranked);
-      if (maxGrade !== undefined && canGradeItem(dataset.items[worn]) && !banned.has(worn)) ranked.unshift(worn);
+      if ((maxGrade === undefined || canGradeItem(dataset.items[worn])) && worn > 0 && !banned.has(worn)) ranked.unshift(worn);
     }
 
     // A piece the build already wears can name a partner that completes a set (the Garra Primordial-LT
@@ -404,7 +564,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const expandMove = (anchor: string, changes: [string, number][]): Move[] => {
       let variants: Record<string, string>[] = [{}];
       for (const [slot, item] of changes) {
-        const grades = maxGrade !== undefined && canGradeItem(dataset.items[item]) ? GRADES.slice(0, gradeLimit + 1)
+        // No cap given: the ideal, grade A (a higher grade never takes a bonus away). A cap: every grade up to it.
+        const grades = canGradeItem(dataset.items[item]) ? (maxGrade !== undefined ? GRADES.slice(0, gradeLimit + 1) : ['A'])
           : [rb.model[slot] === item ? rb.model[`${slot}Grade`] ?? '' : ''];
         variants = variants.flatMap(v => grades.map(grade => ({ ...v, [slot]: grade })));
       }
@@ -415,6 +576,9 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       const seen = new Set<string>();
       const add = (changes: [string, number][]) => {
         for (const move of expandMove(anchor, changes)) {
+          // The worn piece at its own refine and grade is the baseline: only worth a calculation when its sockets are searched.
+          if (!complements && move.changes.every(([slot, item]) => rb.model[slot] === item && (refineFor(slot, item) === undefined || rb.model[`${slot}Refine`] === refineFor(slot, item))
+            && move.grades[slot] === (rb.model[`${slot}Grade`] ?? ''))) continue;
           const id = move.changes.map(([slot, item]) => `${slot}:${item}:${move.grades[slot]}`).sort().join('|');
           if (!seen.has(id)) { seen.add(id); moves.push(move); }
         }
@@ -431,10 +595,13 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       return moves;
     };
 
+    /** The ideal refine unless the caller capped it; pieces with no refine field are left alone. */
+    const refineFor = (target: string, item: number): number | undefined => refine ?? (`${target}Refine` in rb.model
+      ? (rb.model[target] === item ? Math.max(REACHABLE_REFINE, rb.model[`${target}Refine`] ?? 0) : REACHABLE_REFINE) : undefined);
     const patchFor = (move: Move): BuildPatch => ({
       gear: Object.fromEntries(move.changes.flatMap(([target, id]) => [
         [target, id],
-        ...(refine !== undefined ? [[`${target}Refine`, refine]] : []),
+        ...(refineFor(target, id) !== undefined ? [[`${target}Refine`, refineFor(target, id)]] : []),
         // A new item is not automatically the old item's grade.
         ...(`${target}Grade` in rb.model || canGradeItem(dataset.items[id]) ? [[`${target}Grade`, move.grades[target]]] : []),
         ...keptSockets(dataset, rb, target, id).clear.map((key) => [key, null]),
@@ -487,14 +654,18 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const solvedMoves = new Set<string>();
     const moveKey = (move: Move) => move.changes.map(([slot, item]) => `${slot}:${item}:${move.grades[slot]}`).sort().join('|');
 
-    for (let round = 0; round < rounds && !exhausted; round++) {
+    // Round -1 tunes what the build already wears (best cards, enchants and catalogued rolls) before anything is compared with it:
+    // otherwise a worn piece the link left bare loses to a replacement that the walk happened to reach first.
+    for (let round = complements ? -1 : 0; round < rounds && !exhausted; round++) {
+      const tuning = round < 0;
       let improved = false;
       for (const [slotIndex, slot] of walk.entries()) {
         if (searchedAt.get(slot) === version) continue;
         let best: Chosen | null = null;
         const seen: { to: [string, number][]; grades: Record<string, string>; value: number; against: number }[] = [];
-        considered.set(slot, seen);
-        const moves = movesFor(slot);
+        if (!tuning) considered.set(slot, seen);
+        const moves = tuning ? movesFor(slot).filter((move) => move.changes.length === 1 && move.changes[0][1] === rb.model[slot]) : movesFor(slot);
+        if (!moves.length) continue;
         const remainingSlots = walk.length - slotIndex + (rounds - round - 1) * walk.length;
         const completionBudget = Math.max(0, Math.min(48, Math.floor((budget - solves) / Math.max(1, remainingSlots) / Math.max(1, moves.length)) - 1));
         for (const move of moves) {
@@ -526,11 +697,14 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
           }
         }
         // 0,1% is the floor: below it the "gain" is rounding in the engine, and the walk would chase noise.
-        if (!exhausted) searchedAt.set(slot, version);
-        if (best && best.value > value * 1.001) { accept(best); improved = true; version++; solvedMoves.clear(); }
+        if (!exhausted && !tuning) searchedAt.set(slot, version);
+        if (best && best.value > value * 1.001) {
+          accept(best); improved = true; version++; solvedMoves.clear();
+          if (tuning) steps[steps.length - 1]['atual'] = true;
+        }
         if (exhausted) break;
       }
-      if (!improved) break;
+      if (!improved && !tuning) break;
     }
 
     // Pairs the user names: the best few candidates of each slot, every combination, applied only if both together beat the build.
@@ -553,8 +727,106 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       if (best && best.value > value * 1.001) accept(best);
     }
 
+
+    // The walk compares everything at the ideal refine and grade. A piece can lose to the worn one at the level the player has
+    // today and win once both are raised (a better enchant, a bonus that unlocks at a grade), or the other way round: for the
+    // slots that changed, and the best runner-up, measure both levels against the worn piece, each tuned the same way.
+    const levelCheck: Record<string, unknown>[] = [];
+    if (levelChecks && complements) {
+      const original = baseline.rb.model as Record<string, any>;
+      const levelBudget = 12;
+      const gradeIdeal = (id: number) => (canGradeItem(dataset.items[id]) ? (maxGrade === undefined ? 'A' : maxGrade === 'none' ? '' : maxGrade) : undefined);
+      /** `base` with `id` in `slot` at the player's current refine and grade ('now') or at the ideal ones, sockets and rolls tuned. */
+      const valueAt = (slot: string, id: number, level: 'now' | 'ideal'): number | undefined => {
+        if (outOfBudget()) { exhausted = true; return undefined; }
+        const worn = original[slot] === id;
+        const refineTo = level === 'now' ? original[`${slot}Refine`] : refineFor(slot, id);
+        const gradeTo = level === 'now' ? (canGradeItem(dataset.items[id]) ? original[`${slot}Grade`] ?? '' : undefined) : gradeIdeal(id);
+        const patch: BuildPatch = {
+          gear: Object.fromEntries([
+            ...(worn ? [] : [[slot, id], ...keptSockets(dataset, baseline.rb, slot, id).clear.map((key) => [key, null])]),
+            ...(refineTo !== undefined && `${slot}Refine` in original ? [[`${slot}Refine`, refineTo]] : []),
+            ...(gradeTo !== undefined && (`${slot}Grade` in original || canGradeItem(dataset.items[id])) ? [[`${slot}Grade`, gradeTo]] : worn ? [] : [[`${slot}Grade`, '']]),
+          ]),
+          ...(worn ? {} : { options: Object.fromEntries((ItemOptionMap.get(slot as ItemTypeEnum) ?? []).map((index) => [String(index), null])) }),
+        };
+        try {
+          solves++;
+          const first = evaluate(base, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+          const tuned = searchComplements({ patch, result: first }, complementsFor(slot, id), objective, (candidatePatch) => {
+            if (outOfBudget()) { exhausted = true; return null; }
+            solves++;
+            try { return evaluate(base, candidatePatch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); } catch { return null; }
+          }, levelBudget);
+          return tuned.result.metrics[objective];
+        } catch { return undefined; }
+      };
+      const changedSlots = walk.filter((slot) => rb.model[slot] !== original[slot]);
+      for (const slot of changedSlots) {
+        await pace.breathe();
+        const worn = original[slot] as number;
+        const rivals = [rb.model[slot] as number, ...[...(considered.get(slot) ?? [])]
+          .filter((row) => row.to.length === 1 && row.to[0][1] !== worn && row.to[0][1] !== rb.model[slot])
+          .sort((a, b) => b.value - a.value).map((row) => row.to[0][1])].filter((id, index, all) => id > 0 && all.indexOf(id) === index).slice(0, 3);
+        const wornNow = worn > 0 ? valueAt(slot, worn, 'now') : baseline.metrics[objective];
+        const wornIdeal = worn > 0 ? valueAt(slot, worn, 'ideal') : baseline.metrics[objective];
+        if (wornNow === undefined || wornIdeal === undefined) continue;
+        const rows = rivals.flatMap((id) => {
+          const now = valueAt(slot, id, 'now');
+          const ideal = valueAt(slot, id, 'ideal');
+          if (now === undefined || ideal === undefined) return [];
+          const nowPct = deltaPct(now, wornNow);
+          const idealPct = deltaPct(ideal, wornIdeal);
+          const better = (pct: number | null) => (pct ?? 0) > 0.1;
+          return [{ item: itemLabel(dataset, id), now: nowPct, evolved: idealPct,
+            verdict: better(nowPct) && better(idealPct) ? 'melhor nos dois níveis' : !better(nowPct) && better(idealPct) ? 'só vence evoluída' : better(nowPct) ? 'vence agora, perde evoluída' : 'não vence' }];
+        });
+        if (rows.length) levelCheck.push({ slot, worn: worn > 0 ? itemLabel(dataset, worn) : null, rows });
+      }
+    }
+
+
+    // Both kinds of build side by side: a piece can win the opening and lose the long fight.
+    const profiles = Object.fromEntries((['sustained', 'burst'] as const).map((name) => {
+      const metric = profileObjectives[name];
+      try {
+        const before = evaluate(base, undefined, dataset, monster, effects, [metric]).metrics[metric];
+        const after = evaluate(current, undefined, dataset, monster, effects, [metric]).metrics[metric];
+        return [name, compact({ metric, baseline: before === undefined ? undefined : round(before, 2), final: after === undefined ? undefined : round(after, 2), deltaPct: deltaPct(after, before) })];
+      } catch { return [name, { metric }]; }
+    }));
+
+    // What the ranking cannot see on its own: a target without defenses, an objective that ignores crits, an ASPD potion left out.
+    const context = damageContext(baseline.solved.calc);
+    const defendedCheck = isUndefended(context.target) ? CHECK_DUMMIES.flatMap((id) => {
+      try {
+        const dummy = resolveTarget(dataset, id).monster;
+        const before = evaluate(base, undefined, dataset, dummy, effects, [objective]).metrics[objective];
+        const after = evaluate(current, undefined, dataset, dummy, effects, [objective]).metrics[objective];
+        return [compact({ target: dummy.name, id, baseline: before === undefined ? undefined : round(before, 2), final: after === undefined ? undefined : round(after, 2), deltaPct: deltaPct(after, before) })];
+      } catch { return []; }
+    }) : undefined;
+    const objectiveNote = objective === 'max'
+      ? '`max` é o golpe máximo, sem média de crítico nem de acerto: builds que dependem de crítico aparecem erradas. Prefira `dps`, `avgHit` (dano médio por golpe) ou `rotationDps`.'
+      : objective === 'dps' && ((rb.model as { rotation?: string[] }).rotation?.length ?? 0) > 1
+        ? 'A build tem uma rotação: `rotationDps` mede o ciclo inteiro (buffs, recargas); `dps` mede só a habilidade escolhida.' : undefined;
+    let aspdPotionCheck: Record<string, unknown> | undefined;
+    if (!['max', 'min', 'hitsToKill'].includes(objective)) {
+      try {
+        const now = evaluate(current, undefined, dataset, monster, effects, [objective, 'aspd']);
+        if ((now.metrics.aspd ?? 0) < 193 && now.metrics[objective]) {
+          const options = [...AspdPotionList, ...AspdPotionStackable].flatMap((potion) => {
+            if (potion.value === (current as { aspdPotion?: number }).aspdPotion) return [];
+            const gain = deltaPct(evaluate(current, { aspdPotion: potion.value }, dataset, monster, effects, [objective]).metrics[objective], now.metrics[objective]);
+            return gain !== null && gain > 0.5 ? [{ potion: potion.label, id: potion.value, gainPct: gain }] : [];
+          }).sort((a, b) => b.gainPct - a.gainPct).slice(0, 3);
+          if (options.length) aspdPotionCheck = { aspd: now.metrics.aspd, note: 'Ganho de trocar a poção de velocidade de ataque da build final (a busca de peças não a escolhe).', options };
+        }
+      } catch { /* optional report */ }
+    }
+
     // Procs the search did not count, measured on the build it ended with: a piece may be worth more when its proc is on.
-    const procs: { effect: string; label?: string; gainPct: number | null }[] = [];
+    const procs: { effect: string; label?: string; gainPct: number | null; average?: ReturnType<typeof procEstimate> }[] = [];
     let countedProcs: string[] | undefined;
     try {
       const last = evaluate(current, undefined, dataset, monster, effects, [objective], [], 1, countProcs);
@@ -563,26 +835,63 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         if (outOfBudget()) break;
         solves++;
         const withProc = evaluate(current, undefined, dataset, monster, [...effects, chance.name], [objective]).metrics[objective];
-        procs.push({ effect: chance.name, label: chance.label, gainPct: deltaPct(withProc, value) });
+        const gainPct = deltaPct(withProc, value);
+        const average = procEstimate(await procData(dataset, chance), gainPct, procHitsPerSecond);
+        procs.push({ effect: chance.name, label: chance.label, gainPct, ...(average ? { average } : {}) });
       }
     } catch { /* the report is optional */ }
 
+    const uncatalogued = (() => {
+      const ids = [...new Set([...pools.values()].flat().concat(walk.map(slot => rb.model[slot])))].filter(id => id && !randomOptionCatalogFor(id)
+        && (ExtraOptionTable[dataset.items[id]?.aegisName] || dataset.items[id]?.itemTypeId === 1 || dataset.items[id]?.itemTypeId === 10));
+      return { count: ids.length, ...(ids.length ? { sample: ids.slice(0, 8), see: 'uncatalogued_pools' } : {}) };
+    })();
+    const limitsNote = (refine === undefined || maxGrade === undefined) ? `Sem teto informado, as peças entram com o refino alcançável e o grau ideais (+${REACHABLE_REFINE}, A; acima de +${REACHABLE_REFINE} é endgame alto); passe \`refine\` e/ou \`maxGrade\` para mudar.` : undefined;
+
+    // The answer is short by default: the numbers, the path, and the few things that change how to read them (`alerts`). The
+    // explanations and the target block come with `detail` (and are in the `guide` tool).
+    const alerts = [
+      context.undefendedNote,
+      context.classNote,
+      context.hint,
+      ...(context.breakpoints?.notes ?? []),
+      objectiveNote,
+      ...(complements && !skillId ? ['Sem habilidade ofensiva escolhida (`atkSkill`): encantamentos e cartas de habilidade não são ranqueados.'] : []),
+      ...(uncatalogued.count ? [`${uncatalogued.count} item(ns) sem pool de rolagens confirmado ficam fora da busca de rolagens (\`uncatalogued_pools\`).`] : []),
+      limitsNote,
+    ].filter((entry): entry is string => !!entry);
+
     return json({
       objective,
-      maxGrade,
-      targets: aims.length > 1 ? aims.map((aim, i) => ({ monsterId: (targets ?? [])[i]?.monsterId, name: aim.monster.name, weight: aim.weight })) : undefined,
       baseline: roundMetrics(baseline.metrics, shown),
       final: roundMetrics(metrics, shown),
       deltaPct: Object.fromEntries(shown.map((k) => [k, deltaPct(metrics[k], baseline.metrics[k])])),
       steps,
-      solves,
-      stopped: exhausted ? 'orçamento de cálculos ou de tempo esgotado: o resultado pode estar incompleto' : 'convergiu',
-      candidates: Object.fromEntries([...pools].map(([slot, ids]) => [slot, ids.length])),
-      context: damageContext(baseline.solved.calc),
-      ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
       patch: changes,
       share: shareOf(rb),
+      profiles,
+      // The weighted figure hides that a build can be strong on one kind of target and weak on another: show each.
+      perTarget: aims.length > 1 ? aims.map((aim, i) => {
+        const before = evaluate(base, undefined, dataset, aim.monster, effects, [objective]).metrics[objective];
+        const after = evaluate(current, undefined, dataset, aim.monster, effects, [objective]).metrics[objective];
+        return compact({ monsterId: (targets ?? [])[i]?.monsterId, name: aim.monster.name, class: aim.monster.type, baseline: before === undefined ? undefined : round(before, 2), final: after === undefined ? undefined : round(after, 2), deltaPct: deltaPct(after, before) });
+      }) : undefined,
+      ...(defendedCheck?.length ? { defendedCheck: detail ? { note: 'O alvo não tem defesas; o resultado em dummies com defesa de chefe mostra o que a penetração e a TEN valem de verdade.', rows: defendedCheck } : defendedCheck } : {}),
+      ...(levelCheck.length ? { levelCheck: detail ? { note: '`now`: ganho da peça sobre a atual, ambas no refino e grau que você tem hoje; `evolved`: o mesmo com as duas no refino e grau ideais. Cada lado com os melhores cartas, encantamentos e rolagens.', slots: levelCheck } : levelCheck } : {}),
+      ...(aspdPotionCheck ? { aspdPotionCheck } : {}),
+      ...unconfirmed(rb, changes, dataset),
+      ...(procs.length ? { procs: detail ? { note: 'Ganho de DPS com o proc ligado o tempo todo (`gainPct`) e a média esperada (`average`: tempo ativo e ganho médio por ataques por segundo). A busca só conta os procs passados em `effects`; um proc de chance baixa rende bem menos que o ganho ligado, e uma peça sem proc pode ser mais estável contra chefe.', options: procs } : procs } : {}),
+      ...(countedProcs?.length ? { countedProcs } : {}),
+      ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
+      ...(alerts.length ? { alerts } : {}),
+      solves,
+      limits: { refine: refine ?? REACHABLE_REFINE, maxGrade: maxGrade ?? 'A' },
+      ...(exhausted ? { stopped: `orçamento de cálculos ou de tempo esgotado (${solves} de ${budget}): pode haver trocas melhores que a busca não alcançou. Restrinja \`slots\`, fixe \`candidates\`, use \`complements: false\` ou aumente \`maxSolves\` para a busca caber.` } : {}),
+      ...(baseline.rb.warnings.length ? { warnings: baseline.rb.warnings } : {}),
       ...(detail ? {
+        context,
+        targets: aims.length > 1 ? aims.map((aim, i) => ({ monsterId: (targets ?? [])[i]?.monsterId, name: aim.monster.name, weight: aim.weight })) : undefined,
+        candidates: Object.fromEntries([...pools].map(([slot, ids]) => [slot, ids.length])),
         candidateIds: Object.fromEntries(pools),
         alternatives: Object.fromEntries([...considered].flatMap(([slot, rows]) => {
           const top = rows
@@ -591,29 +900,16 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
             .map((row) => ({ to: row.to.map(([target, id]) => itemLabel(dataset, id, row.grades[target])), vsBuildThenPct: deltaPct(row.value, row.against) }));
           return top.length ? [[slot, top]] : [];
         })),
+        complementSearch: { enabled: complements, uncataloguedRandomItems: uncatalogued, note: 'Itens sem pool confirmado ficam fora da busca de rolagens. Orçamento: até 48 cálculos de complementos por movimento.' },
+        note: 'Heurística (peças, conjuntos, graus e complementos); patch/link incluem cartas, encantamentos e rolagens. Antes de comparar, a peça que a build já usa é ajustada com os melhores cartas, encantamentos e rolagens catalogadas (passos com `atual`), mesmo que o link não os traga. Não prova ótimo global.',
       } : {}),
-      ...(countedProcs?.length ? { countedProcs } : {}),
-      ...unconfirmed(rb, changes, dataset),
-      ...(procs.length ? { procs: { note: 'Ganho de DPS ao ativar cada proc na build final; a busca só conta os procs passados em `effects`.', options: procs } } : {}),
-      complementSearch: {
-        enabled: complements,
-        ...(complements && !skillId ? { skillEnchants: 'A build não tem habilidade ofensiva escolhida (`atkSkill`): encantamentos e cartas específicos de habilidade não são ranqueados.' } : {}),
-        // Names stay out of the answer: `uncatalogued_pools` lists them on demand.
-        uncataloguedRandomItems: (() => {
-          const ids = [...new Set([...pools.values()].flat().concat(walk.map(slot => rb.model[slot])))].filter(id => id && !randomOptionCatalogFor(id)
-            && (ExtraOptionTable[dataset.items[id]?.aegisName] || dataset.items[id]?.itemTypeId === 1 || dataset.items[id]?.itemTypeId === 10));
-          return { count: ids.length, ...(ids.length ? { sample: ids.slice(0, 8), see: 'uncatalogued_pools' } : {}) };
-        })(),
-        note: 'Itens sem pool confirmado ficam fora da busca de rolagens. Orçamento: até 48 cálculos de complementos por movimento.',
-      },
-      note: 'Heurística (peças, conjuntos, graus e complementos); patch/link incluem cartas, encantamentos e rolagens. Não prova ótimo global.',
-      ...(baseline.rb.warnings.length ? { warnings: baseline.rb.warnings } : {}),
     });
   });
 
   registerJsonTool<{ itemId: number; query?: string; limit?: number; detail?: boolean }>(server, 'slot_options', {
     title: 'O que uma peça aceita',
     description:
+      'USE antes de montar variantes à mão, para não chutar ids. ' +
       'Para um item equipável, lista os encantamentos que cada soquete aceita (com id e nome) e diz qual categoria de cartas procurar em `search_items`. ' +
       'Evita chutar ids ao montar variantes. Use `query` para filtrar os encantamentos pelo nome.',
     inputSchema: {
@@ -740,6 +1036,83 @@ function contributions(
   };
 }
 
+/** The same enchant at other levels ("Cristal Invernal (Grau Físico 4)", "Thanos Spell (Fighter) Lv.2"), by name stem. */
+const enchantFamilies = new WeakMap<Dataset, Map<string, { id: number; level: number }[]>>();
+function enchantLevels(dataset: Dataset, id: number): { id: number; level: number }[] {
+  let families = enchantFamilies.get(dataset);
+  const stemOf = (name: string): { stem: string; level: number } | undefined => {
+    const match = /^(.*\D)\s*(?:Lv\.?\s*)?(\d+)\)?$/.exec(name.trim());
+    return match ? { stem: match[1].replace(/\s*Lv\.?$/i, '').trim(), level: Number(match[2]) } : undefined;
+  };
+  if (!families) {
+    families = new Map();
+    for (const [key, item] of Object.entries(dataset.items)) {
+      if (!dataset.itemIndex.get(Number(key))?.slotTags?.includes('enchant' as SlotTag)) continue;
+      const parsed = stemOf(String(item?.name ?? ''));
+      if (parsed) families.set(parsed.stem, [...(families.get(parsed.stem) ?? []), { id: Number(key), level: parsed.level }]);
+    }
+    enchantFamilies.set(dataset, families);
+  }
+  const own = stemOf(String(dataset.items[id]?.name ?? ''));
+  return own ? (families.get(own.stem) ?? []).filter((entry) => entry.id !== id).sort((a, b) => a.level - b.level) : [];
+}
+
+/**
+ * Where the next investment pays most, one change at a time over the current build: refine up (+1 and to the reachable +12), grade up
+ * (next and A), an enchant to the next level and to its top level, and a new enchant in an empty socket. They are
+ * single steps, comparable with each other; combined steps can differ when refine and grade unlock bonuses together
+ * (test those with `evaluate_variants`). Cost, failure chance and materials are not counted.
+ */
+function upgradeGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | undefined, metric: Metric, monster: any, effects: string[], dataset: Dataset, keys: string[]) {
+  if (!baseValue) return { error: `A build não produz ${metric} para comparar.` };
+  const model: any = rb.model;
+  const gain = (patch: BuildPatch) => {
+    try { return deltaPct(evaluate(base, patch, dataset, monster, effects, [metric]).metrics[metric], baseValue); } catch { return null; }
+  };
+  const rows: { slot: string; name?: string; action: string; gainPct: number }[] = [];
+  const add = (slot: string, action: string, patch: BuildPatch) => {
+    const value = gain(patch);
+    if (value !== null) rows.push({ slot, name: dataset.itemIndex.get(model[slot])?.name, action, gainPct: value });
+  };
+  for (const slot of MAIN_ITEM_SLOTS) {
+    const id = model[slot];
+    if (typeof id !== 'number' || id <= 0) continue;
+    const refine: number = model[`${slot}Refine`] ?? 0;
+    if (`${slot}Refine` in model && refine < 20) {
+      add(slot, `refino +${refine + 1}${refine >= REACHABLE_REFINE ? ' (endgame alto)' : ''}`, { gear: { [`${slot}Refine`]: refine + 1 } });
+      if (refine < REACHABLE_REFINE - 1) add(slot, `refino +${REACHABLE_REFINE}`, { gear: { [`${slot}Refine`]: REACHABLE_REFINE } });
+    }
+    if (canGradeItem(dataset.items[id])) {
+      const at = GRADES.indexOf(model[`${slot}Grade`] ?? '');
+      if (at < GRADES.length - 1) add(slot, `grau ${GRADES[at + 1]}`, { gear: { [`${slot}Grade`]: GRADES[at + 1] } });
+      if (at < GRADES.length - 2) add(slot, 'grau A', { gear: { [`${slot}Grade`]: 'A' } });
+    }
+    for (const key of relatedItemKeys(slot).filter((field) => /Enchant\d$/.test(field))) {
+      const carried = model[key];
+      if (typeof carried !== 'number' || carried <= 0) continue;
+      const own = enchantLevels(dataset, carried);
+      const current = Number(/(\d+)\)?$/.exec(String(dataset.items[carried]?.name ?? ''))?.[1] ?? 0);
+      const higher = own.filter((entry) => entry.level > current);
+      if (higher[0]) add(slot, `encantamento ${dataset.items[carried]?.name} → nível ${higher[0].level}`, { gear: { [key]: higher[0].id } });
+      const top = higher[higher.length - 1];
+      if (top && top !== higher[0]) add(slot, `encantamento ${dataset.items[carried]?.name} → nível máximo ${top.level}`, { gear: { [key]: top.id } });
+    }
+    // An empty enchant socket: the best of the few legal enchants the piece accepts, scored by the build's own formula.
+    for (const choices of complementChoices(dataset, slot, id, keys, new Set())) {
+      const key = Object.keys(choices[0]?.gear ?? {})[0] ?? '';
+      if (!/Enchant\d$/.test(key) || model[key] > 0) continue;
+      const best = choices.flatMap((choice) => {
+        const id = (choice.gear as Record<string, unknown> | undefined)?.[key];
+        const value = typeof id === 'number' ? gain(choice) : null;
+        return typeof id === 'number' && value !== null ? [{ id, value }] : [];
+      }).sort((a, b) => b.value - a.value)[0];
+      if (best && best.value > 0) rows.push({ slot, name: dataset.itemIndex.get(id)?.name, action: `encantar (${key}): ${dataset.items[best.id]?.name}`, gainPct: best.value });
+    }
+  }
+  rows.sort((a, b) => b.gainPct - a.gainPct);
+  return { note: 'Cada linha é uma mudança isolada sobre a build atual, na métrica pedida; não conta custo, chance de falha nem materiais. Combinações podem render mais (teste em `evaluate_variants`).', ranked: rows.slice(0, 25) };
+}
+
 /** What one and two more refine levels would add on each worn piece: where the next upgrade is worth the most. */
 function refineGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | undefined, metric: Metric, monster: any, effects: string[], dataset: Dataset) {
   if (!baseValue) return { error: `A build não produz ${metric} para comparar.` };
@@ -756,7 +1129,7 @@ function refineGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | un
 }
 
 /** Effects the number leaves out, so an agent does not recommend a piece for what it does not count. */
-function notModelled(
+async function notModelled(
   rb: ResolvedBuild,
   calc: any,
   baseMax: number | undefined,
@@ -787,6 +1160,7 @@ function notModelled(
       label: chance.label,
       gainMaxPct: deltaPct(metrics['max'], baseMax),
       note: 'Efeito de proc fora da conta. Passe o nome em `effects` para contá-lo.',
+      average: procEstimate(await procData(dataset, chance), deltaPct(metrics['max'], baseMax)),
     }));
   }
 

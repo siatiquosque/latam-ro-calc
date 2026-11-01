@@ -1408,6 +1408,8 @@ export class Calculator {
         label2: `[ ${activation} · ${duration} segundos${effect.note ? ` · ${effect.note}` : ''} ]`,
         bonus: { ...(existing?.bonus ?? {}), ...bonus },
         itemId: item.id,
+        ratePct: rate,
+        durationSeconds: duration,
       };
       if (existing) Object.assign(existing, entry);
       else this._chanceList.push(entry);

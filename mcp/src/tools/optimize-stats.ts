@@ -7,7 +7,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { BaseStateCalculator } from 'src/app/core/base-state-calculator';
 import { config } from '../config';
 import { Dataset } from '../data/dataset';
-import { resolveBuild, BuildInput, buildInputSchema } from '../engine/build-input';
+import { resolveBuild, BuildInput, compactBuildSchema } from '../engine/build-input';
 import { Metric, METRICS } from '../engine/metrics';
 import { pacing } from '../engine/pacing';
 import { Shortener } from '../engine/share';
@@ -48,12 +48,13 @@ export function registerStatTools(server: McpServer, dataset: Dataset, shortener
   }>(server, 'optimize_stats', {
     title: 'Redistribuir os pontos de atributo',
     description:
+      'USE depois de escolher as peças, para redistribuir atributos. NÃO use para trocar equipamento. ' +
       'Move pontos entre os atributos (FOR/AGI/VIT/INT/DES/SOR e, nas classes de 4ª, POD/STA/SAB/FEI/CON/CRV) para maximizar a métrica, ' +
       'sem gastar mais do que o nível permite (o custo dos atributos base cresce com o nível do atributo; o das traits é 1 por nível). ' +
       'Pontos ainda não gastos entram na conta. `lock` trava atributos; `require` impõe pisos (ex.: hp mínimo). ' +
       'Subida de encosta por trocas entre pares, limitada pelo orçamento de cálculos: não prova o ótimo global.',
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional(),
       objective: z.enum(METRICS).optional().describe('O que maximizar. Padrão: dps.'),

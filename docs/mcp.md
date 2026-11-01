@@ -15,6 +15,7 @@ montada campo a campo), consultar itens, habilidades e monstros, calcular dano e
 | `search_monsters`, `get_monster` | alvos; o padrão é o boneco Neutro (21077) |
 | `calculate` | dano, DPS, atributos finais, tempos e um link para abrir no simulador |
 | `damage_table`, `compare_builds` | uma build contra vários monstros; até 4 builds contra o mesmo alvo |
+| **`scan_slot`** | mede **todos** os itens do LATAM que a classe usa num slot, com o resto da build como está, e afina os melhores com cartas, encantamentos e rolagens; devolve os parceiros de conjunto de cada um |
 | `optimize_slot` | testa candidatos **de um slot** e ordena por DPS, cada um com os melhores cartas e encantamentos que aceita (`complements: false` compara só as peças nuas); itens fora do LATAM vão em `skippedNotInLatam` |
 | **`optimize_build`** | percorre os slots trocando a melhor peça até nada melhorar (ver abaixo) |
 | **`optimize_stats`** | redistribui os pontos de atributo/traits dentro do orçamento do nível (ver abaixo) |
@@ -77,7 +78,7 @@ troca que mais melhora a métrica** (`objective`, padrão `dps`) e passa ao pró
 { "build": { "share": "…" }, "objective": "max",
   "lock": ["weapon"], "exclude": [470094],          // slots que não mudam; itens proibidos
   "refine": 11,                                      // refino das peças novas (padrão: o do slot)
-  "maxGrade": "C",                                  // sem grau, D ou C; nunca B/A
+  "maxGrade": "C",                                  // limita o grau (padrão: A, o ideal)
   "require": [ { "metric": "hp", "min": 150000 } ],  // pisos e tetos
   "candidatesPerSlot": 12, "rounds": 2, "maxSolves": 400 }
 ```
@@ -113,11 +114,14 @@ si só conta os procs passados em `effects`; use o ganho para decidir se vale bu
 Peças sem pool de bônus aleatório catalogado ficam fora da busca de rolagens e aparecem, com id e nome, em
 `complementSearch.uncataloguedRandomItems`.
 
-`maxGrade` aceita `none`, `D`, `C`, `B` ou `A`. Testa todos os graus até esse teto apenas nas peças que podem
-ser graduadas, incluindo a peça já vestida. A base inteira deve respeitar o teto (inclusive slots travados);
-caso contrário, a chamada informa os slots que precisam ser ajustados. Sem o parâmetro, peças novas ficam
-sem grau e as peças mantidas conservam o grau existente. Mais graus e alvos consomem mais trabalho: confira
-`stopped` e o orçamento antes de interpretar a sugestão como conclusão da busca.
+**Refino e grau, por padrão, no ideal.** Sem `refine` nem `maxGrade`, toda peça testada (inclusive a que a build já
+usa) entra com +12 (o teto alcançável; acima disso é endgame alto) e grau A nas que aceitam grau, porque um grau maior nunca tira bônus: assim a busca mostra o melhor
+que a build pode ser, e subir o refino ou o grau da peça atual aparece como um passo. `limits` na resposta diz o que
+valeu. Para limitar, passe `refine` (refino fixo) e/ou `maxGrade` (`none`, `D`, `C`, `B` ou `A`): com `maxGrade`,
+testa todos os graus até o teto nas peças que podem ser graduadas, e a base inteira (inclusive slots travados) deve
+respeitá-lo; caso contrário, a chamada informa os slots a ajustar. `optimize_slot` aceita os mesmos dois parâmetros.
+Mais graus e alvos consomem mais trabalho: confira `stopped` e o orçamento antes de interpretar a sugestão como
+conclusão da busca.
 
 Devolve o caminho das trocas (`steps`, cada uma com o ganho no momento e o acumulado), a métrica final, o `patch`
 pronto para `evaluate_variants` e um link do simulador. O que ele **não** faz:
@@ -133,6 +137,16 @@ pronto para `evaluate_variants` e um link do simulador. O que ele **não** faz:
 - Não sabe de disponibilidade, preço ou obtenção: use `exclude` para itens que você não tem.
 
 Comparações da build de Inquisidor usadas na revisão estão em `docs/optimization-review.md`.
+
+### Refino alcançável, classes de alvo e procs
+
+- **Refino:** o padrão é +12, o teto que uma build alcança; acima disso é endgame alto e só é testado se `refine` pedir.
+- **Chefe e normal:** a mesma build rende diferente contra os dois (bônus e penetração por classe). Passe `targets` com um
+  de cada; `perTarget` devolve o resultado em cada um e `context.classNote` avisa quando só um foi usado.
+- **Procs:** `procs[].gainPct` é o ganho com o proc ligado o tempo todo. `average` traz a chance, a duração, o tempo
+  ativo e o ganho médio por 1, 3 e 5 ataques por segundo (ou o `procHitsPerSecond` pedido), porque um proc de 5% por
+  10 s fica ligado quase sempre a 5 ataques por segundo e menos da metade do tempo a 1. Uma peça forte sem proc pode
+  ser mais estável, e melhor contra chefe, que uma com proc de chance baixa.
 
 ### `explain_damage`
 
@@ -174,7 +188,7 @@ interface usa (`src/app/constants/enchant_item/`). Para cartas devolve só a cat
 
 1. `parse_share_link` (ou `calculate`) para ler a build — confira **POD/CON e os talentos**: uma build de 4ª
    classe com os talentos em zero dá um dano muito menor e envenena qualquer comparação.
-2. `explain_damage` para ver onde está o dano e o que ele deixa de fora (com `parts: ["refine"]`, o ganho de +1 e +2 refinos por peça), e `optimize_stats` para os pontos de atributo.
+2. `explain_damage` para ver onde está o dano e o que ele deixa de fora (com `parts: ["refine"]`, o ganho de +1 e +2 refinos por peça; com `parts: ["upgrades"]`, o que vale mais investir: refino, grau, nível de cada encantamento e encantar um soquete vazio, um passo isolado de cada vez), e `optimize_stats` para os pontos de atributo.
 3. `slot_options` e `search_items` para montar candidatos; `evaluate_variants` para testá-los em lote.
 4. Conferir no jogo o que for recomendado — ver "Confiança" abaixo.
 
@@ -296,3 +310,55 @@ O MCP calcula o que o motor sabe. Antes de agir numa recomendação:
 | porta já em uso | outro processo (`wrangler` antigo) segura a porta; encerre-o ou passe `--port` |
 | `Slot desconhecido … ignorado` em `warnings` | o nome do slot em `gear` não existe; veja os slots em `build.gear` |
 | `Item N … ainda não está no banco do calculador` | o item existe no LATAM mas o motor não o conhece; ele não conta |
+
+### Peça atual ajustada e níveis de comparação
+
+- **Peça atual ajustada primeiro:** antes de comparar com qualquer troca, `optimize_build` ajusta o que a build já usa
+  (melhores cartas, encantamentos e rolagens catalogadas), mesmo que o link não os traga; esses passos vêm com `atual`.
+  Sem isso, uma peça sem rolagens no link perdia para uma troca que a busca alcançava antes dela.
+- **`levelCheck`:** para cada slot que mudou, a peça nova e as melhores alternativas são medidas contra a atual em dois
+  níveis, cada lado com seus melhores soquetes: o refino e o grau que você tem hoje (`now`) e os ideais (`evolved`).
+  `verdict` diz se vence nos dois, só evoluída, só agora, ou não vence. `levelChecks: false` economiza cálculos.
+
+### Alvos com defesa, objetivo e limites
+
+- **Dummies com defesa** (ids 9000001 a 9000004, em `search_monsters`): cópias do Dummy - Neutro com as defesas dos chefes de
+  nível 200+ dos dados (mediana e percentil 90), como normal e chefe, Médio e Grande. O alvo padrão, sem DEF, DEFM, TEN
+  nem TENM, esconde penetração e redução de TEN; quando é ele, `context.undefendedNote` avisa e `defendedCheck` repete o
+  resultado contra um chefe Médio e um Grande com defesa.
+- **`avgHit`:** dano médio por golpe com chance de acerto e de crítico (o `dps` dividido pelos golpes por segundo). `max` é o
+  golpe máximo e não conta crítico; `objectiveNote` avisa. Com rotação no link, `rotationDps` mede o ciclo inteiro.
+- **`context.breakpoints`:** ASPD contra o teto (193) e ACERTO contra o necessário para 100% no alvo, com o que falta.
+- **`aspdPotionCheck`:** quando o ASPD não está no teto, o ganho de trocar a poção de velocidade de ataque da build final.
+
+### Varredura de slot e perfis de build
+
+- **`scan_slot`** não filtra por palavra-chave: toda peça que a classe e o nível permitem passa pelo motor (centenas, em segundos),
+  então acha a peça improvável. O resto da build é o do link; `base: "tuned"` (padrão) compara contra a peça atual já afinada
+  (melhores soquetes e rolagens) e `"current"` contra a build como veio. Os `topSockets` melhores da varredura nua recebem a busca
+  de soquetes e o ranking final usa esses valores. Conjuntos que dependem de outro slot aparecem em `partners`: só valem testados
+  juntos (`evaluate_variants`, ou `optimize_build` com `pairs`).
+- **`profile`** (`optimize_build` e `scan_slot`): `sustained` (padrão) mede o ciclo da rotação em regime, onde ASPD, conjuração e
+  pós-conjuração contam (`rotationDps`; `dps` sem rotação); `burst` mede a abertura da rotação com as recargas livres (`burstDps`;
+  `avgHit` sem rotação). `profiles` na resposta traz os dois para a build base e a final: uma peça pode ganhar a abertura e perder
+  a luta longa.
+
+### Custo da lista de ferramentas
+
+O schema completo de `build` (cerca de 3,6 KB) é anunciado só em `calculate`; as demais ferramentas anunciam `share` e a lista dos
+campos, e validam a build contra o schema completo ao receber (`compactBuildSchema`, `pipe`). A lista de ferramentas caiu de cerca de
+62 KB para 39 KB mesmo com `scan_slot` a mais; um teste (`tools.spec.ts`) segura o teto. Cada ferramenta que se sobrepõe às outras
+abre a descrição com "USE para… NÃO use para…", para a escolha não depender de inferência.
+
+### Guia sob demanda, resposta curta e cenários
+
+- **`guide`** devolve o índice de tópicos ou a receita de um (`fluxo`, `melhorar-build`, `comparar-pecas`, `achar-peca-improvavel`,
+  `alvos`, `perfil`, `proc-ou-estavel`, `ler-resposta`, `tank`). As instruções do servidor ficaram curtas e apontam para ele; o texto de
+  cada tópico só custa tokens quando é lido. Quem muda uma ferramenta atualiza o tópico (`mcp/src/tools/guide.ts`); um teste falha se o
+  guia citar uma ferramenta que não existe.
+- **Resposta curta por padrão** em `optimize_build`: números, caminho (`steps`), `patch`, `share`, `profiles`, `perTarget`, `levelCheck`,
+  `defendedCheck`, `procs` e `alerts` (o que muda a leitura). `detail: true` traz também o contexto do alvo, candidatos, alternativas e
+  as notas que explicam cada bloco.
+- **Cenários** (`mcp/src/tools/scenarios.spec.ts`): pedidos típicos, a ferramenta esperada e uma chamada que roda. O teste confere que a
+  chamada responde e que o tópico do guia cita a ferramenta. A mesma tabela serve de corpus para medir um agente de verdade: dê a ele só
+  o `ask` e as instruções, e compare a ferramenta e os argumentos que escolher com `tool` e `args`.

@@ -29,6 +29,19 @@ beforeAll(async () => {
 });
 
 describe('tool surface', () => {
+  it('advertises the full build schema once, so the tool list stays small', async () => {
+    const list = await client.listTools();
+    expect(JSON.stringify(list).length).toBeLessThan(48_000);
+    const withFullBuild = list.tools.filter((tool) => JSON.stringify(tool.inputSchema).includes('"jobLevel"'));
+    expect(withFullBuild.map((tool) => tool.name)).toEqual(['calculate']);
+  });
+
+  it('still validates the build against the full schema when the tool advertises the compact one', async () => {
+    const result: any = await client.callTool({ name: 'optimize_slot', arguments: { build: { class: 4262, level: 999 }, slot: 'weapon', candidates: [560037] } }).catch((error) => ({ isError: true, content: [{ text: String(error) }] }));
+    expect(result.isError).toBe(true);
+    expect(JSON.stringify(result.content)).toMatch(/level|300|validation/i);
+  });
+
   it('exposes the full set', async () => {
     const names = (await client.listTools()).tools.map((t) => t.name).sort();
     expect(names).toEqual(
@@ -38,6 +51,7 @@ describe('tool surface', () => {
         'create_custom_items',
         'damage_table',
         'get_custom_item_schema',
+        'guide',
         'get_item',
         'get_monster',
         'item_description',
@@ -49,6 +63,7 @@ describe('tool surface', () => {
         'optimize_build',
         'optimize_slot',
         'optimize_stats',
+        'scan_slot',
         'parse_share_link',
         'search_items',
         'search_monsters',
@@ -284,6 +299,115 @@ describe('regressions', () => {
     expect(vil.sockets?.length).toBeGreaterThan(0);
     expect(vil.dps).toBeGreaterThan(vil.withoutSockets);
     expect(data.skippedNotInLatam ?? []).toEqual([]);
+  });
+
+  it('ranks the next investments: refine, grade, enchant level and an empty enchant socket', async () => {
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037, weaponRefine: 10, weaponGrade: 'D', weaponEnchant1: 311449 },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const { data } = await call('explain_damage', { build, parts: ['upgrades'] });
+    const actions = data.upgrades.ranked.map((row: any) => row.action);
+    expect(actions.some((a: string) => /^refino/.test(a))).toBe(true);
+    expect(actions.some((a: string) => /^grau/.test(a))).toBe(true);
+    expect(actions.some((a: string) => /nível/.test(a))).toBe(true);
+    expect(data.upgrades.ranked[0].gainPct).toBeGreaterThanOrEqual(data.upgrades.ranked[data.upgrades.ranked.length - 1].gainPct);
+  });
+
+  it('optimize_slot defaults to the ideal refine and grade, and a cap limits them', async () => {
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037, weaponRefine: 10 },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const ideal = await call('optimize_slot', { build, slot: 'weapon', candidates: [560037], complements: false });
+    const capped = await call('optimize_slot', { build, slot: 'weapon', candidates: [560037], complements: false, refine: 10, maxGrade: 'none' });
+    expect(ideal.data.limits).toEqual({ refine: 12, maxGrade: 'A' });
+    expect(ideal.data.ranking[0].dps).toBeGreaterThan(capped.data.ranking[0].dps);
+    expect(capped.data.ranking[0].deltaPct).toBe(0);
+  });
+
+  it('optimize_build shows the result against each target, so a normal monster and a boss can be told apart', async () => {
+    const { data } = await call('optimize_build', { build: windhawk, slots: ['boot'], candidates: { boot: [470069] }, targets: [{ monsterId: 21077 }, { monsterId: 3507 }], maxSolves: 60 });
+    expect(data.perTarget).toHaveLength(2);
+    expect(data.perTarget.every((row: any) => typeof row.final === 'number' && typeof row.baseline === 'number')).toBe(true);
+    expect(data.perTarget.map((row: any) => row.name).length).toBe(2);
+  });
+
+  it('optimize_build tunes the worn pieces (rolls, cards) before comparing replacements with them', async () => {
+    // The link brings Selo de Loki and Selo de Copas with no rolls; the Máscara de Pesar (Meio + Baixo) must not win just because
+    // the walk reaches the Meio slot before the Copas has had its rolls.
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037, weaponRefine: 12, headMiddle: 410233, headLower: 420210 },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const { data } = await call('optimize_build', { build, slots: ['headMiddle', 'headLower'], candidates: { headMiddle: [436031] }, objective: 'max', maxSolves: 400 });
+    const tuned = data.steps.filter((step: any) => step.atual);
+    expect(tuned.length).toBeGreaterThan(0);
+    expect(tuned[0].from).toBe(tuned[0].to);
+    expect(Object.keys(data.patch.options ?? {}).length).toBeGreaterThan(0);
+  });
+
+  it('optimize_build tells whether a new piece wins at the current refine and grade, only when evolved, or not at all', async () => {
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560032, weaponRefine: 8, weaponGrade: 'D' },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const { data } = await call('optimize_build', { build, slots: ['weapon'], candidates: { weapon: [560037] }, objective: 'max', maxSolves: 600 });
+    const weapon = data.levelCheck.find((entry: any) => entry.slot === 'weapon');
+    const row = weapon.rows.find((entry: any) => /Vil Invernal/.test(entry.item));
+    expect(typeof row.now).toBe('number');
+    expect(typeof row.evolved).toBe('number');
+    expect(['melhor nos dois níveis', 'só vence evoluída', 'vence agora, perde evoluída', 'não vence']).toContain(row.verdict);
+  });
+
+  it('repeats the result against defended dummies when the target has no defenses, and reads breakpoints and objective notes', async () => {
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037, weaponRefine: 12 },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const { data } = await call('optimize_build', { build, slots: ['boot'], candidates: { boot: [470069] }, objective: 'max', maxSolves: 60 });
+    expect(data.alerts.join(' ')).toMatch(/9000001/);
+    expect(data.defendedCheck).toHaveLength(2);
+    expect(data.defendedCheck[0].baseline).toBeLessThan(data.defendedCheck[0].final + 1);
+    expect(data.alerts.join(' ')).toMatch(/dps/);
+    const full = await call('optimize_build', { build, slots: ['boot'], candidates: { boot: [470069] }, objective: 'max', maxSolves: 60, detail: true });
+    expect(full.data.context.breakpoints).toMatchObject({ aspdCap: 193 });
+    const defended = await call('optimize_build', { build, slots: ['boot'], candidates: { boot: [470069] }, objective: 'dps', maxSolves: 60, target: { monsterId: 9000002 } });
+    expect(defended.data.defendedCheck).toBeUndefined();
+    const defendedFull = await call('optimize_build', { build, slots: ['boot'], candidates: { boot: [470069] }, objective: 'dps', maxSolves: 60, target: { monsterId: 9000002 }, detail: true });
+    expect(defendedFull.data.context.target.name).toMatch(/Chefe Médio/);
+    expect(defendedFull.data.context.target.def).toBe(512);
+  });
+
+  it('avgHit is the average hit with crit and accuracy, between min and max', async () => {
+    const { data } = await call('evaluate_variants', { build: windhawk, variants: [{ label: 'base', patch: {} }], metrics: ['avgHit', 'min', 'max'], target: { monsterId: 21077 } });
+    const m = data.results[0].metrics;
+    expect(m.avgHit).toBeGreaterThan(0);
+    expect(m.avgHit).toBeLessThanOrEqual(m.max * 1.5);
+  });
+
+  const inquisitor = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560032, weaponRefine: 8, weaponGrade: 'D' },
+    stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+
+  it('scan_slot measures every usable item of a slot, tunes the best ones and lists set partners', async () => {
+    const { data } = await call('scan_slot', { build: inquisitor, slot: 'weapon', query: 'Soqueira', limit: 5, topSockets: 4 });
+    expect(data.eligible).toBeGreaterThan(3);
+    expect(data.scanned).toBe(data.eligible);
+    expect(data.ranking.length).toBeGreaterThan(1);
+    expect(data.ranking[0].value).toBeGreaterThanOrEqual(data.ranking[data.ranking.length - 1].value);
+    expect(data.reference.basis).toMatch(/melhores soquetes/);
+    expect(data.ranking.some((row: any) => row.id === 560037)).toBe(true);
+    expect(data.context.undefendedNote).toBeTruthy();
+  });
+
+  it('scan_slot skips items LATAM has not shipped and rejects a slot that is not equipment', async () => {
+    const { data } = await call('scan_slot', { build: inquisitor, slot: 'boot', limit: 40, topSockets: 0 });
+    expect(data.ranking.map((row: any) => row.id)).not.toContain(470328);
+    const bad = await call('scan_slot', { build: inquisitor, slot: 'boots' });
+    expect(bad.isError).toBe(true);
+  });
+
+  it('judges a build by the profile: sustained and burst use different metrics and both come back', async () => {
+    const rotation = ['Third Flame Bomb==5', 'Third Punish==5', 'Third Flame Bomb==5'];
+    const sustained = await call('optimize_build', { build: { ...inquisitor, rotation }, slots: ['boot'], candidates: { boot: [470069] }, maxSolves: 80 });
+    const burst = await call('optimize_build', { build: { ...inquisitor, rotation }, slots: ['boot'], candidates: { boot: [470069] }, maxSolves: 80, profile: 'burst' });
+    expect(sustained.data.objective).toBe('rotationDps');
+    expect(burst.data.objective).toBe('burstDps');
+    expect(sustained.data.profiles.sustained.metric).toBe('rotationDps');
+    expect(sustained.data.profiles.burst.metric).toBe('burstDps');
+    expect(burst.data.profiles.burst.baseline).toBeGreaterThan(0);
+    const bare = await call('optimize_build', { build: inquisitor, slots: ['boot'], candidates: { boot: [470069] }, maxSolves: 60, profile: 'burst' });
+    expect(bare.data.objective).toBe('avgHit');
   });
 
   it('optimize_slot reports the size penalty and penetration the ranking is made under', async () => {

@@ -334,7 +334,7 @@ export const catalog: TranslatedCatalog = {
   'eq.colorNeedsItem': 'Elige un objeto para poder destacar esta ranura',
   'eq.colorCurrent': 'Destaque: {color}',
   'eq.compareToggle': 'Activar o desactivar la comparación de esta ranura',
-  'eq.compareLocked': 'Comparación no disponible: esta ranura está ocupada por {holder}, que se usa en otra ranura. Compara en la ranura que lleva el objeto.',
+  'eq.compareOccupied': 'Comparar con piezas separadas: esta ranura está ocupada por {holder}. La ranura que lo lleva entra en la comparación; cámbiala por una pieza común y elige la de esta ranura.',
   'eq.comparing': 'Comparando',
   'eq.compare': 'Comparar',
   'eq.clearSlot': 'Limpiar ranura',

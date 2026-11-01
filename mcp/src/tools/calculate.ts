@@ -16,17 +16,15 @@ import { config } from '../config';
 import { Dataset } from '../data/dataset';
 import { SLOT_TAGS } from '../data/slot-classifier';
 import { plainItemDesc } from '../data/text';
-import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, ResolvedBuild, resolveBuild } from '../engine/build-input';
+import { BuildInput, buildInputSchema, compactBuildSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, ResolvedBuild, resolveBuild } from '../engine/build-input';
 import { projectResult } from '../engine/project';
 import { buildShareUrl, parseShare, resolveIfShort, Shortener, shortenShareUrl, toPreset } from '../engine/share';
 import { solve } from '../engine/solve';
 import { applyPatch, BuildPatch, decodeOnce } from '../engine/variants';
-import { complementChoices, damageContext, keptSockets, relevantKeys, searchComplements } from '../engine/complements';
+import { complementChoices, damageContext, REACHABLE_REFINE, relevantKeys, searchComplements, swapPatch } from '../engine/complements';
 import { pacing } from '../engine/pacing';
+import { CHECK_DUMMIES, isUndefended } from '../engine/dummies';
 import { SKILL_ID_BY_NAME } from 'src/app/skills';
-import { canGradeItem } from 'src/app/utils/can-grade';
-import { ItemOptionMap } from 'src/app/constants/item-options-table';
-import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
 import { compact, json, registerJsonTool } from './helpers';
 
 export const targetSchema = z
@@ -65,7 +63,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     {
       title: 'Calcular dano',
       description:
-        'Calcula o dano de uma build contra um alvo, com o mesmo motor do simulador web. Devolve dano da habilidade, dano básico, DPS, atributos finais, tempos de conjuração e um link para abrir a build no simulador.',
+        'USE para o dano de uma build (e como referência dos campos de `build`, que as outras ferramentas aceitam do mesmo jeito). Calcula o dano de uma build contra um alvo, com o mesmo motor do simulador web. Devolve dano da habilidade, dano básico, DPS, atributos finais, tempos de conjuração e um link para abrir a build no simulador.',
       inputSchema: {
         build: buildInputSchema,
         target: targetSchema,
@@ -84,9 +82,9 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
 
   registerJsonTool<{ build: BuildInput; monsterIds: number[] }>(server, 'damage_table', {
     title: 'Dano contra vários monstros',
-    description: `Calcula a mesma build contra até ${config.limits.maxTableMonsters} monstros de uma vez.`,
+    description: `USE para ver como uma build rende em vários monstros de uma vez. Calcula a mesma build contra até ${config.limits.maxTableMonsters} monstros.`,
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       monsterIds: z.array(z.number().int()).min(1).max(config.limits.maxTableMonsters),
     },
   }, async ({ build, monsterIds }) => {
@@ -136,9 +134,9 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
 
   registerJsonTool<{ builds: BuildInput[]; target?: TargetArg; labels?: string[] }>(server, 'compare_builds', {
     title: 'Comparar builds',
-    description: `Resolve de 2 a ${config.limits.maxCompareBuilds} builds contra o mesmo alvo e ordena por DPS.`,
+    description: `USE para escolher entre builds prontas e distintas. Resolve de 2 a ${config.limits.maxCompareBuilds} builds contra o mesmo alvo e ordena por DPS.`,
     inputSchema: {
-      builds: z.array(buildInputSchema).min(2).max(config.limits.maxCompareBuilds),
+      builds: z.array(compactBuildSchema).min(2).max(config.limits.maxCompareBuilds),
       target: targetSchema,
       labels: z.array(z.string()).optional().describe('Nomes para identificar cada build no resultado.'),
     },
@@ -176,15 +174,17 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     target?: TargetArg;
     limit?: number;
     complements?: boolean;
+    refine?: number;
+    maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
   }>(server, 'optimize_slot', {
     title: 'Otimizar um slot',
     description:
-      `Testa candidatos para um slot e ordena pelo ganho de DPS. No máximo ${config.limits.maxOptimizeCandidates} candidatos por chamada. ` +
+      `USE quando já há poucos candidatos conhecidos para um slot (até ${config.limits.maxOptimizeCandidates}). NÃO use para descobrir candidatos (\`scan_slot\`) nem para a build inteira (\`optimize_build\`). Testa candidatos para um slot e ordena pelo ganho de DPS. No máximo ${config.limits.maxOptimizeCandidates} candidatos por chamada. ` +
       'Cada candidato entra com os melhores cartas e encantamentos que ele aceita (`complements`, padrão), porque duas peças com o mesmo ATQ diferem em soquetes e encantamentos; ' +
       'os cartas e encantamentos da peça antiga que a nova não comporta são retirados. `withoutSockets` mostra o DPS da peça nua. Só itens do LATAM entram; os demais vão em `skippedNotInLatam`. ' +
       'O link devolvido já vem com a comparação armada (peça atual → peça sugerida), então o jogador abre o simulador e vê a diferença.',
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       slot: z.string().describe('Campo do equipamento a variar, ex.: "weapon", "armor", "boot", "accLeft".'),
       candidates: z.array(z.number().int()).max(config.limits.maxOptimizeCandidates).optional().describe('Ids a testar. Sem isso, busca pelo `slotTag`.'),
       slotTag: z.enum(SLOT_TAGS).optional().describe('Categoria para buscar candidatos automaticamente.'),
@@ -192,8 +192,10 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       target: targetSchema,
       limit: z.number().int().min(1).max(20).optional().default(10),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas e encantamentos de cada candidato. false compara só as peças nuas.'),
+      refine: z.number().int().min(0).max(20).optional().describe('Refino de cada candidato (e da peça atual, para medir o que subir o refino vale). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
+      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau de cada candidato que aceita grau (e da peça atual). Padrão: A, o ideal; informe só para limitar.'),
     },
-  }, async ({ build, slot, candidates, slotTag, query, target, limit = 10, complements = true }) => {
+  }, async ({ build, slot, candidates, slotTag, query, target, limit = 10, complements = true, refine, maxGrade }) => {
     const input = await normalizeShare(build, shortener);
     if (!ITEM_ID_KEYS.includes(slot)) {
       // Without this the override is silently skipped and every candidate solves to
@@ -235,14 +237,8 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       if (pace.timeUp()) { stoppedEarly = true; break; }
       // The new piece keeps only the sockets it has; the old piece's rolls do not carry over.
       const worn = baseRb.model[slot] === id;
-      let patch: BuildPatch = worn ? {} : {
-        gear: Object.fromEntries([
-          [slot, id],
-          ...(`${slot}Grade` in baseRb.model || canGradeItem(dataset.items[id]) ? [[`${slot}Grade`, '']] : []),
-          ...keptSockets(dataset, baseRb, slot, id).clear.map((key) => [key, null]),
-        ]),
-        options: Object.fromEntries((ItemOptionMap.get(slot as ItemTypeEnum) ?? []).map((index) => [String(index), null])),
-      };
+      // Ideal refine and grade unless the caller capped them; the worn piece gets them too, so its own upgrade shows.
+      let patch: BuildPatch = swapPatch(dataset, baseRb, slot, id, { refine, maxGrade });
       let tried;
       try { tried = measure(patch); } catch { continue; }
       const bare = tried.dps;
@@ -285,12 +281,23 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
             itemNames: [slot],
             model2: {
               [slot]: winner.id,
-              [`${slot}Refine`]: baseRb.model[`${slot}Refine`] ?? 0,
+              [`${slot}Refine`]: (winnerGear[`${slot}Refine`] as number | undefined) ?? baseRb.model[`${slot}Refine`] ?? 0,
               [`${slot}Grade`]: (winnerGear[`${slot}Grade`] as string | undefined) ?? baseRb.model[`${slot}Grade`] ?? null,
               ...Object.fromEntries(relatedItemKeys(slot).map((k) => [k, k in winnerGear ? winnerGear[k] ?? null : baseRb.model[k] ?? null])),
             },
           }
         : null;
+
+    // Against a target with no defenses penetration and TEN cannot show: repeat the winner against defended dummies.
+    const context = damageContext(baseSolved);
+    const defendedCheck = winner && isUndefended(context.target) ? CHECK_DUMMIES.flatMap((id) => {
+      try {
+        const dummy = resolveTarget(dataset, id).monster;
+        const before = dpsAndMax(solve(baseRb, dataset, dummy)).dps;
+        const after = dpsAndMax(solve(resolveBuild(applyPatch(perCandidate, winner.patch), dataset), dataset, dummy)).dps;
+        return [{ target: dummy.name, id, current: round(before, 2), winner: round(after, 2), deltaPct: deltaPct(after, before) }];
+      } catch { return []; }
+    }) : undefined;
 
     return json({
       slot,
@@ -299,7 +306,9 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       ranking: top.map(({ patch, ...row }) => row),
       share: shareOf(baseRb, compare),
       complements,
-      context: damageContext(baseSolved),
+      limits: { refine: refine ?? REACHABLE_REFINE, maxGrade: maxGrade ?? 'A' },
+      context,
+      ...(defendedCheck?.length ? { defendedCheck: { note: 'O alvo não tem defesas: o primeiro colocado contra dummies com defesa de chefe.', rows: defendedCheck } } : {}),
       ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
       ...(stoppedEarly ? { stopped: 'tempo esgotado: parte dos candidatos não foi testada' } : {}),
       ...(baseRb.warnings.length ? { warnings: baseRb.warnings } : {}),
@@ -381,7 +390,7 @@ export function registerBridgeTools(server: McpServer, dataset: Dataset, shorten
     title: 'Gerar link do simulador',
     description: 'Transforma uma build em um link que abre o simulador web já preenchido. Opcionalmente com uma comparação armada e/ou encurtado.',
     inputSchema: {
-      build: buildInputSchema,
+      build: compactBuildSchema,
       compare: z
         .object({
           slots: z.array(z.string()).min(1).describe('Slots a comparar, ex.: ["weapon"].'),

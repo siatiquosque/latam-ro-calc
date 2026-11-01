@@ -122,10 +122,6 @@ app-equipment-slot-card{
   background: rgb(253 216 125 / 16%);
   color: #fdd87d;
 }
-:is(app-equipment-slot-card, .ui-scope-app-equipment-slot-card) .eq-card__compare--locked{
-  color: rgb(255 255 255 / 25%);
-  cursor: not-allowed;
-}
 :is(app-equipment-slot-card, .ui-scope-app-equipment-slot-card) .eq-card__clear{
   padding: 0 0 2px;
   color: rgb(255 255 255 / 45%);

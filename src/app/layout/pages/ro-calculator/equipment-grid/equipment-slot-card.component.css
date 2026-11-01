@@ -173,10 +173,6 @@
   color: #fdd87d;
 }
 
-.eq-card__compare--locked {
-  color: rgb(255 255 255 / 25%);
-  cursor: not-allowed;
-}
 
 /*
  * Optical centring for the ✕ and the ⇅.

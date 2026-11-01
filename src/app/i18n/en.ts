@@ -332,7 +332,7 @@ export const catalog: TranslatedCatalog = {
   'eq.colorNeedsItem': 'Pick an item before highlighting this slot',
   'eq.colorCurrent': 'Highlight: {color}',
   'eq.compareToggle': 'Turn the comparison for this slot on or off',
-  'eq.compareLocked': 'Comparison unavailable: this slot is taken by {holder}, which is worn in another slot. Compare it in the slot that holds the item.',
+  'eq.compareOccupied': 'Compare with separate pieces: this slot is taken by {holder}. The slot that holds it joins the comparison; swap it for a regular piece and pick this slot\'s piece.',
   'eq.comparing': 'Comparing',
   'eq.compare': 'Compare',
   'eq.clearSlot': 'Clear slot',

@@ -89,6 +89,19 @@ export const buildInputSchema = z
 
 export type BuildInput = z.infer<typeof buildInputSchema>;
 
+/**
+ * The build argument as every tool but `calculate` advertises it. The full schema is about 3.6 KB and was repeated in each
+ * tool, roughly half of everything `tools/list` sends; here the argument is declared as just `share` plus whatever overrides
+ * `calculate.build` documents, and validated against the full schema on the way in (`pipe`), so the handlers still receive a
+ * checked `BuildInput` and a wrong field still fails with the readable error.
+ */
+export const compactBuildSchema = z
+  .looseObject({
+    share: z.string().optional().describe('Link do simulador (URL completa, encurtada, fragmento antigo #/?b=… ou token). Base da build.'),
+  })
+  .describe('Build: `share` com overrides esparsos por cima, ou os campos de `calculate.build` (class, level, jobLevel, stats, gear, atkSkill, skills, options, rotation, consumables, aspdPotion, propertyAtk, preset, customItems).')
+  .pipe(buildInputSchema);
+
 export interface ResolvedBuild {
   model: MainModel & Record<string, any>;
   char: CharacterBase;

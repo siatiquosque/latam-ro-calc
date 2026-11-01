@@ -9,6 +9,7 @@
  * artifacts still describe the same *set* of items, with the same flags, and that nothing
  * the tools read got pruned on the way.
  */
+import { DEFENDED_DUMMIES } from '../engine/dummies';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -108,7 +109,8 @@ describe('the index the Worker builds matches the one the box built', () => {
 
   it('indexes the same monsters, including the ones with no stat block', () => {
     const expected = new Set([...Object.keys(rawMonsters), ...Object.keys(rawLatamMonsters)]);
-    expect(dataset.monsterIndex.size).toBe(expected.size);
+    // Plus the defended training dummies the MCP adds on top of the generated data (engine/dummies.ts).
+    expect(dataset.monsterIndex.size).toBe(expected.size + DEFENDED_DUMMIES.length);
   });
 
   it('applies the pt-BR monster names, which the generator now does at build time', () => {

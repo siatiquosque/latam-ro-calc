@@ -344,7 +344,7 @@ export const ptBR = {
   'eq.colorNeedsItem': 'Escolha um item para poder destacar este slot',
   'eq.colorCurrent': 'Destaque: {color}',
   'eq.compareToggle': 'Ligar ou desligar a comparação deste slot',
-  'eq.compareLocked': 'Comparação indisponível: este espaço está ocupado por {holder}, que é usado em outro slot. Compare no slot que carrega o item.',
+  'eq.compareOccupied': 'Comparar com peças separadas: este espaço está ocupado por {holder}. O slot que carrega o item entra na comparação junto; troque-o por uma peça comum e escolha a peça deste espaço.',
   'eq.comparing': 'Comparando',
   'eq.compare': 'Comparar',
   'eq.clearSlot': 'Limpar slot',
