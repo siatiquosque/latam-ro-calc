@@ -1,5 +1,21 @@
 [
   {
+    "v": "0.1.197-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "As Botas Desconhecidas (FOR, AGI, VIT, INT, DES e SOR) agora limitam os bônus aleatórios ao que as Contas de Ymir dão: 1º bônus de HP ou SP máx. em %, 2º bônus de HP/SP máx., regeneração natural, velocidade de ataque ou conjuração variável, nas faixas da Queda do Aeroplano.",
+      "Os equipamentos do Torneio de Magia (Traje Anti-Magia, Manto Mágico de Geffen, Anéis de Reforço), da Arena Noturna (Uniformes, Mantos, Sobrepeliz, Absorvedor Mágico, Enciclopédia Editada, Anéis Condensadores) e do Lago do Abismo (Cotas, Capa e Bota Dracônicas) agora limitam os bônus aleatórios ao que cada combinador dá, e os Ventiladores e Fones quebrados rolam como os normais."
+    ],
+    "logs_es": [
+      "Las Botas Desconocidas (FUE, AGI, VIT, INT, DES y SUE) ahora limitan las bonificaciones aleatorias a lo que dan las Cuentas de Ymir: 1ª bonificación de HP o SP máx. en %, 2ª bonificación de HP/SP máx., regeneración natural, velocidad de ataque o lanzamiento variable, en los rangos de la Caída del Aeroplano.",
+      "Los equipos del Torneo de Magia (Traje Anti-Magia, Manto Mágico de Geffen, Anillos de Refuerzo), de la Arena Nocturna (Uniformes, Mantos, Sobrepeliz, Absorvedor Mágico, Enciclopédia Editada, Anillos Condensadores) y del Lago del Abismo (Cotas, Capa y Bota Dracónicas) ahora limitan las bonificaciones aleatorias a lo que da cada combinador, y los Ventiladores y Auriculares rotos tiran igual que los normales."
+    ],
+    "logs_en": [
+      "The Unknown Boots (STR, AGI, VIT, INT, DEX and LUK) now limit random bonuses to what the Ymir Beads give: 1st bonus of max HP or SP in %, 2nd bonus of max HP/SP, natural regeneration, attack speed or variable cast time, within the Aeroplane Crash ranges.",
+      "Gear from the Magic Tournament (Traje Anti-Magia, Manto Mágico de Geffen, Reinforcement Rings), the Night Arena (Uniformes, Mantos, Sobrepeliz, Absorvedor Mágico, Enciclopédia Editada, Condenser Rings) and the Abyss Lake (Dragonic Cotas, Cape and Boots) now limit random bonuses to what each combiner gives, and the broken Fans and Headphones roll like the normal ones."
+    ]
+  },
+  {
     "v": "0.1.196-beta",
     "date": "01-11-2026",
     "logs": [

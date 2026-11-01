@@ -144,7 +144,7 @@ describe('slot_options', () => {
     expect(data.randomOptions.upstream.groups[0].group).toBe('GEFFEN_MAGIC_SCROLL2');
     expect(data.randomOptions.upstream.groups[0].slots[0].every((entry: string) => /^\??[A-Za-z_]+( \d+(-\d+)?)?$/.test(entry))).toBe(true);
     expect(data.randomOptions.validation).toBe('reference-ranges');
-    expect(data.randomOptions.poolSource).toBe('rathena');
+    expect(data.randomOptions.poolSource).toBe('regional'); // the Torneio de Magia page now covers the ring
     expect(data.randomOptions.automaticRollSearch).toBe(true);
     const weapon = (await call('slot_options', { itemId: 560026 })).data;
     expect(weapon.randomOptions.capacity).toBe(3);
@@ -447,15 +447,15 @@ describe('answers stay short by default', () => {
 });
 
 describe('optimize_build with rAthena pools', () => {
-  // Anel Intensificador Físico: no regional source, but rAthena (kRO) has a pool for it.
-  const RING = { ...BUILD, gear: { ...BUILD.gear, accLeft: 2963 } };
+  // Penetration Shadow Pendant: no regional source, but rAthena (kRO) has a pool for it.
+  const RING = { ...BUILD, gear: { ...BUILD.gear, shadowPendant: 24167 } };
 
   it('rolls an item from its rAthena pool by default and says those rolls are not confirmed for LATAM', async () => {
-    const { data, isError } = await call('optimize_build', { build: RING, slots: ['accLeft'], candidates: { accLeft: [] }, objective: 'max', maxSolves: 200 });
+    const { data, isError } = await call('optimize_build', { build: RING, slots: ['shadowPendant'], candidates: { shadowPendant: [] }, objective: 'max', maxSolves: 200 });
     expect(isError).toBe(false);
     expect(Object.keys(data.patch.options ?? {}).length).toBeGreaterThan(0);
     expect(data.final.max).toBeGreaterThan(data.baseline.max);
-    expect(data.unconfirmedRolls.rows[0].item).toContain('(2963)');
+    expect(data.unconfirmedRolls.rows[0].item).toContain('(24167)');
     const reread = (await call('calculate', { build: { share: data.share } })).data;
     expect(reread.damage.skill.max).toBe(data.final.max);
   });

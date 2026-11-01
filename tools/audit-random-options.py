@@ -45,6 +45,12 @@ def audit(source):
                 # Reform applies options to the RESULT, not necessarily the base item.
                 link(base.get('ResultItem', base['BaseItem']), base['RandomOptionGroup'], 'item_reform.yml', row['Item'],
                      {k: v for k, v in base.items() if k != 'RandomOptionGroup'})
+    # Item groups (kits, class shadow boxes, bags) hand out items that already carry a random-option group.
+    for group in body('item_group_db.yml'):
+        for sub in group.get('SubGroups', []):
+            for entry in sub.get('List', []):
+                if entry.get('RandomOptionGroup'):
+                    link(entry['Item'], entry['RandomOptionGroup'], 'item_group_db.yml', group['Group'], {})
     for mob in body('mob_db.yml'):
         for field in ('Drops', 'MvpDrops'):
             for drop in mob.get(field, []):
@@ -83,7 +89,23 @@ def audit(source):
                   bAtk='atk', bBaseAtk='atk', bMatk='matk', bAtkRate='atkPercent', bMatkRate='matkPercent',
                   bDef='def', bMdef='mdef', bHit='hit', bFlee='flee', bFlee2='perfectDodge',
                   bCritical='cri', bAspd='aspd', bAspdRate='aspdPercent', bCritAtkRate='criDmg',
-                  bLongAtkRate='range', bShortAtkRate='melee', bHealPower='healPower', bHealPower2='healReceived')
+                  bLongAtkRate='range', bShortAtkRate='melee', bHealPower='healPower', bHealPower2='healReceived',
+                  bPow='pow', bSpl='spl', bSta='sta', bWis='wis', bCon='con', bCrt='crt', bPAtk='pAtk', bSMatk='sMatk',
+                  bRes='res', bMRes='mres', bHPlus='hplus', bCRate='cRate', bHPrecovRate='hpRecovRate', bSPrecovRate='spRecovRate')
+    # Element / race / class / size scripts carry the member in the script itself, so the key is exact too (same names
+    # the app's random-bonus picker uses: p_element_fire, m_race_demon, subrace_undead, p_size_l, ...).
+    elements = dict(Neutral='neutral', Water='water', Earth='earth', Fire='fire', Wind='wind', Poison='poison',
+                    Holy='holy', Dark='dark', Ghost='ghost', Undead='undead')
+    races = dict(Formless='formless', Undead='undead', Brute='brute', Plant='plant', Insect='insect', Fish='fish',
+                 Demon='demon', DemiHuman='demihuman', Angel='angel', Dragon='dragon')
+    sizes = dict(Small='s', Medium='m', Large='l')
+    classes = dict(Normal='normal', Boss='boss')
+    families = {'bAddEle': ('p_element_', 'Ele_', elements), 'bMagicAddEle': ('m_element_', 'Ele_', elements),
+                'bMagicAtkEle': ('m_my_element_', 'Ele_', elements), 'bSubEle': ('subele_', 'Ele_', elements),
+                'bAddRace': ('p_race_', 'RC_', races), 'bMagicAddRace': ('m_race_', 'RC_', races),
+                'bSubRace': ('subrace_', 'RC_', races), 'bAddClass': ('p_class_', 'Class_', classes),
+                'bMagicAddClass': ('m_class_', 'Class_', classes), 'bAddSize': ('p_size_', 'Size_', sizes),
+                'bMagicAddSize': ('m_size_', 'Size_', sizes)}
     def option_record(name):
         row = options[name]
         script = row.get('Script', '').strip()
@@ -93,10 +115,17 @@ def audit(source):
             key = 'vct'
         if script == 'bonus bDelayrate,-(getrandomoptinfo(ROA_VALUE));':
             key = 'acd'
+        if script == 'bonus bUseSPrate,-(getrandomoptinfo(ROA_VALUE));':
+            key = 'spCostPercent'
+        member = re.fullmatch(r'bonus2 (\w+),(\w+?)_(\w+),getrandomoptinfo\(ROA_VALUE\);', script)
+        if member and member[1] in families:
+            prefix, kind, names = families[member[1]]
+            if member[2] + '_' == kind and member[3] in names:
+                key = prefix + names[member[3]]
         return {'id': row['Id'], **({'calculatorKey': key} if key else {}),
                 'mapping': 'exact-script' if key else 'not-mapped'}
     result = dict(revision=revision, source='https://github.com/rathena/rathena',
-                  scope=['laphine_upgrade.yml', 'item_reform.yml', 'mob_db.yml'],
+                  scope=['laphine_upgrade.yml', 'item_reform.yml', 'item_group_db.yml', 'mob_db.yml'],
                   disclaimer='rAthena reference only; not proof of LATAM availability. NPC-only and regional pools may be missing.',
                   missingLocalItems=missing, items=records, groups=used_groups,
                   options={name: option_record(name) for name in sorted(used_options) if name in options})

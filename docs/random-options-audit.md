@@ -5,7 +5,10 @@ O catálogo regional validado e a referência do rAthena são camadas distintas.
 Quatro fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais fraca (`randomPoolTier` diz de qual veio):
 
 1. **Código** (`random-option-catalog.ts`): Selo de Loki e os selos de elmo inferior, escritos à mão.
-2. **Confirmados no jogo** (`data/random-options/regional-pools.json`): edição manual, um pool por id de item.
+2. **Regionais** (`data/random-options/regional-pools.json`): um pool por id de item. Vem do que foi visto no jogo, de
+   edição manual (Botas Desconhecidas) ou de `tools/import-browiki-instances.py`, que lê as páginas de instância do
+   bROWiki (Lago do Abismo: Cotas, Capa e Bota Dracônicas; Torneio de Magia: Traje/Manto Anti-Magia e Anéis de Reforço;
+   Arena Noturna: Uniformes, Mantos, Escudos e Anéis Condensadores) e reescreve só as entradas que ele mesmo gerou.
 3. **bROWiki** (`data/random-options/browiki-pools.json`): gerado por `tools/import-browiki-pools.py` a partir da
    página [Bônus Aleatórios](https://browiki.org/wiki/B%C3%B4nus_Aleat%C3%B3rios). A página identifica cada item
    pelo link do divine-pride, então o vínculo é por id, nunca por nome; cada texto de regra é traduzido por uma
@@ -13,11 +16,25 @@ Quatro fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais frac
    chute. São faixas de referência de um wiki brasileiro, não medidas por nós. O teste `browiki-pools.spec.ts`
    confere o importador contra os pools do Selo de Loki escritos à mão (todas as regras e faixas batem).
 4. **rAthena** (`data/random-options/rathena-pools.json`): o último recurso, gerado por `tools/build-rathena-pools.py`
-   a partir do instantâneo `rathena-audit.json` (cerca de 1.050 itens, 25 KB). O LATAM tende a seguir o kRO, que o
+   a partir do instantâneo `rathena-audit.json` (cerca de 1.150 itens). A auditoria lê `laphine_upgrade.yml`,
+   `item_reform.yml`, `item_group_db.yml` (kits, caixas de Sombrios de Classe) e `mob_db.yml`; as opções são traduzidas
+   pelo próprio script do rAthena para as chaves do seletor (elemento, raça, tamanho, classe, atributos). Blocos
+   comentados do `laphine_upgrade.yml` (Geffen, Cota Dracônica) dizem quais itens aceitam um combinador, mas sem
+   `RandomOptionGroup`: não há pool neles (esses itens vêm da fonte 2). Ventiladores e Fones quebrados rolam como
+   os normais (`SAME_POOL` em `build-rathena-pools.py`). O LATAM tende a seguir o kRO, que o
    rAthena reproduz, então um item que nenhuma fonte regional cobre fica restrito a esse pool em vez de aberto a
    qualquer bônus. Não é confirmação: a validação de rolagens de uma build compartilhada **não** o impõe (só as
    fontes 1 a 3), e a busca do MCP lista o que rolou a partir dele em `unconfirmedRolls`. Item sem pool em nenhuma
    fonte continua aberto na tela e fora da busca.
+
+Para atualizar a fonte 2 (páginas de instância):
+
+```powershell
+foreach ($p in 'Lago_do_Abismo','Torneio_de_Magia','Arena_Noturna') { curl -sL -A "Mozilla/5.0" "https://browiki.org/wiki/$p" -o ".scratch/browiki/$p.html" }
+python tools/import-browiki-instances.py
+```
+
+Resistência física/mágica por propriedade fica de fora (o seletor não oferece a opção; o motor tem as chaves só para PvP).
 
 Para atualizar a fonte 3:
 

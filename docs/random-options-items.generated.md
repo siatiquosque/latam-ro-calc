@@ -123,7 +123,7 @@ Group_0 é um grupo vazio que remove opções; grupos vazios ou indefinidos não
 | 13493 | Cannon_Rapier_OS | 3 | weapon-generic | [EP17_1_SPC05](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC05; [EP17_1_SPC06](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC06; [EP17_1_SPC07](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC07; [EP17_1_SPC08](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC08; [EP17_1_SPC09](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC09; [EP17_1_SPC10](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / EP17_1_SPC10 |
 | 15073 | Anti_Magic_Suit | 2 | explicit-table | [GEFFEN_MAGIC_SCROLL](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Geffen_Magic_Scroll |
 | 15074 | Geffen_Mage_Robe | 2 | explicit-table | [GEFFEN_MAGIC_SCROLL](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Geffen_Magic_Scroll |
-| 15186 | Kafra_Suit | 1 | explicit-table | Não encontrado |
+| 15186 | Kafra_Suit | 1 | explicit-table | [SUIT_UPGRADE_KIT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / SUIT_UPGRADE_KIT |
 | 15278 | Overwhelm_Str_Armor | 2 | explicit-table | [GEMSTONE_OF_TIME](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Gemstone_Of_Time |
 | 15279 | Overwhelm_Int_Armor | 2 | explicit-table | [GEMSTONE_OF_TIME](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Gemstone_Of_Time |
 | 15280 | S_CriticalHit_Armor | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
@@ -179,13 +179,13 @@ Group_0 é um grupo vazio que remove opções; grupos vazios ou indefinidos não
 | 18191 | G_Knight_Bow | 3 | weapon-generic | Não encontrado |
 | 18198 | G_Knight_Archer_Bow | 3 | weapon-generic | Não encontrado |
 | 19118 | Poring_Sunglasses_K_ | 1 | explicit-table | Não encontrado |
-| 19157 | Droop_Gunslinger | 2 | explicit-table | Não encontrado |
-| 19241 | Magical_Booster_K | 2 | explicit-table | Não encontrado |
-| 19242 | Cat_Lace_Hairband_K | 2 | explicit-table | Não encontrado |
+| 19157 | Droop_Gunslinger | 2 | explicit-table | [GUNSLINGER_ENCHANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / GUNSLINGER_ENCHANT |
+| 19241 | Magical_Booster_K | 2 | explicit-table | [BOOSTER_AMPLIFIER](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / BOOSTER_AMPLIFIER |
+| 19242 | Cat_Lace_Hairband_K | 2 | explicit-table | [MAGICAL_CAT_HAND](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / MAGICAL_CAT_HAND |
 | 19245 | Crimson_Booster | 2 | explicit-table | Não encontrado |
-| 20842 | Bag_Of_Antonio_Melee | 2 | explicit-table | Não encontrado |
-| 20843 | Bag_Of_Antonio_Range | 2 | explicit-table | Não encontrado |
-| 20844 | Bag_Of_Antonio_Magic | 2 | explicit-table | Não encontrado |
+| 20842 | Bag_Of_Antonio_Melee | 2 | explicit-table | [CANDY_BAG_SCROLL_MELEE](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CANDY_BAG_SCROLL_MELEE |
+| 20843 | Bag_Of_Antonio_Range | 2 | explicit-table | [CANDY_BAG_SCROLL_RANGE](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CANDY_BAG_SCROLL_RANGE |
+| 20844 | Bag_Of_Antonio_Magic | 2 | explicit-table | [CANDY_BAG_SCROLL_MAGIC](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CANDY_BAG_SCROLL_MAGIC |
 | 20935 | Lava_Leather_Manteau | 0 | explicit-table | [MAGMA3](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/mob_db.yml) / NIGHTMARE_TERROR_H |
 | 20936 | Lava_Leather_Muffler | 0 | explicit-table | [MAGMA3](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/mob_db.yml) / LAVA_GOLEM_H |
 | 20937 | Lava_Leather_Hode | 0 | explicit-table | [MAGMA3](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/mob_db.yml) / KAHO_H |
@@ -271,80 +271,80 @@ Group_0 é um grupo vazio que remove opções; grupos vazios ou indefinidos não
 | 24243 | S_Reload_Shoes | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24244 | S_Reload_Shield | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24245 | S_Reload_Armor | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
-| 24246 | S_Swordman_earring | 2 | shadow-generic | Não encontrado |
-| 24247 | S_Merchant_earring | 2 | shadow-generic | Não encontrado |
-| 24248 | S_Acolyte_earring | 2 | shadow-generic | Não encontrado |
-| 24249 | S_Magician_earring | 2 | shadow-generic | Não encontrado |
-| 24250 | S_Swordman_Pendant | 2 | shadow-generic | Não encontrado |
-| 24251 | S_Merchant_Pendant | 2 | shadow-generic | Não encontrado |
-| 24252 | S_Acolyte_Pendant | 2 | shadow-generic | Não encontrado |
-| 24253 | S_Thief_Pendant | 2 | shadow-generic | Não encontrado |
-| 24254 | S_Magician_Pendant | 2 | shadow-generic | Não encontrado |
-| 24255 | S_Archer_Pendant | 2 | shadow-generic | Não encontrado |
-| 24256 | S_Knight_Shoes | 2 | shadow-generic | Não encontrado |
-| 24257 | S_Crusader_Shoes | 2 | shadow-generic | Não encontrado |
-| 24258 | S_Blacksmith_Shoes | 2 | shadow-generic | Não encontrado |
-| 24259 | S_Alchemist_Shoes | 2 | shadow-generic | Não encontrado |
-| 24260 | S_Priest_Shoes | 2 | shadow-generic | Não encontrado |
-| 24261 | S_Monk_Shoes | 2 | shadow-generic | Não encontrado |
-| 24262 | S_Assassin_Shoes | 2 | shadow-generic | Não encontrado |
-| 24263 | S_Rogue_Shoes | 2 | shadow-generic | Não encontrado |
-| 24264 | S_Wizard_Shoes | 2 | shadow-generic | Não encontrado |
-| 24265 | S_Sage_Shoes | 2 | shadow-generic | Não encontrado |
-| 24266 | S_Hunter_Shoes | 2 | shadow-generic | Não encontrado |
-| 24267 | S_Bard_Shoes | 2 | shadow-generic | Não encontrado |
-| 24268 | S_Dancer_Shoes | 2 | shadow-generic | Não encontrado |
-| 24269 | S_Knight_Armor | 2 | shadow-generic | Não encontrado |
-| 24270 | S_Crusader_Armor | 2 | shadow-generic | Não encontrado |
-| 24271 | S_Blacksmith_Armor | 2 | shadow-generic | Não encontrado |
-| 24272 | S_Alchemist_Armor | 2 | shadow-generic | Não encontrado |
-| 24273 | S_Priest_Armor | 2 | shadow-generic | Não encontrado |
-| 24274 | S_Monk_Armor | 2 | shadow-generic | Não encontrado |
-| 24275 | S_Assassin_Armor | 2 | shadow-generic | Não encontrado |
-| 24276 | S_Rogue_Armor | 2 | shadow-generic | Não encontrado |
-| 24277 | S_Wizard_Armor | 2 | shadow-generic | Não encontrado |
-| 24278 | S_Sage_Armor | 2 | shadow-generic | Não encontrado |
-| 24279 | S_Hunter_Armor | 2 | shadow-generic | Não encontrado |
-| 24280 | S_Bard_Armor | 2 | shadow-generic | Não encontrado |
-| 24281 | S_Dancer_Armor | 2 | shadow-generic | Não encontrado |
-| 24282 | S_SuperNovice_Weapon | 2 | shadow-generic | Não encontrado |
-| 24283 | S_Gunslinger_Weapon | 2 | shadow-generic | Não encontrado |
-| 24284 | S_Taekwon_Weapon | 2 | shadow-generic | Não encontrado |
-| 24285 | S_Ninja_Weapon | 2 | shadow-generic | Não encontrado |
-| 24286 | S_DoramMagical_Weapon | 2 | shadow-generic | Não encontrado |
-| 24287 | S_DoramPhysical_Weapon | 2 | shadow-generic | Não encontrado |
-| 24288 | S_Runeknight_Weapon | 2 | shadow-generic | Não encontrado |
-| 24289 | S_Royalguard_Weapon | 2 | shadow-generic | Não encontrado |
-| 24290 | S_Mechanic_weapon | 2 | shadow-generic | Não encontrado |
-| 24291 | S_Genetic_Weapon | 2 | shadow-generic | Não encontrado |
-| 24292 | S_Archbishop_Weapon | 2 | shadow-generic | Não encontrado |
-| 24293 | S_Sura_weapon | 2 | shadow-generic | Não encontrado |
-| 24294 | S_Guillotine_Weapon | 2 | shadow-generic | Não encontrado |
-| 24295 | S_Shadowchaser_Weapon | 2 | shadow-generic | Não encontrado |
-| 24296 | S_Warlock_Weapon | 2 | shadow-generic | Não encontrado |
-| 24297 | S_Sorcerer_Weapon | 2 | shadow-generic | Não encontrado |
-| 24298 | S_Ranger_Weapon | 2 | shadow-generic | Não encontrado |
-| 24299 | S_Minstrel_Weapon | 2 | shadow-generic | Não encontrado |
-| 24300 | S_Wanderer_Weapon | 2 | shadow-generic | Não encontrado |
-| 24301 | S_Runeknight_Shield | 2 | shadow-generic | Não encontrado |
-| 24302 | S_Royalguard_Shield | 2 | shadow-generic | Não encontrado |
-| 24303 | S_Mechanic_Shield | 2 | shadow-generic | Não encontrado |
-| 24304 | S_Genetic_Shield | 2 | shadow-generic | Não encontrado |
-| 24305 | S_Archbishop_Shield | 2 | shadow-generic | Não encontrado |
-| 24306 | S_Sura_Shield | 2 | shadow-generic | Não encontrado |
-| 24307 | S_Guillotine_Shield | 2 | shadow-generic | Não encontrado |
-| 24308 | S_Shadowchaser_Shield | 2 | shadow-generic | Não encontrado |
-| 24309 | S_Warlock_Shield | 2 | shadow-generic | Não encontrado |
-| 24310 | S_Sorcerer_Shield | 2 | shadow-generic | Não encontrado |
-| 24311 | S_Ranger_Shield | 2 | shadow-generic | Não encontrado |
-| 24312 | S_Minstrel_Shield | 2 | shadow-generic | Não encontrado |
-| 24313 | S_Wanderer_Shield | 2 | shadow-generic | Não encontrado |
-| 24314 | S_Ninja_Shield | 2 | shadow-generic | Não encontrado |
-| 24315 | S_Taekwon_Shield | 2 | shadow-generic | Não encontrado |
-| 24316 | S_DoramPhysical_Shield | 2 | shadow-generic | Não encontrado |
-| 24317 | S_DoramMagical_Shield | 2 | shadow-generic | Não encontrado |
-| 24318 | S_SuperNovice_Shield | 2 | shadow-generic | Não encontrado |
-| 24319 | S_Gunslinger_Shield | 2 | shadow-generic | Não encontrado |
+| 24246 | S_Swordman_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 24247 | S_Merchant_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 24248 | S_Acolyte_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 24249 | S_Magician_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 24250 | S_Swordman_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24251 | S_Merchant_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24252 | S_Acolyte_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24253 | S_Thief_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24254 | S_Magician_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24255 | S_Archer_Pendant | 2 | shadow-generic | [CLASS_SHADOW_BOX_PENDANT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_PENDANT |
+| 24256 | S_Knight_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24257 | S_Crusader_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24258 | S_Blacksmith_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24259 | S_Alchemist_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24260 | S_Priest_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24261 | S_Monk_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24262 | S_Assassin_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24263 | S_Rogue_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24264 | S_Wizard_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24265 | S_Sage_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24266 | S_Hunter_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24267 | S_Bard_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24268 | S_Dancer_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24269 | S_Knight_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24270 | S_Crusader_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24271 | S_Blacksmith_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24272 | S_Alchemist_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24273 | S_Priest_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24274 | S_Monk_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24275 | S_Assassin_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24276 | S_Rogue_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24277 | S_Wizard_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24278 | S_Sage_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24279 | S_Hunter_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24280 | S_Bard_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24281 | S_Dancer_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24282 | S_SuperNovice_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24283 | S_Gunslinger_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24284 | S_Taekwon_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24285 | S_Ninja_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24286 | S_DoramMagical_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24287 | S_DoramPhysical_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24288 | S_Runeknight_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24289 | S_Royalguard_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24290 | S_Mechanic_weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24291 | S_Genetic_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24292 | S_Archbishop_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24293 | S_Sura_weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24294 | S_Guillotine_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24295 | S_Shadowchaser_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24296 | S_Warlock_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24297 | S_Sorcerer_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24298 | S_Ranger_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24299 | S_Minstrel_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24300 | S_Wanderer_Weapon | 2 | shadow-generic | [CLASS_SHADOW_BOX_WEAPON](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_WEAPON |
+| 24301 | S_Runeknight_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24302 | S_Royalguard_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24303 | S_Mechanic_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24304 | S_Genetic_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24305 | S_Archbishop_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24306 | S_Sura_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24307 | S_Guillotine_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24308 | S_Shadowchaser_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24309 | S_Warlock_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24310 | S_Sorcerer_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24311 | S_Ranger_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24312 | S_Minstrel_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24313 | S_Wanderer_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24314 | S_Ninja_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24315 | S_Taekwon_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24316 | S_DoramPhysical_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24317 | S_DoramMagical_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24318 | S_SuperNovice_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
+| 24319 | S_Gunslinger_Shield | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHIELD](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHIELD |
 | 24321 | S2_Bearers_Pendent | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24331 | S2_Reload_Armor | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24332 | S_Critical_Shield | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
@@ -381,20 +381,20 @@ Group_0 é um grupo vazio que remove opções; grupos vazios ou indefinidos não
 | 24399 | S_ImmunedAthena_Shield | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24400 | S_HardChamption_Shoes | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
 | 24401 | S_KingbirdAncient_Armor | 2 | shadow-generic | [SHADOW_RANDOM_MIX](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Shadow_Random_Mix |
-| 24402 | S_Rebellion_Armor | 2 | shadow-generic | Não encontrado |
-| 24403 | S_Kagerou_Armor | 2 | shadow-generic | Não encontrado |
-| 24404 | S_Oboro_Armor | 2 | shadow-generic | Não encontrado |
-| 24405 | S_Rebellion_Shoes | 2 | shadow-generic | Não encontrado |
-| 24406 | S_Kagerou_Shoes | 2 | shadow-generic | Não encontrado |
-| 24407 | S_Oboro_Shoes | 2 | shadow-generic | Não encontrado |
-| 24408 | S_DoramPhysical_Armor | 2 | shadow-generic | Não encontrado |
-| 24409 | S_DoramPhysical_Shoes | 2 | shadow-generic | Não encontrado |
-| 24410 | S_DoramMagical_Armor | 2 | shadow-generic | Não encontrado |
-| 24411 | S_DoramMagical_Shoes | 2 | shadow-generic | Não encontrado |
-| 24412 | S_Star_Emperor_Armor | 2 | shadow-generic | Não encontrado |
-| 24413 | S_Star_Emperor_Shoes | 2 | shadow-generic | Não encontrado |
-| 24414 | S_Soul_Reaper_Armor | 2 | shadow-generic | Não encontrado |
-| 24415 | S_Soul_Reaper_Shoes | 2 | shadow-generic | Não encontrado |
+| 24402 | S_Rebellion_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24403 | S_Kagerou_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24404 | S_Oboro_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24405 | S_Rebellion_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24406 | S_Kagerou_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24407 | S_Oboro_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24408 | S_DoramPhysical_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24409 | S_DoramPhysical_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24410 | S_DoramMagical_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24411 | S_DoramMagical_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24412 | S_Star_Emperor_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24413 | S_Star_Emperor_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
+| 24414 | S_Soul_Reaper_Armor | 2 | shadow-generic | [CLASS_SHADOW_BOX_ARMOR](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_ARMOR |
+| 24415 | S_Soul_Reaper_Shoes | 2 | shadow-generic | [CLASS_SHADOW_BOX_SHOES](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_SHOES |
 | 24416 | S_Timeoverload_Weapon | 2 | shadow-generic | Não encontrado |
 | 24417 | S_Timeoverload_Armor | 2 | shadow-generic | Não encontrado |
 | 24418 | S_Timeoverload_Shield | 2 | shadow-generic | Não encontrado |
@@ -862,9 +862,9 @@ Group_0 é um grupo vazio que remove opções; grupos vazios ou indefinidos não
 | 28254 | Butcher_IL | 3 | weapon-generic | [ILL_PIECE_A](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / ILL_Piece_A; [ILL_PIECE_B](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / ILL_Piece_B |
 | 28257 | Golden_L_Launcher | 3 | weapon-generic | [ANCIENT_HERO_BRAVERY](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Ancient_Hero_Bravery; [ANCIENT_HERO_WISDOM](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Ancient_Hero_Wisdom |
 | 28258 | The_Black_Gatling | 3 | weapon-generic | [ANCIENT_HERO_BRAVERY](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Ancient_Hero_Bravery; [ANCIENT_HERO_WISDOM](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/laphine_upgrade.yml) / Ancient_Hero_Wisdom |
-| 28391 | S_Thief_earring | 2 | shadow-generic | Não encontrado |
-| 28392 | S_Archer_earring | 2 | shadow-generic | Não encontrado |
-| 28439 | SeeOtter_Fan | 2 | explicit-table | Não encontrado |
+| 28391 | S_Thief_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 28392 | S_Archer_earring | 2 | shadow-generic | [CLASS_SHADOW_BOX_EARRING](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / CLASS_SHADOW_BOX_EARRING |
+| 28439 | SeeOtter_Fan | 2 | explicit-table | [FAN_UPGRADE_KIT](https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_group_db.yml) / FAN_UPGRADE_KIT |
 | 28440 | FurSeal_Fan | 2 | explicit-table | Não encontrado |
 | 28618 | Time_Kamiji | 3 | weapon-generic | Não encontrado |
 | 28619 | Prisoner_Dairy | 3 | weapon-generic | Não encontrado |

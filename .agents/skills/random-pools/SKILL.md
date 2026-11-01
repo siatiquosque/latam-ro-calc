@@ -17,6 +17,9 @@ python tools/import-browiki-pools.py
 ```
 Items are matched by the divine-pride id in the page, never by name. A rule text with no translation lands in `unmapped` and out of the pool; to support it, add an explicit row to `SIMPLE`/`PLACEHOLDER` in the script, keyed to a real leaf key of `ExtraOptionMap`. Rerun `npx vitest run src/app/core/browiki-pools.spec.ts src/app/core/regional-pools.spec.ts` (the first compares the importer with the hand-written Loki pools).
 
+## Refresh the instance pages (regional tier)
+Lago do Abismo, Torneio de Magia, Arena Noturna: download each `https://browiki.org/wiki/<Page>` to `.scratch/browiki/<Page>.html`, run `python tools/import-browiki-instances.py` (rewrites only its own entries in `regional-pools.json`). The coverage test `random-pool-coverage.spec.ts` has an empty `KNOWN_GAPS`: a new LATAM item with option slots and no pool fails it.
+
 ## Refresh the rAthena fallback
 Only after `rathena-audit.json` changes (`python tools/audit-random-options.py --rathena .scratch/rathena`): `python tools/build-rathena-pools.py`.
 

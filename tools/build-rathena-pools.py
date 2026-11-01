@@ -14,6 +14,12 @@ import json
 from pathlib import Path
 
 
+# Items rAthena does not link to a combiner but that the players' wiki/guild confirm roll the same as a sibling:
+# the broken fans (Mini Fan-LT, Fur Seal) and the Crimson Booster share the pool of the normal Sea Otter fan and
+# Magical Booster K.
+SAME_POOL = {28440: 28439, 490374: 28439, 490375: 28439, 19245: 19241}
+
+
 def pool_of(group, mapping):
     """Positions of one rAthena group: per slot, the options that have a calculator key, as [key, min, max]."""
     positions = []
@@ -51,6 +57,9 @@ def main():
             items.setdefault(item_id, [])
             if index[ref['group']] not in items[item_id]:
                 items[item_id].append(index[ref['group']])
+    for alias, original in SAME_POOL.items():
+        if str(original) in items and str(alias) not in items:
+            items[str(alias)] = list(items[str(original)])
     document = {
         '_readme': 'Gerado por tools/build-rathena-pools.py a partir de rathena-audit.json. Referência do kRO via rAthena, não confirmada no LATAM.',
         'source': f"rAthena {audit['revision']}", 'combiners': combiners,
