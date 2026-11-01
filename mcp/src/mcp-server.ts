@@ -50,6 +50,7 @@ export function createMcpServer(dataset: Dataset, shortener?: Shortener): McpSer
         'Toda ferramenta que recebe uma build aceita um link do simulador em `build.share`, com overrides esparsos por cima — ' +
         'então, se a pessoa colar um link, use-o direto em vez de remontar a build. ' +
         'Devolva sempre o `share` do resultado para que ela possa abrir e conferir no simulador. ' +
+        'Ao sugerir melhorias, penetração de DEF/TEN e penalidade de tamanho do alvo contam tanto quanto ATQ: confira `context` (tamanho do alvo, penalidade da arma, penetração atual) e, se a pessoa caça monstros de portes diferentes, passe `targets` com um Médio e um Grande. ' +
         'Para procurar melhorias: `explain_damage` mostra onde está o dano e o que o número não conta, `slot_options` lista os encantamentos que uma peça aceita, ' +
         '`evaluate_variants` testa dezenas de variações de uma vez, em vez de uma chamada por teste; `optimize_stats` redistribui os pontos de atributo e ' +
         '`uncatalogued_pools` lista os itens cujo pool de bônus aleatório ainda não foi confirmado.',

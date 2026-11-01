@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.199-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "O MCP agora testa cada peça do `optimize_slot` com os melhores cartas e encantamentos que ela aceita, leva em conta penetração de DEF e penalidade de tamanho do alvo ao sugerir melhorias, e deixa de sugerir itens que o LATAM ainda não lançou."
+    ],
+    "logs_es": [
+      "El MCP ahora prueba cada pieza de `optimize_slot` con las mejores cartas y encantamientos que acepta, tiene en cuenta la penetración de DEF y la penalización de tamaño del objetivo al sugerir mejoras, y deja de sugerir ítems que LATAM aún no ha lanzado."
+    ],
+    "logs_en": [
+      "The MCP now tests each `optimize_slot` piece with the best cards and enchantments it accepts, accounts for DEF penetration and the target's size penalty when suggesting upgrades, and no longer suggests items LATAM has not released yet."
+    ]
+  },
+  {
     "v": "0.1.198-beta",
     "date": "01-11-2026",
     "logs": [

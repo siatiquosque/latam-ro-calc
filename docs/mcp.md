@@ -15,7 +15,7 @@ montada campo a campo), consultar itens, habilidades e monstros, calcular dano e
 | `search_monsters`, `get_monster` | alvos; o padrão é o boneco Neutro (21077) |
 | `calculate` | dano, DPS, atributos finais, tempos e um link para abrir no simulador |
 | `damage_table`, `compare_builds` | uma build contra vários monstros; até 4 builds contra o mesmo alvo |
-| `optimize_slot` | testa candidatos **de um slot** e ordena por DPS |
+| `optimize_slot` | testa candidatos **de um slot** e ordena por DPS, cada um com os melhores cartas e encantamentos que aceita (`complements: false` compara só as peças nuas); itens fora do LATAM vão em `skippedNotInLatam` |
 | **`optimize_build`** | percorre os slots trocando a melhor peça até nada melhorar (ver abaixo) |
 | **`optimize_stats`** | redistribui os pontos de atributo/traits dentro do orçamento do nível (ver abaixo) |
 | **`uncatalogued_pools`** | itens sem pool de bônus aleatório confirmado + rascunho de pool do rAthena (ver abaixo) |

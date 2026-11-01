@@ -25,12 +25,12 @@ import { Dataset } from '../data/dataset';
 import { compactCatalog, compactUpstream, randomOptionReferencesFor } from '../data/random-options';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
-import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
+import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, resolveBuild, ResolvedBuild } from '../engine/build-input';
 import { DEFAULT_METRICS, Metric, METRICS, Metrics, readMetrics } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
 import { solveWithInput } from '../engine/solve';
 import { applyPatch, BuildPatch, decodeOnce, patchSchema } from '../engine/variants';
-import { complementChoices, searchComplements } from '../engine/complements';
+import { complementChoices, damageContext, keptSockets, relevantKeys, searchComplements } from '../engine/complements';
 import { partnerIndex } from '../engine/item-partners';
 import { pacing } from '../engine/pacing';
 import { normalizeShare, resolveTarget, targetSchema } from './calculate';
@@ -142,69 +142,7 @@ const SEARCH_SLOTS = [
   'shadowWeapon', 'shadowShield', 'shadowArmor', 'shadowBoot', 'shadowEarring', 'shadowPendant',
 ] as const;
 
-/** Bonus keys every damage build cares about, whatever the skill. */
-const COMMON_DAMAGE_KEYS = ['atk', 'atkPercent', 'pAtk', 'pow', 'str', 'dex', 'luk', 'cri', 'criDmg', 'cRate', 'range', 'melee', 'allStatus', 'p_race_all', 'p_size_all', 'p_element_all', 'p_class_all', 'ignore_size_penalty', 'ignorePhysicalDef', 'p_pene_race_all'];
-
-const SIZE_INITIAL: Record<string, string> = { SMALL: 's', MEDIUM: 'm', LARGE: 'l' };
 const GRADES = ['', 'D', 'C', 'B', 'A'] as const;
-
-/**
- * Which bonus keys can move this build's damage against this target: the formula's own stage keys,
- * plus the race, size and element keys of the monster. An item whose script has none of them cannot
- * matter, so it is never solved.
- */
-function relevantKeys(calc: any, targets: any[] = []): string[] {
-  const summary = calc.getTotalSummary() as any;
-  const keys = new Set<string>(COMMON_DAMAGE_KEYS);
-  if (summary.dmg?.dmgType === 'Magical') {
-    for (const key of ['matk', 'matkPercent', 'sMatk', 'spl', 'int', 'm_race_all', 'm_size_all', 'm_element_all', 'm_class_all', 'm_my_element_all', 'ignoreMagicDef', 'm_pene_race_all']) keys.add(key);
-  }
-  for (const key of ['aspd', 'aspdPercent', 'agi', 'vct', 'acd']) keys.add(key);
-  for (const step of summary.dmg?.skillFormulaTrace?.max ?? []) for (const key of step.keys ?? []) keys.add(String(key));
-
-  for (const monster of [summary.monster ?? {}, ...targets]) {
-    const race = String(monster.raceUpper ?? monster.stats?.raceName ?? '').toLowerCase();
-    const size = SIZE_INITIAL[String(monster.sizeFullUpper ?? monster.stats?.scaleName ?? '').toUpperCase()];
-    const element = String(monster.elementName ?? monster.stats?.elementName ?? '').split(' ')[0].toLowerCase();
-    if (race) keys.add(`p_race_${race}`);
-    if (size) keys.add(`p_size_${size}`);
-    if (size) keys.add(`sizePenalty_${size}`);
-    if (element) keys.add(`p_element_${element}`);
-  }
-
-  return [...keys];
-}
-
-/**
- * What the new piece can keep of what the old one carried. A card or enchant left in a socket the
- * new piece does not have would still be counted by the engine, and the "better" build would be one
- * no player can wear. Cards keep their order up to the piece's slot count; an enchant stays only if
- * the new piece's pool at that position offers it.
- */
-function keptSockets(dataset: Dataset, rb: ResolvedBuild, slot: string, itemId: number): { clear: string[]; dropped: string[] } {
-  const item = dataset.items[itemId];
-  const pools = enchantPoolsFor(item) as (string[] | null | undefined)[] | undefined;
-  const clear: string[] = [];
-  const dropped: string[] = [];
-  let cards = 0;
-
-  for (const key of relatedItemKeys(slot)) {
-    const carried = (rb.model as any)[key];
-    if (typeof carried !== 'number' || carried <= 0) continue;
-
-    const isEnchant = /Enchant(\d)$/.exec(key);
-    const fits = isEnchant
-      ? !!pools?.[Number(isEnchant[1])]?.includes(dataset.items[carried]?.aegisName)
-      : ++cards <= (item?.slots ?? 0);
-    if (!fits) {
-      clear.push(key);
-      dropped.push(dataset.itemIndex.get(carried)?.name ?? String(carried));
-    }
-  }
-
-  return { clear, dropped };
-}
-
 
 export function registerOptimizationTools(server: McpServer, dataset: Dataset, shortener?: Shortener): void {
   registerJsonTool<{
@@ -410,6 +348,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     if (skillId) keys.push(String(skillId), `cd__${skillId}`, `chance__${skillId}`);
     const banned = new Set(exclude);
     const partners = partnerIndex(dataset);
+    const skippedNotInLatam: number[] = [];
     const complementPools = new Map<string, BuildPatch[][]>();
     const complementsFor = (slot: string, id: number) => {
       const key = `${slot}:${id}`;
@@ -420,12 +359,14 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const eligible = (id: number, slot: string) => {
       const item = dataset.items[id];
       return !!item && canWear(item) && (item.requiredLevel ?? 0) <= baseline.rb.model.level
+        && !!dataset.itemIndex.get(id)?.latam
         && !!dataset.itemIndex.get(id)?.slotTags.includes(slot as SlotTag);
     };
     const pools = new Map<string, number[]>();
     for (const slot of walk) {
       const worn = baseline.rb.model[slot];
       if (candidates?.[slot]) {
+        skippedNotInLatam.push(...candidates[slot].filter((id) => !dataset.itemIndex.get(id)?.latam));
         pools.set(slot, candidates[slot].filter((id) => (id !== worn || (maxGrade !== undefined && canGradeItem(dataset.items[id]))) && !banned.has(id) && eligible(id, slot)));
         continue;
       }
@@ -637,6 +578,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       solves,
       stopped: exhausted ? 'orçamento de cálculos ou de tempo esgotado: o resultado pode estar incompleto' : 'convergiu',
       candidates: Object.fromEntries([...pools].map(([slot, ids]) => [slot, ids.length])),
+      context: damageContext(baseline.solved.calc),
+      ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
       patch: changes,
       share: shareOf(rb),
       ...(detail ? {
@@ -654,6 +597,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       ...(procs.length ? { procs: { note: 'Ganho de DPS ao ativar cada proc na build final; a busca só conta os procs passados em `effects`.', options: procs } } : {}),
       complementSearch: {
         enabled: complements,
+        ...(complements && !skillId ? { skillEnchants: 'A build não tem habilidade ofensiva escolhida (`atkSkill`): encantamentos e cartas específicos de habilidade não são ranqueados.' } : {}),
         // Names stay out of the answer: `uncatalogued_pools` lists them on demand.
         uncataloguedRandomItems: (() => {
           const ids = [...new Set([...pools.values()].flat().concat(walk.map(slot => rb.model[slot])))].filter(id => id && !randomOptionCatalogFor(id)

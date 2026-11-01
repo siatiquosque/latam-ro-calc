@@ -269,10 +269,34 @@ describe('regressions', () => {
   it('optimize_slot carries the slot cards into the emitted comparison', async () => {
     // The app rebuilds a compared slot's related fields from model2 alone, so a card
     // left out here comes back as null and the simulated side stops matching the rank.
-    const { data } = await call('optimize_slot', { build: windhawk, slot: 'weapon', candidates: [18186], target: { monsterId: 21077 }, limit: 1 });
+    const { data } = await call('optimize_slot', { build: windhawk, slot: 'weapon', candidates: [18186], target: { monsterId: 21077 }, limit: 1, complements: false });
     const parsed = await call('parse_share_link', { share: data.share });
     expect(parsed.data.compare.items.weapon.id).toBe(18186);
     expect(parsed.data.compare.items.weaponCard1.id).toBe(4628);
+  });
+
+  it('optimize_slot tests each candidate with its own sockets and drops the ones it cannot hold', async () => {
+    // Soqueira Invernal (no card slot) and Vil Invernal (one slot, other enchants) share ATK and script: only the sockets tell them apart.
+    const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560032, weaponRefine: 15 },
+      stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 } };
+    const { data } = await call('optimize_slot', { build, slot: 'weapon', candidates: [560032, 560037, 700016] });
+    const vil = data.ranking.find((row: any) => row.id === 560037);
+    expect(vil.sockets?.length).toBeGreaterThan(0);
+    expect(vil.dps).toBeGreaterThan(vil.withoutSockets);
+    expect(data.skippedNotInLatam ?? []).toEqual([]);
+  });
+
+  it('optimize_slot reports the size penalty and penetration the ranking is made under', async () => {
+    const { data } = await call('optimize_slot', { build: windhawk, slot: 'weapon', candidates: [700016, 18186], target: { monsterId: 21077 } });
+    expect(data.context.target.size).toBeTruthy();
+    expect(typeof data.context.sizePenaltyPct).toBe('number');
+    expect(typeof data.context.penetrationPct).toBe('number');
+  });
+
+  it('optimize_slot reports items LATAM has not shipped instead of ranking them', async () => {
+    const { data } = await call('optimize_slot', { build: windhawk, slot: 'boot', candidates: [470328, 470069], target: { monsterId: 21077 } });
+    expect(data.skippedNotInLatam).toEqual([470328]);
+    expect(data.ranking.map((row: any) => row.id)).not.toContain(470328);
   });
 
   it('parse_share_link does not report consumables as equipped gear', async () => {

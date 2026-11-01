@@ -20,7 +20,13 @@ import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedIte
 import { projectResult } from '../engine/project';
 import { buildShareUrl, parseShare, resolveIfShort, Shortener, shortenShareUrl, toPreset } from '../engine/share';
 import { solve } from '../engine/solve';
-import { decodeOnce } from '../engine/variants';
+import { applyPatch, BuildPatch, decodeOnce } from '../engine/variants';
+import { complementChoices, damageContext, keptSockets, relevantKeys, searchComplements } from '../engine/complements';
+import { pacing } from '../engine/pacing';
+import { SKILL_ID_BY_NAME } from 'src/app/skills';
+import { canGradeItem } from 'src/app/utils/can-grade';
+import { ItemOptionMap } from 'src/app/constants/item-options-table';
+import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
 import { compact, json, registerJsonTool } from './helpers';
 
 export const targetSchema = z
@@ -169,10 +175,13 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     query?: string;
     target?: TargetArg;
     limit?: number;
+    complements?: boolean;
   }>(server, 'optimize_slot', {
     title: 'Otimizar um slot',
     description:
       `Testa candidatos para um slot e ordena pelo ganho de DPS. No máximo ${config.limits.maxOptimizeCandidates} candidatos por chamada. ` +
+      'Cada candidato entra com os melhores cartas e encantamentos que ele aceita (`complements`, padrão), porque duas peças com o mesmo ATQ diferem em soquetes e encantamentos; ' +
+      'os cartas e encantamentos da peça antiga que a nova não comporta são retirados. `withoutSockets` mostra o DPS da peça nua. Só itens do LATAM entram; os demais vão em `skippedNotInLatam`. ' +
       'O link devolvido já vem com a comparação armada (peça atual → peça sugerida), então o jogador abre o simulador e vê a diferença.',
     inputSchema: {
       build: buildInputSchema,
@@ -182,8 +191,9 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       query: z.string().optional().describe('Filtra os candidatos automáticos por nome.'),
       target: targetSchema,
       limit: z.number().int().min(1).max(20).optional().default(10),
+      complements: z.boolean().optional().default(true).describe('Buscar também cartas e encantamentos de cada candidato. false compara só as peças nuas.'),
     },
-  }, async ({ build, slot, candidates, slotTag, query, target, limit = 10 }) => {
+  }, async ({ build, slot, candidates, slotTag, query, target, limit = 10, complements = true }) => {
     const input = await normalizeShare(build, shortener);
     if (!ITEM_ID_KEYS.includes(slot)) {
       // Without this the override is silently skipped and every candidate solves to
@@ -195,24 +205,66 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     const classId = baseRb.model.class;
     const { monster } = resolveTarget(dataset, target?.monsterId);
 
-    const ids = resolveCandidates(dataset, classId, { candidates, slotTag, query });
-    const baseDps = dpsAndMax(solve(baseRb, dataset, monster)).dps;
+    const requested = resolveCandidates(dataset, classId, { candidates, slotTag, query });
+    const skippedNotInLatam = requested.filter((id) => !dataset.itemIndex.get(id)?.latam);
+    const ids = requested.filter((id) => dataset.itemIndex.get(id)?.latam);
+    if (!ids.length) throw new Error(`Nenhum candidato disponível no LATAM (fora do LATAM: ${skippedNotInLatam.join(', ')}).`);
+
+    const baseSolved = solve(baseRb, dataset, monster);
+    const baseDps = dpsAndMax(baseSolved).dps;
+    const keys = relevantKeys(baseSolved);
+    const skillId = SKILL_ID_BY_NAME[String(baseRb.model.selectedAtkSkill ?? '').split('==')[0] as keyof typeof SKILL_ID_BY_NAME];
+    if (skillId) keys.push(String(skillId), `cd__${skillId}`, `chance__${skillId}`);
 
     // Decode the share token once — resolveBuild would re-decompress it per candidate.
     const perCandidate = decodeOnce(input);
+    const pace = pacing(config.limits.maxSearchMs);
+    // About 400 calculations in all for the sockets: 48 each for a handful of candidates, fewer when there are dozens.
+    const socketBudget = complements ? Math.min(48, Math.floor(400 / ids.length)) : 0;
+    const measure = (patch: BuildPatch) => {
+      // Gear changes invalidate the bonus pass, so each candidate needs a full solve.
+      const rb = resolveBuild(applyPatch(perCandidate, patch), dataset);
+      const { dps, max } = dpsAndMax(solve(rb, dataset, monster));
+      return { rb, dps, max, metrics: { dps, max } as Record<string, number | undefined> };
+    };
 
     const scored: any[] = [];
+    let stoppedEarly = false;
     for (const id of ids) {
-      // Gear changes invalidate the bonus pass, so each candidate needs a full solve.
-      const rb = resolveBuild({ ...perCandidate, gear: { ...(perCandidate.gear ?? {}), [slot]: id } }, dataset);
-      const { dps, max } = dpsAndMax(solve(rb, dataset, monster));
+      await pace.breathe();
+      if (pace.timeUp()) { stoppedEarly = true; break; }
+      // The new piece keeps only the sockets it has; the old piece's rolls do not carry over.
+      const worn = baseRb.model[slot] === id;
+      let patch: BuildPatch = worn ? {} : {
+        gear: Object.fromEntries([
+          [slot, id],
+          ...(`${slot}Grade` in baseRb.model || canGradeItem(dataset.items[id]) ? [[`${slot}Grade`, '']] : []),
+          ...keptSockets(dataset, baseRb, slot, id).clear.map((key) => [key, null]),
+        ]),
+        options: Object.fromEntries((ItemOptionMap.get(slot as ItemTypeEnum) ?? []).map((index) => [String(index), null])),
+      };
+      let tried;
+      try { tried = measure(patch); } catch { continue; }
+      const bare = tried.dps;
+      if (socketBudget > 0 && !worn) {
+        const refined = searchComplements({ patch, result: tried }, complementChoices(dataset, slot, id, keys, new Set()), 'dps', (candidate) => {
+          try { return measure(candidate); } catch { return null; }
+        }, socketBudget);
+        patch = refined.patch;
+        tried = refined.result;
+      }
+      const gear = (patch.gear ?? {}) as Record<string, unknown>;
+      const sockets = relatedItemKeys(slot).flatMap((key) => typeof gear[key] === 'number' ? [`${key}: ${dataset.itemIndex.get(gear[key] as number)?.name ?? gear[key]}`] : []);
       scored.push({
         id,
         name: dataset.itemIndex.get(id)?.name ?? String(id),
-        dps: round(dps, 2),
-        max,
-        deltaDps: round(dps - baseDps, 2),
-        deltaPct: deltaPct(dps, baseDps),
+        dps: round(tried.dps, 2),
+        max: tried.max,
+        deltaDps: round(tried.dps - baseDps, 2),
+        deltaPct: deltaPct(tried.dps, baseDps),
+        ...(sockets.length ? { sockets } : {}),
+        ...(socketBudget > 0 && !worn ? { withoutSockets: round(bare, 2) } : {}),
+        patch,
       });
     }
 
@@ -226,6 +278,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     // the result over the main model, so any card/enchant left out here would come
     // back as null — and the simulated side would not match the DPS ranked above.
     // Only main slots can be compared; the picker has no row for a card slot.
+    const winnerGear = (winner?.patch.gear ?? {}) as Record<string, unknown>;
     const compare: CompareState | null =
       winner && MAIN_ITEM_SLOTS.includes(slot)
         ? {
@@ -233,8 +286,8 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
             model2: {
               [slot]: winner.id,
               [`${slot}Refine`]: baseRb.model[`${slot}Refine`] ?? 0,
-              [`${slot}Grade`]: baseRb.model[`${slot}Grade`] ?? null,
-              ...Object.fromEntries(relatedItemKeys(slot).map((k) => [k, baseRb.model[k] ?? null])),
+              [`${slot}Grade`]: (winnerGear[`${slot}Grade`] as string | undefined) ?? baseRb.model[`${slot}Grade`] ?? null,
+              ...Object.fromEntries(relatedItemKeys(slot).map((k) => [k, k in winnerGear ? winnerGear[k] ?? null : baseRb.model[k] ?? null])),
             },
           }
         : null;
@@ -243,8 +296,12 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       slot,
       current: { id: currentId || null, name: currentId ? dataset.itemIndex.get(currentId)?.name : null, dps: round(baseDps, 2) },
       tested: scored.length,
-      ranking: top,
+      ranking: top.map(({ patch, ...row }) => row),
       share: shareOf(baseRb, compare),
+      complements,
+      context: damageContext(baseSolved),
+      ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
+      ...(stoppedEarly ? { stopped: 'tempo esgotado: parte dos candidatos não foi testada' } : {}),
       ...(baseRb.warnings.length ? { warnings: baseRb.warnings } : {}),
     });
   });

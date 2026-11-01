@@ -53,7 +53,8 @@ export function partnerIndex(dataset: Dataset): Partners {
       }
   }
   const index: Partners = {
-    of: id => cache.get(id) ?? [],
+    // An item LATAM has not shipped is never offered, whatever set it belongs to.
+    of: id => (cache.get(id) ?? []).filter(partner => dataset.itemIndex.get(partner)?.latam),
     slotOf: (id) => dataset.itemIndex.get(id)?.slotTags?.find((tag) => MAIN_ITEM_SLOTS.includes(tag)),
   };
   partnerIndexes.set(dataset, index);

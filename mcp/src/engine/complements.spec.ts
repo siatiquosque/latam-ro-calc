@@ -45,3 +45,13 @@ it('does not propose cards absent from the current LATAM client', () => {
     if (field.includes('Card') && id) expect(dataset.itemIndex.get(Number(id))?.latam).toBe(true);
   }
 });
+
+it('counts penetration of the target race and class, and the size penalty, among the keys that make an item worth testing', async () => {
+  const { resolveBuild } = await import('./build-input');
+  const { solve } = await import('./solve');
+  const { resolveTarget } = await import('../tools/calculate');
+  const { relevantKeys } = await import('./complements');
+  const rb = resolveBuild({ class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037 } } as any, dataset);
+  const keys = relevantKeys(solve(rb, dataset, resolveTarget(dataset, undefined).monster));
+  expect(keys).toEqual(expect.arrayContaining(['ignore_size_penalty', 'p_pene_class_boss', 'p_pene_race_all', 'pene_res', 'p_class_boss']));
+});
