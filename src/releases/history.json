@@ -1,5 +1,21 @@
 [
   {
+    "v": "0.1.196-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "O seletor de Bônus Aleatório agora também se restringe ao pool do kRO (rAthena) para os cerca de 1.050 itens que nenhuma fonte regional cobre, em vez de ficar aberto a qualquer bônus. O LATAM tende a seguir o kRO, mas isso ainda não está confirmado; itens sem pool em nenhuma fonte continuam abertos.",
+      "MCP: a busca de rolagens passa a usar o pool do rAthena como substituto e lista essas rolagens como não confirmadas no LATAM (unconfirmedRolls)."
+    ],
+    "logs_es": [
+      "El selector de Bonificación Aleatoria ahora también se restringe al pool del kRO (rAthena) para unos 1.050 ítems que ninguna fuente regional cubre, en lugar de quedar abierto a cualquier bonificación. LATAM suele seguir a kRO, pero aún no está confirmado; los ítems sin pool en ninguna fuente siguen abiertos.",
+      "MCP: la búsqueda de tiradas pasa a usar el pool de rAthena como sustituto y lista esas tiradas como no confirmadas en LATAM (unconfirmedRolls)."
+    ],
+    "logs_en": [
+      "The Random Bonus picker is now also limited to the kRO (rAthena) pool for about 1,050 items that no regional source covers, instead of staying open to any bonus. LATAM tends to follow kRO, but this is not confirmed yet; items with no pool in any source stay open.",
+      "MCP: the roll search now uses the rAthena pool as a fallback and lists those rolls as not confirmed for LATAM (unconfirmedRolls)."
+    ]
+  },
+  {
     "v": "0.1.195-beta",
     "date": "01-11-2026",
     "logs": [
