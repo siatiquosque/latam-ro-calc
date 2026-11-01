@@ -497,14 +497,18 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       require: z.array(requireSchema).optional(),
     },
   }, async ({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], candidates, combos = true, pairs = [], countProcs = false, procHitsPerSecond, levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }) => {
-    const budget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
+    const requestedBudget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
     const base = decodeOnce(await normalizeShare(build, shortener));
     const hasRotation = (((resolveBuild(base, dataset).model as { rotation?: string[] }).rotation) ?? []).length > 0;
     const objective: Metric = objectiveArg ?? objectiveFor(profile, hasRotation);
+    // A rotation costs a calculation per step: search on the chosen skill's DPS and measure only the finalists on the real objective.
+    const proxy: Metric | undefined = objective === 'rotationDps' || objective === 'burstDps' ? 'dps' : undefined;
+    const rankMetric: Metric = proxy ?? objective;
     const profileObjectives = { sustained: objectiveFor('sustained', hasRotation), burst: objectiveFor('burst', hasRotation) };
     const shown: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp'])];
     const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric)])];
+    const searchWanted: Metric[] = proxy ? [...new Set<Metric>([...wanted.filter((metric) => metric !== objective), proxy])] : wanted;
 
     const aims = (targets ?? [{ monsterId: target?.monsterId ?? config.defaultTargetId }]).map((aim) => ({
       monster: resolveTarget(dataset, aim.monsterId).monster,
@@ -513,6 +517,13 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const monster = aims[0].monster;
     const more = aims.slice(1);
     const baseline = evaluate(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+    // The search is capped by time as well as by calculations, and a calculation costs 6 ms or 45 ms depending on the build (a
+    // rotation solves every step). Size the budget to what fits, so the effort is spread over the slots instead of the clock
+    // cutting the walk short after the first ones.
+    const probeStart = Date.now();
+    evaluate(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+    const msPerCalculation = Math.max(1, Date.now() - probeStart);
+    const budget = Math.min(requestedBudget, Math.max(80, Math.floor((0.8 * config.limits.maxSearchMs) / msPerCalculation)));
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);
     if (maxGrade !== undefined) {
       const above = MAIN_ITEM_SLOTS.filter(slot => GRADES.indexOf(baseline.rb.model[`${slot}Grade`] ?? '') > gradeLimit);
@@ -704,7 +715,19 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         const moves = tuning ? movesFor(slot).filter((move) => move.changes.length === 1 && move.changes[0][1] === rb.model[slot]) : movesFor(slot);
         if (!moves.length) continue;
         const remainingSlots = walk.length - slotIndex + (rounds - round - 1) * walk.length;
-        const completionBudget = Math.max(0, Math.min(48, Math.floor((budget - solves) / Math.max(1, remainingSlots) / Math.max(1, moves.length)) - 1));
+        const share = Math.max(0, Math.floor((budget - solves) / Math.max(1, remainingSlots)));
+        // Three stages, so every candidate is judged with the same care as the piece it competes with: all of them bare, a quick
+        // search of sockets and rolls for the best dozen, the full search for the best few. A small even share for each candidate
+        // (what this used to give) cannot find the right enchant among eight, and the worn piece, which had the full search, won.
+        const quickEffort = tuning ? 0 : Math.max(4, Math.min(8, Math.floor(share / (2 * Math.max(1, Math.min(12, moves.length))))));
+        const fullEffort = Math.max(0, Math.min(48, tuning ? share - 1 : Math.floor(share / 4)));
+        const solveFor = (candidatePatch: BuildPatch) => {
+          if (outOfBudget()) { exhausted = true; return null; }
+          solves++;
+          try { return evaluate(current, candidatePatch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs); } catch { return null; }
+        };
+        type Tried = ReturnType<typeof evaluate>;
+        const entries: { move: Move; patch: BuildPatch; tried: Tried; fields: BuildPatch[][] }[] = [];
         for (const move of moves) {
           await pace.breathe();
           const key = moveKey(move);
@@ -713,25 +736,47 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
           solves++;
           solvedMoves.add(key);
           try {
-            let patch = patchFor(move);
-            let tried = evaluate(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
-            if (complements) {
-              const fields = move.changes.flatMap(([target, id]) => complementsFor(target, id));
-              const refined = searchComplements({ patch, result: tried }, fields, objective, candidatePatch => {
-                if (outOfBudget()) { exhausted = true; return null; }
-                solves++;
-                try { return evaluate(current, candidatePatch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); }
-                catch { return null; }
-              }, completionBudget);
-              patch = refined.patch;
-              tried = refined.result;
-            }
-            const candidate = tried.metrics[objective];
-            if (candidate !== undefined && meets(tried.metrics, rules)) seen.push({ to: move.changes, grades: move.grades, value: candidate, against: value });
-            if (candidate !== undefined && meets(tried.metrics, rules) && (!best || candidate > best.value)) best = { move, patch, value: candidate, metrics: tried.metrics, rb: tried.rb };
+            const patch = patchFor(move);
+            const tried = evaluate(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs);
+            entries.push({ move, patch, tried, fields: complements ? move.changes.flatMap(([target, id]) => complementsFor(target, id)) : [] });
           } catch {
             /* a candidate that does not resolve is simply not a candidate */
           }
+        }
+        const valueOf = (entry: { tried: Tried }) => entry.tried.metrics[rankMetric] ?? -Infinity;
+        const refineEntry = (entry: (typeof entries)[number], effort: number) => {
+          if (effort <= 0 || !entry.fields.length) return;
+          const refined = searchComplements({ patch: entry.patch, result: entry.tried }, entry.fields, rankMetric, solveFor, effort);
+          entry.patch = refined.patch;
+          entry.tried = refined.result;
+        };
+        if (complements && !exhausted) {
+          entries.sort((x, y) => valueOf(y) - valueOf(x));
+          if (!tuning) {
+            // Pieces with sockets first: a bare tie says nothing about them.
+            const withSockets = entries.filter((entry) => entry.fields.length);
+            for (const entry of withSockets.slice(0, 12)) { await pace.breathe(); refineEntry(entry, quickEffort); }
+            entries.sort((x, y) => valueOf(y) - valueOf(x));
+          }
+          for (const entry of entries.filter((candidate) => candidate.fields.length).slice(0, tuning ? 1 : 3)) { await pace.breathe(); refineEntry(entry, fullEffort); }
+        }
+        // With a rotation the ranking above used the chosen skill's DPS (a third of the cost); only the best few are measured on
+        // the real objective, and only those can be accepted.
+        let contenders = entries;
+        if (proxy) {
+          entries.sort((x, y) => valueOf(y) - valueOf(x));
+          contenders = [];
+          for (const entry of entries.slice(0, tuning ? 1 : 3)) {
+            if (outOfBudget()) { exhausted = true; break; }
+            solves++;
+            try { entry.tried = evaluate(current, entry.patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); contenders.push(entry); } catch { /* not a candidate */ }
+          }
+        }
+        for (const entry of contenders) {
+          const candidate = entry.tried.metrics[objective];
+          if (candidate === undefined || !meets(entry.tried.metrics, rules)) continue;
+          seen.push({ to: entry.move.changes, grades: entry.move.grades, value: candidate, against: value });
+          if (!best || candidate > best.value) best = { move: entry.move, patch: entry.patch, value: candidate, metrics: entry.tried.metrics, rb: entry.tried.rb };
         }
         // 0,1% is the floor: below it the "gain" is rounding in the engine, and the walk would chase noise.
         if (!exhausted && !tuning) searchedAt.set(slot, version);

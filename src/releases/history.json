@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.202-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "O `optimize_build` do MCP agora compara cada candidato com o mesmo cuidado que dá à peça atual (busca de soquetes em três etapas) e, com rotação, ranqueia pela habilidade escolhida e mede só os finalistas na rotação: converge em vez de parar por tempo e passa a achar peças como a Soqueira Vil Invernal."
+    ],
+    "logs_es": [
+      "El `optimize_build` del MCP ahora compara cada candidato con el mismo cuidado que la pieza actual (búsqueda de engarces en tres etapas) y, con rotación, clasifica por la habilidad elegida y mide solo a los finalistas en la rotación: converge en vez de detenerse por tiempo y pasa a encontrar piezas como la Soqueira Vil Invernal."
+    ],
+    "logs_en": [
+      "The MCP `optimize_build` now gives every candidate the same care as the worn piece (socket search in three stages) and, with a rotation, ranks by the chosen skill and measures only the finalists on the rotation: it converges instead of stopping on time and now finds pieces like the Soqueira Vil Invernal."
+    ]
+  },
+  {
     "v": "0.1.201-beta",
     "date": "01-11-2026",
     "logs": [

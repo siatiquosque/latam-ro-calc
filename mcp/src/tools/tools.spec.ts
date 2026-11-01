@@ -9,6 +9,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { createMcpServer } from '../mcp-server';
+import { config } from '../config';
 import { decodeCustomBundle } from 'src/app/core/custom-item-library';
 import { CUSTOM_ITEM_MIN_ID } from 'src/app/core/custom-items';
 
@@ -411,6 +412,17 @@ describe('regressions', () => {
     expect(vil.emptySockets.join(' ')).toMatch(/Vil Invernal.*carta.*encantamento/);
     expect(base.emptySockets).toBeUndefined();
   }, 60_000);
+
+  it('optimize_build converges on a build with a rotation and finds the socketed upgrade of the worn weapon', async () => {
+    const build = { ...inquisitor, rotation: ['Third Flame Bomb==5', 'Third Punish==5'], gear: { ...inquisitor.gear, headMiddle: 410233 } };
+    // The suite runs many workers at once: give the search the time it would have on an idle server.
+    const limit = config.limits.maxSearchMs;
+    config.limits.maxSearchMs = 100_000;
+    const { data } = await call('optimize_build', { build, slots: ['weapon', 'headMiddle'] }).finally(() => { config.limits.maxSearchMs = limit; });
+    expect(data.stopped).toBeUndefined();
+    expect(data.patch.gear.weapon).toBe(560037);
+    expect(data.objective).toBe('rotationDps');
+  }, 120_000);
 
   it('scan_slot skips items LATAM has not shipped and rejects a slot that is not equipment', async () => {
     const { data } = await call('scan_slot', { build: inquisitor, slot: 'boot', limit: 40, topSockets: 0 });
