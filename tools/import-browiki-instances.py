@@ -219,7 +219,10 @@ def main():
                 'profiles': profiles,
             }
     document['pools'] = dict(sorted(pools.items(), key=lambda kv: int(kv[0])))
-    Path(OUT).write_text(json.dumps(document, ensure_ascii=False, indent=1) + '\n', encoding='utf8')
+    # One line per item keeps the file diffable and about half the size (it ships in the app bundle).
+    body = ',\n'.join(f'  {json.dumps(i)}: {json.dumps(p, ensure_ascii=False, separators=(",", ":"))}' for i, p in document['pools'].items())
+    head = json.dumps({'_readme': document['_readme']}, ensure_ascii=False)[:-1]
+    Path(OUT).write_text(f'{head},\n "pools": {{\n{body}\n }}\n}}\n', encoding='utf8')
     for page, items in pages.items():
         print(f'{page}: {len(items)} itens', sorted(items))
     for text, count in unmapped.most_common():
