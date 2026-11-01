@@ -39,8 +39,8 @@ describe('ordem dos botões Sim/Não', () => {
   });
 
   it('alcança o catálogo inteiro, e todo botão é um par Sim/Não', () => {
-    // O levantamento que originou a correção achou 132 botões; o número só cresce.
-    expect(CONTROLS.length).toBeGreaterThanOrEqual(132);
+    // O levantamento que originou a correção achou 132 botões; as três Fés do Inquisidor passaram a ser listas de nível (130).
+    expect(CONTROLS.length).toBeGreaterThanOrEqual(130);
     expect(new Set(CONTROLS.map(({ skill }) => skill.dropdown.map((o) => o.label).join('|')))).toEqual(new Set(['Sim|Não']));
   });
 });

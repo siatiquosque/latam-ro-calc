@@ -1,5 +1,36 @@
 [
   {
+    "v": "0.1.195-beta",
+    "date": "01-11-2026",
+    "logs": [
+      "Links de compartilhamento curtos pelo próprio domínio (laro-calc.siatiquosque.com.br/l/…), guardados no servidor da calculadora. Os links longos antigos continuam funcionando.",
+      "O seletor de Bônus Aleatório passa a mostrar apenas o que o item pode rolar quando o pool é conhecido (Selo de Loki, Manto Branco, Mantos Temporais e cerca de 60 itens do bROWiki). Itens sem pool conhecido continuam abertos a qualquer bônus.",
+      "MCP: nova busca de distribuição de pontos de atributo e traits (optimize_stats), troca de pares de slots, relatório de procs e das alternativas que perderam, e lista dos itens sem pool de bônus aleatório (uncatalogued_pools). Respostas mais curtas, com limite de tempo por busca.",
+      "Busca MCP ampliada para cartas, encantamentos por posição e bônus aleatórios catalogados, incluindo Selo de Loki e os quatro selos inferiores. O resultado informa os limites da busca e pode ser reproduzido pelo link.",
+      "Calculadora, ícones, sprites e tabelas migrados para o domínio próprio; links promocionais e Discord retirados da interface.",
+      "Página MCP revisada para explicar os requisitos de comparação, a privacidade da aplicação e os limites da otimização. A pré-visualização usa a capa local.",
+      "Versão do aplicativo unificada com a identificação MCP e os endpoints de saúde. Novidades e pacote VPS passam a identificar a mesma versão, com metadados do artefato e suporte à reversão de release."
+    ],
+    "logs_es": [
+      "Enlaces para compartir cortos desde el propio dominio (laro-calc.siatiquosque.com.br/l/…), guardados en el servidor de la calculadora. Los enlaces largos anteriores siguen funcionando.",
+      "El selector de Bonificación Aleatoria pasa a mostrar solo lo que el ítem puede obtener cuando se conoce el pool (Sello de Loki, Manto Branco, Mantos Temporais y unos 60 ítems de bROWiki). Los ítems sin pool conocido siguen abiertos a cualquier bonificación.",
+      "MCP: nueva búsqueda de distribución de puntos de atributo y traits (optimize_stats), intercambio de pares de slots, informe de procs y de las alternativas que perdieron, y lista de los ítems sin pool de bonificaciones aleatorias (uncatalogued_pools). Respuestas más cortas, con límite de tiempo por búsqueda.",
+      "Búsqueda MCP ampliada a cartas, encantamientos por posición y bonificaciones aleatorias catalogadas, incluyendo Sello de Loki y los cuatro sellos inferiores. El resultado informa los límites y puede reproducirse mediante el enlace.",
+      "Calculadora, iconos, sprites y tablas migrados al dominio propio; enlaces promocionales y Discord retirados de la interfaz.",
+      "Página MCP revisada para explicar los requisitos de comparación, la privacidad de la aplicación y los límites de la optimización. La vista previa usa la portada local.",
+      "Versión de la aplicación unificada con la identificación MCP y los endpoints de salud. Novedades y paquete VPS identifican la misma versión, con metadatos del artefacto y reversión de release."
+    ],
+    "logs_en": [
+      "Short share links on the calculator's own domain (laro-calc.siatiquosque.com.br/l/…), stored on the calculator's server. Older long links keep working.",
+      "The Random Bonus picker now shows only what the item can roll when its pool is known (Loki Seal, Manto Branco, Mantos Temporais and about 60 bROWiki items). Items without a known pool stay open to any bonus.",
+      "MCP: new stat and trait point distribution search (optimize_stats), swapping pairs of slots, a report of procs and of the alternatives that lost, and a list of items without a random bonus pool (uncatalogued_pools). Shorter responses, with a time limit per search.",
+      "MCP search now includes cards, position-specific enchantments and catalogued random rolls, including Loki Seal and the four lower seals. Results report search limits and can be reproduced through their links.",
+      "Calculator, icons, sprites and tables moved to the project's own domain; promotional links and Discord removed from the interface.",
+      "MCP page revised to explain comparison requirements, application privacy and optimization limits. Link previews use the local cover.",
+      "Application version unified with MCP identification and health endpoints. Release notes and VPS packages identify the same version, with artifact metadata and release rollback support."
+    ]
+  },
+  {
     "v": "0.1.194-beta",
     "date": "31-10-2026",
     "logs": [
