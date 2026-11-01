@@ -51,7 +51,7 @@ O pacote fica em `.tmp/vps-artifact/`: `web.tar.gz`, `node.tar.gz` e
 `release.json`. A geração recusa fragmentos pendentes e divergência entre
 pacote e Novidades. Os metadados registram versão, horário, HEAD e se a árvore
 tinha alterações. O frontend recebe a mesma identificação em
-`/assets/release.json`. A build usa o domínio atual e o encurtador desativado.
+`/assets/release.json`. A build usa o domínio atual e o encurtador próprio em `/l`.
 
 O workflow manual **Build VPS release artifact** executa as verificações e
 publica o artefato no GitHub Actions. Ele não aloca versões, escreve no Git nem

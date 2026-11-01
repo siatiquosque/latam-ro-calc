@@ -10,7 +10,7 @@ if (history[0]?.v !== version) throw new Error('Package version and Novidades di
 if (readFragments(root).length) throw new Error('Prepare pending notes with pnpm release:prepare before packaging');
 const web = '.tmp/vps-release';
 const artifact = '.tmp/vps-artifact';
-const env = { ...process.env, PUBLIC_APP_ORIGIN: 'https://laro-calc.siatiquosque.com.br', SHORTENER_URL: '' };
+const env = { ...process.env, PUBLIC_APP_ORIGIN: 'https://laro-calc.siatiquosque.com.br', SHORTENER_URL: 'https://laro-calc.siatiquosque.com.br/l' };
 function run(command, args) {
   const result = spawnSync(command, args, { cwd: root, env, stdio: 'inherit', windowsHide: true });
   if (result.error) throw result.error;
