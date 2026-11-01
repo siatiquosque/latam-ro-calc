@@ -48,7 +48,7 @@ character in the calc. `"Transclasses"` is `["Hi-Class"]`, `"3ª/Terceiras class
 constant — fetch it rather than translating by eye:
 
 ```
-node -e "fetch('https://assets.latam-tools.com.br/raw/jobs.json').then(r=>r.json()).then(j=>console.log(j.filter(x=>x.name).map(x=>x.id+' '+x.name+' '+x.jt).join('\n')))"
+node -e "fetch('https://laro-calc.siatiquosque.com.br/game-assets/raw/jobs.json').then(r=>r.json()).then(j=>console.log(j.filter(x=>x.name).map(x=>x.id+' '+x.name+' '+x.jt).join('\n')))"
 ```
 
 | pt-BR (client) | `JT_` | token | | pt-BR (client) | `JT_` | token |

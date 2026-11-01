@@ -163,6 +163,11 @@ html { scrollbar-gutter: stable; }
   font-weight: 700;
   font-size: 0.95rem;
 }
+.item_desc_tooltip .item_desc_id {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
 /* "Redução de dano" popover (main stats + PVP HUD) — global because the app-ui-popover
    content is body-appended, so component-scoped styles from two different components
    wouldn't both reach it. */

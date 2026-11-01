@@ -232,8 +232,10 @@ describe('Hyper Novice físico — o proc do Orbe Lupino', () => {
     expect(pk).toHaveLength(12);
 
     // The proc is worth ~5,2% at the top: atkPercent 64 -> 89.
-    expect(Math.round(off.max)).toBe(4_673_950);
-    expect(Math.round(on.max)).toBe(4_915_198);
+    // Engine ceilings, not recorded exact hits. The full-ignore shadow set
+    // removes the former soft-DEF deduction in both states.
+    expect(Math.round(off.max)).toBe(4_674_012);
+    expect(Math.round(on.max)).toBe(4_915_259);
 
     // Nothing falls below the floor, and the five lowest never needed the proc at all.
     expect(pk[0]).toBeGreaterThanOrEqual(off.min);

@@ -159,6 +159,8 @@ export interface EquipmentSummaryModel {
   dmg: number;
   ignore_size_penalty: number;
   p_infiltration: number;
+  /** Full physical DEF bypass (hard and soft), without Infiltration's pseudo-ATK. */
+  ignorePhysicalDef: number;
 
   p_size_all: number;
   p_size_s: number;

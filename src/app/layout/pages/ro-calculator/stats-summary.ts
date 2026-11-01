@@ -242,6 +242,13 @@ const ATTACK_ROWS: RowSpec[] = [
     read: (s) => pair(s?.calc?.totalStatusAtk, weaponAtk(s)),
     origin: { label: 'ss.originWeaponStats' },
   },
+  {
+    label: 'ss.hiddenAtk',
+    valueClass: 'summary_stat_atk',
+    keys: [],
+    read: (s) => num(s?.calc?.totalHideMasteryAtk),
+    tooltipLabel: 'ss.hiddenAtkTip',
+  },
   { label: 'ss.pAtk', valueClass: 'summary_stat_atk2', keys: ['pAtk'], read: (s) => num(s?.dmg?.pAtk), origin: { label: 'ss.originPAtk' } },
   { label: 'taken.melee', valueClass: 'summary_stat_atk', keys: ['melee'], read: (s) => pct(s?.melee) },
   { label: 'taken.ranged', valueClass: 'summary_stat_atk', keys: ['range'], read: (s) => pct(s?.range) },
@@ -472,10 +479,10 @@ export function buildStatsSummary(cur: any, cmp: any | null, opts: StatsSummaryO
   return {
     headline,
     sustain: rows(SUSTAIN_ROWS),
-    // Paired so the three columns come out 8 / 8 / 7 rows deep. Ataque with Conjuração
+    // Paired so the three columns come out 9 / 8 / 7 rows deep. Ataque with Conjuração
     // rather than with Mágico is what keeps the panel as short as the two input cells
     // beside it — the alternative leaves Defesa+Conjuração nine rows deep and the whole
-    // row grows to match.
+    // row grows to match. Ataque also exposes the mastery omitted from Alt+Q.
     columns: [
       groups(
         { title: opts.text('ss.groupAttack'), rows: rows(ATTACK_ROWS) },

@@ -100,6 +100,7 @@ export const createRawTotalBonus = (): EquipmentSummaryModel => {
     dmg: 0,
     ignore_size_penalty: 0,
     p_infiltration: 0,
+    ignorePhysicalDef: 0,
 
     p_size_all: 0,
     p_size_s: 0,

@@ -140,15 +140,6 @@ const last = __index8 === __array8.length - 1; return <Fragment key={identityKey
 "onModelChange": (value: any, event: any) => vm.action(() => { ((event: any) => vm.action(() => { const $event = event; (vm.nick = $event) }))(value); }),
 "className": ["w-full"].filter(Boolean).join(' '),
 "inputText": true}}></Render></Render>
-<Render tag="div" props={{"className": ["col-6"].filter(Boolean).join(' ')}}><Render tag="label" props={{"htmlFor": "helpImproveDiscord",
-"className": ["block mb-1 text-sm"].filter(Boolean).join(' ')}}>{"Discord"}</Render>
-<Render tag="input" props={{"id": "helpImproveDiscord",
-"maxLength": "60",
-"placeholder": t('hi.discordPlaceholder'),
-"value": vm.discord,
-"onModelChange": (value: any, event: any) => vm.action(() => { ((event: any) => vm.action(() => { const $event = event; (vm.discord = $event) }))(value); }),
-"className": ["w-full"].filter(Boolean).join(' '),
-"inputText": true}}></Render></Render>
 <Render tag="div" props={{"className": ["col-12"].filter(Boolean).join(' ')}}><Render tag="label" props={{"htmlFor": "helpImproveNotes",
 "className": ["block mb-1 text-sm"].filter(Boolean).join(' ')}}>{t('hi.notes')}</Render>
 <Render tag="textarea" props={{"appInputTextarea": "",

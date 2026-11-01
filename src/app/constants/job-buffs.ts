@@ -39,6 +39,18 @@ const JobBuffsList: ActiveSkillModel[] = [
     ],
   },
   {
+    // HP máx. +50 per level, measured level by level on a bare Inquisidor (Teste_Angelus.rrf:
+    // 90.061 → 90.111 … 90.561). It lands in the flat `hp` pool, so the HP% bonuses scale it.
+    // The same recording shows soft DEF rising by floor(VIT x level / 40) — not modelled here.
+    name: 'Angelus',
+    label: 'Angelus',
+    inputType: 'dropdown',
+    dropdown: [
+      { label: '-', value: 0, isUse: false },
+      ...Array.from({ length: 10 }, (_, i) => ({ label: `Nv ${i + 1}`, value: i + 1, isUse: true, bonus: { hp: 50 * (i + 1) } })),
+    ],
+  },
+  {
     name: 'Impositio Manus',
     label: 'Impositio 5',
     inputType: 'selectButton',

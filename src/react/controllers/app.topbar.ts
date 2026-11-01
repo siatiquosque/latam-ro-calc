@@ -53,9 +53,6 @@ export class AppTopBarComponent extends ViewState {
 
   // The Google form and spreadsheet are gone: everything became a card on the
   // shared tracker, and what the spreadsheet held was migrated over.
-  readonly issuesReportUrl = `${environment.issuesUrl}/novo?projeto=simulador`;
-  readonly issuesBoardUrl = `${environment.issuesUrl}/?projeto=simulador`;
-  readonly discordUrl = 'https://discord.gg/JCXTqqWq9Q';
   // Original changelog/history at the fork point (last upstream release v3.2.19).
   readonly originalChangelogUrl =
     'https://github.com/turugrura/tong-calc-ro/blob/ba4312f/src/app/layout/app.topbar.component.ts';

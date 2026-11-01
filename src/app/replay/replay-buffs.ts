@@ -30,6 +30,7 @@ const STACKABLE_POTION_EFST: Record<number, number> = {
  * (the snapshot doesn't carry a reliable caster level); the user can bump it.
  */
 export const BUFF_EFST: Record<number, { name: string; value: number }> = {
+  9: { name: 'Angelus', value: 10 }, // Angelus; Lv1-10 measured in Teste_Angelus.rrf, the snapshot carries no level
   10: { name: 'Clementia', value: 10 }, // Bênção
   12: { name: 'Cantocandidus', value: 10 }, // Aumentar Agilidade
   15: { name: 'Impositio Manus', value: 5 },

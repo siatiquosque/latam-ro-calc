@@ -220,17 +220,17 @@ describe('Shadow Chaser — what this recording leaves open', () => {
   const r = simular('Fatal Manace==10');
 
   /**
-   * Pinned, not asserted as correct: the recorded basic attacks overshoot the engine's own
-   * maximum by ~1–2%. Ratcheted so that the gap can only shrink — if a later fix lands, one
-   * of these fails and gets tightened, and if something regresses it fails too.
+   * Pinned, not asserted as exact. Correcting the full-ignore shadow set removed
+   * the soft-DEF deduction: normal is now +0.592%, critical -0.877%. Keep a
+   * tighter 1% residual bound, instead of the former 2.5% one-sided ceiling.
    */
-  it('basic attacks still land above the engine ceiling, by no more than 2.5%', () => {
+  it('basic attacks retain a documented residual below 1% in either direction', () => {
     const normalGravadoMax = 3041; // por golpe, dos pacotes count=2 (pares, logo exatos)
     const criticoGravadoMax = 5357;
-    expect(normalGravadoMax / r.basicoMax).toBeLessThan(1.025);
-    expect(normalGravadoMax / r.basicoMax).toBeGreaterThan(1); // ainda aberto
-    expect(criticoGravadoMax / r.criticoMax).toBeLessThan(1.025);
-    expect(criticoGravadoMax / r.criticoMax).toBeGreaterThan(1); // ainda aberto
+    expect(r.basicoMax).toBe(3059);
+    expect(r.criticoMax).toBe(5310);
+    expect(Math.abs(r.basicoMax / normalGravadoMax - 1)).toBeLessThan(0.01);
+    expect(Math.abs(r.criticoMax / criticoGravadoMax - 1)).toBeLessThan(0.01);
   });
 
 });

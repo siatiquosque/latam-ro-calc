@@ -29,7 +29,7 @@ const statKeys = [
   'res', 'monster_res', 'mres', 'monster_mres', 'melee', 'range', 'bowRange',
   'vct', 'vct_inc', 'acd', 'fct', 'fctPercent', 'cri', 'criRange', 'criDmg', 'nonCriticalDamage',
   'perfectHit', 'hit', 'flee', 'perfectDodge', 'flatDmg', 'mildwind', 'dmg',
-  'ignore_size_penalty', 'p_infiltration', 'pene_res', 'pene_mres', 'unbreakableWeapon',
+  'ignore_size_penalty', 'p_infiltration', 'ignorePhysicalDef', 'pene_res', 'pene_mres', 'unbreakableWeapon',
   'dmg_taken_physical', 'dmg_taken_magical', 'dmg_taken_all', 'dmg_taken_range',
 ];
 const races = ['all', 'formless', 'undead', 'brute', 'plant', 'insect', 'fish', 'demon',

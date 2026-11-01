@@ -455,8 +455,8 @@ export class RoyalGuard extends Paladin {
     const weaponType = weapon?.data?.typeName;
     const bonuses = this.bonuses?.masteryAtks || {};
 
-    const b = this.getMasteryAtkByMonsterRace(info.monster.race);
-    const c = this.getMasteryAtkByMonsterElement(info.monster.element);
+    const b = this.getMasteryAtkByMonsterRace(info.monster.race, info.model.level);
+    const c = this.getMasteryAtkByMonsterElement(info.monster.element, info.model.level);
 
     let sum = b.totalAtk + c.totalAtk;
     const spearMasteryLv = this.learnLv('Spear Mastery');

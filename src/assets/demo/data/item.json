@@ -47754,8 +47754,10 @@
       ],
       "p_pene_race_all": [
         "5",
-        "2---1",
-        "EQUIP[Full Penetration Shadow Pendant]REFINE[shadowEarring,shadowPendant==18]===100"
+        "2---1"
+      ],
+      "ignorePhysicalDef": [
+        "EQUIP[Full Penetration Shadow Pendant]REFINE[shadowEarring,shadowPendant==18]===1"
       ],
       "p_race_all": [
         "10===3"

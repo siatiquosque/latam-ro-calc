@@ -518,16 +518,13 @@ export class Sura extends Champion {
       name: 'Total Spirit',
       inputType: 'dropdown',
       isMasteryAtk: true,
+      // Hidden mastery: affects damage, but not the client's Alt+Q ATK.
+      // inq-buffed-weaponless.rrf reads 821 + 600 with 15 spheres, not 821 + 645.
       dropdown: [
         { label: '-', value: 0, isUse: false },
-        { label: '1', value: 1, isUse: true, bonus: { atk: 1 * 3 } },
-        { label: '2', value: 2, isUse: true, bonus: { atk: 2 * 3 } },
-        { label: '3', value: 3, isUse: true, bonus: { atk: 3 * 3 } },
-        { label: '4', value: 4, isUse: true, bonus: { atk: 4 * 3 } },
-        { label: '5', value: 5, isUse: true, bonus: { atk: 5 * 3 } },
-        { label: '6', value: 6, isUse: true, bonus: { atk: 6 * 3 } },
-        { label: '10', value: 10, isUse: true, bonus: { atk: 10 * 3 } },
-        { label: '15', value: 15, isUse: true, bonus: { atk: 15 * 3 } },
+        ...[1, 2, 3, 4, 5, 6, 10, 15].map(value => ({
+          label: String(value), value, isUse: true, bonus: { x_atk: value * 3 },
+        })),
       ],
     },
     {
@@ -759,10 +756,11 @@ export class Sura extends Champion {
     // Demônios" — emits the race/element mastery keys from Acolyte.ts; until 12/09/2026
     // this line never read them, so Lv10 and Lv0 gave the same number on a Demônio
     // (Inquisitor.brand-rotation-replay.spec.ts). Same wiring as RoyalGuard.getMasteryAtk.
-    const race = this.getMasteryAtkByMonsterRace(info.monster.race).totalAtk;
-    const element = this.getMasteryAtkByMonsterElement(info.monster.element).totalAtk;
+    const race = this.getMasteryAtkByMonsterRace(info.monster.race, info.model.level).totalAtk;
+    const element = this.getMasteryAtkByMonsterElement(info.monster.element, info.model.level).totalAtk;
 
-    return race + element + this.calcHiddenMasteryAtk(info, { prefix: `x_${wTypeName}` }).totalAtk;
+    return race + element + this.calcHiddenMasteryAtk(info, { prefix: `x_${wTypeName}` }).totalAtk
+      + this.calcHiddenMasteryAtk(info).totalAtk;
   }
 
   private getCurrentHP(maxHp: number) {

@@ -43,6 +43,7 @@ import {
   PetLoyalty,
   PetLoyaltyList,
   getMonsterGroupName,
+  getMonsterMapCodes,
 } from 'src/app/constants';
 import { isEquipmentEnchant } from 'src/app/constants/enchant_item';
 import { ActiveSkillModel, AtkSkillModel, CharacterBase, ClassIdBySpriteJob, ClassName, PassiveSkillModel, SkillModel } from 'src/app/jobs';
@@ -87,7 +88,7 @@ import { ElementType } from 'src/app/constants/element-type.const';
 import { CompareState, STATS_COMPARE_KEYS, copyStatsFields } from 'src/app/core/compare-state';
 import { buildComparisonFromImport } from 'src/app/core/import-comparison';
 import { normalizeSavedModel } from 'src/app/core/saved-model';
-import { parseShareInput } from 'src/app/core/share-link-input';
+import { parseShareInput, shortenerBaseFor } from 'src/app/core/share-link-input';
 import { ClassSwitchLoss, applyClassSwitch, findClassSwitchLosses, hasBuildToKeep, slotEquipFilter } from 'src/app/core/class-switch';
 import { canUsedByClass } from 'src/app/utils/can-used-by-class';
 import { SLOTS_BY_KEY } from 'src/app/app-config/equipment-slots';
@@ -2349,7 +2350,8 @@ await ((_event?: unknown) => {
     let token: string | null = input.kind === 'token' ? input.token : null;
     if (input.kind === 'short') {
       try {
-        const res = await fetch(`${environment.shortenerUrl}/api/links/${encodeURIComponent(input.slug)}`);
+        const base = shortenerBaseFor(this.importLinkText, environment.shortenerUrl) ?? environment.shortenerUrl;
+        const res = await fetch(`${base}/api/links/${encodeURIComponent(input.slug)}`);
         if (res.ok) {
           const { url } = await res.json();
           const resolved = parseShareInput(url, environment.shortenerUrl);
@@ -2782,10 +2784,10 @@ await ((_event?: unknown) => {
     const selectedValidSkill2 = this.atkSkills.find(
       (a) => Array.isArray(a.levelList) && a.levelList.length > 0 && a.levelList.find((lv) => lv.value === selectedAtkSkill),
     );
-    if (selectedValidSkill?.value) {
-      this.model.selectedAtkSkill = selectedValidSkill.value;
-    } else if (selectedValidSkill2?.value) {
+    if (selectedValidSkill2?.value) {
       this.model.selectedAtkSkill = selectedAtkSkill;
+    } else if (selectedValidSkill?.value) {
+      this.model.selectedAtkSkill = selectedValidSkill.value;
     } else {
       this.model.selectedAtkSkill = fallbackAtkSkill;
     }
@@ -2939,9 +2941,10 @@ await ((_event?: unknown) => {
       // Grouping is id- and map-driven (see constants/monster-spawn-mapper), so the
       // monster's real spawn — used by SPAWN[] item bonuses — stays intact.
       const spawnMap = getMonsterGroupName({ id, spawn, mvp, class: _class });
+      const maps = getMonsterMapCodes(spawn);
       const group = groupMap.get(spawnMap);
       const monster: DropdownModel = {
-        label: `${level} ${name} (${racePtBr(raceName)} ${sizePtBr(scaleName).at(0)})`,
+        label: `${level} ${name} (${racePtBr(raceName)} ${sizePtBr(scaleName).at(0)})${maps.length ? ` · ${maps.join(', ')}` : ''}`,
         name,
         value: id,
         level,
@@ -2952,7 +2955,8 @@ await ((_event?: unknown) => {
         scaleName: scaleName.at(0),
         health,
         groups: spawnMap.trim().split(','),
-        searchVal: `${spawnMap} ${id}`,
+        spawn,
+        searchVal: `${spawnMap} ${spawn} ${id}`,
       };
 
       monsters.push(monster);

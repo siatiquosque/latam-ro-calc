@@ -27,7 +27,7 @@ export const skillDescHtml = (skillId?: number): string => {
   return html;
 };
 
-/** Full hover-popover HTML for an item: the bold pt-BR name + the client description.
+/** Full hover-popover HTML for an item: name, numeric ID and client description.
  *  Shared by every item dropdown (equipment, shadow, costume/visual, pet).
  *  `description` comes in separately (ItemDescriptionStore) because it loads
  *  after the item map; before it lands this renders the name alone.
@@ -36,12 +36,13 @@ export const skillDescHtml = (skillId?: number): string => {
  *  here any more: excess height is the popover's own job, since it scrolls vertically
  *  (see `.item_desc_tooltip .ui-tooltip-text` in styles.css). They used to flow into a
  *  second column, which broke reading down the middle. */
-export const itemDescPopoverHtml = (item?: { name?: string }, description?: string): string => {
+export const itemDescPopoverHtml = (item?: { name?: string; id?: number }, description?: string): string => {
   const desc = prettyItemDesc(description) || '';
   const safeName = item?.name?.replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   })[char]);
-  const title = safeName ? `<div class="item_desc_title"><b>${safeName}</b></div><br>` : '';
+  const id = Number.isSafeInteger(item?.id) ? `<div class="item_desc_id">ID: ${item.id}</div>` : '';
+  const title = safeName || id ? `<div class="item_desc_title">${safeName ? `<b>${safeName}</b>` : ''}${id}</div><br>` : '';
   if (!title && !desc) return '';
 
   return `${title}${desc}`;

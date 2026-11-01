@@ -31,6 +31,13 @@ function simulate(flashLevel: number, learned: [number, number, number], Job: ty
 }
 
 describe('Combo Rápido sums the learned attacks', () => {
+  it.each([Sura, Inquisitor])('offers Punho do Dragão level 3 and calculates its own ratio for %s', Job => {
+    const skill = new Job().atkSkills.find(skill => skill.name === 'Dragon Combo')!;
+    expect(skill.levelList?.some(option => option.value === 'Dragon Combo==3')).toBe(true);
+    const result = simulate(5, [10, 10, 10], Job, 0, 'Dragon Combo==3');
+    expect(result.baseSkillDamage).toBe(595); // (100 + 3 × 80) × level 175 / 100
+  });
+
   it('is offered in Batalha and exposes the three contributing levels in Aprenda', () => {
     const sura = new Sura();
     expect(sura.atkSkills.find((skill) => skill.name === 'Flash Combo')?.levelList).toHaveLength(5);

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { encodeBuild } from './share-codec';
 import { buildSharePath, isShareToken, readShareToken, SHARE_PATH_PREFIX } from './share-path';
 
-const ORIGIN = 'https://simulador.latam-tools.com.br';
+const ORIGIN = 'https://laro-calc.siatiquosque.com.br';
 
 describe('isShareToken', () => {
   it('accepts every character lz-string can emit after the +/. mapping', () => {

@@ -1,4 +1,4 @@
-import { ItemTypeEnum, MainItemWithRelations } from 'src/app/constants/item-type.enum';
+import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
 import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { EquipmentSummaryModel } from 'src/app/models/equipment-summary.model';
 import { HpSpTable } from 'src/app/models/hp-sp-table.model';
@@ -19,11 +19,6 @@ const mainEquipment = [
   ItemTypeEnum.accLeft,
   ItemTypeEnum.accRight,
 ];
-const eligibleVitIntItems = Object.entries(MainItemWithRelations)
-  .filter(([mainItem]) => mainEquipment.includes(mainItem as any))
-  .flatMap(([mainItem, relatedItems]) => {
-    return [mainItem, ...relatedItems];
-  });
 
 export class HpSpCalculator {
   private hpSpTable: HpSpTable;
@@ -67,9 +62,13 @@ export class HpSpCalculator {
     let equipmentVit = 0;
     let equipmentInt = 0;
 
-    for (const equipmentName of eligibleVitIntItems) {
-      equipmentVit += equipmentBonus[equipmentName]?.vit || 0;
-      equipmentInt += equipmentBonus[equipmentName]?.int || 0;
+    // Only the equipment's own script contributes the extra +1 HP/SP per
+    // VIT/INT. Cards and enchants still increase total VIT/INT, but do not
+    // enter this flat pool (rAthena stores param_equip before parsing cards).
+    for (const equipmentName of mainEquipment) {
+      const bonus = equipmentBonus[equipmentName];
+      equipmentVit += (bonus?.vit || 0) + (bonus?.allStatus || 0);
+      equipmentInt += (bonus?.int || 0) + (bonus?.allStatus || 0);
     }
     this._equipmentVit = equipmentVit;
     this._equipmentInt = equipmentInt;

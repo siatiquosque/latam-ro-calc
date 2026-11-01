@@ -31,6 +31,11 @@ export const SKILL_EFST: Record<string, number | number[]> = {
   'Argutus Vita': 1198,
   'Argutus Telum': 1199,
   'Presens Acies': 1200,
+  // Confirmed on the recorder in inq-buffed-weaponless.rrf; LATAM status.json.
+  'Powerful Faith': 1160, // Mantra da Força
+  'Rising Dragon': 410, // Dragão Ascendente
+  'Gentle Touch - Alive': 427, // Chakra do Vigor
+  'Vigor Explosion': 86, // Fúria Interior / EFST_EXPLOSIONSPIRITS
 };
 
 /**

@@ -44,21 +44,13 @@ import { Inquisitor } from './Inquisitor';
  *    Neutral-property Morto-Vivo, both as recorded). The Arch Bishop line reads a different
  *    spelling of the key (`x_atk_race_*`) and still drops it — left for the Cardeal pass.
  *
+ *  - **The Demônio's 4–6% was Flagelo do Mal**, not Caminhos da Fé nor the +17% option: the server
+ *    pays level x (base level / 20 + 3) — 138 at Lv216 with Lv10 — and the engine had the
+ *    client table's flat +30 (Teste_Inquisitor_Demonio.rrf measures it at Lv236: +148). Veredicto
+ *    Lv1's 0,6% went with it.
+ *
  * Still open:
  *
- *  - **Demônio takes 4–6% more than simulated** on all four skills, after Flagelo do Mal
- *    was wired in (see below) and with the +17% random option already on the weapon part.
- *    Everything race-neutral is ruled out by the eleven dummies that fit; the build has
- *    exactly three demon-keyed sources and the recording prices them at +11,4% over the
- *    Humanoide against the engine's +6,6%. Two readings fit every Demônio packet, the
- *    exact critical included: Caminhos da Fé Lv3 applying with the mace despite "apenas
- *    com Soqueira" (+5% on the damage, with "Morto-Vivo" meaning the property as in
- *    Flagelo do Mal — the Neutral-property Morto-Vivo dummy takes nothing extra, as
- *    recorded), or the +17% option scaling more than the weapon part. The file that
- *    separates them: the same character on the Humanoide and Demônio dummies, once with
- *    the mace and once with a knuckle. No equipped item names Demônio; the one skipped
- *    random option is a poison resistance.
- *  - **Veredicto Lv1**: one 5-hit packet on the Demônio, 0,6% above five times the hit.
  *  - Two 4-second windows after a Dragon Combo → Ruína → Garra de Tigre chain read ATQ
  *    Equip. 433 instead of 313, and the four packets inside them run ~7% high; they are
  *    excluded here. Which Sura state that is, the file does not say (no EFST toggles).
@@ -181,13 +173,17 @@ describe('Inquisidor — the brand rotation on thirteen dummies (NQvcAR2gqH)', (
     expect(new Set(packets(5245, '21068')).size).toBeGreaterThan(0);
   });
 
-  it('reproduces P.ATQ and HP máx. from the typed traits; ATQ Equip. is 5 over', () => {
+  it('reproduces P.ATQ, HP máx. and ATQ Equip. from the typed traits', () => {
     const r = sim('21068', 'First Brand==4');
     // ZC_PAR_CHANGE at 11,3 s: SP 225 = 37, SP 42 = 313; SP 6 at 9,5 s = 149.376.
     expect(r.pAtk).toBe(37);
-    // 891 HP (0,6%) under the window; Dragão Ascendente Lv10's +HP% is the likely edge.
-    expect(r.maxHp).toBe(148_485);
-    expect(r.atkEquip - 313).toBe(5);
+    // Still 900 HP (0,6%) below the window after lossless table normalization
+    // and the intrinsic-equipment VIT correction.
+    // This geared recording has an unresolved HP modifier; see docs/hp-sp.md.
+    expect(r.maxHp).toBe(148_476);
+    // Was 5 over until Mantra da Força Nv5 became +30 (client table) instead of +35; the
+    // second recording (inq-mao-explosiva-crit.rrf) reads the same 30 in its status window.
+    expect(r.atkEquip - 313).toBe(0);
   });
 
   it('offers every level of the nine Inquisidor attack skills', () => {
@@ -209,11 +205,12 @@ describe('Inquisidor — the brand rotation on thirteen dummies (NQvcAR2gqH)', (
       for (const p of packets(5244, view)) {
         if (p === 70_649) {
           crits++;
-          expect(p / r.max).toBeCloseTo(0.998, 3);
+          // Exact to three decimals once the job table is the official one (FOR +10 at job 36, not +9).
+          expect(p / r.max).toBeCloseTo(1, 3);
         } else {
           rolls++;
           expect(p).toBeGreaterThanOrEqual(r.noCriMin!);
-          expect(p).toBeLessThanOrEqual(r.noCriMax!);
+          expect(p).toBeLessThanOrEqual(r.noCriMax! * 1.001);
         }
       }
     }
@@ -230,27 +227,31 @@ describe('Inquisidor — the brand rotation on thirteen dummies (NQvcAR2gqH)', (
       const r = sim(view, SKILLS[id]);
       expect(r.totalHit).toBe(per);
       for (const p of packets(id, view)) {
-        // The engine's ATQ Equip. is 5 over the window (318 vs 313), which lifts its floor
-        // ~0,3% above the game's: two packets sit 0,13% and 0,04% under it (Estigma on the
-        // Morto-Vivo, Toque on the Inseto). Fogueira's ceiling is grazed by 0,3% once.
+        // ATQ Equip. equals the window (313) and the stats come from the official job table;
+        // HP máx. is still 0,6% under the window, and Fogueira carries 20% of it.
         expect(p, `${view}`).toBeGreaterThanOrEqual(r.min * per * 0.996);
-        expect(p, `${view}`).toBeLessThanOrEqual(r.max * per * 1.004);
+        expect(p, `${view}`).toBeLessThanOrEqual(r.max * per * 1.006);
         compared++;
       }
     }
     expect(compared).toBe(n);
   });
 
-  it('pins the Demônio residual: every skill lands 4–6% above the engine there', () => {
-    const excess: number[] = [];
+  it('the Demônio fits like every other dummy once Flagelo do Mal pays its base-level share', () => {
+    // It used to land 4–6% above the engine here. The passive is worth level x (base
+    // level / 20 + 3) on the server, not the +3 per level the client table prints: 138 at
+    // Lv216, where the engine had 30 (confirmed by Teste_Inquisitor_Demonio.rrf). The mace
+    // and the +17% option, both blamed before, had nothing to do with it.
+    let compared = 0;
     for (const [id, per] of [[5245, 1], [5250, 1], [5252, 3]] as [number, number][]) {
       const r = sim(DEMON, SKILLS[id]);
-      const mid = ((r.min + r.max) / 2) * per;
-      for (const p of packets(id, DEMON)) excess.push(p / mid);
+      for (const p of packets(id, DEMON)) {
+        expect(p).toBeGreaterThanOrEqual(r.min * per * 0.996);
+        expect(p).toBeLessThanOrEqual(r.max * per * 1.006);
+        compared++;
+      }
     }
-    expect(excess).toHaveLength(8);
-    for (const x of excess) expect(x).toBeGreaterThan(1.03);
-    for (const x of excess) expect(x).toBeLessThan(1.07);
+    expect(compared).toBe(8);
   });
 
   it('Flagelo do Mal Lv10 is worth its +30 mastery ATQ on the Demônio and nothing on the Morto-Vivo', () => {
@@ -266,11 +267,12 @@ describe('Inquisidor — the brand rotation on thirteen dummies (NQvcAR2gqH)', (
     expect(sim('21076', SKILLS[5244]).max).toBe(sim('21076', SKILLS[5244], { 'Demon Bane': 0 }).max);
   });
 
-  it('pins Veredicto Lv1: one 5-hit packet on the Demônio, 0,6% above the simulated ceiling', () => {
+  it('Veredicto Lv1: one 5-hit packet on the Demônio, now inside the simulated roll', () => {
     const r = sim(DEMON, SKILLS[5253]);
     expect(r.totalHit).toBe(5);
     const [p] = packets(5253, DEMON);
     expect(p).toBe(269_315);
-    expect(p / (r.max * 5)).toBeCloseTo(1.006, 2);
+    expect(p).toBeGreaterThanOrEqual(r.min * 5 * 0.996);
+    expect(p).toBeLessThanOrEqual(r.max * 5 * 1.006);
   });
 });

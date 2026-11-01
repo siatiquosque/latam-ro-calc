@@ -55,6 +55,7 @@ export const ITEM_BONUS_LABELS: Record<string, string> = {
   hit: 'Precisão', perfectHit: 'Precisão perfeita', cri: 'Crítico', criRange: 'CRIT à distância', criDmg: 'Dano crítico',
   perfectDodge: 'Esquiva Perfeita', flee: 'Esquiva', forceCri: 'Força crítico',
   ignore_size_penalty: 'Ignora penalidade de tamanho', p_infiltration: 'Infiltração física',
+  ignorePhysicalDef: 'Ignora DEF física (equipamento e atributos)',
   mildwind: 'Vento Suave',
   // General defender-side reductions, shared by PvP and incoming monster damage.
   dmg_taken_all: 'Redução de dano recebido',

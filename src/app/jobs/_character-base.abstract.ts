@@ -8,10 +8,11 @@ import { DamageFormulaCalc } from '../models/damage-summary.model';
 import { ClassAutoCastDefinition } from '../models/auto-cast.model';
 import { EquipmentSummaryModel } from '../models/equipment-summary.model';
 import { AdditionalBonusInput, InfoForClass, SkillRef, SkillStateCtx } from '../models/info-for-class.model';
-import { ASPD_CAP, sortSkill } from '../utils';
+import { ASPD_CAP, floor, sortSkill } from '../utils';
 import { AspdTable } from './_aspd-table';
 import { ClassName } from './_class-name';
 import { rebalancedSkillCatalog } from '../skills/rebalance-2026';
+import { withSelectableSkillLevels } from '../skills/skill-levels';
 import type { SkillFormulaVersion } from '../skills/skill-formula-version';
 import { previewSkillsForClass, previewBuffsForClass, applyPreviewBuffs } from '../skills/preview-275';
 import { preview285SkillsForClass, preview285BuffsForClass, preview285PassivesForClass, PREVIEW_285_AUTOCAST } from '../skills/preview-285';
@@ -286,7 +287,7 @@ export abstract class CharacterBase {
   }
 
   get atkSkills() {
-    const skills: AtkSkillModel[] = [...this._atkSkillList];
+    const skills: AtkSkillModel[] = this._atkSkillList.map(withSelectableSkillLevels);
 
     if (environment.production) {
       return skills.filter((a) => !a.isDevMode);
@@ -296,7 +297,8 @@ export abstract class CharacterBase {
   }
 
   getAtkSkills(version?: SkillFormulaVersion): AtkSkillModel[] {
-    return rebalancedSkillCatalog([...this.atkSkills, ...previewSkillsForClass(this.className), ...preview285SkillsForClass(this.className)], this.className, version).map(applyPreviewBuffs);
+    return rebalancedSkillCatalog([...this.atkSkills, ...previewSkillsForClass(this.className), ...preview285SkillsForClass(this.className)], this.className, version)
+      .map(applyPreviewBuffs).map(withSelectableSkillLevels);
   }
 
   get passiveSkills() {
@@ -488,7 +490,23 @@ export abstract class CharacterBase {
     return totalBonus;
   }
 
-  protected getMasteryAtkByMonsterRace(race: string) {
+  /**
+   * Flagelo do Mal's share that grows with the base level. The client text prints only +3 per
+   * level (the passive's own bonus, summed by the two getters below), but the server pays
+   * level x (base level / 20 + 3) — the line rAthena's battle.cpp carries for AL_DEMONBANE, and
+   * what the LATAM server did in Teste_Inquisitor_Demonio.rrf: a Lv236 Inquisidor with Lv10 hit a
+   * Demônio for +148 over a Humano, to the unit, with either weapon (the table says +30).
+   * Returns the part past the +3 per level.
+   */
+  private demonBaneBaseLevelAtk(baseLevel?: number): number {
+    const level = this.learnLv('Demon Bane');
+    if (!baseLevel || level <= 0) return 0;
+
+    return floor((level * baseLevel) / 20);
+  }
+
+  /** Pass `baseLevel` to include Flagelo do Mal's base-level share (see `demonBaneBaseLevelAtk`). */
+  protected getMasteryAtkByMonsterRace(race: string, baseLevel?: number) {
     const allBonus = { ...(this.bonuses?.masteryAtks || {}), ...(this.bonuses?.equipAtks || {}) };
 
     const attrAtk = `x_race_${race}_atk`; // Demon Bane ex: x_race_demon_atk
@@ -497,11 +515,12 @@ export abstract class CharacterBase {
     for (const [, bonus] of Object.entries(allBonus)) {
       totalAtk += bonus[attrAtk] || 0;
     }
+    if (race === 'demon') totalAtk += this.demonBaneBaseLevelAtk(baseLevel);
 
     return { totalAtk };
   }
 
-  protected getMasteryAtkByMonsterElement(element: string) {
+  protected getMasteryAtkByMonsterElement(element: string, baseLevel?: number) {
     const allBonus = { ...(this.bonuses?.masteryAtks || {}), ...(this.bonuses?.equipAtks || {}) };
 
     const attrAtk = `x_element_${element}_atk`; // Demon Bane ex: x_element_undead_atk
@@ -510,6 +529,7 @@ export abstract class CharacterBase {
     for (const [, bonus] of Object.entries(allBonus)) {
       totalAtk += bonus[attrAtk] || 0;
     }
+    if (element === 'undead') totalAtk += this.demonBaneBaseLevelAtk(baseLevel);
 
     return { totalAtk };
   }

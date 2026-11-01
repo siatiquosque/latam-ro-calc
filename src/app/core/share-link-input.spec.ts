@@ -1,21 +1,29 @@
 import { describe, expect, it } from 'vitest';
-import { isShortLink, parseShareInput } from './share-link-input';
+import { isShortLink, parseShareInput, shortenerBaseFor } from './share-link-input';
 
 const SHORT = 'https://short.latam-tools.com.br';
+
+it('imports both new-domain and previously issued short links without accepting lookalike hosts', () => {
+  const configured = 'https://link.siatiquosque.com.br';
+  expect(parseShareInput(`${SHORT}/abc123`, configured)?.kind).toBe('short');
+  expect(parseShareInput(`${configured}/abc123`, configured)?.kind).toBe('short');
+  expect(shortenerBaseFor(`<${SHORT}/abc123>`, configured)).toBe(SHORT);
+  expect(shortenerBaseFor(`${configured}.evil.test/abc123`, configured)).toBeNull();
+});
 const TOKEN = 'N4IgzgxgTg9gJgLgAoEMA2BXAtgI0.';
 
 describe('parseShareInput', () => {
   it('reads the canonical /s/<token>/ form, trailing dot included', () => {
-    expect(parseShareInput(`https://simulador.latam-tools.com.br/s/${TOKEN}/`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
+    expect(parseShareInput(`https://laro-calc.siatiquosque.com.br/s/${TOKEN}/`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
   });
 
   it('reads the legacy #/?b= form', () => {
-    expect(parseShareInput(`https://simulador.latam-tools.com.br/#/?b=${TOKEN}`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
+    expect(parseShareInput(`https://laro-calc.siatiquosque.com.br/#/?b=${TOKEN}`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
   });
 
   it('accepts a bare token and a link wrapped in angle brackets', () => {
     expect(parseShareInput(`  ${TOKEN} `, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
-    expect(parseShareInput(`<https://simulador.latam-tools.com.br/s/${TOKEN}/>`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
+    expect(parseShareInput(`<https://laro-calc.siatiquosque.com.br/s/${TOKEN}/>`, SHORT)).toEqual({ kind: 'token', token: TOKEN, slug: null });
   });
 
   it('reports a short link by its slug, ignoring trailing punctuation and a query', () => {

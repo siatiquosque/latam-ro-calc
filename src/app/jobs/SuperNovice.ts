@@ -111,7 +111,7 @@ export class SuperNovice extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Fire,
       formula: (): number => {
@@ -126,7 +126,7 @@ export class SuperNovice extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Water,
       formula: (): number => {
@@ -141,7 +141,7 @@ export class SuperNovice extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Wind,
       formula: (): number => {
@@ -587,8 +587,8 @@ export class SuperNovice extends CharacterBase {
     const bonuses = this.bonuses?.masteryAtks || {};
 
     const a = this.calcHiddenMasteryAtk(info);
-    const b = this.getMasteryAtkByMonsterRace(info.monster.race);
-    const c = this.getMasteryAtkByMonsterElement(info.monster.element);
+    const b = this.getMasteryAtkByMonsterRace(info.monster.race, info.model.level);
+    const c = this.getMasteryAtkByMonsterElement(info.monster.element, info.model.level);
 
     let sum = a.totalAtk + b.totalAtk + c.totalAtk;
     const spearMasteryLv = this.learnLv('Spear Mastery');

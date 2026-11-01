@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { loadReplayFixture } from './__tests__/load-fixture';
 import { importReplayBuffer } from './replay-to-model';
 import { makeBuffGate } from './skill-status.map';
+import { SKILL_ID_BY_NAME } from '../skills';
 
 // Minimal item map — this test only cares about skills/statuses, not gear.
 const emptyItems = {} as any;
@@ -42,6 +43,23 @@ describe('makeBuffGate — positive-confirmation buff/effect import gating', () 
       expect(makeBuffGate([statusId])(name)).toBe(true);
       expect(makeBuffGate([])(name)).toBe(false);
     }
+  });
+});
+
+describe('Inquisitor replay — confirmed class buffs', () => {
+  const { learnedSkills, activeStatuses } = importReplayBuffer(
+    loadReplayFixture('inq-buffed-weaponless.rrf'), emptyItems,
+  );
+
+  it.each([
+    ['Powerful Faith', 5],
+    ['Rising Dragon', 10],
+    ['Gentle Touch - Alive', 5],
+    ['Vigor Explosion', 5],
+  ] as const)('imports %s only with a recorded active status', (name, level) => {
+    expect(learnedSkills[SKILL_ID_BY_NAME[name]]).toBe(level);
+    expect(makeBuffGate(activeStatuses)(name)).toBe(true);
+    expect(makeBuffGate([])(name)).toBe(false);
   });
 });
 

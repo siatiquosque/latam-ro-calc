@@ -33,7 +33,6 @@ export class HelpImproveDialogComponent extends ViewState {
   }
 
   readonly browikiUrl = 'https://browiki.org/wiki/Replay';
-  readonly discordUrl = 'https://discord.gg/JCXTqqWq9Q';
 
   fileName = '';
   dragOver = false;

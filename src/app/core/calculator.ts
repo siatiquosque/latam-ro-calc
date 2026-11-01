@@ -2046,7 +2046,7 @@ export class Calculator {
 
     return {
       ...this.getObjSummary(sheet.totalBonus),
-      monster: { ...this.monster.data },
+      monster: { ...this.monster.data, spawn: this.monster.spawn },
       propertyAtk: this.propertyBasicAtk,
       incomingDamage: this.monster.attackProfile ? {
         attacker: this.monster.attackProfile,

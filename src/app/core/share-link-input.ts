@@ -27,10 +27,17 @@ const SLUG_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 
 const trimUrl = (url: string): string => url.trim().replace(/\/+$/, '');
 
+/** Keep previously issued links importable after configuring a new short domain. */
+export const shortenerBaseFor = (input: string, configured: string): string | null => {
+  const raw = input.trim().replace(/^<(.*)>$/, '$1').trim();
+  return [...new Set([configured, 'https://short.latam-tools.com.br'].filter(Boolean).map(trimUrl))]
+    .find(base => raw.startsWith(base + '/')) ?? null;
+};
+
 /** Whether `input` is a link on the shortener rather than one carrying a build. */
 export const isShortLink = (input: string | null | undefined, shortenerUrl: string): boolean => {
   const s = (input ?? '').trim();
-  return !!shortenerUrl && s.startsWith(trimUrl(shortenerUrl) + '/') && !readShareToken(s);
+  return !!shortenerBaseFor(s, shortenerUrl) && !readShareToken(s);
 };
 
 /**
@@ -46,7 +53,7 @@ export const parseShareInput = (text: string | null | undefined, shortenerUrl: s
   if (!raw) return null;
 
   if (isShortLink(raw, shortenerUrl)) {
-    const rest = raw.slice(trimUrl(shortenerUrl).length + 1);
+    const rest = raw.slice(shortenerBaseFor(raw, shortenerUrl)!.length + 1);
     const slug = rest.split(/[/?#]/)[0].replace(/[.,;!]+$/, '');
     return SLUG_PATTERN.test(slug) ? { kind: 'short', token: null, slug } : null;
   }

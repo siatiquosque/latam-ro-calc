@@ -164,7 +164,7 @@ export class Mage extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Fire,
       formula: (): number => {
@@ -179,7 +179,7 @@ export class Mage extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Water,
       formula: (): number => {
@@ -194,7 +194,7 @@ export class Mage extends CharacterBase {
       fct: 1.2,
       vct: 3.2,
       cd: 0,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       isMatk: true,
       element: ElementType.Wind,
       formula: (): number => {

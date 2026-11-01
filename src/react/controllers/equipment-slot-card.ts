@@ -3,6 +3,7 @@ import { ViewState } from '../state/view-state';
 import { Events } from '../services/events';
 import { EquipmentSlotDescriptor, comparableKeysOf } from 'src/app/app-config/equipment-slots';
 import { DescriptionStore as ItemDescriptionStore } from '../services/data-client';
+import { restrictToPool } from 'src/app/core/random-option-catalog';
 import { Chip, buildChipRows } from 'src/app/core/equipment-chips';
 import { SlotDerivation } from 'src/app/core/equipment-slot-derivation';
 import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
@@ -324,7 +325,11 @@ public readonly itemDescriptions: ItemDescriptionStore,
       case 'converter':
         return { ...base, mode: 'flat', options: this.lists.propertyAtkList ?? [], filterKeys: ['label'], iconKey: 'img', elementColoured: true };
       case 'option':
-        return { ...base, mode: 'tree', roots: this.lists.optionList ?? [], leafIndex: ExtraOptionMap };
+      {
+        const roots = this.lists.optionList ?? [];
+        const pool = restrictToPool(Number(model?.[this.descriptor.key]), this.descriptor.optionIndexes.indexOf(chip.optionIndex!), roots, ExtraOptionMap);
+        return { ...base, mode: 'tree', roots: pool?.roots ?? roots, leafIndex: pool?.leaves ?? ExtraOptionMap };
+      }
       default:
         return null;
     }

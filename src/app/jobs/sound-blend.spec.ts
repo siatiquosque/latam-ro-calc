@@ -43,7 +43,7 @@ describe('Arranjo Musical', () => {
   it('is available to both classes with the client level table and magic type', () => {
     for (const Class of [Troubadour, Trouvere]) {
       const skill = new Class().atkSkills.find((s) => s.name === 'Sound Blend');
-      expect(skill).toBe(SOUND_BLEND);
+      expect(skill).toMatchObject(SOUND_BLEND);
       expect(skill?.isMatk).toBe(true);
       for (let level = 1; level <= 5; level++) {
         expect(skill?.formula({ model: { level: 100 }, skillLevel: level, status: { totalSpl: 0 } } as any)).toBe(level * 120);

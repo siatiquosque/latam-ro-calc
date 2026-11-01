@@ -763,6 +763,7 @@ export class DamageCalculator {
   }
 
   private getTotalPhysicalPene() {
+    if (this.totalBonus.ignorePhysicalDef > 0) return 100;
     const { race, type } = this.monster;
     const { p_pene_race_all, p_pene_class_all } = this.totalBonus;
     const rawP_Pene = p_pene_race_all + (p_pene_class_all || 0);
@@ -791,8 +792,11 @@ export class DamageCalculator {
 
     // Both Infiltration and Intoxicação bypass the target's physical DEF entirely; only
     // Infiltration also converts it into pseudo-ATK / 100% pene (handled at its own sites).
-    const isDefZeroed = this.isActiveInfilltration || this.isIntoxicated;
+    const isDefZeroed = this.isActiveInfilltration || this.isIntoxicated || this.totalBonus.ignorePhysicalDef > 0;
     const finalDmgReduction = isDefZeroed ? 1 : dmgReductionByHardDef;
+    // Full DEF ignore is distinct from percentage penetration. The latter's
+    // soft-DEF behavior is pinned by LATAM recordings; do not generalize it
+    // from the emulated percentage path in rAthena.
     const finalSoftDef = isDefZeroed ? 0 : softDef;
 
     const { monster_res } = this.totalBonus;

@@ -2,6 +2,7 @@ import { translate } from 'src/app/core/i18n';
 import { DEFAULT_CATALOG } from 'src/app/i18n';
 import { describe, expect, it } from 'vitest';
 import { BASIC_ATTACK_VALUE } from '../../../../core/rotation';
+import { simulateRotationOf } from '../../../../core/rotation-dps';
 import { buildRotationView, computeRotationTimeToKill, RotationSkillMeta, toScheduleStep } from './rotation-view';
 
 /** A solved getTotalSummary() with just the fields the rotation view reads. */
@@ -529,5 +530,34 @@ describe('computeRotationTimeToKill', () => {
   it('reports nothing when nothing can die', () => {
     expect(computeRotationTimeToKill(0, burstCycle())).toBeNull();
     expect(computeRotationTimeToKill(1000, burstCycle({ damage: 0 }))).toBeNull();
+  });
+});
+
+describe('the rotation the MCP reads', () => {
+  // `simulateRotationOf` (core) is what `evaluate_variants` ranks rotationDps on. It must say
+  // what the panel says, or an agent would optimise a number the player never sees.
+  const rotation = ['Solar Kick==7', BASIC_ATTACK_VALUE, 'Sunset Blast==5'];
+  const summaryByValue = new Map<string, any>([
+    ['Solar Kick==7', summaryOf({ castPeriod: 0.5, reducedAcd: 1, reducedCd: 2, perHit: 40_000, hits: 3, canCri: true, criRate: 30, criDmg: 60_000, critMin: 150_000, critMax: 180_000 })],
+    ['Sunset Blast==5', summaryOf({ castPeriod: 1, reducedAcd: 0.5, reducedCd: 6, perHit: 90_000, hits: 1 })],
+  ]);
+  const baseSummary = summaryOf({ basicDps: 4760, hitPerSecs: 2.38 });
+
+  it('lands on the same sustained DPS and cycle as the panel', () => {
+    const view = buildRotationView({ text, rotation, summaryByValue, baseSummary, hasSelectedChances: false, atkSkills });
+    const cycle = simulateRotationOf({ rotation, summaryByValue, baseSummary, hasSelectedChances: false });
+
+    expect(cycle.sustainedDps).toBeGreaterThan(0);
+    expect(cycle.sustainedDps).toBe(view.cycle.sustainedDps);
+    expect(cycle.cycleDuration).toBe(view.cycle.cycleDuration);
+    expect(cycle.damagePerCycle).toBe(view.cycle.damagePerCycle);
+  });
+
+  it('counts a step that cannot hit as time without damage, like the panel', () => {
+    const blocked = new Map(summaryByValue).set('Solar Kick==7', summaryOf({ castPeriod: 0.5, reducedAcd: 1, perHit: 40_000, requireTxt: 'Requer: Soqueira' }));
+    const view = buildRotationView({ text, rotation, summaryByValue: blocked, baseSummary, hasSelectedChances: false, atkSkills });
+    const cycle = simulateRotationOf({ rotation, summaryByValue: blocked, baseSummary, hasSelectedChances: false });
+
+    expect(cycle.sustainedDps).toBe(view.cycle.sustainedDps);
   });
 });

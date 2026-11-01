@@ -32,7 +32,7 @@ function Footer({ session }: { session: CalculatorSession }) {
   // The credit reads around its link, so the sentence is split either side of it rather
   // than interpolated — a translation that moves the name keeps both halves.
   return createElement('app-footer', null, <div className="layout-footer flex-column gap-1 text-center" style={{ fontSize: '0.85rem' }}>
-    <div><a href="https://latam-tools.com.br/" target="_blank" rel="noreferrer noopener">LATAM Tools</a><span className="mx-2">•</span>
+    <div>
       <a href="https://github.com/adsonpleal/latam-ro-calc" target="_blank" rel="noreferrer noopener">{t('footer.source')}</a><span className="mx-2">•</span>
       {t('footer.basedOn')}<a href="https://github.com/turugrura/tong-calc-ro" target="_blank" rel="noreferrer noopener">tong-calc-ro</a>{t('footer.basedOnTail')}</div>
     <div className="text-color-secondary">{t('footer.rights')}</div>

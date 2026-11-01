@@ -4,3 +4,9 @@ app-battle-monster-card {
   width: 100%;
   container-type: inline-size;
 }
+
+.hud-monster-maps {
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}

@@ -31,77 +31,83 @@ const AURA_REQUIREMENT: Record<Aura, string> = {
   'Third Exor Flame': 'Auréola das Chamas',
 };
 
+/**
+ * Stat and trait weights per job level, copied from the official Gravity page
+ * https://ro.gnjoy.com/guide/runemidgarts/jobview.asp?lineseq=6&jobgamecode=4262 (levels 1-65).
+ * Level 50 also reads the same in a LATAM replay's ZC_COUPLESTATUS (inq-mao-explosiva-crit.rrf).
+ * Levels 66-70 repeat 65, the last the page lists.
+ */
 const jobBonusTable: Record<number, [number, number, number, number, number, number]> = {
   1: [0, 1, 0, 0, 1, 0],
   2: [1, 1, 0, 0, 2, 0],
   3: [1, 1, 0, 1, 2, 0],
-  4: [2, 1, 0, 1, 2, 0],
-  5: [3, 1, 0, 1, 2, 0],
-  6: [4, 1, 0, 1, 2, 0],
-  7: [4, 1, 0, 1, 3, 0],
-  8: [4, 2, 0, 2, 3, 0],
-  9: [5, 2, 0, 2, 4, 0],
-  10: [5, 3, 0, 2, 4, 0],
-  11: [5, 3, 0, 2, 5, 0],
-  12: [5, 4, 1, 2, 5, 0],
-  13: [5, 4, 1, 2, 5, 0],
-  14: [5, 5, 2, 2, 5, 0],
-  15: [5, 5, 2, 3, 5, 1],
-  16: [6, 5, 2, 3, 5, 1],
-  17: [6, 5, 3, 4, 5, 1],
-  18: [7, 5, 3, 5, 5, 1],
-  19: [7, 5, 4, 5, 6, 1],
-  20: [7, 5, 5, 5, 7, 1],
-  21: [7, 6, 5, 5, 7, 1],
-  22: [8, 7, 5, 5, 7, 1],
-  23: [8, 8, 5, 5, 7, 1],
-  24: [8, 8, 5, 5, 8, 1],
-  25: [8, 9, 5, 5, 8, 1],
-  26: [9, 9, 5, 5, 8, 1],
-  27: [9, 9, 5, 5, 8, 1],
-  28: [9, 9, 5, 5, 8, 1],
-  29: [9, 9, 5, 5, 8, 1],
-  30: [9, 9, 5, 6, 8, 1],
-  31: [9, 9, 5, 6, 8, 1],
-  32: [9, 9, 5, 6, 8, 1],
-  33: [9, 9, 5, 6, 8, 1],
-  34: [9, 9, 5, 6, 8, 1],
-  35: [9, 9, 5, 6, 8, 1],
-  36: [9, 9, 5, 6, 8, 1],
-  37: [9, 9, 5, 6, 8, 1],
-  38: [9, 9, 5, 6, 8, 1],
-  39: [9, 9, 5, 6, 8, 1],
-  40: [9, 9, 5, 6, 8, 1],
-  41: [9, 9, 5, 6, 8, 1],
-  42: [9, 9, 5, 7, 8, 1],
-  43: [9, 10, 5, 7, 8, 1],
-  44: [9, 10, 5, 7, 8, 1],
-  45: [9, 10, 5, 8, 8, 1],
-  46: [9, 10, 5, 8, 8, 1],
-  47: [9, 10, 6, 8, 8, 1],
-  48: [9, 10, 6, 8, 8, 1],
-  49: [9, 10, 6, 8, 8, 1],
-  50: [9, 10, 6, 8, 8, 1],
-  51: [9, 10, 6, 8, 8, 1],
-  52: [9, 10, 6, 8, 8, 1],
-  53: [9, 10, 6, 8, 8, 1],
-  54: [9, 10, 6, 8, 8, 1],
-  55: [9, 10, 6, 8, 8, 1],
-  56: [9, 10, 6, 8, 8, 1],
-  57: [9, 10, 6, 8, 8, 1],
-  58: [9, 10, 6, 8, 8, 1],
-  59: [9, 10, 6, 8, 8, 1],
-  60: [9, 10, 6, 8, 8, 1],
-  61: [9, 10, 6, 8, 8, 1],
-  62: [9, 10, 6, 8, 8, 1],
-  63: [9, 10, 6, 8, 8, 1],
-  64: [9, 10, 6, 8, 8, 1],
-  65: [9, 10, 6, 8, 8, 1],
-  66: [9, 10, 6, 8, 8, 1],
-  67: [9, 10, 6, 8, 8, 1],
-  68: [9, 10, 6, 8, 8, 1],
-  69: [9, 10, 6, 8, 8, 1],
-  70: [9, 10, 6, 8, 8, 1],
+  4: [3, 1, 0, 1, 2, 0],
+  5: [4, 1, 0, 1, 2, 0],
+  6: [5, 1, 0, 1, 2, 0],
+  7: [5, 1, 0, 1, 3, 0],
+  8: [5, 2, 0, 2, 3, 0],
+  9: [6, 2, 0, 2, 4, 0],
+  10: [6, 3, 0, 2, 4, 0],
+  11: [6, 3, 0, 2, 5, 0],
+  12: [6, 4, 1, 2, 5, 0],
+  13: [6, 4, 1, 2, 5, 0],
+  14: [6, 5, 2, 2, 5, 0],
+  15: [6, 5, 2, 3, 5, 1],
+  16: [7, 5, 2, 3, 5, 1],
+  17: [7, 5, 3, 4, 5, 1],
+  18: [8, 5, 3, 5, 5, 1],
+  19: [8, 5, 4, 5, 6, 1],
+  20: [8, 5, 5, 5, 7, 1],
+  21: [8, 6, 5, 5, 7, 1],
+  22: [9, 7, 5, 5, 7, 1],
+  23: [9, 8, 5, 5, 7, 1],
+  24: [9, 8, 5, 5, 8, 1],
+  25: [9, 9, 5, 5, 8, 1],
+  26: [10, 9, 5, 5, 8, 1],
+  27: [10, 9, 5, 5, 8, 1],
+  28: [10, 9, 5, 5, 8, 1],
+  29: [10, 9, 5, 5, 8, 1],
+  30: [10, 9, 5, 6, 8, 1],
+  31: [10, 9, 5, 6, 8, 1],
+  32: [10, 9, 5, 6, 8, 1],
+  33: [10, 9, 5, 6, 8, 1],
+  34: [10, 9, 5, 6, 8, 1],
+  35: [10, 9, 5, 6, 8, 1],
+  36: [10, 9, 5, 6, 8, 1],
+  37: [10, 9, 5, 6, 8, 1],
+  38: [10, 9, 5, 6, 8, 1],
+  39: [10, 9, 5, 6, 8, 1],
+  40: [10, 9, 5, 6, 8, 1],
+  41: [10, 9, 5, 6, 8, 1],
+  42: [10, 9, 5, 7, 8, 1],
+  43: [10, 10, 5, 7, 8, 1],
+  44: [10, 10, 5, 7, 8, 1],
+  45: [10, 10, 5, 8, 8, 1],
+  46: [10, 10, 5, 8, 8, 1],
+  47: [10, 10, 6, 8, 8, 1],
+  48: [10, 10, 6, 8, 8, 1],
+  49: [10, 10, 6, 8, 8, 1],
+  50: [10, 10, 6, 8, 8, 1],
+  51: [10, 10, 6, 8, 8, 1],
+  52: [10, 10, 6, 8, 8, 1],
+  53: [10, 10, 6, 8, 8, 1],
+  54: [10, 10, 6, 8, 8, 1],
+  55: [10, 10, 6, 8, 8, 1],
+  56: [10, 10, 6, 8, 8, 1],
+  57: [10, 10, 6, 8, 8, 1],
+  58: [10, 10, 6, 8, 8, 1],
+  59: [10, 10, 6, 8, 8, 1],
+  60: [10, 10, 6, 8, 8, 1],
+  61: [10, 10, 6, 8, 8, 1],
+  62: [10, 10, 6, 8, 8, 1],
+  63: [10, 10, 6, 8, 8, 1],
+  64: [10, 10, 6, 8, 9, 1],
+  65: [10, 10, 6, 8, 9, 1],
+  66: [10, 10, 6, 8, 9, 1],
+  67: [10, 10, 6, 8, 9, 1],
+  68: [10, 10, 6, 8, 9, 1],
+  69: [10, 10, 6, 8, 9, 1],
+  70: [10, 10, 6, 8, 9, 1],
 };
 
 const traitBonusTable: Record<number, [number, number, number, number, number, number]> = {
@@ -165,16 +171,16 @@ const traitBonusTable: Record<number, [number, number, number, number, number, n
   58: [11, 8, 6, 3, 5, 6],
   59: [11, 8, 6, 3, 6, 6],
   60: [11, 8, 6, 3, 6, 6],
-  61: [11, 8, 6, 3, 6, 6],
-  62: [11, 8, 6, 3, 6, 6],
-  63: [11, 8, 6, 3, 6, 6],
-  64: [11, 8, 6, 3, 6, 6],
-  65: [11, 8, 6, 3, 6, 6],
-  66: [11, 8, 6, 3, 6, 6],
-  67: [11, 8, 6, 3, 6, 6],
-  68: [11, 8, 6, 3, 6, 6],
-  69: [11, 8, 6, 3, 6, 6],
-  70: [11, 8, 6, 3, 6, 6],
+  61: [11, 8, 6, 3, 7, 6],
+  62: [11, 8, 6, 3, 7, 6],
+  63: [11, 8, 6, 3, 7, 6],
+  64: [11, 8, 7, 3, 7, 6],
+  65: [11, 8, 7, 3, 7, 6],
+  66: [11, 8, 7, 3, 7, 6],
+  67: [11, 8, 7, 3, 7, 6],
+  68: [11, 8, 7, 3, 7, 6],
+  69: [11, 8, 7, 3, 7, 6],
+  70: [11, 8, 7, 3, 7, 6],
 };
 
 export class Inquisitor extends Sura {
@@ -385,31 +391,22 @@ export class Inquisitor extends Sura {
       name: 'Sincere Faith',
       label: 'Sincere Faith',
       exclusiveGroup: 'faith',
-      inputType: 'selectButton',
-      dropdown: [
-        { label: 'Sim', value: 5, isUse: true },
-        { label: 'Não', value: 0, isUse: false },
-      ],
+      inputType: 'dropdown',
+      dropdown: genSkillList(5),
     },
     {
       name: 'Firm Faith',
       label: 'Firm Faith',
       exclusiveGroup: 'faith',
-      inputType: 'selectButton',
-      dropdown: [
-        { label: 'Sim', value: 5, isUse: true },
-        { label: 'Não', value: 0, isUse: false },
-      ],
+      inputType: 'dropdown',
+      dropdown: genSkillList(5),
     },
     {
       name: 'Powerful Faith',
       label: 'Powerful Faith',
       exclusiveGroup: 'faith',
-      inputType: 'selectButton',
-      dropdown: [
-        { label: 'Sim', value: 5, isUse: true },
-        { label: 'Não', value: 0, isUse: false },
-      ],
+      inputType: 'dropdown',
+      dropdown: genSkillList(5),
     },
     // The three Auréolas: one state at a time (bROWiki: "Você não pode ter as 3 auréolas
     // ativas ao mesmo tempo, uma deve sobrepor a outra"), see AURAS above.
@@ -501,16 +498,20 @@ export class Inquisitor extends Sura {
       addBonus(totalBonus, 'p_race_undead', willOfFaithLv + 2);
     }
 
-    // Only one Faith can be active at a time (exclusiveGroup 'faith'). Values are Lv5.
+    // Only one Faith can be active at a time (exclusiveGroup 'faith').
+    // Per-level bonuses follow the LATAM client tables (skills 5242/5239/5238).
     if (this.isSkillActive('Sincere Faith')) {
-      addBonus(totalBonus, 'aspd', 3);
-      addBonus(totalBonus, 'perfectHit', 5 * 4);
+      const level = this.activeSkillLv('Sincere Faith');
+      addBonus(totalBonus, 'aspd', level);
+      addBonus(totalBonus, 'perfectHit', level * 4);
     } else if (this.isSkillActive('Firm Faith')) {
-      addBonus(totalBonus, 'hpPercent', 5 * 2);
-      addBonus(totalBonus, 'res', 5 * 8);
+      const level = this.activeSkillLv('Firm Faith');
+      addBonus(totalBonus, 'hpPercent', level * 2);
+      addBonus(totalBonus, 'res', level * 8);
     } else if (this.isSkillActive('Powerful Faith')) {
-      addBonus(totalBonus, 'atk', 10 + 5 * 5);
-      addBonus(totalBonus, 'pAtk', 5 + 5 * 2);
+      const level = this.activeSkillLv('Powerful Faith');
+      addBonus(totalBonus, 'atk', 5 + level * 5);
+      addBonus(totalBonus, 'pAtk', 5 + level * 2);
     }
 
     return totalBonus;

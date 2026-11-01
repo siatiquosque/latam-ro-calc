@@ -221,7 +221,7 @@ public readonly itemDescriptions: ItemDescriptionStore,
   originTooltip(source: any, descriptionVersion?: number): string {
     void descriptionVersion;
     const itemId = source?.result?.source?.sourceItemId;
-    if (itemId) return itemDescPopoverHtml({ name: source.result.source.sourceName }, this.itemDescriptions.get(itemId));
+    if (itemId) return itemDescPopoverHtml({ id: itemId, name: source.result.source.sourceName }, this.itemDescriptions.get(itemId));
     const originSkillId = source?.result?.source?.enablingSkillId
       ?? ({ 'Desejo Arcano': 279, 'Plágio': 225, 'Mimetismo': 2285 } as Record<string, number>)[source?.result?.source?.sourceName];
     return skillDescHtml(originSkillId);

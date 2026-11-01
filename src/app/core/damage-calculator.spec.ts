@@ -228,6 +228,29 @@ describe('DamageCalculator DEF/RES internals exposed for the graph view', () => 
   });
 });
 
+describe('Full DEF ignore is distinct from percentage penetration', () => {
+  it.each([[0, 50], [1, 50], [25, 50], [50, 50], [100, 50], [125, 50]])(
+    '%i%% penetration leaves %i soft DEF out of 50', (penetration, expected) => {
+      const dc = makeCalc({ p_pene_race_all: penetration, p_pene_class_all: 0, monster_res: 0 });
+      (dc as any).monster.data.def = 100;
+      (dc as any).monster.data.softDef = 50;
+      const data = (dc as any).getPhisicalDefData();
+      expect(data.finalSoftDef).toBe(expected);
+      expect(data.reducedHardDef).toBe(100 - Math.min(penetration, 100));
+    });
+
+  it('the full-ignore effect bypasses hard and soft DEF without granting Infiltration ATK', () => {
+    const dc = makeCalc({ p_pene_race_all: 0, p_pene_class_all: 0, ignorePhysicalDef: 1 });
+    (dc as any).monster.data.def = 100;
+    (dc as any).monster.data.softDef = 50;
+    const data = (dc as any).getPhisicalDefData();
+    expect(data.reducedHardDef).toBe(0);
+    expect(data.finalDmgReduction).toBe(1);
+    expect(data.finalSoftDef).toBe(0);
+    expect((dc as any).isActiveInfilltration).toBe(false);
+  });
+});
+
 // Intoxicação (from Poço Venenoso / Cultivar Fada) drops the target's physical DEF to
 // zero — browiki.org/wiki/Efeitos_negativos#Intoxicação. Modeled like Infiltration's
 // def-bypass but WITHOUT its pseudo-ATK buff / 100% pene: it only zeroes hard + soft DEF

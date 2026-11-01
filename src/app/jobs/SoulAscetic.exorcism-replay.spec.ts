@@ -283,12 +283,11 @@ describe('Soul Ascetic — HP/SP table row (hp_sp_table.json row 56)', () => {
    *
    * The row upstream shipped was a placeholder — baseHp 9.805 at 200 against Soul Reaper's
    * 20.752, and a flat 900 SP across all 51 levels (SoulLinker's max SP at 99) — and the
-   * engine got 27.905 HP and 2.864 SP out of it, less than half. Since card
-   * vk17UlVbaGo5GlRMnIxb the seven Expanded 4th rows carry rAthena's per-class curve
-   * (expanded-fourth-hp-sp-table.spec.ts has the formula). On this build it lands 303 HP
-   * (+0,5%) and 234 SP (+3,6%) over the window, with the VIT/INT typed from the card rather
-   * than read from the file, so the residual is not attributable to the row alone. The two
-   * numbers below are that approximation; they move when the row does.
+   * engine got 27.905 HP and 2.864 SP out of it, less than half. The intermediate
+   * rAthena approximation produced 60.701 HP / 6.650 SP. The observed Taiwan row
+   * (docs/hp-sp.md) now reproduces HP exactly, but SP is 122 below the observed peak.
+   * VIT/INT were typed from the card rather than read from the file, so the remaining
+   * SP difference cannot be attributed to the table alone.
    */
   it('the recording holds HP 60.398 and SP 6.416 at base 223', () => {
     // ZC_PAR_CHANGE values arrive as BigInt.
@@ -298,10 +297,11 @@ describe('Soul Ascetic — HP/SP table row (hp_sp_table.json row 56)', () => {
     expect(Math.max(...sp)).toBe(6416);
   });
 
-  it('the engine gets 60.701 HP and 6.650 SP on the rAthena row — +0,5% and +3,6%', () => {
+  it('the observed Taiwan row closes HP exactly, with a documented SP residual', () => {
     const r = sim(20, false);
-    expect(r.maxHp).toBe(60701);
-    expect(r.maxSp).toBe(6650);
+    expect(r.maxHp).toBe(60398);
+    expect(r.maxSp).toBe(6294);
+    expect(6416 - r.maxSp).toBe(122);
   });
 
   it('the row sits above the class it evolves from', () => {

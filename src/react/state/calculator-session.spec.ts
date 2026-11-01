@@ -95,6 +95,22 @@ describe('localizeItemNames', () => {
 describe('plain calculator session', () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+  it('finds localized EP19 monsters by real map and keeps the maps in the target summary', async () => {
+    const { session } = makeSession();
+    session.start();
+    await vi.advanceTimersByTimeAsync(1500);
+    session.viewReady();
+    await vi.advanceTimersByTimeAsync(300);
+    const monster = session.monsterList.find(m => m.value === 21520)!;
+    expect(monster.name).toBe('Remakina');
+    expect(monster.label).toContain('jor_back2');
+    expect(monster.searchVal).toContain('jor_back3');
+    session.selectedMonster = 21520;
+    session.onMonsterChange();
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(session.totalSummary.monster.spawn).toBe('jor_back2,jor_back3');
+    session.dispose();
+  });
   it('restores Algoz with base 99, every job through 70 and named Sonic Blow controls', async () => {
     const { session, storage } = makeSession();
     storage.setItem('ro-set', JSON.stringify({ class: 4013, level: 200, jobLevel: 68, str: 130, pow: 50, weapon: 1250,

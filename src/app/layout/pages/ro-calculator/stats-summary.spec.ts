@@ -65,6 +65,21 @@ const row = (view: ReturnType<typeof buildStatsSummary>, label: string): Summary
 };
 
 describe('buildStatsSummary — the values', () => {
+  it('shows hidden mastery separately, with an explanation and comparison', () => {
+    const view = buildStatsSummary(
+      summary({ calc: { totalEquipAtk: 600, totalHideMasteryAtk: 75 } }),
+      summary({ calc: { totalEquipAtk: 600, totalHideMasteryAtk: 30 } }), OPTS,
+    );
+    expect(row(view, 'Alt+Q ATQ').text).toBe('821 + 600');
+    expect(row(view, 'Alt+Q ATQ').compare).toBeNull();
+    expect(row(view, 'ATQ oculto')).toMatchObject({
+      text: '75', clickable: false,
+      compare: { text: '30', deltaText: '-45' },
+    });
+    expect(row(view, 'ATQ oculto').tooltip).toContain('Esferas Espirituais');
+    expect(row(view, 'ATQ oculto').tooltip).toContain('sem aparecer no Alt+Q');
+  });
+
   it('reads ATQ and ATQM as the status window does, "base + equipamento"', () => {
     const view = buildStatsSummary(summary(), null, OPTS);
 
@@ -157,7 +172,7 @@ describe('buildStatsSummary — the groups', () => {
       ['Mágico', 'Precisão e crítico'],
       ['Defesa', 'Recursos'],
     ]);
-    expect(view.columns.map((col) => col.reduce((n, g) => n + g.rows.length, 0))).toEqual([8, 8, 7]);
+    expect(view.columns.map((col) => col.reduce((n, g) => n + g.rows.length, 0))).toEqual([9, 8, 7]);
   });
 
   it('hangs the Redução de dano link off the Defesa header', () => {

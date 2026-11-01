@@ -2,7 +2,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { shortenUrl } from './shorten-url';
 
 describe('shortenUrl', () => {
-  const longUrl = 'https://simulador.latam-tools.com.br/#/?customItem=example';
+  it('keeps the current-domain URL without contacting a disabled shortener', async () => {
+    const mocked = vi.spyOn(globalThis, 'fetch');
+    const url = 'https://laro-calc.siatiquosque.com.br/s/build/';
+    expect(await shortenUrl(url, '')).toBe(url);
+    expect(mocked).not.toHaveBeenCalled();
+    mocked.mockRestore();
+  });
+  const longUrl = 'https://laro-calc.siatiquosque.com.br/#/?customItem=example';
   const service = 'https://short.latam-tools.com.br';
 
   it('uses the shortener result for a custom-item link', async () => {

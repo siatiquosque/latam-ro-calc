@@ -8,7 +8,7 @@ description: Refresh the calculator's client-derived data (latam-items.json, ite
 Every byte this repo derives from the game comes from **ragassets**, which reads the
 client once and republishes the result as public JSON, no auth:
 
-    https://assets.latam-tools.com.br/raw/<table>.json
+    https://laro-calc.siatiquosque.com.br/game-assets/raw/<table>.json
 
 **This repo never opens a GRF, never decodes a `.lub` and never calls an upstream API.**
 It used to (`build-latam-db.mjs`, `build-item-views.mjs`, `grf.mjs`, `lua51.mjs`) — that

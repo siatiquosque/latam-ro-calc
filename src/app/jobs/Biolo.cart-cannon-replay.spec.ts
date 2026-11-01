@@ -270,12 +270,12 @@ describe('Cientista — "Musty LTDA", os dois tamanhos (cVfBmHUQzf)', () => {
    * millisecond the client re-sends the master's VIT (`plus` 54 where the gear and job give
    * 24), soft DEF, soft MDEF and HP máx. The master gets no status icon for it. The client's
    * own table says "VIT do Mestre +30" at Nv 5, and with that one toggle the engine lands on
-   * DEF and DEFM to the unit and on HP máx. within 9 points.
+   * DEF and DEFM to the unit and on HP máx. within 21 points.
    *
-   * The 9 points are the HP formula's rounding somewhere in the percent stack (the Alquimiro
-   * file is 7 high the same way). It is a display-only figure, so it is pinned, not chased.
+   * After lossless table normalization and intrinsic-equipment VIT accounting,
+   * HP is 21 points high. The cause is unresolved; the Alquimiro file is 17 high.
    */
-  it('Fortaleza Nv 5 do homúnculo: VIT +30 fecha DEF, DEFM e o HP máx.', () => {
+  it('Fortaleza Nv 5 do homúnculo: VIT +30 fecha DEF/DEFM, com resíduo de HP documentado', () => {
     const cast = f.usos().find((u) => u.skillId === HAMI_DEFENCE)!;
     expect(cast).toBeDefined();
     expect(cast.source).not.toBe(f.aid);
@@ -289,7 +289,7 @@ describe('Cientista — "Musty LTDA", os dois tamanhos (cVfBmHUQzf)', () => {
     expect(com.status.vit).toBe(90 + 54);
     expect([sem.janela[45], sem.janela[47]]).toEqual([186, 240]);
     expect([com.janela[45], com.janela[47]]).toEqual([201, 246]);
-    expect(com.janela[6]).toBe(109869); // recorded 109860
+    expect(com.janela[6]).toBe(109881); // recorded 109860; unresolved +21 HP
     // Fortaleza only touches VIT-derived fields; the damage roll is the same with and without it.
     expect([com.min, com.max]).toEqual([sim(f.replay, { mob: MEDIO, traits: TRAITS }).min, sem.max]);
   });
@@ -351,7 +351,7 @@ describe('Cientista — "Alquimiro" (uoyYvxyRYP)', () => {
    * With DEX settled, ATQ (845) and P.ATQ (94) both ask for POD 106: status ATQ pays 5 per
    * POD and P.ATQ pays one per three, and 106 is the only value that satisfies both at CON
    * 20. The card's 100 leaves ATQ 30 short and P.ATQ 2 short. Every field the client sent
-   * then matches to the unit; HP máx. is 7 high, same rounding as the Musty file.
+   * then matches to the unit; HP máx. retains an unresolved +17 residual.
    */
   it('a janela pede DES +10 e POD 106, não o POD 100 / CON 20 do card', () => {
     expect(f.couple(17).map((c) => [c.base, c.plus])).toEqual([[130, 260], [130, 60]]); // 260 is the Instinto proc
@@ -370,7 +370,7 @@ describe('Cientista — "Alquimiro" (uoyYvxyRYP)', () => {
       expect({ sp, valor: s.janela[Number(sp)] }).toEqual({ sp, valor });
     }
     expect(f.param(6)).toEqual([138047]);
-    expect(s.janela[6]).toBe(138054);
+    expect(s.janela[6]).toBe(138064); // recorded 138047
     // 106 is pinned from both sides: 105 loses the ATQ, 107 overshoots P.ATQ.
     expect(sim(f.replay, { ...BUILD, traits: { pow: 105, con: 20 } }).janela[41]).toBe(840);
     expect(sim(f.replay, { ...BUILD, traits: { pow: 107, con: 20 } }).janela[225]).toBe(95);

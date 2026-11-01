@@ -9,7 +9,7 @@ describe('shareEntryHref', () => {
     // The whole point: by the time the app reads it, `window.location.href` is
     // '<origin>/#/' — the router's first replaceState resolved '#/' against
     // <base href="/"> and took the share path with it.
-    captureShareEntry('https://simulador.latam-tools.com.br/s/abc/');
+    captureShareEntry('https://laro-calc.siatiquosque.com.br/s/abc/');
     expect(readShareToken(shareEntryHref())).toBe('abc');
   });
 

@@ -183,6 +183,8 @@ describe('Spirit Handler cast/cooldown metadata', () => {
 
   it.each(cases)('$name has acd $acd, vct $vct, fct $fct, cd $cd', ({ name, acd, vct, fct, cd }) => {
     const skill = findSkill(sh(MCM_ONLY), name);
-    expect({ acd: skill.acd, vct: skill.vct, fct: skill.fct, cd: skill.cd }).toEqual({ acd, vct, fct, cd });
+    const level = Number(skill.value.split('==')[1]);
+    const at = (value: number | ((level: number) => number)) => typeof value === 'function' ? value(level) : value;
+    expect({ acd: at(skill.acd), vct: at(skill.vct), fct: at(skill.fct), cd: at(skill.cd) }).toEqual({ acd, vct, fct, cd });
   });
 });

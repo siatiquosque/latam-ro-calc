@@ -12,7 +12,7 @@ the ragassets feed, grouped under its spawn map in the picker.
 ## The source
 Everything except the spawn map comes from one public file, no auth:
 
-    https://assets.latam-tools.com.br/raw/mobs.json
+    https://laro-calc.siatiquosque.com.br/game-assets/raw/mobs.json
 
 ragassets generates it from the RagnaPlace Public API (laro-pt gateway) — LATAM
 server values. **This repo only downloads the file; it never calls the API.** The

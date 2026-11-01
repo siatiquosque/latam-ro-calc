@@ -74,7 +74,11 @@ const GEARED = { at: 21_000, packet: 6_913_590, window: 20_279, readAt: 20_285 }
  * Aumentar Agilidade (+7 AGI), EFST 1509 Estimulante (102803), and EFST 480/481 the HP/SP
  * Increase Potions, stood in for by flat values — see the header.
  */
-const CONSUMABLES = [{ int: ['15'], agi: ['22'] }, items[102803].script, { hp: ['3300'], spPercent: ['29'], sp: ['4'] }];
+// This is a calibration for an unmodelled potion, not its official formula.
+// Lossless SP normalization and intrinsic equipment INT reduce the former +4
+// stand-in to +1; both
+// recorded HP/SP buckets and the exact breath packets must still match.
+const CONSUMABLES = [{ int: ['15'], agi: ['22'] }, items[102803].script, { hp: ['3300'], spPercent: ['29'], sp: ['1'] }];
 
 /** The build at `untilMs`: the t=0 inventory with every equip event up to then folded on. */
 function modelAt(untilMs: number) {

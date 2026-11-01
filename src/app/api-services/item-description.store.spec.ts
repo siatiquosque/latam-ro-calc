@@ -33,6 +33,14 @@ describe('ItemDescriptionStore', () => {
 });
 
 describe('itemDescPopoverHtml without a description', () => {
+  it.each([
+    { id: 470073, name: 'Bota Desconhecida VIT' },
+    { id: 4381, name: 'Carta Ferus Verde' },
+    { id: 29105, name: 'Insígnia da Resiliência 5' },
+  ])('shows the ID of $name before descriptions finish loading', item => {
+    expect(itemDescPopoverHtml(item, undefined)).toContain(`ID: ${item.id}`);
+    expect(itemDescPopoverHtml(item, 'Descrição')).toContain(`ID: ${item.id}`);
+  });
   // This is the real state between items-core and items-desc: the popover shows just the
   // name, rather than vanishing or breaking.
   it('renders just the name while the description has not arrived', () => {

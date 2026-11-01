@@ -100,7 +100,7 @@ export class Oboro extends Ninja {
       cd: 0,
       element: ElementType.Fire,
       isMatk: true,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       formula: (): number => {
         return 90;
       },
@@ -115,7 +115,7 @@ export class Oboro extends Ninja {
       cd: 0,
       element: ElementType.Water,
       isMatk: true,
-      totalHit: 12,
+      totalHit: ({ skillLevel }) => skillLevel + 2,
       formula: (): number => {
         return 70;
       },
@@ -130,7 +130,7 @@ export class Oboro extends Ninja {
       cd: 0,
       element: ElementType.Water,
       isMatk: true,
-      totalHit: 12,
+      totalHit: ({ skillLevel }) => skillLevel + 2,
       formula: (input: AtkSkillFormulaInput): number => {
         const { skillLevel } = input;
 
@@ -147,7 +147,7 @@ export class Oboro extends Ninja {
       cd: 0,
       element: ElementType.Wind,
       isMatk: true,
-      totalHit: 6,
+      totalHit: ({ skillLevel }) => Math.floor(skillLevel / 2) + 1,
       formula: (): number => {
         return 150;
       },

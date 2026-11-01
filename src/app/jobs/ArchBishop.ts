@@ -126,7 +126,7 @@ export class ArchBishop extends HighPriest {
       vct: 4,
       isMatk: true,
       element: ElementType.Holy,
-      totalHit: 10,
+      totalHit: ({ skillLevel }) => skillLevel,
       formula: (input: AtkSkillFormulaInput): number => {
         const { race, element } = input.monster;
         const inCludeBonus =
@@ -390,7 +390,7 @@ export class ArchBishop extends HighPriest {
     // Demônios" — is emitted by Acolyte.ts as x_race_demon_atk / x_element_undead_atk;
     // the loop above looks for `x_atk_race_*`, a spelling nothing emits, so the passive
     // never reached this line. Wired the way RoyalGuard and Sura read it (12/09/2026).
-    totalAtk += this.getMasteryAtkByMonsterRace(race).totalAtk + this.getMasteryAtkByMonsterElement(element).totalAtk;
+    totalAtk += this.getMasteryAtkByMonsterRace(race, model.level).totalAtk + this.getMasteryAtkByMonsterElement(element, model.level).totalAtk;
 
     return totalAtk;
   }

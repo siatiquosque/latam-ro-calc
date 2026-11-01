@@ -101,6 +101,10 @@ export const getMonsterSpawnMap = (spawn: string) => {
   return [...new Set(spawns)].join(', ');
 };
 
+/** Display real map codes; MD_* entries are calculator grouping placeholders. */
+export const getMonsterMapCodes = (spawn = ''): string[] =>
+  [...new Set(spawn.split(',').map(code => code.trim()).filter(code => code && !code.startsWith('MD_')))];
+
 /** The fields of a monster record that decide which picker group it lands in. */
 export interface MonsterGrouping {
   id: number;

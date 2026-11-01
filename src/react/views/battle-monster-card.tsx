@@ -1,5 +1,6 @@
 import { createElement, useState } from 'react';
 import { monsterDamageReductionTooltip } from '../../app/constants/monster-damage-reduction';
+import { getMonsterMapCodes } from '../../app/constants/monster-spawn-mapper';
 import { elementPtBr, monsterTypePtBr, racePtBr, sizePtBr } from '../../app/constants/monster-i18n';
 import { elementTagClass } from '../../app/layout/pages/ro-calculator/battle-hud/battle-hud.logic';
 import { ReductionCategory, ReductionRow, reductionRowClickable } from '../../app/layout/pages/ro-calculator/reduction-breakdown';
@@ -35,6 +36,7 @@ export function BattleMonsterCard({ totalSummary, selectedMonster, selectedMonst
   onShowElementTable, onReductionRowClick, onIncomingReductionClick }: BattleMonsterCardProps) {
   const t = useText();
   const monster = totalSummary?.monster;
+  const maps = getMonsterMapCodes(monster?.spawn);
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const aura = useTooltip({ text: t('hud.auraTooltip'), position: 'top' });
   const reduction = useTooltip({ text: monster?.damageReduction > 0 ? monsterDamageReductionTooltip(monster.damageReduction) : '', position: 'top' });
@@ -55,6 +57,7 @@ export function BattleMonsterCard({ totalSummary, selectedMonster, selectedMonst
         {monster?.isRedAura && <Tag {...aura.triggerProps} tabIndex={0} className="tag-aura" value="AURA" />}
         {!!monster?.damageReduction && <Tag {...reduction.triggerProps} tabIndex={0} className="tag-map-reduction" value={t('hud.mapReduction', { percent: monster.damageReduction })} />}
       </div><div className="hud-hp-line">HP {number(monster?.hp)}</div>
+      {!!maps.length && <div className="hud-monster-maps">{t('hud.maps')}: {maps.join(', ')}</div>}
       {selectedMonster === 20994 && !!betelgeuseHpOptions.length && <div className="hud-relieve">
         <span className="hud-relieve-label">{t('hud.difficulty')}</span>
         <Select className="hud-relieve-dd" ariaLabel={t('hud.betelgeuseDifficulty')} options={betelgeuseHpOptions}

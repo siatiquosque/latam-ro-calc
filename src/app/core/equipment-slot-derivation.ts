@@ -70,6 +70,12 @@ const refineListFor = ({ descriptor, item, refineList, shadowRefineList }: Deriv
  *  every pick. It is only ever read. */
 const GRADE_OPTIONS: DropdownModel[] = getGradeList().filter((grade) => grade.value !== '');
 
+/** Shared by the picker and MCP: item identity/position rules have one owner. */
+export const enchantPoolsFor = (item: ItemModel) => item && (
+  getMonarchTombEnchants(item.id) ?? getVerusEnchants(item.id) ?? getEnchants(item.aegisName)
+  ?? getEnchants(item.name) ?? getMoraEnchants(item.id) ?? getMalangdoEnchants(item.id, item.slots)
+);
+
 const optionSlotsFor = (descriptor: EquipmentSlotDescriptor, item: ItemModel | undefined): number => {
   // `fixed` means "no ceiling of its own" — shadow gear rolls its options by piece rather
   // than by item. The Math.min below is what clamps every source to the indexes the slot
@@ -103,11 +109,11 @@ export function deriveSlot(input: DeriveSlotInput): SlotDerivation {
       optionSlots: 0,
     };
   }
-  const { id, aegisName, name, canGrade, slots } = item ?? ({} as ItemModel);
+  const { canGrade, slots } = item ?? ({} as ItemModel);
 
   // Verus matches by id because several pieces have Korean aegis names, and the
   // slotted and unslotted Carburador share one. It overrides their old incomplete pools.
-  const enchants = getMonarchTombEnchants(id) ?? getVerusEnchants(id) ?? getEnchants(aegisName) ?? getEnchants(name) ?? getMoraEnchants(id) ?? getMalangdoEnchants(id, slots);
+  const enchants = enchantPoolsFor(item);
   const positions = Array.isArray(enchants) ? enchants : [];
 
   return {

@@ -372,7 +372,7 @@ divergence to the chain rather than to a missing item bonus.
   the bookkeeping ids, per §2c**, or half of what follows belongs to a stranger. Resolve
   unknown ids from ragassets' status table — `{id, name}` for every EFST the client **names**, pt-BR. Do not guess.
   ```bash
-  curl -s https://assets.latam-tools.com.br/raw/status.json > /tmp/status.json
+  curl -s https://laro-calc.siatiquosque.com.br/game-assets/raw/status.json > /tmp/status.json
   node -e 'const s=require("/tmp/status.json");for(const id of process.argv.slice(1))console.log(id, s.find(e=>e.id==+id)?.name ?? "(unknown)")' 156 158
   ```
   **That feed only names 704 ids out of a 0-1688 range**, and the gaps are not rare — a
@@ -798,6 +798,23 @@ weapon's stat bonus turned 135 tests red and the verdict came from four lines of
 Shinkiro critical that had been exact went 7,6% **over** its packet, and Sky Emperor, Sicário
 and Guardião Imperial packets fell **below** the new floor. Those are recorded values, so the
 change was out — the pinned-percentage failures in the same run were irrelevant either way.
+
+### Before the fixture is committed
+
+- **Scrub it.** A recording carries the recorder's name and account id, the other players it saw, and
+  the guild, party and title strings. `node tools/redact-rrf.mjs in.rrf out.rrf "name:Fulano=>Jogador 01"
+  "aid:1002607=>1000001"` overwrites them in place (the file is only XOR-obfuscated, so lengths and
+  offsets survive). List who to scrub from `decodeReplay(...).sessionInfo` and the `pc` entities, and
+  read what is left with `scanReplayStrings`. **Do not grep the raw file for a name: it is encrypted
+  and the grep always says "clean".** Re-run the scrub over its own output; every count must be 0.
+- **Partial traits are not traits.** `coupleStatus` empty with `traits: {pow: 100}` means a single-map
+  session: type the six values in the spec (the status window shows them) instead of trusting the import.
+- **`replayToModel` counts any status that ever turned on as active** (`activeStatuses` takes every
+  `isOn` event of the recorder, not those at t=0). A recording that buffs up at minute six imports with
+  the buffs already on; switch them off by hand when comparing against the opening status window.
+- **State the tolerance as what it is.** A weapon-free critical is one number and reproduces to the unit
+  (`toBe`); only a rolled hit needs a range. Keep the assertion tight and write the residual in the header
+  instead of widening the bound until it passes.
 
 ## Cleanup
 

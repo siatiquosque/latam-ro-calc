@@ -13,7 +13,7 @@ export type DamageBranch = 'mean' | 'nocri' | 'cri' | 'flat';
 
 /** The synthetic option for ataque básico. ragassets serves no `/icons/skill` entry for
  *  the in-game sword cursor, so the picker points straight at the map asset. */
-export const BASIC_ATTACK_ICON = 'https://assets.latam-tools.com.br/maps/_u/4680d9e5597cb23d.png';
+export const BASIC_ATTACK_ICON = 'assets/icons/basic-attack.png';
 
 /**
  * The "ROTAÇÃO" column: the ordered skill list, its drag/keyboard reordering, the add

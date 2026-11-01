@@ -37,28 +37,6 @@ return <><Render tag="div" props={{"className": ["layout-topbar"].filter(Boolean
 <Render tag="button" props={{"click": (event: any) => vm.action(() => { const $event = event; vm.showReferenceDialog() }),
 "className": ["pl-2 ui-button-text ui-button-info ui-button-raised topbar-nav"].filter(Boolean).join(' '),
 "button": true}}>{t('topbar.references')}</Render>
-<Render tag="div" props={{"className": ["flex align-items-center gap-2 ml-2"].filter(Boolean).join(' ')}}><Render tag="a" props={{"target": "_blank",
-"rel": "noreferrer noopener",
-"href": vm.issuesReportUrl,
-"className": "topbar-nav"}}><Render tag="button" props={{"aria-label": t('topbar.report'),
-"className": ["ui-button-warning ui-button-raised px-2"].filter(Boolean).join(' '),
-"button": true}}><Render tag="app-icon" props={{"name": "comment"}}></Render>
-<Render tag="span" props={{"className": ["pl-1"].filter(Boolean).join(' ')}}>{t('topbar.report')}</Render></Render></Render>
-<Render tag="a" props={{"target": "_blank",
-"rel": "noreferrer noopener",
-"href": vm.issuesBoardUrl,
-"className": "topbar-nav"}}><Render tag="button" props={{"aria-label": t('topbar.follow'),
-"className": ["ui-button-help ui-button-raised px-2"].filter(Boolean).join(' '),
-"button": true}}><Render tag="app-icon" props={{"name": "list"}}></Render>
-<Render tag="span" props={{"className": ["pl-1"].filter(Boolean).join(' ')}}>{t('topbar.follow')}</Render></Render></Render>
-<Render tag="a" props={{"target": "_blank",
-"rel": "noreferrer noopener",
-"href": vm.discordUrl,
-"className": "topbar-nav"}}><Render tag="button" props={{"aria-label": "Discord",
-"className": ["ui-button-raised px-2"].filter(Boolean).join(' '),
-"style": normalizeStyle(Object.assign({}, parseStyle("background: #5865f2; border-color: #5865f2"))),
-"button": true}}><Render tag="app-icon" props={{"name": "discord"}}></Render>
-<Render tag="span" props={{"className": ["pl-1"].filter(Boolean).join(' ')}}>{"Discord"}</Render></Render></Render></Render>
 <Render tag="div" props={{"className": ["topbar-actions flex align-items-center gap-2"].filter(Boolean).join(' ')}}>
 <Render tag="button" props={{"aria-label": t('topbar.mcpServer'),
 "click": (event: any) => vm.action(() => { const $event = event; vm.showMcpDialog() }),
@@ -99,15 +77,6 @@ return <><Render tag="div" props={{"className": ["layout-topbar"].filter(Boolean
     <button type="button" className="topbar-menu-row" onClick={() => { closeMenu(); vm.action(() => vm.showReferenceDialog()); }}>
       <Icon name="list" aria-hidden="true" /><span>{t('topbar.references')}</span>
     </button>
-    <a className="topbar-menu-row" href={vm.issuesReportUrl} target="_blank" rel="noreferrer noopener" onClick={closeMenu}>
-      <Icon name="comment" aria-hidden="true" /><span>{t('topbar.report')}</span><Icon name="external-link" aria-hidden="true" className="topbar-menu-external" />
-    </a>
-    <a className="topbar-menu-row" href={vm.issuesBoardUrl} target="_blank" rel="noreferrer noopener" onClick={closeMenu}>
-      <Icon name="list" aria-hidden="true" /><span>{t('topbar.follow')}</span><Icon name="external-link" aria-hidden="true" className="topbar-menu-external" />
-    </a>
-    <a className="topbar-menu-row" href={vm.discordUrl} target="_blank" rel="noreferrer noopener" onClick={closeMenu}>
-      <Icon name="discord" aria-hidden="true" /><span>Discord</span><Icon name="external-link" aria-hidden="true" className="topbar-menu-external" />
-    </a>
     <button type="button" className="topbar-menu-row" onClick={() => { closeMenu(); vm.action(() => { vm.visibleSettings = true; }); }}>
       <Icon name="cog" aria-hidden="true" /><span>{t('topbar.settings')}</span>
     </button>
@@ -194,14 +163,7 @@ const i = __index4; return <Fragment key={identityKey(__entry4)}><Render tag="di
 <Render tag="li" props={{}}>{rich('mcp.faqBuild')}</Render>
 <Render tag="li" props={{}}>{rich('mcp.faqMath')}</Render>
 <Render tag="li" props={{}}>{rich('mcp.faqMissingItem')}</Render></Render></Render></Render>
-<Render tag="div" props={{"className": ["mt-3 flex gap-2 flex-wrap justify-content-center align-items-center"].filter(Boolean).join(' ')}}><Render tag="span" props={{}}>{t('mcp.trouble')}</Render>
-<Render tag="a" props={{"target": "_blank",
-"rel": "noreferrer noopener",
-"href": vm.discordUrl}}><Render tag="app-ui-chip" props={{"label": "Discord",
-"icon": "discord"}}></Render></Render></Render></Render>
-<Render tag="app-help-improve" props={{"visible": vm.visibleHelpImprove,
-"appVersion": vm.lastestVersion,
-"visibleChange": (event: any) => vm.action(() => { const $event = event; (vm.visibleHelpImprove = $event) })}}></Render>
+</Render>
 <Render tag="app-ui-dialog" props={{"header": t('topbar.references'),
 "modal": true,
 "visible": vm.visibleReference,

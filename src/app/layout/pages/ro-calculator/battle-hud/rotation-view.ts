@@ -4,8 +4,12 @@ import { Translate } from 'src/app/i18n';
 // plain Vitest. It only reshapes numbers the engine already produced — it never
 // re-derives game truth. The timing itself lives in src/app/core/rotation-schedule.ts.
 
-import { BASIC_ATTACK_VALUE, isBasicAttack } from '../../../../core/rotation';
-import { RotationCycle, RotationLane, RotationScheduleStep, simulateRotation } from '../../../../core/rotation-schedule';
+import { isBasicAttack } from '../../../../core/rotation';
+import { RotationCycle, RotationLane, simulateRotation } from '../../../../core/rotation-schedule';
+import { effectedDpsInputs, toScheduleStep } from '../../../../core/rotation-dps';
+
+// The step mapping moved to core so the MCP reads the same timing; this is the panel's door to it.
+export { toScheduleStep };
 import { SkillType } from '../../../../models/damage-summary.model';
 import { dmgTypeLabel } from '../../../../utils/dmg-type-label';
 import { buildDpsSteps, formatDuration, isCritWeighted, TimeToKill, TTK_CAP_SECONDS } from './battle-hud.logic';
@@ -162,32 +166,6 @@ const NO_DAMAGE: DamageReadings = { damage: 0, ranges: [] };
 const isSpread = (ranges: DamageRange[]): boolean => ranges.length > 1 || ranges.some((r) => r.min !== r.max);
 
 /**
- * The effected pass's DPS inputs when Efeitos are ticked, the base ones otherwise —
- * the same effected-or-base rule {@link pickHeroDamage} applies to the hero figure, and
- * gated on the same flag for the same reason (unticking the last Efeito can leave
- * `effected*` stale).
- *
- * Without this the rows read the un-effected inputs, so ticking an Efeito moved the hero
- * DPS and the (i) popover but left every row and the cycle total untouched.
- */
-function effectedDpsInputs(dmg: any, hasSelectedChances: boolean): any {
-  if (!dmg) return dmg;
-  const hasEffected = hasSelectedChances && (dmg.effectedSkillDpsInputMin ?? 0) > 0;
-  if (!hasEffected) return dmg;
-
-  return {
-    ...dmg,
-    skillDpsInputMin: dmg.effectedSkillDpsInputMin,
-    skillDpsInputMax: dmg.effectedSkillDpsInputMax,
-    skillDpsInputCriDmg: dmg.effectedSkillDpsInputCriDmg,
-    skillDpsInputHitsPerSec: dmg.effectedSkillDpsInputHitsPerSec,
-    skillCriRateToMonster: dmg.effectedSkillCriRateToMonster,
-    skillAccuracy: dmg.effectedSkillAccuracy,
-    skillTotalHit: dmg.effectedSkillTotalHit,
-  };
-}
-
-/**
  * Per-use damage for one skill: the engine's own damage arithmetic (accuracy- and
  * crit-weighted, summed over every hit), with no rate applied.
  *
@@ -248,36 +226,6 @@ function basicDamagePerUse(summary: any, hasSelectedChances: boolean, text: Tran
   }
 
   return { damage, ranges: [{ ...plain, kind: 'flat', label: text('rv.rangeFlat') }] };
-}
-
-/**
- * Map one solved summary onto the scheduler's per-step timing.
- *
- * `castPeriod` is used rather than `reducedFct + reducedVct` so that `hitEveryNSec`
- * skills come through the way calc-skill-aspd already treats them: the channel time is
- * the cast and the block period is zero. `blockPeriod === 0` is exactly that signal.
- */
-export function toScheduleStep(input: { value: string; summary: any; damage: number }): RotationScheduleStep {
-  const { value, summary, damage } = input;
-  if (isBasicAttack(value)) {
-    return { key: BASIC_ATTACK_VALUE, cast: 0, acd: 0, cd: 0, damage };
-  }
-
-  const calcSkill = summary?.calcSkill ?? {};
-  const cast = calcSkill.castPeriod || 0;
-  const blockPeriod = Math.max(0, (calcSkill.hitPeriod || 0) - cast);
-  const channelled = blockPeriod <= 0 && (calcSkill.reducedAcd > 0 || calcSkill.reducedCd > 0);
-
-  return {
-    // Recarga is per skill, shared across its levels, so the name is the identity.
-    key: splitValue(value).name,
-    timingUnknown: calcSkill.timingUnknown,
-    cast,
-    acd: channelled ? 0 : calcSkill.reducedAcd || 0,
-    cd: channelled ? 0 : calcSkill.reducedCd || 0,
-    damage,
-    ignoreAspdFloor: calcSkill.ignoreAspdFloor,
-  };
 }
 
 /**

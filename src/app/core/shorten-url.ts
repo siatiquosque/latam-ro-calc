@@ -1,5 +1,6 @@
 /** Best-effort short link for browser share actions; the complete URL remains usable. */
 export async function shortenUrl(url: string, shortenerUrl: string): Promise<string> {
+  if (!shortenerUrl) return url;
   try {
     const response = await fetch(`${shortenerUrl}/api/links`, {
       method: 'POST',
