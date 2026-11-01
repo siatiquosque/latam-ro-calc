@@ -3,6 +3,8 @@
  * or a build from scratch.
  */
 import { z } from 'zod';
+import { ItemOptionMap } from 'src/app/constants/item-options-table';
+import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
 import { MainItemWithRelations } from 'src/app/constants/item-type.enum';
 import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { MainModel } from 'src/app/models/main.model';
@@ -77,6 +79,11 @@ export const buildInputSchema = z
     consumables: z.array(z.number().int()).optional(),
     aspdPotion: z.number().int().optional(),
     propertyAtk: z.string().optional().describe('Elemento do ataque (conversor/endow).'),
+    rotation: z
+      .array(z.string())
+      .max(30)
+      .optional()
+      .describe('Rotação de habilidades, cada passo "Nome==Nível" (ou o ataque básico). Alimenta a métrica rotationDps; sem isso vale a rotação do link, se houver.'),
   })
   .describe('Build a calcular. Sem `share`/`preset`, parte de uma build vazia com os overrides aplicados.');
 
@@ -101,6 +108,7 @@ function applyOverrides(model: any, input: BuildInput, warnings: string[], datas
   if (input.atkSkill !== undefined) model.selectedAtkSkill = input.atkSkill;
   if (input.aspdPotion !== undefined) model.aspdPotion = input.aspdPotion;
   if (input.consumables) model.consumables = [...input.consumables];
+  if (input.rotation) model.rotation = [...input.rotation];
 
   for (const [stat, value] of Object.entries(input.stats ?? {})) {
     if (value !== undefined) model[stat] = value;
@@ -165,7 +173,11 @@ export function resolveBuild(input: BuildInput, dataset: Dataset): ResolvedBuild
     throw new Error(validation.errors.map((e) => `${e.path}: ${e.message}`).join('; '));
   }
   const customItems = validation.items;
-  const items: Record<number, ItemModel> = { ...dataset.items, ...Object.fromEntries(customItems.map((item) => [item.id, item])) };
+  // Spreading the whole item table costs ~5 ms and a few MB of garbage per build; only a build that
+  // carries custom items needs its own copy. The dataset is shared read-only, so reuse it otherwise.
+  const items: Record<number, ItemModel> = customItems.length
+    ? { ...dataset.items, ...Object.fromEntries(customItems.map((item) => [item.id, item])) }
+    : dataset.items;
   const model = applyPreset(base) as any;
   applyOverrides(model, input, warnings, dataset, items);
 
@@ -179,6 +191,12 @@ export function resolveBuild(input: BuildInput, dataset: Dataset): ResolvedBuild
   applySkillMaps(model, char);
   resolveAtkSkill(model, char);
   model.rawOptionTxts = toRawOptionTxtList(model, items);
+  if (input.options) {
+    for (const [slot, positions] of ItemOptionMap) {
+      const error = validateCataloguedRolls(Number(model[slot]), positions.map(index => model.rawOptionTxts[index]));
+      if (error) throw new Error(error);
+    }
+  }
 
   return { model: model as ResolvedBuild['model'], char, classInfo: dataset.classes.get(model.class), warnings, items, customItems };
 }

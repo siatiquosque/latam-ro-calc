@@ -15,7 +15,7 @@ import { ClassID, ClassNamePtBr } from '../src/app/jobs/_class-name';
  * A module constant, never `request.headers.host`: a spoofed Host would otherwise end
  * up in og:url and canonical, pointing a preview at somebody else's domain.
  */
-export const SITE_ORIGIN = 'https://simulador.latam-tools.com.br';
+export const SITE_ORIGIN = 'https://laro-calc.siatiquosque.com.br';
 
 /** Bounds the decompressed payload before it is parsed — lz-string is a compressor,
  *  and a short token can expand into megabytes of JSON. */
@@ -40,7 +40,7 @@ const finite = (value: unknown): number | null => {
  * shell untouched, so a human still gets a working app and a crawler still gets the
  * site's generic card — a bad token must never turn into a broken page.
  */
-export function buildShareMeta(token: string | null | undefined): ShareMeta | null {
+export function buildShareMeta(token: string | null | undefined, origin = SITE_ORIGIN): ShareMeta | null {
   if (!isShareToken(token)) return null;
 
   const shared = decodeShared(token, MAX_PRESET_JSON_CHARS);
@@ -59,7 +59,7 @@ export function buildShareMeta(token: string | null | undefined): ShareMeta | nu
     description:
       `Build de ${className} (base ${level}, classe ${jobLevel}) no Simulador de Dano RO LATAM. ` +
       `Abra o link para ver os atributos, trocar equipamentos e calcular o dano.`,
-    canonical: `${SITE_ORIGIN}${path}`,
-    image: `${SITE_ORIGIN}${path}og.png`,
+    canonical: `${origin}${path}`,
+    image: `${origin}${path}og.png`,
   };
 }

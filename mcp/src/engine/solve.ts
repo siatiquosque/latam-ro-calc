@@ -14,7 +14,7 @@
  */
 import { JobBuffs } from 'src/app/constants/job-buffs';
 import { Calculator } from 'src/app/core/calculator';
-import { applyGuaranaCandy, CalculatorController, collectBuffBonuses, collectConsumables } from 'src/app/core/calculator-controller';
+import { applyGuaranaCandy, CalcChainInput, CalculatorController, collectBuffBonuses, collectConsumables } from 'src/app/core/calculator-controller';
 import { parseOptionScripts } from 'src/app/core/option-scripts';
 import { Dataset } from '../data/dataset';
 import { ResolvedBuild } from './build-input';
@@ -31,6 +31,20 @@ const controller = new CalculatorController();
  * applied re-solves with `effects`.
  */
 export function solve(rb: ResolvedBuild, dataset: Dataset, monster: any, effects: string[] = []): Calculator {
+  return solveWithInput(rb, dataset, monster, effects).calc;
+}
+
+/**
+ * Same as {@link solve}, but also hands back the chain input, so a caller can solve further
+ * skills on the same calculator (a rotation) with `CalculatorController#solveSkill` instead
+ * of loading the whole build again.
+ */
+export function solveWithInput(
+  rb: ResolvedBuild,
+  dataset: Dataset,
+  monster: any,
+  effects: string[] = [],
+): { calc: Calculator; input: CalcChainInput } {
   const { model, char } = rb;
 
   const { equipAtks, masteryAtks, activeSkillNames, learnedSkillMap } = char
@@ -53,7 +67,7 @@ export function solve(rb: ResolvedBuild, dataset: Dataset, monster: any, effects
     .setClass(char)
     .loadItemFromModel(model as any);
 
-  controller.runChain(calc, {
+  const input: CalcChainInput = {
     monster,
     equipAtks,
     masteryAtks,
@@ -67,7 +81,11 @@ export function solve(rb: ResolvedBuild, dataset: Dataset, monster: any, effects
     selectedAtkSkill: (model as any).selectedAtkSkill,
     selectedChances: effects,
     usedHpL,
-  });
+  };
+  controller.runChain(calc, input);
 
-  return calc;
+  return { calc, input };
 }
+
+/** The controller the MCP solves with, for callers that re-solve other skills on a prepared calculator. */
+export const solveController = controller;

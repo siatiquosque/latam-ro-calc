@@ -13,8 +13,8 @@ import { config, initConfig } from './config';
 describe('initConfig', () => {
   it('falls back to the defaults when no var is set', () => {
     initConfig({});
-    expect(config.appOrigin).toBe('https://simulador.latam-tools.com.br');
-    expect(config.allowedHosts).toEqual(['simulador.latam-tools.com.br', 'localhost']);
+    expect(config.appOrigin).toBe('https://laro-calc.siatiquosque.com.br');
+    expect(config.allowedHosts).toEqual(['laro-calc.siatiquosque.com.br', 'localhost']);
     expect(config.limits.maxSearchResults).toBe(50);
   });
 
@@ -33,9 +33,9 @@ describe('initConfig', () => {
 
   it('ignores blank and unparseable values rather than taking them literally', () => {
     initConfig({ PUBLIC_APP_ORIGIN: '   ', DEFAULT_TARGET_ID: 'não é número', ALLOWED_HOSTS: '' });
-    expect(config.appOrigin).toBe('https://simulador.latam-tools.com.br');
+    expect(config.appOrigin).toBe('https://laro-calc.siatiquosque.com.br');
     expect(config.defaultTargetId).toBe(21077);
-    expect(config.allowedHosts).toEqual(['simulador.latam-tools.com.br', 'localhost']);
+    expect(config.allowedHosts).toEqual(['laro-calc.siatiquosque.com.br', 'localhost']);
   });
 
   it('is idempotent, since it runs on every request', () => {
@@ -49,7 +49,7 @@ describe('initConfig', () => {
     const first = config.allowedHosts;
     initConfig({ ALLOWED_HOSTS: 'other.example.com' });
     initConfig({});
-    expect(config.allowedHosts).toEqual(['simulador.latam-tools.com.br', 'localhost']);
+    expect(config.allowedHosts).toEqual(['laro-calc.siatiquosque.com.br', 'localhost']);
     expect(config.allowedHosts).not.toBe(first);
   });
 });

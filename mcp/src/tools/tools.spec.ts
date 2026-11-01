@@ -44,11 +44,17 @@ describe('tool surface', () => {
         'list_bonus_keys',
         'list_classes',
         'list_skills',
+        'evaluate_variants',
+        'explain_damage',
+        'optimize_build',
         'optimize_slot',
+        'optimize_stats',
         'parse_share_link',
         'search_items',
         'search_monsters',
         'share_link',
+        'slot_options',
+        'uncatalogued_pools',
         'validate_custom_items',
       ].sort(),
     );
@@ -76,12 +82,13 @@ describe('custom item tools', () => {
     expect(decodeCustomBundle(token).map((item) => item.id)).toEqual([first, second]);
   });
 
-  it('returns a short link for a valid batch when the shortener responds', async () => {
+  it('keeps custom-item links on the current domain when the shortener is disabled', async () => {
     const shortUrl = 'https://short.latam-tools.com.br/itens123';
     const mocked = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(new Response(JSON.stringify({ short_url: shortUrl }), { status: 200 }));
     const created = await call('create_custom_items', { items });
+    expect(created.data.url).toMatch(/^https:\/\/laro-calc\.siatiquosque\.com\.br\//);
+    expect(mocked).not.toHaveBeenCalled();
     mocked.mockRestore();
-    expect(created.data.url).toBe(shortUrl);
   });
 
   it('rejects a broken member without returning a partial link', async () => {
@@ -161,7 +168,7 @@ describe('calculate', () => {
     const { data, bytes } = await call('calculate', { build, target: { monsterId: 21077 } });
     expect(data.damage.skill.max).toBe(68309);
     expect(data.target).toMatchObject({ id: 21077, name: 'Dummy - Neutro' });
-    expect(data.share).toMatch(/^https:\/\/simulador\.latam-tools\.com\.br\/s\/[A-Za-z0-9.$-]+\/$/);
+    expect(data.share).toMatch(/^https:\/\/laro-calc\.siatiquosque\.com\.br\/s\/[A-Za-z0-9.$-]+\/$/);
     // The default result must stay cheap — never spread getTotalSummary().
     expect(bytes).toBeLessThan(4000);
   });
@@ -306,7 +313,7 @@ describe('bridge', () => {
   });
 
   it('rejects a malformed link with a readable message', async () => {
-    const { data, isError } = await call('parse_share_link', { share: 'https://simulador.latam-tools.com.br/#/?b=garbage' });
+    const { data, isError } = await call('parse_share_link', { share: 'https://laro-calc.siatiquosque.com.br/#/?b=garbage' });
     expect(isError).toBe(true);
     expect(data.error).toMatch(/inválido|corrompido/);
   });

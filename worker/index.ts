@@ -49,6 +49,9 @@ interface Env {
   MAX_OPTIMIZE_CANDIDATES?: string;
   MAX_TABLE_MONSTERS?: string;
   MAX_COMPARE_BUILDS?: string;
+  MAX_VARIANTS?: string;
+  MAX_CONTRIBUTIONS?: string;
+  MAX_SOLVES?: string;
   MAX_SEARCH_RESULTS?: string;
 }
 
@@ -169,7 +172,7 @@ export default {
       }
 
       const shell = await asset(env, url, '/index.html');
-      const meta = token ? buildShareMeta(token) : null;
+      const meta = token ? buildShareMeta(token, env.PUBLIC_APP_ORIGIN) : null;
       // No usable token, or the shell isn't HTML for some reason: hand back exactly what
       // the static path would have served, generic tags and all.
       if (!meta || !shell.headers.get('content-type')?.includes('text/html')) return shell;

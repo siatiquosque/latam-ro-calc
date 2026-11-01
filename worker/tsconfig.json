@@ -37,5 +37,5 @@
   },
   // Roots only — TypeScript follows the imports from here into src/app/** on its own.
   "include": ["**/*.ts", "../mcp/src/**/*.ts"],
-  "exclude": ["**/*.spec.ts", "../mcp/src/**/*.spec.ts", "../mcp/src/data/dataset.node.ts"]
+  "exclude": ["**/*.spec.ts", "../mcp/src/**/*.spec.ts", "../mcp/src/data/dataset.node.ts", "../mcp/src/node/**"]
 }

@@ -10,10 +10,11 @@ import { projectResult } from './project';
 import { readShareToken } from 'src/app/core/share-path';
 import { buildShareUrl, parseShare, toPreset } from './share';
 import { solve } from './solve';
+import { ClassIDEnum } from 'src/app/jobs/_class-name';
 
 const dataset = loadDatasetFromDisk();
 const DUMMY_NEUTRAL = 21077;
-const ORIGIN = 'https://simulador.latam-tools.com.br';
+const ORIGIN = 'https://laro-calc.siatiquosque.com.br';
 
 const project = (input: BuildInput) => {
   const rb = resolveBuild(input, dataset);
@@ -30,6 +31,18 @@ const roundTrips = (input: BuildInput) => {
 };
 
 describe('share round-trip', () => {
+  it.each([
+    [ClassIDEnum.Inquisitor, 'Tiger Cannon==3'],
+    [ClassIDEnum.Inquisitor, 'Tiger Cannon Combo==3'],
+    [ClassIDEnum.Mechanic, 'Arm Cannon==3'],
+  ] as const)('preserves lower skill levels through share links (%i, %s)', (classId, skill) => {
+    const first = resolveBuild({ class: classId, atkSkill: skill }, dataset);
+    expect(first.model.selectedAtkSkill).toBe(skill);
+    const url = buildShareUrl(toPreset(first.model, first.char), ORIGIN);
+    const second = resolveBuild({ share: url }, dataset);
+    expect(second.model.selectedAtkSkill).toBe(skill);
+  });
+
   it('preserves a bare build', () => {
     const { a, b } = roundTrips({ class: 4261, level: 230, jobLevel: 47, stats: { int: 133, spl: 100, vit: 120 }, atkSkill: 'Poison Burst==5' });
     expect(b['damage']).toEqual(a['damage']);
@@ -104,7 +117,7 @@ describe('parseShare', () => {
 
   it('throws rather than silently calculating a default build', () => {
     expect(() => parseShare('')).toThrow(/vazio/);
-    expect(() => parseShare('https://simulador.latam-tools.com.br/#/?b=obviously-not-a-token')).toThrow(/inválido|corrompido/);
+    expect(() => parseShare('https://laro-calc.siatiquosque.com.br/#/?b=obviously-not-a-token')).toThrow(/inválido|corrompido/);
   });
 });
 

@@ -78,6 +78,7 @@ export async function resolveShortLink(url: string, timeoutMs = 3000, shortener?
  * always works, so a shortener hiccup must not fail the tool call.
  */
 export async function shortenShareUrl(url: string, shortenerUrl: string, timeoutMs = 3000, shortener?: Shortener): Promise<string> {
+  if (!shortenerUrl) return url;
   try {
     const endpoint = `${shortenerUrl}/api/links`;
     const init: RequestInit = {

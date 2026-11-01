@@ -13,10 +13,10 @@
  */
 const DEFAULTS = {
   /** Origin of the web calculator, used to build share links. */
-  appOrigin: 'https://simulador.latam-tools.com.br',
+  appOrigin: 'https://laro-calc.siatiquosque.com.br',
 
   /** URL shortener, mirroring the app's share dialog. */
-  shortenerUrl: 'https://short.latam-tools.com.br',
+  shortenerUrl: '',
 
   /** Dummy - Neutro: neutral defence, so the element table cancels out and a bare
    *  comparison isn't distorted by resistances. */
@@ -24,16 +24,24 @@ const DEFAULTS = {
 
   /** Hostnames this server answers as. Cloudflare already routes by hostname, so this is
    *  belt-and-braces rather than the primary DNS-rebinding defence it was on the box. */
-  allowedHosts: ['simulador.latam-tools.com.br', 'localhost'],
+  allowedHosts: ['laro-calc.siatiquosque.com.br', 'localhost'],
 
   /** Browser-based MCP clients send Origin; native/CLI ones send none (and must be
    *  allowed, or the primary use case breaks). */
-  allowedOrigins: ['https://claude.ai', 'https://simulador.latam-tools.com.br', 'http://localhost:4200'],
+  allowedOrigins: ['https://claude.ai', 'https://laro-calc.siatiquosque.com.br', 'http://localhost:4200'],
 
   limits: {
     maxOptimizeCandidates: 40,
     maxTableMonsters: 20,
     maxCompareBuilds: 4,
+    /** Variants per `evaluate_variants` call. Each costs ~4 ms of CPU (resolve + solve), measured on a 236 Inquisidor. */
+    maxVariants: 100,
+    /** Leave-one-out solves `explain_damage` will run. */
+    maxContributions: 60,
+    /** Solves one `optimize_build` call may spend. Each costs ~4 ms of CPU (more with `rotationDps`). */
+    maxSolves: 2000,
+    /** Wall-clock allowance of one search call, in ms. It returns the best build found so far when it runs out. */
+    maxSearchMs: 25_000,
     maxSearchResults: 50,
   },
 };
@@ -77,6 +85,10 @@ export function initConfig(env: object): void {
     maxOptimizeCandidates: int('MAX_OPTIMIZE_CANDIDATES', DEFAULTS.limits.maxOptimizeCandidates),
     maxTableMonsters: int('MAX_TABLE_MONSTERS', DEFAULTS.limits.maxTableMonsters),
     maxCompareBuilds: int('MAX_COMPARE_BUILDS', DEFAULTS.limits.maxCompareBuilds),
+    maxVariants: int('MAX_VARIANTS', DEFAULTS.limits.maxVariants),
+    maxContributions: int('MAX_CONTRIBUTIONS', DEFAULTS.limits.maxContributions),
+    maxSolves: int('MAX_SOLVES', DEFAULTS.limits.maxSolves),
+    maxSearchMs: int('MAX_SEARCH_MS', DEFAULTS.limits.maxSearchMs),
     maxSearchResults: int('MAX_SEARCH_RESULTS', DEFAULTS.limits.maxSearchResults),
   };
 }

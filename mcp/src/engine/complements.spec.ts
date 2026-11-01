@@ -1,0 +1,43 @@
+import { expect, it } from 'vitest';
+import { loadDatasetFromDisk } from '../data/dataset.node';
+import { complementChoices, searchComplements } from './complements';
+import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
+
+const dataset = loadDatasetFromDisk();
+
+it('offers only valid coin profiles and never assigns unknown weapon random options', () => {
+  const fields = complementChoices(dataset, 'headMiddle', 410233, ['atk', 'melee', 'range', 'sMatk'], new Set());
+  const rolls = fields.flat().filter(patch => patch.options);
+  expect(rolls.length).toBeGreaterThan(0);
+  for (const patch of rolls) expect(validateCataloguedRolls(410233, [patch.options['10'], patch.options['11']])).toBeNull();
+  expect(complementChoices(dataset, 'weapon', 560026, ['atk'], new Set()).flat().every(p => !p.options)).toBe(true);
+});
+
+it('searches each field and keeps gains evaluated before its per-stage budget runs out', () => {
+  const initial = { patch: { gear: {} }, result: { metrics: { max: 0 } } };
+  const fields = Array.from({ length: 4 }, (_, i) => Array.from({ length: 10 }, (_, j) => ({ gear: { [`field${i}`]: j + 1 } })));
+  let calls = 0;
+  const result = searchComplements(initial, fields, 'max', patch => {
+    calls++;
+    return { metrics: { max: Object.values(patch.gear).reduce<number>((sum, value) => sum + Number(value), 0) } };
+  });
+  expect(calls).toBeLessThanOrEqual(48);
+  expect(Object.keys(result.patch.gear)).toHaveLength(4);
+  expect(result.result.metrics.max).toBeGreaterThan(4);
+});
+
+it('honors exclusions when generating card and enchantment choices', () => {
+  const fields = complementChoices(dataset, 'boot', 470094, ['atk', 'criDmg', 'melee'], new Set());
+  const ids = fields.flat().flatMap(p => Object.values(p.gear ?? {})).filter((id): id is number => typeof id === 'number');
+  expect(ids.length).toBeGreaterThan(0);
+  const banned = new Set(ids);
+  const filtered = complementChoices(dataset, 'boot', 470094, ['atk', 'criDmg', 'melee'], banned);
+  expect(filtered.flat().flatMap(p => Object.values(p.gear ?? {})).every(id => !banned.has(Number(id)))).toBe(true);
+});
+
+it('does not propose cards absent from the current LATAM client', () => {
+  const fields = complementChoices(dataset, 'weapon', 560026, ['atk', 'criDmg', 'melee'], new Set());
+  for (const patch of fields.flat()) for (const [field, id] of Object.entries(patch.gear ?? {})) {
+    if (field.includes('Card') && id) expect(dataset.itemIndex.get(Number(id))?.latam).toBe(true);
+  }
+});

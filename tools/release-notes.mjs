@@ -60,5 +60,7 @@ export function prepareRelease(root, now = new Date()) {
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const root = resolve(import.meta.dirname, '..');
   readFragments(root);
-  console.log('Release fragments valid');
+  if (process.argv.includes('--prepare')) {
+    console.log(prepareRelease(root) ?? 'No pending fragments; version unchanged');
+  } else console.log('Release fragments valid');
 }

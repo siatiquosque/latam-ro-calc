@@ -1,8 +1,10 @@
 {
   "name": "ro-calculator",
-  "version": "0.1.193-beta",
+  "version": "0.1.194-beta",
   "license": "MIT",
   "scripts": {
+    "release:prepare": "node tools/release-notes.mjs --prepare",
+    "package:vps": "node tools/package-vps.mjs",
     "prepare": "node scripts/setup-hooks.mjs",
     "start": "node tools/serve-web.mjs",
     "start2": "node tools/serve-web.mjs --host localhost",
@@ -10,6 +12,7 @@
     "data:build": "node tools/build-web-data.mjs --hash --report",
     "data:dev": "node tools/build-web-data.mjs",
     "build:worker": "node tools/build-worker.mjs",
+    "build:vps": "node tools/build-web-data.mjs --hash && node tools/build-web.mjs && node tools/build-vps.mjs",
     "typecheck": "node tools/build-web.mjs --check && tsc -p worker/tsconfig.json && tsc -p tsconfig.backend-tests.json && tsc -p tsconfig.react.json",
     "typecheck:react": "tsc -p tsconfig.react.json",
     "typecheck:worker": "tsc -p worker/tsconfig.json",

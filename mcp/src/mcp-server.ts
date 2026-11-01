@@ -3,7 +3,12 @@ import { Dataset } from './data/dataset';
 import { registerDiscoveryTools } from './tools/discovery';
 import { registerBridgeTools, registerCalculationTools } from './tools/calculate';
 import { registerCustomItemTools } from './tools/custom-items';
+import { registerOptimizationTools } from './tools/optimize';
+import { registerStatTools } from './tools/optimize-stats';
+import { registerRandomPoolTools } from './tools/random-pools';
 import { Shortener } from './engine/share';
+import { useShortener } from './tools/helpers';
+import { APP_VERSION } from 'src/app/core/app-version';
 
 /**
  * Keeps AJV out of the request path.
@@ -37,21 +42,28 @@ const unreachableValidator = {
  */
 export function createMcpServer(dataset: Dataset, shortener?: Shortener): McpServer {
   const server = new McpServer(
-    { name: 'ro-calc-latam', version: '1.0.0' },
+    { name: 'ro-calc-latam', version: APP_VERSION },
     {
       jsonSchemaValidator: unreachableValidator as any,
       instructions:
         'Simulador de dano de Ragnarok Online LATAM. Fluxo típico: list_classes → list_skills → search_items → calculate. ' +
         'Toda ferramenta que recebe uma build aceita um link do simulador em `build.share`, com overrides esparsos por cima — ' +
         'então, se a pessoa colar um link, use-o direto em vez de remontar a build. ' +
-        'Devolva sempre o `share` do resultado para que ela possa abrir e conferir no simulador.',
+        'Devolva sempre o `share` do resultado para que ela possa abrir e conferir no simulador. ' +
+        'Para procurar melhorias: `explain_damage` mostra onde está o dano e o que o número não conta, `slot_options` lista os encantamentos que uma peça aceita, ' +
+        '`evaluate_variants` testa dezenas de variações de uma vez, em vez de uma chamada por teste; `optimize_stats` redistribui os pontos de atributo e ' +
+        '`uncatalogued_pools` lista os itens cujo pool de bônus aleatório ainda não foi confirmado.',
     },
   );
 
+  useShortener(server, shortener);
   registerDiscoveryTools(server, dataset);
   registerCalculationTools(server, dataset, shortener);
   registerBridgeTools(server, dataset, shortener);
   registerCustomItemTools(server, dataset, shortener);
+  registerOptimizationTools(server, dataset, shortener);
+  registerRandomPoolTools(server, dataset);
+  registerStatTools(server, dataset, shortener);
 
   return server;
 }

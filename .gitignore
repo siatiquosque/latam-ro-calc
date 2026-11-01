@@ -75,3 +75,4 @@ ssl
 backup-preset.json
 /.tmp/
 /.pnpm-store/
+tools/__pycache__/

@@ -16,6 +16,7 @@ import { config, initConfig } from '../../mcp/src/config';
 import { createMcpServer } from '../../mcp/src/mcp-server';
 import { Shortener } from '../../mcp/src/engine/share';
 import { AssetsEnv, getDataset, isCold, lastLoadMs } from './data';
+import { APP_VERSION } from '../../src/app/core/app-version';
 
 /**
  * Assets supply the dataset; SHORTENER reaches the same-zone shortener Worker.
@@ -95,6 +96,7 @@ export async function handleMcp(request: Request, env: McpEnv, ctx: ExecutionCon
     return new Response(
       JSON.stringify({
         ok: true,
+        version: APP_VERSION,
         items: dataset.itemIndex.size,
         monsters: dataset.monsterIndex.size,
         classes: dataset.classes.list().length,

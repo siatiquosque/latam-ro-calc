@@ -21,5 +21,7 @@ Use user-facing wording, impersonal voice, and reporter credits. Keep in-game pr
 nouns in the form the client uses for that language; where the localized name is not
 known, keep the PT-BR name rather than inventing one.
 
-Do not choose a version, change `package.json`, or edit `src/releases/history.json`.
+Feature changes must not manually choose a version or edit published history.
+Use `pnpm release:prepare` at release time to update `package.json` and append to
+`src/releases/history.json`.
 Internal changes may omit a fragment. See [release workflow](../docs/releases.md).

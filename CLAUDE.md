@@ -17,3 +17,10 @@ When the user asks for a pull request for this project:
 - Write the PT-BR line first and translate from it. Keep in-game proper nouns (items,
   skills, classes, monsters) in the form the client uses for that language; if the
   localized name is not known, leave the PT-BR name rather than inventing one.
+
+## Publicação na VPS
+
+Never publish, activate a release or change anything on the VPS (`deploy/vps/deploy.ps1`, `activate.sh`, PM2,
+Caddy, the links SQLite file) without the user's explicit permission for that specific change. Preparing the
+artifact, notes and tests locally needs no permission. See `docs/deploy-vps.md` and `docs/releases.md`.
+Always back up `/root/web/Caddyfile` (dated copy beside it) before any change to it, validate before reload, and never print its contents: it holds other sites' `basic_auth` hashes.

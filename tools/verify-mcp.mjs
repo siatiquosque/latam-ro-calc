@@ -2,7 +2,7 @@
 /** Deployment smoke test for the cross-Worker path that health/tools-list cannot cover. */
 import assert from 'node:assert/strict';
 
-const base = process.env.MCP_BASE_URL || 'https://simulador.latam-tools.com.br';
+const base = process.env.MCP_BASE_URL || 'https://laro-calc.siatiquosque.com.br';
 let id = 0;
 
 async function call(name, args) {

@@ -19,9 +19,21 @@ export function splitSkillCatalog(catalog) {
   return { metadata, descriptions };
 }
 
+/** withSelectableSkillLevels only consumes varying timing curves. Scalar client
+ * values and maxLevel are never used to replace an authored skill's timing.
+ */
+export function projectSkillTimingCurves(table) {
+  return Object.fromEntries(Object.entries(table).map(([id, row]) => [id,
+    Object.fromEntries(['fct', 'vct', 'acd', 'cd'].filter(field => Array.isArray(row[field])).map(field => [field, row[field]])),
+  ]).filter(([, row]) => Object.keys(row).length));
+}
+
 /** Browser-only projections: optional prose is fetched after startup or on demand. */
 export function browserDataPlugin(root) {
   return { name: 'browser-data', setup(builder) {
+    builder.onLoad({ filter: /src[\\/]assets[\\/]demo[\\/]data[\\/]skill-delay\.json$/ }, () => ({
+      contents: JSON.stringify(projectSkillTimingCurves(JSON.parse(readFileSync(resolve(root, 'src/assets/demo/data/skill-delay.json'), 'utf8')))), loader: 'json',
+    }));
     builder.onLoad({ filter: /src[\\/]app[\\/]skills[\\/]skill-meta\.generated\.ts$/ }, async () => {
       const { metadata } = splitSkillCatalog(await readSkillCatalog(root));
       return { contents: `export const SKILL_META = ${JSON.stringify(metadata)};`, loader: 'js' };

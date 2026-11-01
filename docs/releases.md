@@ -1,61 +1,90 @@
-# Releases and novidades
+# Versões, Novidades e publicação na VPS
 
-Feature PRs add uniquely named JSON fragments in `release-notes/`, rather than
-editing shared version numbers or published history. Internal-only work does
-not need notes. The supported release type is `patch`, retaining sequential
-versions such as `0.1.165-beta` → `0.1.166-beta`.
+A calculadora usa versões beta sequenciais, incrementando o patch:
+`0.1.193-beta` → `0.1.194-beta`. Hoje o único tipo de fragmento suportado é
+`patch`; isso não representa uma promessa de estabilidade de API em versão 1.x.
 
-## Languages
+`package.json` é a origem da versão. A primeira entrada de
+`src/releases/history.json` deve ter o mesmo valor. O sino **Novidades** lê esse
+histórico, e a identificação MCP (`initialize.serverInfo.version`), `/healthz`
+e `/mcp/healthz` usam a versão do pacote. Os arquivos web e o servidor são
+publicados juntos; a ativação rejeita versões divergentes.
 
-The notes are published in the three languages the interface ships. A fragment
-carries `logs` (PT-BR, the source the notes are written in) plus `logs_es` and
-`logs_en`, each with one line per `logs` entry, in the same order.
-`tools/release-notes.mjs` enforces that on every fragment, so a note cannot reach
-the app untranslated.
+## Notas de uma alteração
 
-Releases published before the notes became trilingual have only `logs`, and
-nothing rewrites them. `entryLogs` in `src/releases/entry-logs.ts` falls back to
-PT-BR per entry, so the bell shows an old note in Portuguese rather than hiding
-it, and `tools/post-novidades.mjs` posts one Discord embed per language present —
-a single PT-BR embed for those older releases, exactly as before.
+Adicione um arquivo JSON de nome único em `release-notes/` com `type: "patch"`
+e três listas: `logs` (português), `logs_es` (espanhol), `logs_en` (inglês).
+As listas devem ter uma linha correspondente por alteração. Mudanças internas
+sem efeito visível não precisam de nota. Validação sem alteração:
 
-On a push to main, the deployment workflow checks out the latest main, combines
-all pending fragments in filename order, increments the patch version, and
-consumes the fragments. Dates use America/Sao_Paulo. The app bell and Discord
-share `src/releases/history.json`; existing versions and local read markers
-remain valid. PR previews show published history until their fragments release.
+```sh
+node tools/release-notes.mjs
+```
 
-The coordinator installs dependencies, checks types and source, tests, and
-builds before committing. It pushes the release commit and `v<version>` tag
-atomically without force. If another merge wins the race, it starts again from
-latest main and repeats validation and build, up to five attempts. Quick merges
-may be batched into one release. Workflow concurrency serializes deployment;
-every run collects all fragments, including those from superseded pending runs.
+## Preparar a versão
 
-The same run deploys its built commit and then announces unannounced release
-tags contained in that commit, oldest first. Successful announcements get an
-`announced/v<version>` receipt tag. A Discord failure leaves the release pending
-and does not fail the already completed deployment. Historical entries without
-release tags are not announced. Discord's enforced nonce also suppresses recent
-duplicate requests, but a crash between posting and pushing the receipt can
-still produce a duplicate on a much later retry. This is not an exactly-once
-delivery guarantee. The manual announcement workflow intentionally allows reposts.
+```sh
+pnpm release:prepare
+```
 
-If deployment or announcement fails, rerun the workflow or dispatch it manually.
-With no new fragments it retains the allocated version. New fragments allocate
-the next version; any pending older announcements are recovered after deployment.
+O comando combina os fragmentos por nome, incrementa o patch, acrescenta a
+entrada ao início de Novidades e consome os fragmentos. Datas usam
+`America/Sao_Paulo`. Entradas já publicadas e marcadores de leitura não são
+reescritos. Sem fragmentos novos, repetir o comando não incrementa a versão.
+Ele não faz commit, push, tag, publicação ou anúncio externo.
 
-## GitHub configuration
+Revise versão e notas antes de gerar o artefato. No fluxo regular, a versão
+preparada deve estar em um commit aprovado, para identificar a origem do build.
+Os primeiros deploys desta instalação foram snapshots de uma árvore de
+trabalho; seus metadados os identificam como `dirty`, sem fingir um commit limpo.
 
-The workflow needs `contents: write`, and repository/ruleset policy must allow
-GitHub Actions to push release commits to main and create release/receipt tags.
-If main requires all changes through PRs with no permitted automation bypass,
-configure a dedicated GitHub App with an allowed bypass and use its token for
-checkout. Do not broadly disable branch protection. The default GITHUB_TOKEN
-release push does not trigger another push workflow; deployment continues in
-the original run. A custom App token can trigger another run, which finds no
-new fragments and does not create another release.
+## Validar e empacotar
 
-Never run `tools/release-main.mjs` locally: it resets its checkout to origin/main
-and is guarded for GitHub Actions. Local fragment validation is read-only:
-`node tools/release-notes.mjs`.
+```sh
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm package:vps
+```
+
+O pacote fica em `.tmp/vps-artifact/`: `web.tar.gz`, `node.tar.gz` e
+`release.json`. A geração recusa fragmentos pendentes e divergência entre
+pacote e Novidades. Os metadados registram versão, horário, HEAD e se a árvore
+tinha alterações. O frontend recebe a mesma identificação em
+`/assets/release.json`. A build usa o domínio atual e o encurtador desativado.
+
+O workflow manual **Build VPS release artifact** executa as verificações e
+publica o artefato no GitHub Actions. Ele não aloca versões, escreve no Git nem
+publica na VPS. Execute-o sobre a revisão já preparada; baixe o artefato para
+publicação. Os workflows antigos de Cloudflare, Firebase e anúncios no Discord
+foram retirados do fluxo desta instalação.
+
+## Publicar e reverter
+
+**Publicar na VPS exige permissão explícita de quem mantém o projeto**, a cada vez. Preparar a versão, as notas,
+o artefato e os testes pode ser feito sem pedir; ativar um release, reiniciar o PM2, recarregar o Caddy ou
+alterar arquivos na VPS só depois de um "pode publicar" para aquela alteração. Uma autorização anterior não vale
+para a próxima publicação.
+
+Com acesso SSH configurado pelo alias `larotools-vps`, na raiz do projeto:
+
+```powershell
+./deploy/vps/deploy.ps1 -ArtifactDirectory .tmp/vps-artifact
+```
+
+O script verifica os hashes transferidos e ativa uma pasta de release com versão
+e horário no nome. `activate.sh` valida o Caddy, inicia o servidor e confere a
+versão do servidor contra o artefato web antes de recarregar o Caddy. Falha na
+ativação restaura o release/configuração anterior. A versão pública é conferida
+novamente após a ativação. Os releases anteriores permanecem disponíveis.
+
+Repetir a publicação do mesmo artefato não aloca outra versão. Para rollback,
+restaure os symlinks de servidor e web ao par anterior e recarregue o PM2,
+conforme [deploy-vps.md](deploy-vps.md). Não prepare novas notas para uma simples
+repetição ou reversão. Notas aparecem no sino após publicar o novo frontend;
+prepará-las localmente não altera o site público.
+
+Os scripts antigos `release-main.mjs` e `announce-pending-releases.mjs` são
+legados do upstream e não fazem parte desse fluxo. Não execute
+`release-main.mjs` localmente: ele possui operações de Git próprias de uma
+automação antiga. Não há postagem automática no Discord.

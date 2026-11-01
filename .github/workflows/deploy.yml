@@ -1,81 +1,37 @@
-name: Deploy to Cloudflare
+name: Build VPS release artifact
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
-# Two overlapping runs would race to activate different asset manifests. Serialising is
-# free, and matters more now that this workflow also ships the MCP server.
 concurrency:
-  group: site-deploy
+  group: vps-release-artifact
   cancel-in-progress: false
 
 jobs:
-  build_and_deploy:
+  package:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          # Full history and tags for release allocation and announcement receipts.
-          fetch-depth: 0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 12.8.1
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
-
-      - name: Prepare, verify, and commit release on latest main
-        id: release
-        run: node tools/release-main.mjs
-
-      # Assets plus a Worker on two routes (share links and the MCP server), configured by
-      # wrangler.jsonc. wrangler uploads the contents of dist/sakai-ng and the pre-bundled
-      # Worker from dist/worker; cache policy for the assets travels with them in
-      # dist/sakai-ng/_headers.
-      - name: Install deployment tools
-        run: pnpm --dir tooling/cloudflare install --frozen-lockfile
-
-      - name: Deploy to Cloudflare Workers
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: pnpm deploy:worker
-
-      # Lifted from the retired mcp-deploy.yml. A green wrangler deploy says the script
-      # uploaded, not that the dataset it reads through the ASSETS binding actually parses
-      # — which is the one thing that can break here without a build error.
-      - name: Verify the MCP server
-        run: |
-          BASE=https://simulador.latam-tools.com.br
-          for i in $(seq 1 10); do
-            if curl -fsS "$BASE/mcp/healthz" | grep -q '"ok":true'; then break; fi
-            echo "waiting for /mcp/healthz ($i/10)"
-            sleep 3
-          done
-          curl -fsS "$BASE/mcp/healthz" | tee /dev/stderr | grep -q '"ok":true'
-          curl -fsS -X POST "$BASE/mcp" \
-            -H 'content-type: application/json' \
-            -H 'accept: application/json, text/event-stream' \
-            -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | grep -q '"calculate"'
-          node tools/verify-mcp.mjs
-
-      # Durable tags record successful announcements. A rerun can recover a
-      # failed deployment or Discord post without allocating another version.
-      - name: Post pending novidades to Discord
-        continue-on-error: true
-        env:
-          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-          DISCORD_CHANNEL_ID: "1524025278471471295"
-        run: node tools/announce-pending-releases.mjs
+      - run: pnpm install --frozen-lockfile
+      - run: node tools/release-notes.mjs
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm package:vps
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vps-release
+          path: .tmp/vps-artifact/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

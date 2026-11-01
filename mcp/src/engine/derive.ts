@@ -85,7 +85,7 @@ export function resolveAtkSkill(model: MainModel, char: CharacterBase): void {
   const direct = atkSkills.find((a) => a.value === wanted || (Array.isArray(a.values) && a.values.includes(wanted)));
   const byLevel = atkSkills.find((a) => Array.isArray(a.levelList) && a.levelList.some((lv: any) => lv.value === wanted));
 
-  if (direct?.value) model.selectedAtkSkill = direct.value;
-  else if (byLevel?.value) model.selectedAtkSkill = wanted;
+  if (byLevel?.value) model.selectedAtkSkill = wanted;
+  else if (direct?.value) model.selectedAtkSkill = direct.value;
   else model.selectedAtkSkill = fallback;
 }

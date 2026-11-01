@@ -11,6 +11,7 @@ import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { buildShareUrl } from '../../mcp/src/engine/share';
 import { handleMcp, McpEnv } from './handler';
+import { APP_VERSION } from '../../src/app/core/app-version';
 
 /**
  * Serves src/assets/ the way the deployed ASSETS binding serves the built site — including
@@ -36,7 +37,7 @@ const call = (request: Request) => handleMcp(request, env, ctx);
 
 const rpc = (body: unknown, headers: Record<string, string> = {}, bindings: McpEnv = env) =>
   handleMcp(
-    new Request('https://simulador.latam-tools.com.br/mcp', {
+    new Request('https://laro-calc.siatiquosque.com.br/mcp', {
       method: 'POST',
       headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream', ...headers },
       body: JSON.stringify(body),
@@ -45,10 +46,10 @@ const rpc = (body: unknown, headers: Record<string, string> = {}, bindings: McpE
 
 describe('health', () => {
   it('reports the loaded dataset', async () => {
-    const res = await call(new Request('https://simulador.latam-tools.com.br/mcp/healthz'));
+    const res = await call(new Request('https://laro-calc.siatiquosque.com.br/mcp/healthz'));
     expect(res.status).toBe(200);
     // 11652 distinct calculator ids + 5996 LATAM-only ids: the raw-data union.
-    await expect(res.json()).resolves.toMatchObject({ ok: true, items: 17648, classes: 41 });
+    await expect(res.json()).resolves.toMatchObject({ ok: true, version: APP_VERSION, items: 17648, classes: 41 });
   });
 });
 
@@ -63,6 +64,7 @@ describe('MCP over Streamable HTTP', () => {
     expect(init.status).toBe(200);
     const initBody: any = await init.json();
     expect(initBody.result.serverInfo.name).toBe('ro-calc-latam');
+    expect(initBody.result.serverInfo.version).toBe(APP_VERSION);
 
     const list: any = await (await rpc({ jsonrpc: '2.0', id: 2, method: 'tools/list' })).json();
     expect(list.result.tools.map((t: any) => t.name)).toContain('calculate');
@@ -95,7 +97,7 @@ describe('MCP over Streamable HTTP', () => {
 });
 
 describe('shortener service binding', () => {
-  const origin = 'https://simulador.latam-tools.com.br';
+  const origin = 'https://laro-calc.siatiquosque.com.br';
   const short = 'https://short.latam-tools.com.br/gJELaJ';
   const long = buildShareUrl({ class: 4261, level: 230, jobLevel: 47, int: 133, spl: 100, vit: 120,
     selectedAtkSkill: 'Poison Burst==5' }, origin);
@@ -137,10 +139,11 @@ describe('shortener service binding', () => {
   ])('creates short links through the binding in %s', async (name, args, urlPart) => {
     const create = vi.fn<(url: string, init: RequestInit) => Promise<Response>>(async () =>
       new Response(JSON.stringify({ short_url: short }), { status: 201 }));
-    const result = await tool(name as string, args, { ...env, SHORTENER: { fetch: create } });
+    const configured = { ...env, SHORTENER_URL: 'https://short.example.test', SHORTENER: { fetch: create } };
+    const result = await tool(name as string, args, configured);
     expect(result.isError).toBe(false);
     expect(result.data.url).toBe(short);
-    expect(create).toHaveBeenCalledWith('https://short.latam-tools.com.br/api/links', expect.objectContaining({ method: 'POST' }));
+    expect(create).toHaveBeenCalledWith('https://short.example.test/api/links', expect.objectContaining({ method: 'POST' }));
     const init = create.mock.calls[0][1] as RequestInit;
     expect(JSON.parse(init.body as string).url).toContain(urlPart);
     expect(globalThis.fetch).toHaveBeenCalledTimes(0);
@@ -160,7 +163,7 @@ describe('shortener service binding', () => {
 describe('transport guards', () => {
   it('rejects GET and DELETE — stateless mode has no stream to resume', async () => {
     for (const method of ['GET', 'DELETE']) {
-      const res = await call(new Request('https://simulador.latam-tools.com.br/mcp', { method }));
+      const res = await call(new Request('https://laro-calc.siatiquosque.com.br/mcp', { method }));
       expect(res.status).toBe(405);
       await expect(res.json()).resolves.toMatchObject({ jsonrpc: '2.0', error: { code: -32000 } });
     }
@@ -186,7 +189,7 @@ describe('transport guards', () => {
 
   it('answers preflight with the headers browser clients need', async () => {
     const res = await call(
-      new Request('https://simulador.latam-tools.com.br/mcp', { method: 'OPTIONS', headers: { Origin: 'https://claude.ai' } }),
+      new Request('https://laro-calc.siatiquosque.com.br/mcp', { method: 'OPTIONS', headers: { Origin: 'https://claude.ai' } }),
     );
     expect(res.status).toBe(204);
     expect(res.headers.get('access-control-allow-origin')).toBe('https://claude.ai');
@@ -197,7 +200,7 @@ describe('transport guards', () => {
   });
 
   it('404s an unknown path under /mcp', async () => {
-    const res = await call(new Request('https://simulador.latam-tools.com.br/mcp/nope'));
+    const res = await call(new Request('https://laro-calc.siatiquosque.com.br/mcp/nope'));
     expect(res.status).toBe(404);
   });
 
@@ -205,7 +208,7 @@ describe('transport guards', () => {
     // The SDK falls back to req.json() when parsedBody is undefined, on a stream this
     // handler has already drained — which throws deep inside the transport.
     const res = await call(
-      new Request('https://simulador.latam-tools.com.br/mcp', {
+      new Request('https://laro-calc.siatiquosque.com.br/mcp', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: '',
@@ -217,7 +220,7 @@ describe('transport guards', () => {
 
   it('refuses a body over the 256 KB cap', async () => {
     const res = await call(
-      new Request('https://simulador.latam-tools.com.br/mcp', {
+      new Request('https://laro-calc.siatiquosque.com.br/mcp', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ jsonrpc: '2.0', id: 8, method: 'tools/list', params: { pad: 'x'.repeat(300 * 1024) } }),

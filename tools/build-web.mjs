@@ -6,6 +6,7 @@ import { build, transform } from 'esbuild';
 import { copyWebAssets } from './web-assets.mjs';
 import { browserDataPlugin } from './browser-data.mjs';
 import { startupOutputs } from './web-startup.mjs';
+import { deduplicateCss } from './deduplicate-css.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const defaultOutput = resolve(root, 'dist/sakai-ng');
@@ -43,12 +44,26 @@ export async function buildWeb({ production = true, outputDirectory = defaultOut
     entryNames: production ? '[name].[hash]' : '[name]', chunkNames: 'chunk-[hash]', assetNames: 'media/[name].[hash]',
     legalComments: 'external',
     plugins: [browserDataPlugin(root), { name: 'environment', setup(builder) {
-      builder.onLoad({ filter: /src[\\/]environments[\\/]environment\.ts$/ }, args => production
-        ? { contents: readFileSync(resolve(root, 'src/environments/environment.prod.ts'), 'utf8'), loader: 'ts' } : null);
+      builder.onLoad({ filter: /src[\\/]environments[\\/]environment\.ts$/ }, () => {
+        if (!production) return null;
+        let contents = readFileSync(resolve(root, 'src/environments/environment.prod.ts'), 'utf8');
+        for (const [key, value] of Object.entries({
+          shortenerUrl: process.env.SHORTENER_URL,
+          mcpUrl: process.env.PUBLIC_APP_ORIGIN ? `${new URL(process.env.PUBLIC_APP_ORIGIN).origin}/mcp` : undefined,
+        })) {
+          if (value) {
+            const url = new URL(value);
+            if (!['https:', 'http:'].includes(url.protocol)) throw new Error(`Invalid ${key} protocol`);
+            contents = contents.replace(new RegExp(`(${key}: )'[^']*'`), (_match, prefix) => `${prefix}${JSON.stringify(value)}`);
+          }
+        }
+        return { contents, loader: 'ts' };
+      });
     } }],
     logLevel: 'info',
   });
   copyWebAssets(root, output);
+  deduplicateCss(result.metafile.outputs, output, root);
   const entries = Object.entries(result.metafile.outputs);
   // The translation catalogs are mutually exclusive: `loadCatalog` fetches the one chunk
   // for the chosen language and no reader ever downloads another. Counting all of them
@@ -69,6 +84,12 @@ export async function buildWeb({ production = true, outputDirectory = defaultOut
       inner + (/src[\/]releases[\/]summary\.ts$/.test(input) ? bytesInOutput : 0), 0), 0);
   const totalBytes = counted.reduce((sum, [, meta]) => sum + meta.bytes, 0)
     + Math.max(0, ...altCatalogs.map(([, meta]) => meta.bytes)) - releaseVersionsBytes;
+  // Keep diagnostics even when a budget fails, so regressions can be traced to
+  // their inputs instead of raising the budget without measuring the cause.
+  if (production) {
+    mkdirSync(resolve(root, 'out-tsc'), { recursive: true });
+    writeFileSync(resolve(root, 'out-tsc/web-production-metafile.json'), JSON.stringify(result.metafile));
+  }
   if (production && releaseVersionsBytes > budgets.releaseVersionsLimit) throw new Error(`Bundled release version list exceeds budget: ${releaseVersionsBytes} > ${budgets.releaseVersionsLimit}`);
   if (production && totalBytes > budgets.totalBaseline) throw new Error(`Web JS/CSS regressed against the Angular baseline: ${totalBytes} > ${budgets.totalBaseline}`);
   if (Object.keys(result.metafile.inputs).some(name => /node_modules.*(?:@angular|rxjs|zone\.js|tslib)/.test(name))) throw new Error('Removed framework dependency entered the browser bundle');

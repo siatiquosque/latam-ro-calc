@@ -1,9 +1,11 @@
 /** Shared plumbing for tool handlers. */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { config } from '../config';
+import { Shortener, shortenShareUrl } from '../engine/share';
 
-/** MCP tool results carry text content; ours is always JSON. */
+/** MCP tool results carry text content; ours is always JSON, compact: indentation is tokens the reader never needed. */
 export const json = (payload: unknown, isError = false) => ({
-  content: [{ type: 'text' as const, text: JSON.stringify(payload, null, 1) }],
+  content: [{ type: 'text' as const, text: JSON.stringify(payload) }],
   ...(isError ? { isError: true as const } : {}),
 });
 
@@ -14,6 +16,23 @@ export const fail = (error: unknown) => json({ error: error instanceof Error ? e
 /** Drop undefined entries so they don't serialize as noise. */
 export const compact = <T extends Record<string, any>>(o: T): T =>
   Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as T;
+
+const shorteners = new WeakMap<McpServer, Shortener | undefined>();
+/** Records how this server reaches the shortener, before any tool is registered. */
+export const useShortener = (server: McpServer, shortener?: Shortener): void => { shorteners.set(server, shortener); };
+
+/** Build links in a tool result are long (the whole build rides in the URL), so hand out the short form when a shortener is configured. */
+async function shortenShares<R>(result: R, shortener?: Shortener): Promise<R> {
+  const content = (result as { content?: { type: string; text?: string }[] } | undefined)?.content?.[0];
+  if (!config.shortenerUrl || content?.type !== 'text' || !content.text) return result;
+  const prefix = config.appOrigin.replace(/\/+$/, '') + '/s/';
+  const pattern = /("(?:share|url)":\s*")(https?:\/\/[^"]+)(")/g;
+  const urls = [...new Set([...content.text.matchAll(pattern)].map(m => m[2]).filter(url => url.startsWith(prefix)))];
+  if (!urls.length) return result;
+  const short = new Map(await Promise.all(urls.map(async url => [url, await shortenShareUrl(url, config.shortenerUrl, undefined, shortener)] as const)));
+  content.text = content.text.replace(pattern, (all, open, url, close) => short.has(url) ? open + short.get(url) + close : all);
+  return result;
+}
 
 /**
  * Register a tool whose errors become readable JSON results. The specs parse
@@ -27,7 +46,7 @@ export function registerJsonTool<A>(
 ): void {
   server.registerTool(name, config as any, (async (args: A) => {
     try {
-      return await handler(args);
+      return await shortenShares(await handler(args), shorteners.get(server));
     } catch (error) {
       return fail(error);
     }

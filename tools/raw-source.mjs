@@ -1,7 +1,7 @@
 // Access to the ragassets `/raw` tables — this repo's single source for
 // everything extracted from the Ragnarok LATAM client.
 //
-//   https://assets.latam-tools.com.br/raw/<name>.json
+//   https://laro-calc.siatiquosque.com.br/game-assets/raw/<name>.json
 //
 // ragassets reads the client GRF (iteminfo_new.lub, itemmoveinfov5.txt, the job
 // icons, …) and republishes the result as compact JSON arrays sorted by id. This
@@ -14,7 +14,7 @@ import { join } from "node:path";
 
 // Also the runtime image gateway's host (src/environments/environment.ts) — the
 // build tooling can't import the Angular env, so the two are kept in step by hand.
-export const RAW_BASE = "https://assets.latam-tools.com.br/raw";
+export const RAW_BASE = "https://laro-calc.siatiquosque.com.br/game-assets/raw";
 
 /**
  * Read one `/raw` table. `srcDir` makes it work offline: a directory holding the

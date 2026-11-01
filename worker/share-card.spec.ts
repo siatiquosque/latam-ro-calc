@@ -13,7 +13,7 @@ import worker from './index';
 
 const OG_ORIGIN = 'https://social.latam-tools.com.br';
 const token = encodeBuild({ class: 4252, level: 285, jobLevel: 70 });
-const cardRequest = () => new Request(`https://simulador.latam-tools.com.br/s/${token}/og.png`);
+const cardRequest = () => new Request(`https://laro-calc.siatiquosque.com.br/s/${token}/og.png`);
 
 const png = () => new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), { status: 200, headers: { 'content-type': 'image/png' } });
 

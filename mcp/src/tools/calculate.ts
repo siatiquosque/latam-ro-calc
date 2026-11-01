@@ -20,9 +20,10 @@ import { BuildInput, buildInputSchema, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedIte
 import { projectResult } from '../engine/project';
 import { buildShareUrl, parseShare, resolveIfShort, Shortener, shortenShareUrl, toPreset } from '../engine/share';
 import { solve } from '../engine/solve';
+import { decodeOnce } from '../engine/variants';
 import { compact, json, registerJsonTool } from './helpers';
 
-const targetSchema = z
+export const targetSchema = z
   .object({ monsterId: z.number().int().optional().describe('Id do monstro alvo. Veja search_monsters.') })
   .optional();
 
@@ -32,10 +33,10 @@ type TargetArg = z.infer<typeof targetSchema>;
 const deltaPct = (value: number, base: number): number | null => (base ? round(((value - base) / base) * 100, 2) : null);
 
 /** Resolve a short link before decoding, since that is the form the app hands out. */
-const normalizeShare = async (input: BuildInput, shortener?: Shortener): Promise<BuildInput> =>
+export const normalizeShare = async (input: BuildInput, shortener?: Shortener): Promise<BuildInput> =>
   input.share ? { ...input, share: await resolveIfShort(input.share, config.shortenerUrl, shortener) } : input;
 
-function resolveTarget(dataset: Dataset, monsterId?: number) {
+export function resolveTarget(dataset: Dataset, monsterId?: number) {
   const id = monsterId ?? config.defaultTargetId;
   const monster = dataset.monsters[id];
   if (!monster) throw new Error(`Monstro ${id} não tem bloco de atributos no calculador e não pode ser alvo. Use search_monsters.`);
@@ -198,9 +199,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     const baseDps = dpsAndMax(solve(baseRb, dataset, monster)).dps;
 
     // Decode the share token once — resolveBuild would re-decompress it per candidate.
-    const importedShare = input.share ? parseShare(input.share) : null;
-    const perCandidate: BuildInput = { ...input, share: undefined, preset: importedShare?.preset ?? input.preset,
-      customItems: [...(importedShare?.items ?? []).map((item) => ({ ...item })), ...(input.customItems ?? [])] };
+    const perCandidate = decodeOnce(input);
 
     const scored: any[] = [];
     for (const id of ids) {
@@ -333,7 +332,7 @@ export function registerBridgeTools(server: McpServer, dataset: Dataset, shorten
         })
         .optional()
         .describe('Abre o simulador na visão atual → simulado.'),
-      short: z.boolean().optional().default(false).describe('Encurtar via short.latam-tools.com.br.'),
+      short: z.boolean().optional().default(false).describe('Encurtar se houver um serviço configurado; caso contrário mantém o link completo.'),
     },
   }, async ({ build, compare, short }) => {
     const rb = resolveBuild(await normalizeShare(build, shortener), dataset);

@@ -1,0 +1,22 @@
+laro-calc.siatiquosque.com.br {
+    encode zstd gzip
+    request_body {
+        max_size 256KB
+    }
+    handle_path /game-assets/* {
+        reverse_proxy 127.0.0.1:8789
+    }
+    @dynamic path /mcp /mcp/* /s/* /l/* /healthz
+    handle @dynamic {
+        reverse_proxy 127.0.0.1:8787
+    }
+    handle {
+        root * /srv/tools/laro-calc/current
+        @private path /_headers
+        respond @private 404
+        @fresh path / /index.html /assets/data-manifest.json /assets/release.json
+        header @fresh Cache-Control "no-cache"
+        try_files {path} /index.html
+        file_server
+    }
+}

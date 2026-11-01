@@ -1,10 +1,21 @@
 import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
 import { SKILL_META, SKILL_DESC_BY_ID } from '../src/app/skills';
-import { browserDataPlugin, splitSkillCatalog } from './browser-data.mjs';
+import { browserDataPlugin, splitSkillCatalog, projectSkillTimingCurves } from './browser-data.mjs';
 import { startupOutputs } from './web-startup.mjs';
 
 describe('browser startup data', () => {
+  it('keeps every timing curve used for selectable levels without shipping unused scalar metadata', () => {
+    const table = JSON.parse(readFileSync('src/assets/demo/data/skill-delay.json', 'utf8'));
+    const projected = projectSkillTimingCurves(table);
+    for (const [id, row] of Object.entries(table) as [string, any][]) {
+      for (const field of ['fct', 'vct', 'acd', 'cd']) {
+        if (Array.isArray(row[field])) expect(projected[id][field]).toEqual(row[field]);
+        else expect(projected[id]?.[field]).toBeUndefined();
+      }
+      expect(projected[id]?.maxLevel).toBeUndefined();
+    }
+  });
   it('keeps every skill identity while moving all description prose to a sidecar', () => {
     const { metadata, descriptions } = splitSkillCatalog(SKILL_META);
     expect(descriptions).toEqual(SKILL_DESC_BY_ID);

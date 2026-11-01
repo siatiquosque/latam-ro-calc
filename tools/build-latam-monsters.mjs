@@ -10,6 +10,7 @@
 // mobs, plus the calc's synthetic per-level clones), so this merges on top of
 // the existing OUT file instead of overwriting it wholesale: ragassets wins for
 // any id it has, the previous value is kept as a fallback for ids it doesn't.
+// Explicit RagnarokDB translations override the feed; calculator labels win last.
 //
 // Usage: node tools/build-latam-monsters.mjs [--src <mobs.json>]
 // Without --src the file is downloaded from MOBS_URL.
@@ -54,9 +55,15 @@ for (const e of mobs) {
     out[id] = e.name;
   }
 }
+// Explicit translations exported from RagnarokDB take precedence over the feed,
+// which still returns English names for many LATAM monsters. Keep the source
+// separate so a regular feed refresh cannot erase these translations.
+const namesPath = resolve(import.meta.dirname, '../data/monsters/ragnarokdb-names.json');
+const translated = JSON.parse(readFileSync(namesPath, 'utf8'));
+for (const [id, name] of Object.entries(translated)) out[id] = name;
 for (const [id, name] of Object.entries(CALC_OVERRIDES)) out[id] = name;
 writeFileSync(OUT, JSON.stringify(out));
 console.log(
   `latam-monsters.json — ${Object.keys(out).length} pt-BR monster names ` +
-    `(${overridden} set/overridden from ${src ?? MOBS_URL}, ${fallbackCount} kept as prior fallback)`,
+    `(${overridden} set/overridden from ${src ?? MOBS_URL}, ${Object.keys(translated).length} RagnarokDB translations, ${fallbackCount} prior entries)`,
 );

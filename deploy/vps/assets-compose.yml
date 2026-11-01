@@ -1,0 +1,25 @@
+services:
+  assets:
+    image: laro-game-assets:local
+    build:
+      context: /srv/laro-assets/service
+      dockerfile: assets.Dockerfile
+    container_name: laro-game-assets
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 256m
+    cpus: 0.5
+    ports: ["127.0.0.1:8789:8080"]
+    environment:
+      RESOURCE_DIR: /mirror
+      ICONS_DIR: /icons
+      RAW_DIR: /raw
+      GOMEMLIMIT: 180MiB
+      GOMAXPROCS: 1
+    volumes:
+      - /srv/laro-assets/mirror:/mirror:ro
+      - /srv/laro-assets/icons:/icons:ro
+      - /srv/laro-assets/raw:/raw:ro

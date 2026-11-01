@@ -28,7 +28,7 @@ turugrura.
 - TypeScript 7, esbuild
 - [Vitest](https://vitest.dev/) para testes unitários da engine de cálculo
 - Playwright para interações reais e comparação visual da interface
-- Node 22 + [pnpm](https://pnpm.io/); deploy via Cloudflare Workers
+- Node 24 LTS + [pnpm](https://pnpm.io/); deploy na VPS com Caddy e PM2
 
 A aplicação usa React com serviços explícitos e uma sessão de cálculo externa ao
 render. A comparação com a versão Angular, dependências e medições ficam em
@@ -51,6 +51,10 @@ pnpm start          # servidor local em http://localhost:4200
 > postinstall na raiz. Os peers necessários são declarados explicitamente.
 
 ## Scripts úteis
+
+A origem, atualização e validação das tabelas de HP/SP estão documentadas em
+[HP/SP base](docs/hp-sp.md).
+A seleção comum de níveis está descrita em [Níveis das habilidades](docs/skill-levels.md).
 
 | Comando             | Descrição                                      |
 | ------------------- | ---------------------------------------------- |
@@ -84,7 +88,7 @@ tools/           # scripts de build da base LATAM (itens, monstros, habilidades,
 A pasta `tools/` contém os scripts que geram a base de dados LATAM
 (`sync-latam-db.mjs`, `sync-monster-db.mjs`, `build-latam-monsters.mjs`) a partir das
 tabelas que o [ragassets](https://github.com/adsonpleal/ragassets) publica em
-`https://assets.latam-tools.com.br/raw/` — é ele que lê os arquivos do jogo; aqui só se
+`https://laro-calc.siatiquosque.com.br/game-assets/raw/` — é ele que lê os arquivos do jogo; aqui só se
 baixa o JSON pronto. As habilidades (nomes, descrições e ids) ficam no catálogo estático
 em `src/app/skills/`.
 
@@ -97,34 +101,28 @@ os campos, chaves de bônus, condições e exemplos comentados — está em
 
 ## Deploy
 
-O build de produção é publicado no Cloudflare Workers (static assets). Pushes na branch
-`main` disparam o deploy automático.
+A instalação atual usa a VPS com Caddy, PM2 e o gateway próprio de imagens.
+A política de versões e Novidades está em [docs/releases.md](docs/releases.md).
 
-PRs abertas a partir de branches deste repositório também geram um preview no Firebase
-Hosting, seguindo o workflow do `latamvisuais`. O workflow
-`.github/workflows/firebase-hosting-pull-request.yml` roda os checks, testes e build,
-publica no projeto `simulador-latam-ro` com o secret existente `FIREBASE_SERVICE_ACCOUNT`
-e comenta o link na PR. Novos commits atualizam o mesmo link; o preview expira sete dias
-após a última publicação. PRs de forks não publicam previews, pois não recebem o secret.
-
-O preview hospeda a interface e os dados estáticos de `dist/sakai-ng`. Os endpoints do
-Worker (`/mcp` e links curtos `/s/`) continuam no Cloudflare; o preview não executa esse
-Worker. A configuração de `firebase.json` serve os assets e retorna `index.html` nas
-rotas da interface. A action e os requisitos estão na
-[documentação do Firebase](https://firebase.google.com/docs/hosting/github-integration).
-
-A política de cache fica em `src/_headers`, copiado para a raiz do build. Para publicar à
-mão:
-
-```bash
-pnpm --dir tooling/cloudflare install --frozen-lockfile
-pnpm build
-pnpm deploy:worker
+```sh
+pnpm release:prepare
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm package:vps
 ```
 
-Wrangler tem instalação e lockfile próprios em `tooling/cloudflare`; não integra
-a instalação da raiz. Para desenvolver o Worker, instale essa pasta e rode
-`pnpm dev:worker`. O SDK MCP/Zod e o parser compartilhado continuam preservados.
+Depois de revisar o artefato, publique com
+`./deploy/vps/deploy.ps1 -ArtifactDirectory .tmp/vps-artifact` no PowerShell.
+O workflow manual **Build VPS release artifact** gera esse mesmo pacote no CI,
+sem publicar ou alterar o Git. Configuração e rollback:
+[docs/deploy-vps.md](docs/deploy-vps.md). Imagens e dados do cliente:
+[docs/game-assets.md](docs/game-assets.md).
+
+Os workflows de publicação no Cloudflare, previews no Firebase e anúncios no
+Discord não fazem parte dessa instalação. O Worker permanece no código como
+alternativa de runtime e para testes; seu desenvolvimento usa
+`pnpm --dir tooling/cloudflare install --frozen-lockfile` e `pnpm dev:worker`.
 
 ## Créditos
 
