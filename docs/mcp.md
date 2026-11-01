@@ -92,12 +92,11 @@ Conjuntos são descobertos em ambas as direções, por `EQUIP_ID` e pelos nomes 
 As trocas conjuntas cobrem pares; `targets` permite comparar, por exemplo, Médio e Grande com pesos. Efeitos
 de remover penalidade de tamanho entram nos candidatos e a penalidade é recalculada em cada alvo.
 
-Itens com pool do código, do `regional-pools.json` ou do bROWiki (cerca de 60 itens, entre eles o Manto Branco
-Físico/Mágico e os Mantos Temporais) já entram na busca de rolagens sem opt-in; veja `docs/random-options-audit.md`.
-
-`pools: "upstream"` faz a busca de rolagens usar também os pools do rAthena de itens sem pool confirmado (cerca de 100
-itens LATAM com tabela explícita e mais de mil contando armas e sombrios). Essas rolagens **não são validadas para o
-LATAM**: a resposta as lista em `unconfirmedRolls`, e o padrão (`confirmed`) continua usando só pools confirmados.
+A busca de rolagens usa o pool de cada item, da fonte mais forte para a mais fraca: código, `regional-pools.json`,
+bROWiki (cerca de 60 itens, entre eles o Manto Branco Físico/Mágico e os Mantos Temporais) e, por último, o rAthena
+(cerca de 1.050 itens). O LATAM tende a seguir o kRO, que o rAthena reproduz, mas isso não está confirmado: as
+rolagens escolhidas a partir do rAthena vêm em `unconfirmedRolls`. Item sem pool em nenhuma fonte fica fora da busca
+(contagem em `complementSearch.uncataloguedRandomItems`). Veja `docs/random-options-audit.md`.
 
 `countProcs: true` conta, em cada build testada, todos os procs que ela oferece (inclusive os de peças recém-trocadas)
 e devolve `countedProcs`; custa até o dobro dos cálculos das builds com procs. A resposta traz `alternatives`: por slot,

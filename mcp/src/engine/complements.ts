@@ -3,7 +3,6 @@ import { CardPosition } from 'src/app/constants/card-position.enum';
 import { enchantPoolsFor } from 'src/app/core/equipment-slot-derivation';
 import { randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
 import { Dataset } from '../data/dataset';
-import { upstreamPoolFor } from '../data/random-options';
 import { BuildPatch, applyPatch } from './variants';
 import { partnerIndex } from './item-partners';
 
@@ -24,7 +23,7 @@ function indexFor(dataset: Dataset) {
 }
 
 /** Legal socket choices only. Unknown regional random pools never become free-form stats. */
-export function complementChoices(dataset: Dataset, slot: string, itemId: number, keys: string[], excluded: Set<number>, upstream = false) {
+export function complementChoices(dataset: Dataset, slot: string, itemId: number, keys: string[], excluded: Set<number>) {
   const descriptor = EQUIPMENT_SLOTS.find(d => d.key === slot);
   const item = dataset.items[itemId];
   if (!descriptor || !item) return [];
@@ -54,8 +53,7 @@ export function complementChoices(dataset: Dataset, slot: string, itemId: number
     const ids = rank((enchants[position] ?? []).map(name => byAegis.get(name)).filter((id): id is number => !!id));
     if (ids.length) fields.push([...ids.map(id => ({ gear: { [field]: id } })), { gear: { [field]: null } }]);
   });
-  // Unconfirmed rAthena pools only when the caller opts in; the confirmed catalog always wins.
-  const catalog = randomOptionCatalogFor(itemId) ?? (upstream ? upstreamPoolFor(itemId) : undefined);
+  const catalog = randomOptionCatalogFor(itemId);
   if (catalog && descriptor.optionIndexes.length) {
     // Keep each combiner atomic: never combine the best roll of unrelated coins.
     const profiles: BuildPatch[][] = [];

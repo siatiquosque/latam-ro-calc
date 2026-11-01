@@ -4,6 +4,7 @@
  */
 import regionalPools from '../../../data/random-options/regional-pools.json';
 import browiki from '../../../data/random-options/browiki-pools.json';
+import rathena from '../../../data/random-options/rathena-pools.json';
 
 type Range = { key: string; min: number; max: number };
 const r = (key: string, min: number, max: number): Range => ({ key, min, max });
@@ -45,27 +46,43 @@ export type RandomOptionPool = typeof loki;
 const regional = new Map<number, RandomOptionPool>(Object.entries(regionalPools.pools as Record<string, RandomOptionPool>)
   .map(([id, pool]) => [Number(id), pool]));
 
-/**
- * Pools read from the bROWiki page by `tools/import-browiki-pools.py`: reference ranges for the Brazilian server,
- * not measured by us. They sit below everything above, so a pool confirmed in game always overrides the wiki.
- */
-const wiki = new Map<number, RandomOptionPool>(Object.entries(browiki.items as Record<string, number[]>).map(([id, rolling]) => [Number(id), {
-  source: browiki.source,
-  confidence: 'bROWiki; faixas de referência, não medidas no LATAM',
+type PoolDocument = { source: string; combiners: { name: string; positions: unknown }[]; items: unknown };
+
+/** Pools written once as combiners and pointed at by items, as the two generated files store them. */
+const fromDocument = (document: PoolDocument, confidence: string) => new Map<number, RandomOptionPool>(Object.entries(document.items as Record<string, number[]>).map(([id, rolling]) => [Number(id), {
+  source: document.source,
+  confidence,
   profiles: rolling.map(index => ({
-    combiner: browiki.combiners[index].name,
-    positions: (browiki.combiners[index].positions as [string, number, number][][]).map(position => position.map(([key, min, max]) => r(key, min, max))),
+    combiner: document.combiners[index].name,
+    positions: (document.combiners[index].positions as [string, number, number][][]).map(position => position.map(([key, min, max]) => r(key, min, max))),
   })),
 }]));
 
+/**
+ * Pools read from the bROWiki page by `tools/import-browiki-pools.py`: reference ranges for the Brazilian server,
+ * not measured by us. They sit below the code and regional-pools.json, so a pool confirmed in game always wins.
+ */
+const wiki = fromDocument(browiki, 'bROWiki; faixas de referência, não medidas no LATAM');
+/**
+ * The last resort: what rAthena (the kRO server) rolls for the item. LATAM tends to follow kRO, so an item no regional
+ * source covers is narrowed to this instead of being left open to every bonus. Not confirmed for LATAM, which is why
+ * `randomPoolTier` tells it apart and the roll validation of a shared build does not enforce it.
+ */
+const upstream = fromDocument(rathena, 'rAthena (kRO); o LATAM tende a seguir o kRO, mas não está confirmado');
+
+export type RandomPoolTier = 'code' | 'regional' | 'wiki' | 'rathena';
+export const randomPoolTier = (itemId: number): RandomPoolTier | undefined =>
+  itemId === 410233 || aces[itemId] ? 'code' : regional.has(itemId) ? 'regional' : wiki.has(itemId) ? 'wiki' : upstream.has(itemId) ? 'rathena' : undefined;
+
 export const randomOptionCatalogFor = (itemId: number): RandomOptionPool | undefined =>
-  itemId === 410233 ? loki : aces[itemId] ?? regional.get(itemId) ?? wiki.get(itemId);
-/** Every item with a regional pool (code, confirmed JSON or wiki), for audits. */
-export const cataloguedRandomItemIds = (): number[] => [...new Set([410233, ...Object.keys(aces).map(Number), ...regional.keys(), ...wiki.keys()])];
+  itemId === 410233 ? loki : aces[itemId] ?? regional.get(itemId) ?? wiki.get(itemId) ?? upstream.get(itemId);
+/** Every item with a pool from any source, for audits. */
+export const cataloguedRandomItemIds = (): number[] => [...new Set([410233, ...Object.keys(aces).map(Number), ...regional.keys(), ...wiki.keys(), ...upstream.keys()])];
 
 /** Unknown pools are explicitly not validated. Do not invent a global stat range. */
 export function validateCataloguedRolls(itemId: number, rolls: (string | null | undefined)[]): string | null {
-  const catalog = randomOptionCatalogFor(itemId);
+  // A shared build is only held to pools somebody confirmed or read from a regional source, never to the rAthena fallback.
+  const catalog = randomPoolTier(itemId) === 'rathena' ? undefined : randomOptionCatalogFor(itemId);
   if (!catalog) return null;
   const fits = catalog.profiles.some(profile => rolls.every((text, index) => {
     if (!text) return true;

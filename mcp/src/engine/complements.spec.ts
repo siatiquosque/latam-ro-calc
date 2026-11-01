@@ -1,16 +1,18 @@
 import { expect, it } from 'vitest';
 import { loadDatasetFromDisk } from '../data/dataset.node';
+import { randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
 import { complementChoices, searchComplements } from './complements';
 import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
 
 const dataset = loadDatasetFromDisk();
 
-it('offers only valid coin profiles and never assigns unknown weapon random options', () => {
+it('offers only valid coin profiles and never assigns random options to an item with no pool', () => {
   const fields = complementChoices(dataset, 'headMiddle', 410233, ['atk', 'melee', 'range', 'sMatk'], new Set());
   const rolls = fields.flat().filter(patch => patch.options);
   expect(rolls.length).toBeGreaterThan(0);
   for (const patch of rolls) expect(validateCataloguedRolls(410233, [patch.options['10'], patch.options['11']])).toBeNull();
-  expect(complementChoices(dataset, 'weapon', 560026, ['atk'], new Set()).flat().every(p => !p.options)).toBe(true);
+  const bare = Object.values(dataset.items).find(item => item.itemTypeId === 1 && !randomOptionCatalogFor(item.id))!;
+  expect(complementChoices(dataset, 'weapon', bare.id, ['atk'], new Set()).flat().every(p => !p.options)).toBe(true);
 });
 
 it('searches each field and keeps gains evaluated before its per-stage budget runs out', () => {

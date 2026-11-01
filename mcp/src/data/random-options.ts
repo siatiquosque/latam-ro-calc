@@ -42,13 +42,6 @@ export function auditedRandomItems() {
  * A starting point for `regional-pools.json`, built from the rAthena pool of the item. It is a draft: only
  * options that map to a calculator key (`exact-script`) become rules, and nothing here is confirmed for LATAM.
  */
-const drafts = new Map<number, ReturnType<typeof draftPoolFor>>();
-/** The rAthena draft, memoised: the same item is asked for by every candidate that wears it. Never confirmed for LATAM. */
-export function upstreamPoolFor(itemId: number) {
-  if (!drafts.has(itemId)) drafts.set(itemId, draftPoolFor(itemId));
-  return drafts.get(itemId)?.pool;
-}
-
 export function draftPoolFor(itemId: number) {
   const references = randomOptionReferencesFor(itemId)?.references.filter(ref => 'pool' in ref && ref.pool) ?? [];
   if (!references.length) return undefined;

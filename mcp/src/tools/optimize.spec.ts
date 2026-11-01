@@ -143,8 +143,9 @@ describe('slot_options', () => {
     const { data } = await call('slot_options', { itemId: 2963 });
     expect(data.randomOptions.upstream.groups[0].group).toBe('GEFFEN_MAGIC_SCROLL2');
     expect(data.randomOptions.upstream.groups[0].slots[0].every((entry: string) => /^\??[A-Za-z_]+( \d+(-\d+)?)?$/.test(entry))).toBe(true);
-    expect(data.randomOptions.validation).toBe('capacity-only');
-    expect(data.randomOptions.automaticRollSearch).toBe(false);
+    expect(data.randomOptions.validation).toBe('reference-ranges');
+    expect(data.randomOptions.poolSource).toBe('rathena');
+    expect(data.randomOptions.automaticRollSearch).toBe(true);
     const weapon = (await call('slot_options', { itemId: 560026 })).data;
     expect(weapon.randomOptions.capacity).toBe(3);
     expect(weapon.randomOptions.slots.some(slot => slot.positions.length === 3)).toBe(true);
@@ -446,21 +447,17 @@ describe('answers stay short by default', () => {
 });
 
 describe('optimize_build with rAthena pools', () => {
-  // Anel Intensificador Físico: no regional pool, but the rAthena reference has one.
+  // Anel Intensificador Físico: no regional source, but rAthena (kRO) has a pool for it.
   const RING = { ...BUILD, gear: { ...BUILD.gear, accLeft: 2963 } };
-  const run = (pools: string) => call('optimize_build', { complements: true, build: RING, slots: ['accLeft'], candidates: { accLeft: [] }, objective: 'max', maxSolves: 200, pools });
 
-  it('keeps unconfirmed pools out by default and says which rolls came from them when asked', async () => {
-    const confirmed = (await run('confirmed')).data;
-    expect(Object.keys(confirmed.patch.options ?? {})).toHaveLength(0);
-    expect(confirmed.unconfirmedRolls).toBeUndefined();
-
-    const upstream = (await run('upstream')).data;
-    expect(Object.keys(upstream.patch.options ?? {}).length).toBeGreaterThan(0);
-    expect(upstream.final.max).toBeGreaterThan(confirmed.final.max);
-    expect(upstream.unconfirmedRolls[0].item).toContain('(2963)');
-    const reread = (await call('calculate', { build: { share: upstream.share } })).data;
-    expect(reread.damage.skill.max).toBe(upstream.final.max);
+  it('rolls an item from its rAthena pool by default and says those rolls are not confirmed for LATAM', async () => {
+    const { data, isError } = await call('optimize_build', { build: RING, slots: ['accLeft'], candidates: { accLeft: [] }, objective: 'max', maxSolves: 200 });
+    expect(isError).toBe(false);
+    expect(Object.keys(data.patch.options ?? {}).length).toBeGreaterThan(0);
+    expect(data.final.max).toBeGreaterThan(data.baseline.max);
+    expect(data.unconfirmedRolls.rows[0].item).toContain('(2963)');
+    const reread = (await call('calculate', { build: { share: data.share } })).data;
+    expect(reread.damage.skill.max).toBe(data.final.max);
   });
 });
 

@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { randomOptionCatalogFor, restrictToPool, validateCataloguedRolls } from './random-option-catalog';
+import { randomOptionCatalogFor, randomPoolTier, restrictToPool, validateCataloguedRolls } from './random-option-catalog';
 import { createExtraOptionList, ExtraOptionMap } from '../utils/create-extra-option-list';
 
 it('links every Loki lower seal with distinct attribute and effect positions', () => {
@@ -33,4 +33,20 @@ it('narrows the picker to the pool of a catalogued item and leaves other items o
   expect(treeLeaves(pool.roots).sort()).toEqual(leaves.sort());
   expect(restrictToPool(410233, 2, roots, ExtraOptionMap)).toBeNull();
   expect(restrictToPool(1234567, 0, roots, ExtraOptionMap)).toBeNull();
+});
+
+it('ranks the sources: code, regional JSON, bROWiki, then rAthena as the fallback', () => {
+  expect(randomPoolTier(410233)).toBe('code');
+  expect(randomPoolTier(480812)).toBe('wiki');
+  expect(randomPoolTier(2963)).toBe('rathena'); // Anel Intensificador Físico: only the kRO pool exists.
+  expect(randomPoolTier(1)).toBeUndefined();
+});
+
+it('narrows the picker of an item to its rAthena pool, but does not hold a shared build to it', () => {
+  const pool = restrictToPool(2963, 0, createExtraOptionList(), ExtraOptionMap)!;
+  expect(pool).not.toBeNull();
+  expect(pool.leaves.size).toBeGreaterThan(0);
+  expect(pool.leaves.size).toBeLessThan(ExtraOptionMap.size / 4);
+  expect(validateCataloguedRolls(2963, ['atk:9999'])).toBeNull();
+  expect(validateCataloguedRolls(480812, ['atk:9999', undefined])).not.toBeNull();
 });

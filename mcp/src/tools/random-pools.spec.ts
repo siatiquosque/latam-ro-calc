@@ -17,12 +17,13 @@ beforeAll(async () => {
 });
 
 describe('uncatalogued_pools', () => {
-  it('lists items without a confirmed pool, never the catalogued ones, with upstream evidence first', async () => {
+  it('lists items no regional source confirms, never the confirmed ones, rAthena fallbacks first', async () => {
     const { data } = await call({ limit: 100 });
     expect(data.total).toBeGreaterThan(0);
     expect(data.items.some((item: any) => item.id === 410233)).toBe(false);
-    const flags = data.items.map((item: any) => item.hasUpstreamPool);
+    const flags = data.items.map((item: any) => item.pool === 'rathena');
     expect(flags).toEqual([...flags].sort((a, b) => Number(b) - Number(a)));
+    expect(data.items.every((item: any) => ['rathena', 'nenhum'].includes(item.pool))).toBe(true);
   });
   it('pages, and filters by name', async () => {
     const first = (await call({ limit: 2 })).data;
@@ -33,7 +34,7 @@ describe('uncatalogued_pools', () => {
     expect(none.total).toBe(0);
   });
   it('drafts a pool from the upstream reference without calling it confirmed', async () => {
-    const withPool = (await call({ limit: 100 })).data.items.find((item: any) => item.hasUpstreamPool);
+    const withPool = (await call({ limit: 100 })).data.items.find((item: any) => item.pool === 'rathena');
     if (!withPool) return;
     const { data } = await call({ itemId: withPool.id });
     expect(data.catalogued).toBe(false);

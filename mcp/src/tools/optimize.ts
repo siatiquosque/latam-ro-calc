@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { ItemOptionMap } from 'src/app/constants/item-options-table';
 import { ExtraOptionTable } from 'src/app/constants/extra-option-table';
-import { randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
+import { randomOptionCatalogFor, randomPoolTier } from 'src/app/core/random-option-catalog';
 import { enchantPoolsFor } from 'src/app/core/equipment-slot-derivation';
 import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
 import { collectConsumables } from 'src/app/core/calculator-controller';
@@ -92,14 +92,15 @@ export function evaluate(
   return { rb, solved, metrics };
 }
 
-/** Rolls the search placed from rAthena pools: valid for the emulator, not confirmed for LATAM. */
+/** Rolls placed from the rAthena (kRO) pool: the LATAM server tends to follow kRO, but no regional source confirms it. */
 function unconfirmed(rb: ResolvedBuild, changes: BuildPatch, dataset: Dataset) {
   const rolled = changes.options ?? {};
-  return [...ItemOptionMap].flatMap(([slot, indexes]) => {
+  const rows = [...ItemOptionMap].flatMap(([slot, indexes]) => {
     const id = Number((rb.model as unknown as Record<string, unknown>)[slot]);
     const options = indexes.filter(index => rolled[String(index)]).map(index => rolled[String(index)]);
-    return id > 0 && options.length && !randomOptionCatalogFor(id) ? [{ slot, item: itemLabel(dataset, id), options }] : [];
+    return id > 0 && options.length && randomPoolTier(id) === 'rathena' ? [{ slot, item: itemLabel(dataset, id), options }] : [];
   });
+  return rows.length ? { unconfirmedRolls: { note: 'Pool do rAthena (kRO), não confirmado no LATAM.', rows } } : {};
 }
 
 /** "Nome (id) C": enough to read a step and to reuse the id, without a nested object per item. */
@@ -334,7 +335,6 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     pairs?: string[][];
     countProcs?: boolean;
     detail?: boolean;
-    pools?: 'confirmed' | 'upstream';
     complements?: boolean;
     refine?: number;
     maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
@@ -365,7 +365,6 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       candidates: z.record(z.string(), z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
       combos: z.boolean().optional().default(true).describe('Testar também trocas de duas peças ligadas por um conjunto.'),
       pairs: z.array(z.tuple([z.string(), z.string()])).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),
-      pools: z.enum(['confirmed', 'upstream']).optional().default('confirmed').describe('Pools de bônus aleatório usados na busca de rolagens. `confirmed` (padrão): só os confirmados no LATAM. `upstream`: também os pools do rAthena para itens sem confirmação — rolagens NÃO validadas, listadas em `unconfirmedRolls`.'),
       detail: z.boolean().optional().default(false).describe('Inclui também os ids de candidatos por slot e as alternativas que perderam (várias centenas de tokens a mais).'),
       countProcs: z.boolean().optional().default(false).describe('Conta, em cada build testada, todos os procs que ela oferece (inclusive os de peças recém-trocadas), em vez de só os de `effects`. Dobra o custo dos cálculos de builds com procs.'),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas, encantamentos e rolagens catalogadas. false preserva a busca somente de peças.'),
@@ -376,7 +375,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
       require: z.array(requireSchema).optional(),
     },
-  }, async ({ build, target, targets, effects = [], objective = 'dps', slots, lock = [], exclude = [], candidates, combos = true, pairs = [], countProcs = false, detail = false, pools: poolMode = 'confirmed', complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }) => {
+  }, async ({ build, target, targets, effects = [], objective = 'dps', slots, lock = [], exclude = [], candidates, combos = true, pairs = [], countProcs = false, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }) => {
     const budget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
     const shown: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp'])];
@@ -414,7 +413,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     const complementPools = new Map<string, BuildPatch[][]>();
     const complementsFor = (slot: string, id: number) => {
       const key = `${slot}:${id}`;
-      if (!complementPools.has(key)) complementPools.set(key, complementChoices(dataset, slot, id, keys, banned, poolMode === 'upstream'));
+      if (!complementPools.has(key)) complementPools.set(key, complementChoices(dataset, slot, id, keys, banned));
       return complementPools.get(key)!;
     };
     const canWear = canUsedByClass(baseline.rb.char);
@@ -651,7 +650,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         })),
       } : {}),
       ...(countedProcs?.length ? { countedProcs } : {}),
-      ...(poolMode === 'upstream' ? { unconfirmedRolls: unconfirmed(rb, changes, dataset) } : {}),
+      ...unconfirmed(rb, changes, dataset),
       ...(procs.length ? { procs: { note: 'Ganho de DPS ao ativar cada proc na build final; a busca só conta os procs passados em `effects`.', options: procs } } : {}),
       complementSearch: {
         enabled: complements,
@@ -718,7 +717,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       enchants,
       ...(randomCapacity || randomReferences?.references.length ? { randomOptions: {
         capacity: randomCapacity, slots: randomPositions,
-        validation: randomCatalog ? 'reference-ranges' : 'capacity-only', automaticRollSearch: !!randomCatalog,
+        validation: randomCatalog ? 'reference-ranges' : 'capacity-only', poolSource: randomPoolTier(itemId), automaticRollSearch: !!randomCatalog,
         ...(randomCatalog ? { catalog: detail ? randomCatalog : compactCatalog(randomCatalog) } : {}),
         ...(randomReferences ? { upstream: detail ? randomReferences : compactUpstream(randomReferences) } : {}),
         input: 'Passe options com o número da posição e o bônus rolado (ex.: "melee:5"). optimize_build busca rolagens só com catalog. `detail: true` devolve os pools brutos.',

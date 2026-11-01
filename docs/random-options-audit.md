@@ -2,7 +2,7 @@
 
 O catálogo regional validado e a referência do rAthena são camadas distintas.
 
-Três fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais fraca:
+Quatro fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais fraca (`randomPoolTier` diz de qual veio):
 
 1. **Código** (`random-option-catalog.ts`): Selo de Loki e os selos de elmo inferior, escritos à mão.
 2. **Confirmados no jogo** (`data/random-options/regional-pools.json`): edição manual, um pool por id de item.
@@ -12,6 +12,12 @@ Três fontes alimentam `randomOptionCatalogFor`, da mais forte para a mais fraca
    tabela explícita para a chave do simulador, e o que não tem tradução fica em `unmapped` e fora do pool, sem
    chute. São faixas de referência de um wiki brasileiro, não medidas por nós. O teste `browiki-pools.spec.ts`
    confere o importador contra os pools do Selo de Loki escritos à mão (todas as regras e faixas batem).
+4. **rAthena** (`data/random-options/rathena-pools.json`): o último recurso, gerado por `tools/build-rathena-pools.py`
+   a partir do instantâneo `rathena-audit.json` (cerca de 1.050 itens, 25 KB). O LATAM tende a seguir o kRO, que o
+   rAthena reproduz, então um item que nenhuma fonte regional cobre fica restrito a esse pool em vez de aberto a
+   qualquer bônus. Não é confirmação: a validação de rolagens de uma build compartilhada **não** o impõe (só as
+   fontes 1 a 3), e a busca do MCP lista o que rolou a partir dele em `unconfirmedRolls`. Item sem pool em nenhuma
+   fonte continua aberto na tela e fora da busca.
 
 Para atualizar a fonte 3:
 
@@ -22,7 +28,7 @@ python tools/import-browiki-pools.py
 
 Ficam de fora o que a página não liga a itens (pools de Sombrios de Classe, Encantador Sombrio, Fascículos, Essência
 de Magma) e as linhas sem chave no simulador (EXP, "ignora DEF", resistência a todas as propriedades). A referência
-do rAthena, abaixo, continua separada e só entra na busca com `pools: "upstream"`.
+do rAthena entra como a fonte 4. Para regerá-la após atualizar o instantâneo: `python tools/build-rathena-pools.py`.
 `random-option-catalog.ts` valida as faixas conhecidas do Selo de Loki com fonte
 regional; os grupos do rAthena não substituem essas regras automaticamente.
 
@@ -61,8 +67,8 @@ ou evidência do servidor antes de restringir entradas legítimas.
 
 `optimize_build` busca novas rolagens quando há catálogo regional: Selo de Loki
 e os quatro selos inferiores. A busca mantém cada combinador e suas posições
-como um perfil, sem misturar moedas. Pools sem catálogo continuam omitidos e
+como um perfil, sem misturar moedas. Itens sem pool em qualquer fonte continuam omitidos e
 os IDs aparecem em `complementSearch.uncataloguedRandomItems`. `slot_options`
 informa `automaticRollSearch` por item. Faixas catalogadas são validadas também
-nas entradas explícitas; referências rAthena não confirmadas não viram opções
-livres da busca.
+nas entradas explícitas (exceto as do rAthena, que são só o substituto); o que não tem pool não vira opção
+livre da busca.
