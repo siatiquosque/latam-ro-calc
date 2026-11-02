@@ -3,6 +3,13 @@
 // adding, by hand, the cards whose name differs from the monster's (Howard/Harword, Ferlock, Flamel, Fenrir/Fenris, Selada,
 // Miragem). When a card is in doubt it is listed: excluding one card too many is safer than recommending a card the player
 // cannot get. Used by the optimizer, the item search and `validate_build` (`mvpCards`).
+export const MVP_CARD_SOURCE = {
+  method: 'curated-id-list',
+  path: 'src/app/constants/mvp-cards.ts',
+  derivedFrom: 'card-names-and-mvp-reference-plus-manual-review',
+  regionalConfirmation: 'unconfirmed',
+} as const;
+
 export const MVP_CARD_IDS: ReadonlySet<number> = new Set([
   4121, 4123, 4128, 4131, 4132, 4134, 4135, 4137, 4142, 4143, 4144, 4145,
   4146, 4147, 4148, 4168, 4236, 4263, 4276, 4302, 4305, 4318, 4324, 4330,

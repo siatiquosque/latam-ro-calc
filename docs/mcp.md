@@ -73,6 +73,22 @@ e as `unmapped`. O rascunho não é confirmação: veja o item no jogo e só ent
 usar o pool na hora, e `regional-pools.spec.ts` valida o formato. Sem pool, a tela fica aberta a qualquer bônus
 e a busca ignora o item.
 
+### Crítico e formatos de link
+
+Em `calculate`, `damage.skill.effectiveCritRate` é a chance efetiva, em **porcentagem**,
+da habilidade selecionada contra o alvo, no estado de efeitos solicitado.
+`damage.skill.critRate` permanece como alias compatível com o mesmo valor.
+`get_skill.canCrit` descreve capacidade, não a probabilidade da build concreta.
+`stats.crit` é o CRIT da ficha do motor, que pode seguir regras próprias do ataque
+básico; não é a chance efetiva da habilidade. Uma habilidade capaz de critar pode
+ter chance efetiva zero. Consulte `explain_damage` com `parts: ["crit"]` para os termos.
+Nas métricas de variantes, `critRate` já representa essa mesma chance efetiva.
+
+Links completos, fragmentos antigos e o token codificado extraído de `/s/<token>/`
+são aceitos em `build.share` e `parse_share_link.share`. O identificador de
+`/l/<identificador>` é uma chave do encurtador, não um token codificado da build:
+nesse caso envie a URL curta completa para que o resolvedor consulte o encurtador.
+
 ### `evaluate_variants`
 
 ```jsonc

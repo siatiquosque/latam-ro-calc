@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe('tool surface', () => {
   it('advertises the full build schema once, so the tool list stays small', async () => {
     const list = await client.listTools();
-    expect(JSON.stringify(list).length).toBeLessThan(48_000);
+    expect(JSON.stringify(list).length).toBeLessThan(49_000);
     const withFullBuild = list.tools.filter((tool) => JSON.stringify(tool.inputSchema).includes('"jobLevel"'));
     expect(withFullBuild.map((tool) => tool.name)).toEqual(['calculate']);
   });
@@ -56,6 +56,7 @@ describe('tool surface', () => {
         'get_item',
         'get_monster',
         'get_skill',
+        'get_build_context',
         'item_description',
         'list_bonus_keys',
         'list_classes',

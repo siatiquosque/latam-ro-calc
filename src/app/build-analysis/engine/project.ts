@@ -61,6 +61,8 @@ export function projectResult(calc: Calculator, rb: ResolvedBuild, opts: Project
   const effected = (opts.effects?.length ?? 0) > 0 && num(dmg.effectedSkillDamageMin) !== undefined;
   const skillMin = effected ? dmg.effectedSkillDamageMin : dmg.skillMinDamage;
   const skillMax = effected ? dmg.effectedSkillDamageMax : dmg.skillMaxDamage;
+  // Capability lives in get_skill. These are the motor's effective percentages for this build/target/pass.
+  const effectiveCritRate = round2(effected ? dmg.effectedSkillCriRateToMonster : dmg.skillCriRateToMonster);
 
   const result: Record<string, any> = {
     build: compact({
@@ -103,7 +105,8 @@ export function projectResult(calc: Calculator, rb: ResolvedBuild, opts: Project
         type: calcSkill.dmgType,
         element: calcSkill.propertySkill,
         accuracy: round2(effected ? dmg.effectedSkillAccuracy : dmg.skillAccuracy),
-        critRate: round2(effected ? dmg.effectedSkillCriRateToMonster : dmg.skillCriRateToMonster),
+        critRate: effectiveCritRate,
+        effectiveCritRate,
         baseRatio: num(calcSkill.baseSkillDamage),
       }),
       basic: compact({

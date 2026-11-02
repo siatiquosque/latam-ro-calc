@@ -344,6 +344,8 @@ export type ExplainDamageArgs = {
   };
 
 export type OptimizeBuildArgs = {
+    /** `legacy` (default, the preserved baseline): the final socket pass has its own allowance outside the budget. `unified`: the pass is paid from the same calculation budget (the last 15% is reserved for it), so Quality@budget is comparable across strategies. */
+    budgetMode?: 'legacy' | 'unified';
     equipmentMode?: 'current' | 'replace';
     procMode?: ProcMode;
     build: BuildInput;
@@ -659,7 +661,7 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     return out;
   }
 
-async function optimizeBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }: OptimizeBuildArgs) {
+async function optimizeBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }: OptimizeBuildArgs) {
     mvpPolicy ??= strictMvp ? 'none' : avoidMvp ? 'exclude-new' : 'allow';
     strictMvp = mvpPolicy === 'none';
     avoidMvp = mvpPolicy !== 'allow';
@@ -694,7 +696,9 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     const more = aims.slice(1);
     const baseline = evalFresh(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
     // Both limits apply; a wall-clock stop returns the best measured build so far.
-    const budget = requestedBudget;
+    const unified = budgetMode === 'unified';
+    // Unified: the search stops at 85% and the final socket pass spends the rest; the stages after it stop at the full budget.
+    const budget = unified && complements ? Math.floor(requestedBudget * 0.85) : requestedBudget;
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);
     if (maxGrade !== undefined) {
       const above = MAIN_ITEM_SLOTS.filter(slot => GRADES.indexOf(baseline.rb.model[`${slot}Grade`] ?? '') > gradeLimit);
@@ -863,6 +867,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     });
 
     const outOfBudget = () => spent() >= budget || pace.timeUp();
+    const outOfTotalBudget = () => spent() >= requestedBudget || pace.timeUp();
     let current = base;
     let value = baseValue;
     let metrics = baseline.metrics;
@@ -1085,7 +1090,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         const fields = walk.flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).map((option) => ({ slot, option })) : []));
         if (pass === 0) polish.total = fields.length;
         for (const [position, { slot, option }] of fields.entries()) {
-          if (polishPace.timeUp()) break;
+          if (polishPace.timeUp() || (unified && outOfTotalBudget())) break;
           const itemId = rb.model[slot];
           if (!(itemId > 0) || !socketOptions(dataset, slot, itemId).some((entry) => entry.field === option.field)) continue;
           const fieldEnd = Date.now() + Math.max(250, (polishEnd - Date.now()) / (fields.length - position));
@@ -1094,7 +1099,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
           let best: { id: number; ranked: number } | undefined;
           const candidates = option.ids.filter((id) => id !== current_ && !banned.has(id)).sort((a, b) => score(b) - score(a) || a - b);
           for (const id of candidates) {
-            if (polishPace.timeUp() || Date.now() > fieldEnd) break;
+            if (polishPace.timeUp() || Date.now() > fieldEnd || (unified && outOfTotalBudget())) break;
             await polishPace.breathe();
             const patch: BuildPatch = { gear: { [option.field]: id } };
             if (option.kind === 'enchant') {
@@ -1125,7 +1130,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       }
     }
 
-    polishFresh = memo.misses - polishFrom;
+    polishFresh = unified ? 0 : memo.misses - polishFrom;
 
     // The walk compares everything at the ideal refine and grade. A piece can lose to the worn one at the level the player has
     // today and win once both are raised (a better enchant, a bonus that unlocks at a grade), or the other way round: for the
@@ -1137,7 +1142,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       const gradeIdeal = (id: number) => (canGradeItem(dataset.items[id]) ? (maxGrade === undefined ? 'A' : maxGrade === 'none' ? '' : maxGrade) : undefined);
       /** `base` with `id` in `slot` at the player's current refine and grade ('now') or at the ideal ones, sockets and rolls tuned. */
       const valueAt = (slot: string, id: number, level: 'now' | 'ideal'): number | undefined => {
-        if (outOfBudget()) { exhausted = true; return undefined; }
+        if (outOfTotalBudget()) { exhausted = true; return undefined; }
         const worn = original[slot] === id;
         const refineTo = level === 'now' ? original[`${slot}Refine`] : refineFor(slot, id);
         const gradeTo = level === 'now' ? (canGradeItem(dataset.items[id]) ? original[`${slot}Grade`] ?? '' : undefined) : gradeIdeal(id);
@@ -1152,8 +1157,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         try {
           const first = evalBuild(base, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
           const tuned = searchComplements({ patch, result: first }, complementsFor(slot, id), objective, (candidatePatch) => {
-            if (outOfBudget()) { exhausted = true; return null; }
-            try { return evalBuild(base, candidatePatch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); } catch { return null; }
+            if (outOfTotalBudget()) { exhausted = true; return null; }
+  try { return evalBuild(base, candidatePatch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); } catch { return null; }
           }, levelBudget);
           return tuned.result.metrics[objective];
         } catch { return undefined; }
@@ -1242,7 +1247,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       }
       if (resolvedProcMode === 'active') countedProcs = evalFresh(current, undefined, dataset, monster, effects, [objective]).solved.effects;
       else for (const chance of ((last.solved.calc.chanceList ?? []) as any[]).filter(chance => chance?.name && !effects.includes(chance.name)).slice(0, 10)) {
-        if (outOfBudget()) break;
+        if (outOfTotalBudget()) break;
         const withProc = evaluate(current, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
         const gainPct = deltaPct(withProc, last.metrics[objective]);
         const average = procEstimate(await procData(dataset, chance), gainPct, procHitsPerSecond);

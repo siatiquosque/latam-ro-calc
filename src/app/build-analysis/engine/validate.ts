@@ -4,7 +4,7 @@
  * a piece or card accepts, the enchant pools, the refine cap); what it cannot check it lists under `unknowns` instead of passing.
  */
 import { EQUIPMENT_SLOTS } from 'src/app/app-config/equipment-slots';
-import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
+import { MVP_CARD_IDS, MVP_CARD_SOURCE } from 'src/app/constants/mvp-cards';
 import { APP_VERSION } from 'src/app/core/app-version';
 import { JobBuffs } from 'src/app/constants/job-buffs';
 import { BaseStateCalculator } from 'src/app/core/base-state-calculator';
@@ -16,7 +16,7 @@ import { isCustomItem, validateCustomItems } from 'src/app/core/custom-items';
 import { ensureCustomAttachment } from 'src/app/core/custom-attachments';
 import { refineLimitFor } from 'src/app/core/equipment-rules';
 import { canGradeItem } from 'src/app/utils/can-grade';
-import { checkSkillTree, SkillTreeData } from './skill-tree';
+import { checkSkillTree, SkillTreeData, SKILL_TREE_SOURCE } from './skill-tree';
 
 export interface BuildIssue { code: string; path: string; message: string; itemId?: number }
 
@@ -36,10 +36,11 @@ export function validateBuild(input: BuildInput, dataset: Dataset, constraints: 
   const warnings: BuildIssue[] = [];
   const unknowns: string[] = [
     'A árvore de habilidades é a do kRO (rAthena), não confirmada no LATAM: pré-requisitos, tetos e pontos aparecem só como avisos de referência; o orçamento de pontos soma apenas as habilidades que o calculador modela.',
-    'Classificação de carta de MVP vem do nome da carta (não há tabela de drops no LATAM): carta em dúvida está na lista.',
+    'Classificação MVP usa uma lista explícita de IDs, originalmente derivada de nomes e revisão manual; não há confirmação regional por tabela de drops.',
   ];
   // The data artifacts are built and shipped with the app, so they carry its version.
-  const base = { engineVersion: APP_VERSION, dataVersion: APP_VERSION };
+  const base = { engineVersion: APP_VERSION, dataVersion: APP_VERSION,
+    sources: { skillTree: { ...SKILL_TREE_SOURCE, loaded: !!skillTree }, mvpCards: MVP_CARD_SOURCE } };
 
   let resolved: ReturnType<typeof resolveBuild>;
   try {

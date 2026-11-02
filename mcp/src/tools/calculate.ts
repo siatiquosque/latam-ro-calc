@@ -12,20 +12,33 @@ import { createCalculationOperations, targetSchema } from 'src/app/build-analysi
 import { createBuildContext } from 'src/app/build-analysis/operations/context';
 import { validateBuild, ValidateConstraints } from 'src/app/build-analysis/engine/validate';
 import { loadSkillTree, skillTreeLoaded } from 'src/app/build-analysis/engine/skill-tree';
+import { createBuildContextOperations, GetBuildContextArgs } from 'src/app/build-analysis/operations/build-context';
 
 export const normalizeShare = (input: BuildInput, shortener?: Shortener) => createBuildContext(config, shortener).normalizeShare(input);
 
 export const resolveTarget = (dataset: Dataset, monsterId?: number) => createBuildContext(config).resolveTarget(dataset, monsterId);
 
+const validationConstraintsSchema = z.object({
+  excludeMvpCards: z.boolean().optional().describe('Carta de MVP vira erro MVP_CARD_EXCLUDED, independentemente do alvo.'),
+  latamOnly: z.boolean().optional(),
+  requireCalculableItems: z.boolean().optional(),
+}).optional();
+
 export function registerCalculationTools(server: McpServer, dataset: Dataset, shortener?: Shortener): void {
   const operations = createCalculationOperations(dataset, config, shortener);
+  const contexts = createBuildContextOperations(dataset, config, shortener);
+  registerJsonTool<GetBuildContextArgs>(server, 'get_build_context', {
+    title: 'Contexto compacto da build',
+    description: 'Consulta inicial: validação, equipamentos, números do motor, dependências da skill e origem das referências. Uma simulação, sem Optimize. Build inválida retorna problemas sem calcular dano. Use validate_build/get_skill/explain_damage para detalhes.',
+    inputSchema: { build: compactBuildSchema, target: targetSchema, effects: z.array(z.string()).optional(), constraints: validationConstraintsSchema },
+  }, args => contexts.getBuildContext(args).then(json));
   registerJsonTool<{ build: BuildInput; target?: TargetArg; effects?: string[]; include?: ('bonuses' | 'tables')[] }>(
     server,
     'calculate',
     {
       title: 'Calcular dano',
       description:
-        'USE para o dano de uma build (e como referência dos campos de `build`, que as outras ferramentas aceitam do mesmo jeito). Calcula o dano de uma build contra um alvo, com o mesmo motor do simulador web. Devolve dano da habilidade, dano básico, DPS, atributos finais, tempos de conjuração e um link para abrir a build no simulador.',
+        'USE para o dano de uma build (e como referência dos campos de `build`, que as outras ferramentas aceitam do mesmo jeito). Calcula o dano de uma build contra um alvo, com o mesmo motor do simulador web. Devolve dano da habilidade, dano básico, DPS, atributos finais, tempos de conjuração e um link para abrir a build no simulador. damage.skill.effectiveCritRate é a chance efetiva em porcentagem; critRate é seu alias, e get_skill.canCrit é capacidade.',
       inputSchema: {
         build: buildInputSchema,
         target: targetSchema,
@@ -43,11 +56,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       'Devolve `valid`, `errors` e `warnings` (cada um com `code`, `path`, `itemId`), `unknowns` (o que não foi checado) e as versões. `constraints.excludeMvpCards` torna carta de MVP um erro; `latamOnly` e `requireCalculableItems` valem true por padrão.',
     inputSchema: {
       build: compactBuildSchema,
-      constraints: z.object({
-        excludeMvpCards: z.boolean().optional().describe('Carta que cai de MVP vira erro MVP_CARD_EXCLUDED. A classificação é pela carta, não pelo alvo.'),
-        latamOnly: z.boolean().optional(),
-        requireCalculableItems: z.boolean().optional(),
-      }).optional(),
+      constraints: validationConstraintsSchema,
     },
   }, async ({ build, constraints }) => { await loadSkillTree();
     // The same resolver as every other tool: a short link (/l/<slug>) is followed to the real share before it is read.

@@ -5,6 +5,7 @@ import fixture from './__tests__/fixtures/inquisitor-fogueira-optimization.json'
 import { config } from '../config';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { createMcpServer } from '../mcp-server';
+import { readShareToken } from 'src/app/core/share-path';
 
 /** Every tool that takes a build must follow a short link the way `parse_share_link` does: validate_build used to read it as a token. */
 const saved = { shortenerUrl: config.shortenerUrl, appOrigin: config.appOrigin };
@@ -34,6 +35,21 @@ beforeAll(async () => {
 afterAll(() => { Object.assign(config, saved); });
 
 describe('short links', () => {
+  it.each(['calculate', 'validate_build', 'parse_share_link'])('%s accepts the encoded build token without its URL', async (name) => {
+    const token = readShareToken(longShare)!;
+    expect(token).toBeTruthy();
+    const fromLong = await call(name, name === 'parse_share_link' ? { share: longShare } : { build: { share: longShare } });
+    const fromToken = await call(name, name === 'parse_share_link' ? { share: token } : { build: { share: token } });
+    expect(fromToken.error).toBeUndefined();
+    if (name === 'validate_build') {
+      expect(fromToken.valid).toBe(fromLong.valid);
+      expect(fromToken.errors).toEqual(fromLong.errors);
+    } else {
+      expect(fromToken.build).toEqual(fromLong.build);
+      if (name === 'calculate') expect(fromToken.damage).toEqual(fromLong.damage);
+    }
+  });
+
   it('validate_build accepts a valid short link and reads the same build as the long one', async () => {
     const viaShort = await call('validate_build', { build: { share: shortUrl } });
     const viaLong = await call('validate_build', { build: { share: longShare } });

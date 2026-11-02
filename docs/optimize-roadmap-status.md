@@ -202,3 +202,26 @@ residual permanece disponível e a ativação concreta é decidida pelo motor. I
 é um limite declarado da consulta, não uma suspeita sobre as informações dos itens.
 As mudanças do Optimize que ainda faltam continuam sendo orçamento de equipamentos,
 baseline versionada e, depois, gerador/algoritmos comparados por benchmark.
+
+## Triagem do reteste após publicação
+
+- **find_synergies:** publicado em 0.1.208-beta; o `tools/list` público anuncia
+  28 ferramentas. A conexão da sessão conserva o catálogo antigo e precisa ser
+  recarregada. É uma pendência de atualização do cliente, não de registro no servidor.
+- **Crítico:** `canCrit` é capacidade. Foi reproduzida chance efetiva zero com
+  pouco crítico e positiva com SOR 120, sem qualquer mudança na matemática.
+  Correção local aditiva: `damage.skill.effectiveCritRate` explicita a porcentagem
+  efetiva; `critRate` continua alias compatível. A ficha `stats.crit` não é a mesma
+  grandeza. Testes comparam o retorno aos termos de `explain_damage`.
+- **Tokens:** URL completa e token codificado da build funcionaram no servidor
+  público; identificador curto isolado não é esse token. Contrato esclarecido e
+  regressões adicionadas em calculate, validate_build e parse_share_link. Não foi
+  necessário mudar a resolução; um caso diferente exige a chamada/token que falhou.
+- **Variantes multi-alvo:** já publicadas (`targets`, `perTarget`, `rankingTarget`).
+- **get_build_context:** não implementado, opcional; as ferramentas atuais compõem
+  o contexto. Reavaliar apenas com um ganho concreto de chamadas/payload.
+- **Referências regionais:** manter no backlog a proveniência LATAM da árvore e da
+  classificação MVP. Os avisos atuais são preservados; não substituir por inferências
+  nem tratar essa origem como evidência de erro das informações do motor/catálogo.
+
+As alterações deste reteste são locais; não constituem outra publicação nem commit.

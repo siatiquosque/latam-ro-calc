@@ -7,6 +7,14 @@
 export interface TreeSkill { name: string; max?: number; baseLevel?: number; jobLevel?: number; exclude?: boolean; requires?: { name: string; level?: number }[] }
 export interface SkillTreeData { jobs: Record<string, { inherit: string[]; skills: Record<string, TreeSkill> }> }
 
+export const SKILL_TREE_SOURCE = {
+  origin: 'rathena',
+  region: 'kRO',
+  path: 'src/data/skill-tree/rathena-skill-tree.json',
+  regionalConfirmation: 'unconfirmed',
+  enforcement: 'warnings-only',
+} as const;
+
 let loaded: SkillTreeData | undefined;
 let loading: Promise<void> | undefined;
 

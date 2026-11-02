@@ -1,5 +1,21 @@
 [
   {
+    "v": "0.1.209-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "MCP: nova ferramenta get_build_context reúne, em uma chamada, validação, equipamentos, números do motor e dependências da habilidade; build inválida mostra os problemas sem calcular dano.",
+      "MCP: a validação informa a origem da árvore de habilidades e da lista de cartas de MVP, ainda sem confirmação regional, e o cálculo expõe effectiveCritRate como a chance efetiva de crítico em porcentagem."
+    ],
+    "logs_es": [
+      "MCP: nueva herramienta get_build_context que reúne, en una sola llamada, validación, equipamiento, números del motor y dependencias de la habilidad; una build inválida muestra los problemas sin calcular el daño.",
+      "MCP: la validación informa el origen del árbol de habilidades y de la lista de cartas de MVP, aún sin confirmación regional, y el cálculo expone effectiveCritRate como la probabilidad efectiva de crítico en porcentaje."
+    ],
+    "logs_en": [
+      "MCP: new get_build_context tool gathers validation, equipment, engine numbers and skill dependencies in a single call; an invalid build shows its problems without calculating damage.",
+      "MCP: validation reports the source of the skill tree and of the MVP card list, still without regional confirmation, and the calculation exposes effectiveCritRate as the effective crit chance in percent."
+    ]
+  },
+  {
     "v": "0.1.208-beta",
     "date": "02-11-2026",
     "logs": [

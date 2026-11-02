@@ -22,6 +22,7 @@ describe('critical chance of a skill', () => {
     const boss = await call('explain_damage', { build, target: { monsterId: 20994 }, parts: ['crit'] });
     const calculated = await call('calculate', { build, target: { monsterId: 20994 } });
     expect(boss.crit.skillChancePct).toBe(calculated.damage.skill.critRate);
+    expect(calculated.damage.skill.effectiveCritRate).toBe(calculated.damage.skill.critRate);
     expect(boss.crit.skillChancePct).toBeGreaterThan(0);
     expect(boss.crit.steps.length).toBeGreaterThan(0);
     // A dummy without crit shield: the same build rolls more.
@@ -38,6 +39,17 @@ describe('critical chance of a skill', () => {
   it('get_skill carries how the skill uses the crit', async () => {
     const info = await call('get_skill', { classId: 4262, skill: 'Explosion Blaster' });
     expect(info.crit).toMatchObject({ canCrit: true, shareOfCharacterCrit: 1, shareOfCritDamage: 0.5 });
+  });
+
+  it('distinguishes capability from effective probability without changing damage', async () => {
+    const minimal = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Explosion Blaster==5', gear: { weapon: 560026, weaponRefine: 11 } };
+    const low = await call('calculate', { build: minimal, target: { monsterId: 21077 } });
+    const high = await call('calculate', { build: { ...minimal, stats: { luk: 120 } }, target: { monsterId: 21077 } });
+    expect(low.damage.skill.effectiveCritRate).toBe(0);
+    expect(high.damage.skill.effectiveCritRate).toBeGreaterThan(0);
+    expect(high.damage.skill.effectiveCritRate).toBe(high.damage.skill.critRate);
+    const explanation = await call('explain_damage', { build: { ...minimal, stats: { luk: 120 } }, target: { monsterId: 21077 }, parts: ['crit'] });
+    expect(high.damage.skill.effectiveCritRate).toBe(explanation.crit.skillChancePct);
   });
 
   // The skill typed without its level used to be replaced by the class default (Asura Strike, which does not crit) and the answer
