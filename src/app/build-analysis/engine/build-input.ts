@@ -41,14 +41,20 @@ export const ITEM_ID_KEYS: readonly string[] = [
   ...Object.values(MainItemWithRelations).flat(),
 ] as string[];
 
+/**
+ * A string-keyed map the way tool clients read it: `additionalProperties` only. `z.record` also emits `propertyNames`, a
+ * newer keyword that stricter clients (ChatGPT's tool validation) do not accept in a tool schema; the parsing is the same.
+ */
+export const stringMap = <T extends z.ZodType>(value: T) => z.object({}).catchall(value);
+
 export const buildInputSchema = z
   .object({
     share: z
       .string()
       .optional()
       .describe('Link de compartilhamento do simulador (URL completa, encurtada, fragmento antigo #/?b=… ou o token puro). Base da build.'),
-    preset: z.record(z.string(), z.unknown()).optional().describe('Preset bruto, alternativa ao `share`.'),
-    customItems: z.array(z.record(z.string(), z.unknown())).max(20).optional().describe('Definições de itens personalizados usadas apenas nesta requisição.'),
+    preset: stringMap(z.unknown()).optional().describe('Preset bruto, alternativa ao `share`.'),
+    customItems: z.array(stringMap(z.unknown())).max(20).optional().describe('Definições de itens personalizados usadas apenas nesta requisição.'),
 
     class: z.number().int().optional().describe('Id interno da classe (ex.: 4261 Elementalista). Veja list_classes.'),
     level: z.number().int().min(1).max(300).optional(),
@@ -61,8 +67,7 @@ export const buildInputSchema = z
       .optional()
       .describe('Atributos base alocados. POD/STA/SAB/FEI/CON/CRV só valem para classes de 4ª.'),
 
-    gear: z
-      .record(z.string(), z.union([z.number().int(), z.string(), z.null()]))
+    gear: stringMap(z.union([z.number().int(), z.string(), z.null()]))
       .optional()
       .describe(
         'Equipamentos por slot: weapon, weaponRefine, weaponCard1..4, weaponEnchant0..3, headUpper, armor, shield, garment, boot, accLeft, accRight, shadow*, costume*, ammo, pet. Use null para limpar.',
@@ -71,14 +76,14 @@ export const buildInputSchema = z
     atkSkill: z.string().optional().describe('Habilidade ofensiva no formato "Nome==Nível" (ex.: "Arrow Storm==10"). Veja list_skills.'),
     skills: z
       .object({
-        active: z.record(z.string(), z.number()).optional(),
-        passive: z.record(z.string(), z.number()).optional(),
-        buffs: z.record(z.string(), z.number()).optional(),
+        active: stringMap(z.number()).optional(),
+        passive: stringMap(z.number()).optional(),
+        buffs: stringMap(z.number()).optional(),
       })
       .optional()
       .describe('Níveis por NOME da habilidade (nunca por posição).'),
 
-    options: z.record(z.string(), z.string().nullable()).optional().describe('Bônus aleatórios por número de slot, no formato "attr:valor".'),
+    options: stringMap(z.string().nullable()).optional().describe('Bônus aleatórios por número de slot, no formato "attr:valor".'),
     consumables: z.array(z.number().int()).optional(),
     aspdPotion: z.number().int().optional(),
     propertyAtk: z.string().optional().describe('Elemento do ataque (conversor/endow).'),

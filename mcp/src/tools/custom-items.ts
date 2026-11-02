@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { Dataset } from '../data/dataset';
 import { config } from '../config';
+import { stringMap } from '../engine/build-input';
 import { registerJsonTool, json } from './helpers';
 import { CUSTOM_ITEM_LIMIT, CUSTOM_ITEM_MIN_ID, CUSTOM_ITEM_MAX_ID, CUSTOM_KINDS, validateCustomItems, customItemDescription } from 'src/app/core/custom-items';
 import { encodeCustomBundle } from 'src/app/core/custom-item-library';
@@ -16,7 +17,7 @@ const itemWarnings = (item: { script: Record<string, unknown> }): string[] => [
 ];
 
 const draftsSchema = {
-  items: z.array(z.record(z.string(), z.unknown())).min(1).max(CUSTOM_ITEM_LIMIT),
+  items: z.array(stringMap(z.unknown())).min(1).max(CUSTOM_ITEM_LIMIT),
 };
 
 /** Item creation is entirely stateless. The returned URL carries the validated records. */

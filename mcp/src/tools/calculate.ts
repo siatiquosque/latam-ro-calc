@@ -5,7 +5,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { config } from '../config';
 import { Dataset } from '../data/dataset';
 import { SLOT_TAGS } from '../data/slot-classifier';
-import { BuildInput, buildInputSchema, compactBuildSchema } from '../engine/build-input';
+import { BuildInput, buildInputSchema, compactBuildSchema, stringMap } from '../engine/build-input';
 import { Shortener } from '../engine/share';
 import { json, registerJsonTool } from './helpers';
 import { createCalculationOperations, targetSchema } from 'src/app/build-analysis/operations/calculate';
@@ -121,7 +121,7 @@ export function registerBridgeTools(server: McpServer, dataset: Dataset, shorten
       compare: z
         .object({
           slots: z.array(z.string()).min(1).describe('Slots a comparar, ex.: ["weapon"].'),
-          gear: z.record(z.string(), z.union([z.number().int(), z.string(), z.null()])).describe('Peças alternativas, mesmo formato de `build.gear`.'),
+          gear: stringMap(z.union([z.number().int(), z.string(), z.null()])).describe('Peças alternativas, mesmo formato de `build.gear`.'),
         })
         .optional()
         .describe('Abre o simulador na visão atual → simulado.'),

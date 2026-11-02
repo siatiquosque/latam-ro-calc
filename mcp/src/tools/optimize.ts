@@ -5,7 +5,7 @@ import { ProcMode } from 'src/app/build-analysis/engine/proc';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { config } from '../config';
 import { Dataset } from '../data/dataset';
-import { BuildInput, compactBuildSchema } from '../engine/build-input';
+import { BuildInput, compactBuildSchema, stringMap } from '../engine/build-input';
 import { DEFAULT_METRICS, Metric, METRICS, Profile } from '../engine/metrics';
 import { Shortener } from '../engine/share';
 import { BuildPatch, compactPatchSchema } from '../engine/variants';
@@ -185,9 +185,9 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       lock: z.array(z.string()).optional().describe('Slots que não mudam.'),
       exclude: z.array(z.number().int()).optional().describe('Ids de itens que não podem entrar.'),
       excludeMvpCards: z.boolean().optional().describe('Não recomenda carta que cai de MVP (por carta, não pelo alvo). Uma carta de MVP que você já usa é mantida e sai em `alerts`.'),
-      candidates: z.record(z.string(), z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
+      candidates: stringMap(z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
       combos: z.boolean().optional().default(true).describe('Testar também trocas de duas peças ligadas por um conjunto.'),
-      pairs: z.array(z.tuple([z.string(), z.string()])).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),
+      pairs: z.array(z.array(z.string()).length(2)).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),
       detail: z.boolean().optional().default(false).describe('Resposta completa: contexto do alvo, candidatos por slot (ids), alternativas que perderam, as notas que explicam cada bloco e o resumo da busca de complementos (centenas de tokens a mais). O padrão traz só os números, o caminho e os `alerts`.'),
       levelChecks: z.boolean().optional().default(true).describe('Para as peças que mudaram, compara a nova com a atual no refino e grau que você tem hoje e também nos ideais (`levelCheck`): mostra a peça que só vence evoluída, ou que vence agora e perde depois. false economiza cálculos.'),
       procHitsPerSecond: z.number().min(0.1).max(30).optional().describe('Ataques por segundo para estimar a média dos procs (cada ataque rola a chance). Sem isso, mostra 1, 3 e 5 por segundo; mais alvos atingidos por habilidade em área contam como mais ataques.'),

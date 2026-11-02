@@ -1,5 +1,18 @@
 [
   {
+    "v": "0.1.205-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "Os esquemas das ferramentas do MCP passaram a usar apenas JSON Schema simples (sem listas de tuplas nem `propertyNames`), para clientes mais estritos como o ChatGPT aceitarem a lista de ferramentas."
+    ],
+    "logs_es": [
+      "Los esquemas de las herramientas del MCP pasaron a usar solo JSON Schema simple (sin listas de tuplas ni `propertyNames`), para que clientes más estrictos como ChatGPT acepten la lista de herramientas."
+    ],
+    "logs_en": [
+      "The MCP tool schemas now use only plain JSON Schema (no tuple lists and no `propertyNames`), so stricter clients such as ChatGPT accept the tool list."
+    ]
+  },
+  {
     "v": "0.1.204-beta",
     "date": "02-11-2026",
     "logs": [

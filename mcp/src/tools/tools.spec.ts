@@ -79,6 +79,24 @@ describe('tool surface', () => {
   });
 });
 
+describe('tool schemas', () => {
+  it('stay in plain JSON Schema: no tuple items, no additionalItems, no propertyNames (ChatGPT validates tool schemas strictly)', async () => {
+    const tools = (await client.listTools()).tools;
+    const offenders: string[] = [];
+    const walk = (node: unknown, where: string) => {
+      if (Array.isArray(node)) { node.forEach((entry, index) => walk(entry, `${where}[${index}]`)); return; }
+      if (!node || typeof node !== 'object') return;
+      const record = node as Record<string, unknown>;
+      if (Array.isArray(record['items'])) offenders.push(`${where}: items is a list (tuple)`);
+      for (const key of ['additionalItems', 'propertyNames', 'prefixItems', 'patternProperties']) if (key in record) offenders.push(`${where}: ${key}`);
+      if (record['type'] === 'array' && !('items' in record)) offenders.push(`${where}: array without items`);
+      for (const [key, value] of Object.entries(record)) walk(value, `${where}.${key}`);
+    };
+    for (const tool of tools) walk(tool.inputSchema, tool.name);
+    expect(offenders).toEqual([]);
+  });
+});
+
 describe('tool annotations', () => {
   it('declares the three hints ChatGPT requires on every tool, and marks only the link makers as writers', async () => {
     const tools = (await client.listTools()).tools;
