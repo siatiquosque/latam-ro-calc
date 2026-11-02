@@ -1,5 +1,27 @@
 [
   {
+    "v": "0.1.207-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "O `validate_build` passou a aceitar links curtos válidos (usa o mesmo resolvedor do `parse_share_link`), e o `scan_slot` garante que cada patch devolvido reproduz o DPS anunciado na linha (antes, com o orçamento esgotado, a linha trazia o número da busca rápida com o patch sem soquetes).",
+      "O `explain_damage` ganhou a parte `crit` (chance efetiva de crítico da habilidade contra o alvo, com cada termo) e o `get_skill` informa como a habilidade usa o crítico e a forma do dano (acertos, elemento, pacotes extras, acúmulos).",
+      "Corrigida a contagem de cálculos do `optimize_build` (`solves` podia ficar negativo), e o novo `strictMvp` devolve uma build final sem nenhuma carta de MVP, tirando as que você já usa.",
+      "Habilidade informada em `atkSkill` sem o nível (ou pelo nome em pt-BR ou pelo id) agora é reconhecida; uma habilidade que a classe não tem, ou um nível que ela não oferece, vira erro em vez de o cálculo trocar em silêncio pela habilidade padrão da classe (o que fazia o Explosion Blaster aparecer com chance de crítico 0)."
+    ],
+    "logs_es": [
+      "El `validate_build` ahora acepta enlaces cortos válidos (usa el mismo resolvedor que `parse_share_link`), y el `scan_slot` garantiza que cada patch devuelto reproduce el DPS anunciado en la fila (antes, con el presupuesto agotado, la fila traía el número de la búsqueda rápida con el patch sin engarces).",
+      "El `explain_damage` ganó la parte `crit` (probabilidad efectiva de crítico de la habilidad contra el objetivo, con cada término) y el `get_skill` informa cómo la habilidad usa el crítico y la forma del daño (golpes, elemento, paquetes extra, acumulaciones).",
+      "Se corrigió el conteo de cálculos del `optimize_build` (`solves` podía quedar negativo), y el nuevo `strictMvp` devuelve una build final sin ninguna carta de MVP, quitando las que ya usas.",
+      "La habilidad indicada en `atkSkill` sin el nivel (o por el nombre en pt-BR o por el id) ahora se reconoce; una habilidad que la clase no tiene, o un nivel que no ofrece, pasa a ser un error en lugar de que el cálculo cambie en silencio a la habilidad predeterminada de la clase (lo que hacía que Explosion Blaster apareciera con probabilidad de crítico 0)."
+    ],
+    "logs_en": [
+      "The `validate_build` now accepts valid short links (it uses the same resolver as `parse_share_link`), and `scan_slot` guarantees that each returned patch reproduces the DPS announced on the row (before, when the budget ran out, the row carried the quick search number with the patch without sockets).",
+      "The `explain_damage` gained the `crit` part (the skill's effective critical chance against the target, with every term) and `get_skill` reports how the skill uses crit and the shape of its damage (hits, element, extra packets, stacks).",
+      "Fixed the `optimize_build` calculation count (`solves` could go negative), and the new `strictMvp` returns a final build with no MVP card at all, removing the ones you already wear.",
+      "The skill given in `atkSkill` without the level (or by its pt-BR name or id) is now recognized; a skill the class does not have, or a level it does not offer, becomes an error instead of the calculation silently switching to the class default skill (which made Explosion Blaster show a critical chance of 0)."
+    ]
+  },
+  {
     "v": "0.1.206-beta",
     "date": "02-11-2026",
     "logs": [

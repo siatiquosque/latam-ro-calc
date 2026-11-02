@@ -67,4 +67,25 @@ describe('MVP cards', () => {
     const added = after.errors.filter((error: any) => error.code === 'MVP_CARD_EXCLUDED' && !already.has(error.itemId));
     expect(added).toEqual([]);
   }, 300_000);
+
+  describe('strictMvp', () => {
+    // A build that wears Carta Tao Gunka (an MVP card) in the Traje do Lobo Cinzento.
+    const worn = { preset: fixture.preset, gear: { armor: 450177, armorCard: 4302 } };
+
+    it('takes the worn MVP cards out and returns a build with none', async () => {
+      const before = await call('validate_build', { build: worn, constraints: { excludeMvpCards: true } });
+      expect(before.errors.map((error: any) => error.code)).toContain('MVP_CARD_EXCLUDED');
+      const found = await call('optimize_build', { build: worn, target: { monsterId: 20994 }, objective: 'dps', maxSolves: 800, procMode: 'off', mvpPolicy: 'none', excludeMvpCards: false });
+      expect(found.mvpPolicy).toBe('none');
+      expect(found.mvpFree).toBe(true);
+      const after = await call('validate_build', { build: { share: found.share }, constraints: { excludeMvpCards: true } });
+      expect(after.errors.map((error: any) => error.code)).not.toContain('MVP_CARD_EXCLUDED');
+      expect(JSON.stringify(found.steps)).toContain('Tao Gunka');
+    }, 300_000);
+
+    it('refuses when the MVP card sits on a locked piece', async () => {
+      const result = await client.callTool({ name: 'optimize_build', arguments: { build: worn, target: { monsterId: 20994 }, objective: 'dps', maxSolves: 200, procMode: 'off', strictMvp: true, lock: ['armor'] } }, undefined, { timeout: 300_000 }) as any;
+      expect(JSON.parse(result.content[0].text).error).toContain('strictMvp');
+    }, 300_000);
+  });
 });

@@ -71,6 +71,8 @@ export function evaluationCache(limit = 4000) {
   const store = new Map<string, { metrics: Metrics; procEvaluation: Evaluation['procEvaluation'] }>();
   const cache = {
     hits: 0,
+    /** Calculations the cache did not have (what the budget pays for). */
+    misses: 0,
     evaluate(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset, monster: any, effects: string[], wanted: readonly Metric[], more: { monster: any; weight: number }[] = [], weight = 1, autoProcs: ProcPolicy = false): Evaluation {
       const rb = resolveBuild(patch ? applyPatch(base, patch) : base, dataset);
       const policy = typeof autoProcs === 'object' ? `${autoProcs.mode}:${autoProcs.hitsPerSecond}:${autoProcs.metadata.size}` : String(autoProcs);
@@ -80,6 +82,7 @@ export function evaluationCache(limit = 4000) {
         cache.hits++;
         return { rb, solved: undefined as unknown as Evaluation['solved'], metrics: { ...known.metrics }, procEvaluation: known.procEvaluation };
       }
+      cache.misses++;
       const result = evaluateResolved(rb, base, patch, dataset, monster, effects, wanted, more, weight, autoProcs);
       if (store.size >= limit) store.delete(store.keys().next().value as string);
       store.set(key, { metrics: { ...result.metrics }, procEvaluation: result.procEvaluation });
@@ -441,7 +444,7 @@ export type ExplainDamageArgs = {
     build: BuildInput;
     target?: TargetArg;
     effects?: string[];
-    parts?: ('stages' | 'contributions' | 'warnings' | 'refine' | 'upgrades')[];
+    parts?: ('stages' | 'contributions' | 'warnings' | 'refine' | 'upgrades' | 'crit')[];
     metric?: 'dps' | 'max' | 'rotationDps';
     maxContributions?: number;
   };
@@ -460,6 +463,10 @@ export type OptimizeBuildArgs = {
     exclude?: number[];
     /** No card dropped by an MVP is recommended (same as listing them in `exclude`, and a worn one is reported). */
     excludeMvpCards?: boolean;
+    /** Strict: the final build has no MVP card at all. The ones already worn are taken out first and their sockets searched again. */
+    strictMvp?: boolean;
+    /** Explicit policy takes precedence over the legacy flags. */
+    mvpPolicy?: 'allow' | 'exclude-new' | 'none';
     candidates?: Record<string, number[]>;
     combos?: boolean;
     pairs?: string[][];
@@ -627,7 +634,9 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
       for (const entry of quickPool) {
         await pace.breathe();
         const out = tune(entry.id, entry.patch, entry.value, 8);
-        quick.push({ id: entry.id, patch: entry.patch, value: out.value });
+        // The value of the tuned piece goes with the patch that made it: keeping the bare patch here handed out a number the patch
+        // could not reproduce once the budget ended before the full search.
+        quick.push({ id: entry.id, patch: out.patch, value: out.value });
       }
       quick.sort((a, b) => b.value - a.value);
       finalists = quick.slice(0, topSockets);
@@ -642,9 +651,16 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     for (const entry of finalists) {
       await pace.breathe();
       const fields = complementChoices(dataset, slot, entry.id, keys, noCards);
-      const out = topSockets > 0 ? tune(entry.id, bare.find((candidate) => candidate.id === entry.id)?.patch ?? entry.patch, entry.value,
-        Math.max(48, fields.reduce((sum, field) => sum + field.length, 0) * 2)) : { patch: entry.patch, value: entry.value };
+      const full = topSockets > 0 ? tune(entry.id, bare.find((candidate) => candidate.id === entry.id)?.patch ?? entry.patch, entry.value,
+        Math.max(48, fields.reduce((sum, field) => sum + field.length, 0) * 2)) : { patch: entry.patch, value: entry.value, result: undefined };
+      // No budget for the full search (`result` is empty): the quick stage's patch and value are the pair that was measured.
+      const out = topSockets > 0 && !full.result ? { patch: entry.patch, value: entry.value } : full;
       tunedRows.push({ id: entry.id, patch: out.patch, value: out.value, bare: bareOf.get(entry.id) ?? entry.value });
+    }
+    // Whatever the search path, a row is announced with the number its own patch gives: each returned patch is measured once more
+    // (a handful of calculations, outside the budget) and the ranking is made on that.
+    for (const row of tunedRows) {
+      try { row.value = measure(input, row.patch, dataset, monster, effects, wanted).metrics[objective] ?? row.value; } catch { /* keeps the searched value */ }
     }
     const wornRow = tunedRows.find((row) => row.id === worn);
     const reference = baseMode === 'tuned' && wornRow ? wornRow.value : baseValue;
@@ -675,7 +691,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     return {
       slot,
       objective,
-      reference: { item: worn ? itemLabel(dataset, worn) : null, value: round(reference, 2), basis: baseMode === 'tuned' && wornRow ? 'peça atual com os melhores soquetes' : 'build como veio no link' },
+      reference: { item: worn ? itemLabel(dataset, worn) : null, value: round(reference, 2), basis: baseMode === 'tuned' && wornRow ? 'peça atual com os melhores soquetes' : 'build como veio no link', ...(includePatches && baseMode === 'tuned' && wornRow ? { patch: wornRow.patch } : {}) },
       scanned: bare.length,
       eligible: found.length,
       ranking: top,
@@ -688,7 +704,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
   }
 
 async function explainDamage({ build, target, effects = [], parts, metric = 'dps', maxContributions = 25 }: ExplainDamageArgs) {
-    const want = new Set(parts ?? ['stages', 'contributions', 'warnings']);
+    const want = new Set(parts ?? ['stages', 'contributions', 'warnings', 'crit']);
     const base = decodeOnce(await normalizeShare(build, shortener));
     const { monster } = resolveTarget(dataset, target?.monsterId);
 
@@ -698,6 +714,23 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     if (want.has('stages')) {
       const trace = (baseline.solved.calc.getTotalSummary() as any).dmg?.skillFormulaTrace;
       out['stages'] = (trace?.max ?? []).map((step: any) => compact({ label: step.label, value: step.value, keys: step.keys }));
+    }
+
+    if (want.has('crit')) {
+      // The chance the skill really rolls against this target, with every term the engine used (the character's crit, the skill's own
+      // share of it, the target's shield), not the character's crit stat: a skill that crits "half as much" or a target with a crit
+      // shield shows here and nowhere in the stats.
+      const dmg = (baseline.solved.calc.getTotalSummary() as any).dmg ?? {};
+      const breakdown = dmg.skillCriRateBreakdown as { total?: number; effective?: number; isCapped?: boolean; steps?: { label: string; value: number; kind: string; detail?: string }[] } | undefined;
+      out['crit'] = {
+        skillChancePct: round(dmg.skillCriRateToMonster ?? 0, 2),
+        ...(breakdown?.isCapped ? { cappedAt100: true } : {}),
+        basicAttackChancePct: round(dmg.basicCriRate ?? 0, 2),
+        steps: (breakdown?.steps ?? []).map((step) => compact({ label: step.label, value: step.value, kind: step.kind, detail: step.detail })),
+        note: (dmg.skillCriRateToMonster ?? 0) === 0
+          ? 'Chance 0: a habilidade não critica, ou o escudo de crítico do alvo anula o crítico da build (veja os passos).'
+          : 'Chance por uso contra este alvo; o dano crítico entra no cálculo do dano médio e do DPS.',
+      };
     }
 
     if (want.has('contributions')) out['contributions'] = contributions(base, baseline.rb, baseline.metrics[metric], metric, monster, effects, dataset, maxContributions, config);
@@ -711,10 +744,18 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     return out;
   }
 
-async function optimizeBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards = false, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }: OptimizeBuildArgs) {
+async function optimizeBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }: OptimizeBuildArgs) {
+    mvpPolicy ??= strictMvp ? 'none' : avoidMvp ? 'exclude-new' : 'allow';
+    strictMvp = mvpPolicy === 'none';
+    avoidMvp = mvpPolicy !== 'allow';
     const resolvedProcMode = procMode ?? (countProcs === undefined ? 'average' : countProcs ? 'active' : 'off');
     const procPolicy = await prepareProcPolicy(dataset, resolvedProcMode, procHitsPerSecond);
     const memo = evaluationCache();
+    // What the search has calculated, counted where the calculation happens (a cache hit costs nothing, and the final socket pass has
+    // its own allowance and is reported apart): one number for the budget, the answer and the coverage. It used to be attempts minus
+    // hits, which went negative once the pass that does not count attempts began to hit the cache (`solves: -2`).
+    let polishFresh = 0;
+    const spent = () => 1 + memo.misses - polishFresh;
     const evalBuild = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return memo.evaluate(...args); };
     const evalFresh = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return evaluate(...args); };
     const requestedBudget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
@@ -759,6 +800,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     const keys = relevantKeys(baseline.solved.calc, aims.map(aim => aim.monster));
     const skillId = SKILL_ID_BY_NAME[String(baseline.rb.model.selectedAtkSkill ?? '').split('==')[0] as keyof typeof SKILL_ID_BY_NAME];
     if (skillId) keys.push(String(skillId), `cd__${skillId}`, `chance__${skillId}`);
+    const excludeMvpCards = avoidMvp || strictMvp;
     const banned = new Set([...exclude, ...(excludeMvpCards ? MVP_CARD_IDS : [])]);
     const partners = partnerIndex(dataset);
     const skippedNotInLatam: number[] = [];
@@ -775,7 +817,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         && !!dataset.itemIndex.get(id)?.latam
         && !!dataset.itemIndex.get(id)?.slotTags.includes(slot as SlotTag);
     };
-    let solves = 1;
     /** Calculations spent finding out what each candidate is worth (discovery) against refining the ones that matter (evaluation). */
     let discovery = 0;
     const screening: Record<string, { eligible: number; tested: number }> = {};
@@ -809,9 +850,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       const scored: { id: number; value: number }[] = [];
       const slotShare = Math.max(6, Math.floor((discoveryBudget - discovery) / (walk.length - slotPosition)));
       for (const row of ordered.slice(0, slotShare)) {
-        if (solves >= budget || pace.timeUp()) break;
+        if (spent() >= budget || pace.timeUp()) break;
         await pace.breathe();
-        solves++;
         discovery++;
         try {
           const trial = evalBuild(base, swapPatch(dataset, baseline.rb, slot, row.id, { refine, maxGrade }), dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs);
@@ -907,7 +947,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         : (ItemOptionMap.get(target as ItemTypeEnum) ?? []).map(index => [String(index), null]))),
     });
 
-    const outOfBudget = () => solves - memo.hits >= budget || pace.timeUp();
+    const outOfBudget = () => spent() >= budget || pace.timeUp();
     let current = base;
     let value = baseValue;
     let metrics = baseline.metrics;
@@ -955,6 +995,28 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     const solvedMoves = new Set<string>();
     const moveKey = (move: Move) => move.changes.map(([slot, item]) => `${slot}:${item}:${move.grades[slot]}`).sort().join('|');
 
+    // Strict mode: the MVP cards the build already wears come out before anything is compared, so the answer cannot keep one. The
+    // round that tunes the worn pieces then searches the emptied sockets with the MVP cards banned. A locked piece cannot be changed,
+    // so an MVP card on it makes the request impossible and it is said so, not quietly ignored.
+    if (strictMvp) {
+      const wornMvp = ITEM_ID_KEYS.filter((key) => MVP_CARD_IDS.has(rb.model[key]));
+      const owner = (field: string) => EQUIPMENT_SLOTS.find((descriptor) => (descriptor.cardFields as readonly string[]).includes(field))?.key;
+      const blocked = wornMvp.filter((field) => locked.has(String(owner(field))));
+      if (blocked.length) throw new Error(`strictMvp: ${blocked.map((field) => `${dataset.items[rb.model[field]]?.name} (${owner(field)})`).join(', ')} está em peça travada (lock) e é carta de MVP. Destrave o slot ou use excludeMvpCards.`);
+      if (wornMvp.length) {
+        const patch: BuildPatch = { gear: Object.fromEntries(wornMvp.map((field) => [field, null])) };
+        const start = evalFresh(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+        const startValue = start.metrics[objective];
+        if (startValue === undefined) throw new Error('strictMvp: a build sem as cartas de MVP não produz o objetivo.');
+        steps.push({ kind: 'semMvp', mvp: wornMvp.map((field) => `${dataset.items[rb.model[field]]?.name} (${field})`), gainPct: deltaPct(startValue, value), note: 'Cartas de MVP retiradas (strictMvp); os soquetes são procurados de novo sem elas.' });
+        current = applyPatch(current, patch);
+        changes = applyPatch(changes, patch);
+        value = startValue;
+        metrics = start.metrics;
+        rb = start.rb;
+      }
+    }
+
     // Round -1 tunes what the build already wears (best cards, enchants and catalogued rolls) before anything is compared with it:
     // otherwise a worn piece the link left bare loses to a replacement that the walk happened to reach first.
     for (let round = complements ? -1 : 0; round < rounds && !exhausted; round++) {
@@ -964,7 +1026,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         if (searchedAt.get(slot) === version) continue;
         // Discovery (35%) and tuning what is worn (40% more) leave a quarter of the calculations for the walk: a short budget spent
         // on the sockets of the current pieces never looks at a replacement. What was not reached is reported in `coverage`.
-        if (tuning && solves - memo.hits >= Math.floor(budget * 0.75)) break;
+        if (tuning && spent() >= Math.floor(budget * 0.75)) break;
         let best: Chosen | null = null;
         const seen: { to: [string, number][]; grades: Record<string, string>; value: number; against: number }[] = [];
         if (!tuning) considered.set(slot, seen);
@@ -972,7 +1034,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         if (!moves.length) continue;
         if (tuning) tunedSlots++;
         const remainingSlots = walk.length - slotIndex + (rounds - round - 1) * walk.length;
-        const share = Math.max(0, Math.floor((budget - (solves - memo.hits)) / Math.max(1, remainingSlots)));
+        const share = Math.max(0, Math.floor((budget - spent()) / Math.max(1, remainingSlots)));
         // Three stages, so every candidate is judged with the same care as the piece it competes with: all of them bare, a quick
         // search of sockets and rolls for the best dozen, the full search for the best few. A small even share for each candidate
         // (what this used to give) cannot find the right enchant among eight, and the worn piece, which had the full search, won.
@@ -980,7 +1042,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         const fullEffort = Math.max(0, tuning ? share - 1 : Math.floor(share / 3));
         const solveFor = (candidatePatch: BuildPatch) => {
           if (outOfBudget()) { exhausted = true; return null; }
-          solves++;
           try { return evalBuild(current, candidatePatch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs); } catch { return null; }
         };
         type Tried = ReturnType<typeof evalBuild>;
@@ -997,7 +1058,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
           if (discovered >= discoveryCap) break;
           discovered++;
           discovery++;
-          solves++;
           solvedMoves.add(key);
           try {
             const patch = patchFor(move);
@@ -1052,7 +1112,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
             // The leader of the proxy ranking is measured on the real objective even when the budget is spent (one calculation): stopping
             // here would throw away the best candidate found so far.
             if (outOfBudget()) { exhausted = true; if (rank > 0) break; }
-            solves++;
             try { entry.tried = evalBuild(current, entry.patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); contenders.push(entry); } catch { /* not a candidate */ }
           }
         }
@@ -1082,7 +1141,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       search: for (const a of top(first)) for (const b of top(second)) for (const move of expandMove(first, [[first, a], [second, b]])) {
         await pace.breathe();
         if (outOfBudget()) { exhausted = true; break search; }
-        solves++;
         try {
           const patch = patchFor(move);
           const tried = evalBuild(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
@@ -1098,6 +1156,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     // keeps a worse one. So the build it ends with is checked field by field against every legal card and enchant, in the time
     // the search left, with its own allowance so a long walk cannot starve it.
     const polish = { fields: 0, total: 0, tried: 0, improved: 0 };
+    const polishFrom = memo.misses;
     if (complements) {
       const allowanceMs = Math.max(25_000, Math.round(config.limits.maxSearchMs * 0.5));
       const polishPace = pacing(allowanceMs);
@@ -1151,6 +1210,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       }
     }
 
+    polishFresh = memo.misses - polishFrom;
+
     // The walk compares everything at the ideal refine and grade. A piece can lose to the worn one at the level the player has
     // today and win once both are raised (a better enchant, a bonus that unlocks at a grade), or the other way round: for the
     // slots that changed, and the best runner-up, measure both levels against the worn piece, each tuned the same way.
@@ -1174,11 +1235,9 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
           ...(worn ? {} : { options: Object.fromEntries((ItemOptionMap.get(slot as ItemTypeEnum) ?? []).map((index) => [String(index), null])) }),
         };
         try {
-          solves++;
           const first = evalBuild(base, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
           const tuned = searchComplements({ patch, result: first }, complementsFor(slot, id), objective, (candidatePatch) => {
             if (outOfBudget()) { exhausted = true; return null; }
-            solves++;
             try { return evalBuild(base, candidatePatch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); } catch { return null; }
           }, levelBudget);
           return tuned.result.metrics[objective];
@@ -1207,6 +1266,9 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         if (rows.length) levelCheck.push({ slot, worn: worn > 0 ? itemLabel(dataset, worn) : null, rows });
       }
     }
+
+    // The search is over: what the profiles, targets and reports below calculate is not part of what the budget paid for.
+    const searchedCalcs = spent();
 
 
     // Both kinds of build side by side: a piece can win the opening and lose the long fight.
@@ -1266,7 +1328,6 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       if (resolvedProcMode === 'active') countedProcs = evalFresh(current, undefined, dataset, monster, effects, [objective]).solved.effects;
       else for (const chance of ((last.solved.calc.chanceList ?? []) as any[]).filter(chance => chance?.name && !effects.includes(chance.name)).slice(0, 10)) {
         if (outOfBudget()) break;
-        solves++;
         const withProc = evaluate(current, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
         const gainPct = deltaPct(withProc, last.metrics[objective]);
         const average = procEstimate(await procData(dataset, chance), gainPct, procHitsPerSecond);
@@ -1327,7 +1388,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       ...(hpBefore && hpAfter && hpAfter < hpBefore * 0.95 ? [`O HP cai ${round((1 - hpAfter / hpBefore) * 100, 1)}% (${Math.round(hpBefore)} → ${Math.round(hpAfter)}): se a build precisa aguentar, repita com \`require: [{ metric: "hp", min: ${Math.round(hpBefore)} }]\`.`] : []),
       ...((gainByKind['refinoGrau'] ?? 0) > 10 ? [`${gainByKind['refinoGrau']}% do ganho é subir refino e grau das peças que você já usa (para +${REACHABLE_REFINE}/A); só trocar peças rende ${gainByKind['troca'] ?? 0}% (\`gainByKind\`).`] : []),
       ...lostProcs,
-      ...(excludeMvpCards && ITEM_ID_KEYS.some((key) => MVP_CARD_IDS.has(rb.model[key]))
+      ...(excludeMvpCards && !strictMvp && ITEM_ID_KEYS.some((key) => MVP_CARD_IDS.has(rb.model[key]))
         ? [`A build final ainda usa carta de MVP que você já tinha: ${ITEM_ID_KEYS.filter((key) => MVP_CARD_IDS.has(rb.model[key])).map((key) => `${dataset.items[rb.model[key]]?.name} (${key})`).join(', ')}. A busca não recomenda carta de MVP nova, mas mantém a sua; para tirá-la, teste a troca em \`evaluate_variants\`.`] : []),
       ...(profile === 'burst' && !hasRotation ? ['Sem rotação no link: burst e sustentado medem quase o mesmo. Passe `rotation` para separá-los.'] : []),
     ].filter((entry): entry is string => !!entry);
@@ -1341,18 +1402,19 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     const searchable = walk.filter((slot) => (pools.get(slot)?.length ?? 0) > 0);
     const unreached = searchable.filter((slot) => !slotCoverage.has(slot));
     const partial = [...slotCoverage].filter(([, entry]) => entry.measured < entry.available).map(([slot, entry]) => [slot, entry.available - entry.measured] as const);
-    const total = solves - memo.hits;
+    const total = searchedCalcs;
     const coverage = {
       slots: { searched: searchable.length - unreached.length, total: searchable.length, ...(unreached.length ? { notReached: unreached } : {}) },
       candidates: { measured: [...slotCoverage.values()].reduce((sum, entry) => sum + entry.measured, 0), available: [...slotCoverage.values()].reduce((sum, entry) => sum + entry.available, 0), ...(partial.length ? { notMeasured: Object.fromEntries(partial) } : {}) },
       ...(complements ? { worn: { tuned: tunedSlots, total: walk.filter((slot) => rb.model[slot] > 0).length }, sockets: { checked: Math.min(polish.fields, polish.total), total: polish.total } } : {}),
-      calculations: { discovery, evaluation: Math.max(0, total - discovery), ...(memo.hits ? { reused: memo.hits } : {}) },
+      calculations: { discovery, evaluation: Math.max(0, total - discovery), ...(polishFresh ? { socketPass: polishFresh } : {}), ...(memo.hits ? { reused: memo.hits } : {}) },
       complete: !exhausted && !unreached.length && !partial.length && (!complements || polish.fields >= polish.total),
     };
 
     const finalProcEvaluation = evalBuild(current, undefined, dataset, monster, effects, [objective]).procEvaluation;
     return {
       objective,
+      mvpPolicy,
       baseline: roundMetrics(baseline.metrics, shown),
       final: roundMetrics(metrics, shown),
       deltaPct: Object.fromEntries(shown.map((k) => [k, deltaPct(metrics[k], baseline.metrics[k])])),
@@ -1376,7 +1438,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       ...(countedProcs?.length ? { countedProcs } : {}),
       ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
       ...(alerts.length ? { alerts } : {}),
-      solves: solves - memo.hits,
+      solves: searchedCalcs,
       ...(memo.hits ? { reused: memo.hits } : {}),
       screening,
       procContext: { mode: resolvedProcMode, hitsPerSecond: procHitsPerSecond ?? 3,
@@ -1387,7 +1449,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         note: 'Média estimada por estados ativo/inativo de até 3 procs com chance e duração conhecidas, independentes e ataques regulares. HP mínimo é verificado sem os procs adicionais. A comparação visual usa os efeitos explicitamente selecionados.' },
       limits: { refine: refine ?? REACHABLE_REFINE, maxGrade: maxGrade ?? 'A' },
       coverage,
-      ...(exhausted ? { stopped: `orçamento de cálculos ou de tempo esgotado (${solves - memo.hits} de ${budget}): pode haver trocas melhores que a busca não alcançou. Restrinja \`slots\`, fixe \`candidates\`, use \`complements: false\` ou aumente \`maxSolves\` para a busca caber.` } : {}),
+      ...(strictMvp ? { mvpFree: !ITEM_ID_KEYS.some((key) => MVP_CARD_IDS.has(rb.model[key])) } : {}),
+      ...(exhausted ? { stopped: `orçamento de cálculos ou de tempo esgotado (${searchedCalcs} de ${budget}): pode haver trocas melhores que a busca não alcançou. Restrinja \`slots\`, fixe \`candidates\`, use \`complements: false\` ou aumente \`maxSolves\` para a busca caber.` } : {}),
       ...(baseline.rb.warnings.length ? { warnings: baseline.rb.warnings } : {}),
       ...(detail ? {
         context,

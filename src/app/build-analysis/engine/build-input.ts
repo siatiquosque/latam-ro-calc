@@ -236,7 +236,14 @@ export function resolveBuild(input: BuildInput, dataset: Dataset): ResolvedBuild
   for (const { field, from, to } of adjusted) warnings.push(`${field}: ${from} está fora do limite da classe; o cálculo usou ${to}.`);
   applyJobBonus(model, char);
   applySkillMaps(model, char);
-  resolveAtkSkill(model, char);
+  const skillIssue = resolveAtkSkill(model, char);
+  if (skillIssue) {
+    const message = `Habilidade "${skillIssue.unresolved}" não existe nesta classe ou o nível não existe (a calculadora usaria ${skillIssue.usedInstead}). Use list_skills para os nomes e níveis.`;
+    // Asked for by the caller: refuse, so a number is never reported for a skill that was not the one requested. From an old link it
+    // still falls back to the class default, with the warning.
+    if (input.atkSkill !== undefined) throw new Error(message);
+    warnings.push(message);
+  }
   model.rawOptionTxts = toRawOptionTxtList(model, items);
   if (input.options) {
     for (const [slot, positions] of ItemOptionMap) {

@@ -57,7 +57,10 @@ export interface AtkSkillModel {
   cd: number | ((skillLevel: number) => number);
   levelList?: { label: string; value: any; }[];
   formula: (input: AtkSkillFormulaInput) => number;
-  /** Explicit mechanical dependencies for discovery and search; never inferred from a function's source. */
+  /**
+   * Explicit mechanical dependencies for discovery and search, with the wording. What the formula reads (traits, HP, SP) is
+   * also found by running it on a recording input (`formulaInputs`, core/skill-synergy.ts), never by reading its source text.
+   */
   scaling?: { resources?: ('hp' | 'sp')[]; bonusKeys?: string[]; formulaText?: string };
   /** Adjust this skill's final hit chance, without changing basic attacks. */
   accuracy?: (input: AtkSkillFormulaInput & { accuracy: number }) => number;

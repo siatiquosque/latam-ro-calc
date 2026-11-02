@@ -112,7 +112,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     build: BuildInput;
     target?: TargetArg;
     effects?: string[];
-    parts?: ('stages' | 'contributions' | 'warnings' | 'refine' | 'upgrades')[];
+    parts?: ('stages' | 'contributions' | 'warnings' | 'refine' | 'upgrades' | 'crit')[];
     metric?: 'dps' | 'max' | 'rotationDps';
     maxContributions?: number;
   }>(server, 'explain_damage', {
@@ -125,7 +125,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional(),
-      parts: z.array(z.enum(['stages', 'contributions', 'warnings', 'refine', 'upgrades'])).optional().describe('Padrão: stages, contributions e warnings. `upgrades` ordena o que vale mais investir: refino, grau, nível de cada encantamento e encantar um soquete vazio. `refine` mostra o ganho de +1 e +2 refinos em cada peça (custo: uma conta por peça e nível).'),
+      parts: z.array(z.enum(['stages', 'contributions', 'warnings', 'refine', 'upgrades', 'crit'])).optional().describe('Padrão: stages, contributions, warnings e crit (chance efetiva de crítico da habilidade contra o alvo, com cada termo). `upgrades` ordena o que vale mais investir: refino, grau, nível de cada encantamento e encantar um soquete vazio. `refine` mostra o ganho de +1 e +2 refinos em cada peça (custo: uma conta por peça e nível).'),
       metric: z.enum(['dps', 'max', 'rotationDps']).optional().describe('Em que medir as contribuições. Padrão: dps.'),
       maxContributions: z.number().int().min(1).max(100).optional().default(25),
     },
@@ -145,6 +145,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     lock?: string[];
     exclude?: number[];
     excludeMvpCards?: boolean;
+    strictMvp?: boolean;
+    mvpPolicy?: 'allow' | 'exclude-new' | 'none';
     candidates?: Record<string, number[]>;
     combos?: boolean;
     pairs?: string[][];
@@ -185,6 +187,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       lock: z.array(z.string()).optional().describe('Slots que não mudam.'),
       exclude: z.array(z.number().int()).optional().describe('Ids de itens que não podem entrar.'),
       excludeMvpCards: z.boolean().optional().describe('Não recomenda carta que cai de MVP (por carta, não pelo alvo). Uma carta de MVP que você já usa é mantida e sai em `alerts`.'),
+      mvpPolicy: z.enum(['allow', 'exclude-new', 'none']).optional().describe('allow permite MVP; exclude-new preserva as existentes sem adicionar; none exige build final sem MVP. Tem precedência sobre excludeMvpCards e strictMvp; sem política explícita, mantém o comportamento dessas flags.'),
+      strictMvp: z.boolean().optional().describe('Modo estrito: a build final não tem nenhuma carta de MVP. As que você já usa saem primeiro e os soquetes são procurados de novo sem elas (`mvpFree: true` na resposta); falha se uma está numa peça travada em `lock`.'),
       candidates: stringMap(z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
       combos: z.boolean().optional().default(true).describe('Testar também trocas de duas peças ligadas por um conjunto.'),
       pairs: z.array(z.array(z.string()).length(2)).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),

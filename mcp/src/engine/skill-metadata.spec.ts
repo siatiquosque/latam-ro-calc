@@ -50,3 +50,20 @@ describe('Inquisitor skill metadata', () => {
     expect(formula).toContain('Oleum Sanctum');
   });
 });
+
+describe('structure of a skill', () => {
+  it('gives the shape of the damage as data: hits, element, stacks and the extras a formula adds', () => {
+    let withHits = 0;
+    let withExtras = 0;
+    for (const { id } of dataset.classes.list() as { id: number }[]) {
+      const char = dataset.classes.newInstance(id);
+      for (const skill of char.getAtkSkills('current') as { name: string }[]) {
+        const { structure } = skillInfo(char, skill.name);
+        if (structure['hits'] !== undefined) withHits++;
+        if (structure['secondPacket'] || structure['addsFlatDamage'] || structure['adjustsFinalDamage'] || structure['stacks']) withExtras++;
+      }
+    }
+    expect(withHits).toBeGreaterThan(100);
+    expect(withExtras).toBeGreaterThan(5);
+  });
+});

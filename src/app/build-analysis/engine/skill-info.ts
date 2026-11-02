@@ -11,6 +11,25 @@ export function findSkill(char: CharacterBase, query: string, version: SkillForm
   if (!skill) throw new Error(`Habilidade "${query}" não encontrada nesta classe. Use list_skills.`);
   return skill;
 }
+/** What the model says about the shape of a skill's damage, structured, so an agent does not have to infer it from the description. */
+function structureOf(skill: ReturnType<typeof findSkill>, level: number) {
+  const hits = typeof skill.hitByLevel === 'function' ? skill.hitByLevel(level) : skill.hit;
+  return Object.fromEntries(Object.entries({
+    hits,
+    totalHit: typeof skill.totalHit === 'number' ? skill.totalHit : undefined,
+    hitEveryNSec: skill.hitEveryNSec,
+    element: skill.element,
+    ignoresAspdFloor: skill.ignoreAspdFloor || undefined,
+    timingUnknown: skill.timingUnknown || undefined,
+    stacks: skill.maxStack !== undefined ? { min: skill.minStack ?? 0, max: skill.maxStack, default: skill.defaultStack } : undefined,
+    secondPacket: skill.part2 ? { label: skill.part2.label, hits: skill.part2.hit, damageType: skill.part2.isMatk ? 'magical' : 'physical', includesMain: skill.part2.isIncludeMain } : undefined,
+    addsFlatDamage: skill.flatDamage ? true : undefined,
+    adjustsFinalDamage: skill.finalDmgFormula ? true : undefined,
+    adjustsAccuracy: skill.accuracy ? true : undefined,
+    alwaysCrits: skill.forceCri || undefined,
+  }).filter(([, value]) => value !== undefined));
+}
+
 export function skillInfo(char: CharacterBase, query: string, version: SkillFormulaVersion = 'current', level?: number) {
   const skill = findSkill(char, query, version);
   const meta = resolveSkillMeta(skill.name);
@@ -23,6 +42,11 @@ export function skillInfo(char: CharacterBase, query: string, version: SkillForm
     name: skill.name, label: meta?.label ?? skill.label, id: meta?.id, value: `${skill.name}==${selected}`, levels, formulaVersion: version,
     description: meta?.description, damageType: skill.isMatk ? 'magical' : 'physical', melee: !!skill.isMelee,
     canCrit: typeof skill.canCri === 'function' ? 'conditional' : !!skill.canCri,
+    // How the skill uses the crit: the share of the character's crit it applies, its own flat crit and the multiplier of its crit damage.
+    // The chance it really rolls against a target depends on the build and the target: `explain_damage` (part `crit`).
+    crit: { canCrit: typeof skill.canCri === 'function' ? 'conditional' : !!skill.canCri, shareOfCharacterCrit: skill.baseCriPercentage ?? 1, flatCrit: skill.baseCri ?? 0, shareOfCritDamage: skill.criDmgPercentage ?? 1 },
+    // The skill's shape, from the model: how many hits, which element, what else shapes the damage. Absent keys mean "not special".
+    structure: structureOf(skill, selected),
     timing: { fixedCast: timing(skill.fct), variableCast: timing(skill.vct), afterCastDelay: timing(skill.acd), cooldown: timing(skill.cd) },
     scaling: { documented: !!skill.scaling || inputs.length > 0, inputs: inputs.map((input) => input.label), resources: skill.scaling?.resources ?? [], bonusKeys: skillSynergyKeys(skill), formula: skill.scaling?.formulaText,
       note: skill.scaling ? 'Dependências documentadas no motor; valide combinações com calculate/evaluate_variants.'

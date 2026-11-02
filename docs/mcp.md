@@ -27,7 +27,7 @@ montada campo a campo), consultar itens, habilidades e monstros, calcular dano e
 | `damage_table`, `compare_builds` | uma build contra vários monstros; até 4 builds contra o mesmo alvo |
 | **`scan_slot`** | mede **todos** os itens do LATAM que a classe usa num slot, com o resto da build como está, e afina os melhores com cartas, encantamentos e rolagens; devolve os parceiros de conjunto de cada um |
 | `optimize_slot` | testa candidatos **de um slot** e ordena por DPS, cada um com os melhores cartas e encantamentos que aceita (`complements: false` compara só as peças nuas); itens fora do LATAM vão em `skippedNotInLatam` |
-| **`optimize_build`** | percorre os slots trocando a melhor peça até nada melhorar (ver abaixo) |
+| **`optimize_build`** | percorre os slots trocando a melhor peça até nada melhorar (ver abaixo); `strictMvp` exige build final sem carta de MVP; a resposta traz `coverage` |
 | **`optimize_stats`** | redistribui os pontos de atributo/traits dentro do orçamento do nível (ver abaixo) |
 | **`uncatalogued_pools`** | itens sem pool de bônus aleatório confirmado + rascunho de pool do rAthena (ver abaixo) |
 | **`evaluate_variants`** | várias variações de uma build numa só chamada (ver abaixo) |
@@ -425,3 +425,13 @@ Detalhes da divisão de recursos entre calculadora e MCP em [build-analysis.md](
 
 - `get_skill` informa em `scaling.inputs` de que a fórmula depende (POD/STA/SAB/FEI/CON/CRV, HP máximo, SP máximo) e em `bonusKeys` as chaves de bônus que alimentam isso. As entradas são lidas **executando a fórmula** uma vez com uma entrada que registra o que ela toca (`formulaInputs` em `src/app/core/skill-synergy.ts`), então valem para todas as classes e versões (inclusive as fórmulas do rebalanceamento) sem uma segunda tabela. Só enxerga o ramo que a fórmula toma sem buff ou estado ativo e não vê o que a classe guarda no próprio estado (por exemplo, o peso do carrinho).
 - Os pools de bônus aleatórios do rAthena (kRO) são aceitos como referência do LATAM: a busca os usa sem o alerta "não confirmado" e sem o cálculo extra do ganho sem eles; `unconfirmedRolls` continua dizendo de onde a rolagem veio. Itens que rolam e não têm pool em nenhuma fonte (Marionete de Thanatos-LT, Pingentes da Força Física/Mental-LT) seguem fora da busca de rolagens (`uncatalogued_pools`).
+
+## Correções de contrato (patch, crítico, solves, MVP estrito)
+
+- **Links curtos:** toda ferramenta que recebe `build.share` resolve o link curto antes de ler (`normalizeShare`), inclusive `validate_build`.
+- **`scan_slot`:** cada linha é anunciada com o número que o próprio patch dá: os patches devolvidos são medidos de novo (alguns cálculos, fora do orçamento) e o ranking usa esse valor. Com `includePatches`, `reference.patch` traz o patch da peça atual afinada.
+- **Crítico:** `explain_damage` com a parte `crit` (padrão) traz `skillChancePct` (a chance que a habilidade realmente rola contra o alvo, igual a `calculate.damage.skill.critRate`) e os passos do cálculo (crítico do personagem, parte que a habilidade aplica, escudo do alvo). `get_skill.crit` diz se a habilidade crita, que parte do crítico do personagem aplica e que parte do dano crítico.
+- **`get_skill.structure`:** acertos, elemento, acúmulos, segundo pacote, dano fixo, ajuste do dano final e da precisão, como dados.
+- **`solves`:** conta cálculos feitos (não repetições do cache); a passada final nos soquetes aparece à parte em `coverage.calculations.socketPass`.
+- **`strictMvp`:** no `optimize_build`, a build final não tem nenhuma carta de MVP (`mvpFree: true`): as que a build já usa saem primeiro (passo `semMvp`) e os soquetes são procurados de novo sem elas. Falha com mensagem clara se uma está numa peça travada em `lock`. `excludeMvpCards` continua sendo o modo brando (mantém as que você já usa e avisa).
+- **`atkSkill`:** aceita `Nome==nível`, o nome sem nível (usa o nível máximo), o nome em pt-BR ou o id. Habilidade que a classe não tem ou nível que ela não oferece é **erro** (com a orientação de usar `list_skills`); antes o cálculo trocava em silêncio pela habilidade padrão da classe e a resposta só mostrava o outro nome. Um link antigo cuja habilidade não existe mais continua caindo no padrão, com aviso em `warnings`.

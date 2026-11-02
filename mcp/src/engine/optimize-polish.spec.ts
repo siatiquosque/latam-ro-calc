@@ -49,4 +49,14 @@ describe('coverage of the search', () => {
     expect(found.coverage.slots.notReached?.length ?? 0).toBeGreaterThan(0);
     expect(found.final.dps).toBeGreaterThanOrEqual(found.baseline.dps);
   }, 300_000);
+
+  it('counts what it calculated, never a negative number, whatever the budget', async () => {
+    // `solves` was attempts minus cache hits, and the socket pass hit the cache without being counted: -2 came out.
+    for (const maxSolves of [30, 150, 800]) {
+      const found = await call('optimize_build', { build: { preset: fixture.preset }, target: { monsterId: 20994 }, objective: 'dps', maxSolves, procMode: 'off' });
+      expect(found.solves, `maxSolves ${maxSolves}`).toBeGreaterThan(0);
+      expect(found.solves).toBeLessThanOrEqual(maxSolves + 60);
+      for (const value of Object.values(found.coverage.calculations) as number[]) expect(value).toBeGreaterThanOrEqual(0);
+    }
+  }, 300_000);
 });

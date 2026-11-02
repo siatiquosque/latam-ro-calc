@@ -12,7 +12,7 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
   consultoria: {
     title: 'Roteiro para melhorar uma build conversando',
     text:
-      '1) `validate_build` no link: corrija o que for erro antes de medir e leia `unknowns`. 2) `explain_damage` (e `get_skill`) para ver o que a habilidade escala e o que mais pesa na fórmula. ' +
+      '0) `atkSkill` aceita `Nome==nível`, o nome sem nível, o nome em pt-BR ou o id; nome ou nível que não existe é erro. 1) `validate_build` no link: corrija o que for erro antes de medir e leia `unknowns`. 2) `explain_damage` (e `get_skill`) para ver o que a habilidade escala e o que mais pesa na fórmula. ' +
       '3) Busque candidatos com `search_items`: slot, classId, `bonus`/`skill`/`synergy`, `maxLevel`, `excludeMvpCards` se a pessoa não quer carta de MVP, `withBonuses` para ler o que cada um faz. `get_item` traz `partners` (conjuntos e combos) e `slot_options` os encantamentos. ' +
       '4) Teste em lote com `evaluate_variants` (patches independentes; mantenha refino e grau da peça atual quando a pergunta for "no mesmo nível"; conjunto = as peças juntas na mesma variante). ' +
       '5) Confirme o vencedor com `explain_damage` e em outro alvo (normal e chefe, Médio e Grande). 6) Diga o que foi testado: é a melhor entre as testadas, não a melhor possível; não some ganhos de variantes isoladas.',
@@ -39,7 +39,7 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
       'Defina alvo, perfil, peças a manter e patamar de refino/grau. Consulte `get_item`, `slot_options` e `list_skills`; use `evaluate_variants` para suas hipóteses. ' +
       'Quando uma busca automática ajudar, chame `optimize_build` com esses limites e o link. Por padrão ele ajusta primeiro a peça que a build já usa (cartas, encantamentos, rolagens catalogadas), depois troca peças, ' +
       'cartas e encantamentos, e testa tudo com refino +12 e grau A: para uma evolução parcial informe `refine`, `maxGrade`, `slots`/`lock`, `candidates` e `exclude`. Não classifique early/mid/endgame por dano: preço e obtenção não são conhecidos. Passe `targets` com um monstro normal e um chefe ' +
-      '(e Médio e Grande) se a build serve para os dois. Se `stopped` aparecer, restrinja `slots`, fixe `candidates` ou suba `maxSolves`. ' +
+      '(e Médio e Grande) se a build serve para os dois. Se `stopped` aparecer, restrinja `slots`, fixe `candidates` ou suba `maxSolves`; `coverage` diz o que foi e o que não foi medido. Sem carta de MVP: `excludeMvpCards` (mantém as que a build já usa) ou `strictMvp` (build final sem nenhuma). ' +
       'Depois: `explain_damage` com `parts: ["upgrades"]` ordena onde investir refino, grau e nível de encantamento; `optimize_stats` redistribui atributos. ' +
       'A poção de ASPD vem em `aspdPotionCheck`. `levelCheck` diz se uma peça nova só vence evoluída. Itens com bônus aleatório sem pool confirmado ficam fora da busca de rolagens: `uncatalogued_pools` lista quais.',
   },

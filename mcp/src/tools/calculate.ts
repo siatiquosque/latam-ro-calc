@@ -49,7 +49,9 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
         requireCalculableItems: z.boolean().optional(),
       }).optional(),
     },
-  }, async ({ build, constraints }) => { await loadSkillTree(); return json(validateBuild(build, dataset, constraints, skillTreeLoaded())); });
+  }, async ({ build, constraints }) => { await loadSkillTree();
+    // The same resolver as every other tool: a short link (/l/<slug>) is followed to the real share before it is read.
+    return json(validateBuild(await normalizeShare(build, shortener), dataset, constraints, skillTreeLoaded())); });
 
   registerJsonTool<{ build: BuildInput; monsterIds: number[] }>(server, 'damage_table', {
     title: 'Dano contra vários monstros',

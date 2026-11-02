@@ -198,3 +198,41 @@ Medido com um teste independente que, depois da busca, tenta todas as cartas leg
 cálculos, alvo Betelgeuse): antes da passada, 5 a 6 soquetes por build tinham carta melhor disponível (Tao Gunka na armadura, +17 a
 +23%; Derreting no Selo, +2%; Gan Ceann na arma, +4%); depois, nenhum. O DPS da build recomendada foi de 385 mil para 696 mil
 (fixture da Fogueira), de 1,41 para 2,46 milhões (build 1) e de 892 mil para 1,27 milhão (build 2).
+
+## Orçamento por fase, cobertura e contagem de cálculos
+
+Medido na build da Fogueira Espiritual (Betelgeuse, procs desligados): com 800 cálculos a busca antiga gastava tudo na triagem dos primeiros slots (a arma tem centenas de candidatos) e no ajuste das peças que a build já usa, e nenhuma troca de peça chegava a ser comparada. Agora o orçamento tem fases:
+
+- **Descoberta** (medir cada item elegível sem soquetes): até 35%, repartido entre os slots; o que um slot não usa passa ao seguinte, e cada slot mede ao menos 6 itens.
+- **Ajuste do que a build já usa**: até 75% somados à descoberta; sobra um quarto para a busca de trocas.
+- **Busca de trocas, pares e verificação de nível**: o resto. O líder do ranking por habilidade é sempre medido no objetivo real, mesmo com o orçamento esgotado.
+- **Passada final nos soquetes**: tempo próprio, fora do orçamento.
+
+Resultado: DPS com 800 cálculos 158 mil → 656 mil; com 4.000, 696 mil → 724 mil; a régua de qualidade (20 mil cálculos) manteve b1 e b2 e subiu a build fraca de 4,24 para 5,40 milhões.
+
+`coverage` na resposta diz o que foi olhado: `slots` (alcançados/total, `notReached`), `candidates` (medidos/disponíveis, `notMeasured` por slot), `worn` (peças ajustadas), `sockets` (conferidos/total), `calculations` (`discovery`, `evaluation`, `socketPass`, `reused`) e `complete`.
+
+`solves` conta os cálculos que a busca fez de fato, no ponto em que o cache decide (um acerto do cache não conta). Antes era "tentativas menos acertos", e a passada final nos soquetes batia no cache sem ser contada: saía `-33`. O número é fechado quando a busca termina; o que os perfis, alvos e relatórios calculam depois não entra.
+
+### `scan_slot`: o patch reproduz o número
+
+Com o orçamento esgotado antes da busca completa de soquetes, a linha levava o valor da busca rápida e o patch sem os soquetes (Varinha Invernal: 129 mil anunciados, 73 mil no patch). A busca rápida agora guarda o patch junto do valor, e todo patch devolvido é medido de novo (fora do orçamento) antes de ir para o ranking. Com `includePatches`, `reference.patch` traz o da peça atual afinada.
+
+### MVP: brando e estrito
+
+`excludeMvpCards` não recomenda carta de MVP nova e mantém a que a build já usa (avisa em `alerts`). `strictMvp` devolve uma build final sem nenhuma: as cartas já usadas saem antes de qualquer comparação (passo `semMvp`) e o ajuste das peças procura os soquetes de novo com elas banidas; `mvpFree: true` confirma. Se uma está em peça travada em `lock`, o pedido é impossível e a ferramenta diz qual.
+
+### Habilidade pedida por nome
+
+`atkSkill` aceita `Nome==nível`, o nome sem nível (nível máximo), o nome em pt-BR ou o id. Habilidade que a classe não tem ou nível que não existe é erro; um link antigo com habilidade que sumiu cai no padrão com aviso. Antes a troca era silenciosa (o Explosion Blaster voltava como Asura Strike, com crítico 0).
+
+### Validação e metadados
+
+- `validate_build`: limites de nível e atributos, orçamento de pontos de atributo, habilidade desconhecida ou nível inexistente, links curtos (mesmo resolvedor das outras ferramentas), cartas de MVP, e a árvore do kRO (rAthena) como avisos. Ver `docs/mcp.md`.
+- `evaluate_variants`: recusa a variante que quebra uma regra da build (`status: invalid` com `code`); pontos além do orçamento só viram aviso.
+- `get_skill`: `scaling.inputs` (lido executando a fórmula), `crit` (como a habilidade usa o crítico) e `structure` (acertos, elemento, acúmulos, pacote extra, dano fixo, ajustes). `explain_damage` ganhou a parte `crit` (chance efetiva contra o alvo, com os passos).
+- Valores de referência do motor (habilidades do Inquisidor, builds de bancada, conjunto): `mcp/src/engine/reference-golden.spec.ts` (regenere com `UPDATE_GOLDEN=1`, só em correção deliberada).
+
+### Publicação para o ChatGPT
+
+O ChatGPT consegue ler o servidor (verificado com captura de rede e com o cliente oficial do SDK), mas a criação do app dava "configurações rejeitadas". Corrigido no servidor: anotações das ferramentas (`readOnlyHint`, `destructiveHint`, `openWorldHint`), `/mcp/` com barra final, origens do ChatGPT, `/.well-known/*` em 404 e esquemas em JSON Schema simples (sem tupla e sem `propertyNames`). Se ainda falhar, o próximo passo é uma rota de diagnóstico com uma ferramenta só (ver `docs/mcp.md`).

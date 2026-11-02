@@ -95,9 +95,14 @@ describe('facade derivation', () => {
     expect((rb.model as any).level).toBe(200);
   });
 
-  it('falls back to the class default when the attack skill is unknown', () => {
-    const rb = resolveBuild({ class: 4261, atkSkill: 'Not A Real Skill==9' }, dataset);
+  it('refuses an attack skill the caller named and the class does not have, instead of calculating another', () => {
+    expect(() => resolveBuild({ class: 4261, atkSkill: 'Not A Real Skill==9' }, dataset)).toThrow(/list_skills/);
+  });
+
+  it('still falls back to the class default, with a warning, when an old link carries a skill that is gone', () => {
+    const rb = resolveBuild({ preset: { class: 4261, selectedAtkSkill: 'Not A Real Skill==9' } }, dataset);
     expect((rb.model as any).selectedAtkSkill).toBe(defaultAtkSkill(rb.char.atkSkills));
+    expect(rb.warnings.join(' ')).toContain('Not A Real Skill==9');
   });
 
   it('rejects a class that is not released on LATAM', () => {
