@@ -665,6 +665,7 @@ private readonly colorPicker: SlotColorPreferences,
       mapEnchant: this.mapEnchant ?? new Map(),
       refineList: this.lists?.refineList ?? [],
       shadowRefineList: this.lists?.shadowRefineList ?? [],
+      currentEnchants: slot.enchantFields.map(field => field ? model?.[field] : undefined),
     });
 
     const { lists, clear } = reconcileEnchants({

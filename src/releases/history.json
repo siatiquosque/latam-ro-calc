@@ -1,5 +1,54 @@
 [
   {
+    "v": "0.1.204-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "A calculadora ganhou Encontrar melhorias: busca de equipamentos, exploração de slot, redistribuição de atributos e análise de dano e upgrades, com alvo, perfil e limites explícitos. A busca roda localmente sem IA, pode ser cancelada e leva a sugestão ao painel de comparação sem substituir a build principal.",
+      "Calculadora e MCP agora usam a mesma camada de análise e busca. O MCP mantém suas ferramentas e passa a orientar a IA a consultar dados e testar hipóteses conforme a situação, usando a otimização automática como opção. A heurística foi preservada, com uma correção na varredura sem complementos: ela agora devolve os candidatos medidos, em vez de listar somente a peça atual.",
+      "A busca de melhorias (calculadora e MCP) ficou cerca de duas vezes mais rápida: cada cálculo deixou de copiar centenas de campos por peça e os cálculos repetidos da busca são reaproveitados, sem mudar nenhum resultado.",
+      "O `optimize_build` agora confere, no fim, cada carta e encantamento da build contra todas as opções legais do soquete: deixa de manter uma carta pior (como a Alga Brilhante no lugar da Derreting na build de Fogueira Espiritual).",
+      "Encontrar melhorias: ajuste as peças atuais ou explore trocas, com comparação de cartas e encantamentos antes/depois, dependência de HP da Fogueira Espiritual e avaliação estimada de procs.",
+      "Busca respeita refino sombrio +10, posições de encantamentos e limites dos módulos Automatron, e considera famílias cujo potencial vem dos encantamentos.",
+      "MCP: consulte a descrição e dependências documentadas de habilidades com get_skill, pesquise sinergias e teste combinações sem usar o otimizador.",
+      "O MCP passou a declarar em cada ferramenta se ela só lê ou também grava (`readOnlyHint`, `destructiveHint`, `openWorldHint`), como o ChatGPT exige, a aceitar a URL com barra final (`/mcp/`) e a aceitar as origens do ChatGPT.",
+      "O servidor responde 404 para `/.well-known/*` em vez de devolver a página do simulador, que confundia clientes que procuram a descoberta de autenticação.",
+      "O `optimize_build` do MCP agora separa o ganho em ajuste da peça atual, subir refino e grau e troca de peça (`gainByKind`), lista as mudanças em palavras (`changes`) e avisa quando o HP cai, quando parte do ganho vem de rolagens não confirmadas e quando é só refino e grau. Também resume o ajuste das peças atuais em um passo, avisa quando a troca abandona uma peça com proc e `parse_share_link` deixou de devolver o preset bruto (~5 KB) por padrão.",
+      "O MCP ganhou a ferramenta `validate_build`: confere classe, nível, slots, encaixes de carta, encantamentos e refino de uma build, e diz o que o calculador não consegue medir, sem consertar nem ranquear.",
+      "Novo filtro `excludeMvpCards` na busca de itens, no `scan_slot`, no `evaluate_variants` e no `optimize_build`: cartas que caem de MVP deixam de ser sugeridas (a classificação é pela carta, não pelo alvo).",
+      "O `get_item` informa se a carta é de MVP e lista os parceiros de conjunto; a busca de itens aceita `withBonuses` para ler o que cada candidato faz; o `evaluate_variants` recusa, com status e código, a variante que quebra uma regra da build (como uma carta deixada numa peça sem encaixe)."
+    ],
+    "logs_es": [
+      "La calculadora incorpora Buscar mejoras: búsqueda de equipo, exploración de slots, redistribución de atributos y análisis de daño y mejoras, con objetivo, perfil y límites explícitos. La búsqueda se ejecuta localmente sin IA, puede cancelarse y lleva la sugerencia al panel de comparación sin sustituir la build principal.",
+      "Calculadora y MCP ahora usan la misma capa de análisis y búsqueda. El MCP conserva sus herramientas y orienta a la IA a consultar datos y probar hipótesis según la situación, usando la optimización automática como opción. Se conservó la heurística, con una corrección en la búsqueda sin complementos: ahora devuelve los candidatos medidos en vez de listar solo la pieza actual.",
+      "La búsqueda de mejoras (calculadora y MCP) quedó aproximadamente dos veces más rápida: cada cálculo dejó de copiar cientos de campos por pieza y los cálculos repetidos de la búsqueda se reutilizan, sin cambiar ningún resultado.",
+      "El `optimize_build` ahora revisa, al final, cada carta y encantamiento de la build contra todas las opciones legales del engarce: deja de conservar una carta peor (como la Alga Brilhante en lugar de la Derreting en la build de Fogueira Espiritual).",
+      "Encontrar mejoras: ajusta las piezas actuales o explora cambios, con comparación de cartas y encantamientos antes/después, dependencia de HP de Fogueira Espiritual y evaluación estimada de procs.",
+      "La búsqueda respeta el refinamiento sombrío +10, las posiciones de encantamientos y los límites de módulos Automatron, y considera familias cuyo potencial proviene de encantamientos.",
+      "MCP: consulta la descripción y dependencias documentadas de habilidades con get_skill, busca sinergias y prueba combinaciones sin usar el optimizador.",
+      "El MCP ahora declara en cada herramienta si solo lee o también escribe (`readOnlyHint`, `destructiveHint`, `openWorldHint`), como exige ChatGPT, acepta la URL con barra final (`/mcp/`) y acepta los orígenes de ChatGPT.",
+      "El servidor responde 404 para `/.well-known/*` en lugar de devolver la página del simulador, que confundía a los clientes que buscan el descubrimiento de autenticación.",
+      "El `optimize_build` del MCP ahora separa la ganancia en ajuste de la pieza actual, subir refinamiento y grado, y cambio de pieza (`gainByKind`), lista los cambios con palabras (`changes`) y avisa cuando baja el HP, cuando parte de la ganancia viene de tiradas no confirmadas y cuando es solo refinamiento y grado. También resume el ajuste de las piezas actuales en un paso, avisa cuando el cambio abandona una pieza con proc y `parse_share_link` dejó de devolver el preset en bruto (~5 KB) por defecto.",
+      "El MCP ganó la herramienta `validate_build`: revisa clase, nivel, slots, encajes de carta, encantamientos y refinamiento de una build, e indica lo que la calculadora no puede medir, sin corregir ni clasificar.",
+      "Nuevo filtro `excludeMvpCards` en la búsqueda de ítems, en `scan_slot`, en `evaluate_variants` y en `optimize_build`: las cartas que caen de MVP dejan de ser sugeridas (la clasificación es por la carta, no por el objetivo).",
+      "El `get_item` informa si la carta es de MVP y lista los compañeros de conjunto; la búsqueda de ítems acepta `withBonuses` para leer lo que hace cada candidato; el `evaluate_variants` rechaza, con estado y código, la variante que rompe una regla de la build (como una carta dejada en una pieza sin encaje)."
+    ],
+    "logs_en": [
+      "The calculator now offers Find improvements: equipment search, slot exploration, stat redistribution, and damage and upgrade analysis, with explicit target, profile and limits. Search runs locally without AI, can be cancelled, and sends the suggestion to the comparison panel without replacing the main build.",
+      "The calculator and MCP now use the same analysis and search layer. MCP keeps its tools and guides AI to consult data and test hypotheses for the situation, treating automatic optimization as an option. The heuristic was preserved, with a fix for scans without complements: they now return the measured candidates instead of listing only the worn item.",
+      "The upgrade search (calculator and MCP) is about twice as fast: each calculation no longer copies hundreds of fields per piece and the search reuses repeated calculations, without changing any result.",
+      "The `optimize_build` now checks, at the end, every card and enchant of the build against all the legal options of the socket: it no longer keeps a worse card (like the Alga Brilhante instead of the Derreting in the Fogueira Espiritual build).",
+      "Find improvements: tune current equipment or explore replacements, with before/after cards and enchants, Fogueira Espiritual HP scaling and estimated proc evaluation.",
+      "Search respects shadow refine +10, enchant positions and Automatron module limits, and considers families whose potential comes from enchants.",
+      "MCP: inspect skill descriptions and documented dependencies with get_skill, research synergies and test combinations without the optimizer.",
+      "The MCP now declares on each tool whether it only reads or also writes (`readOnlyHint`, `destructiveHint`, `openWorldHint`), as ChatGPT requires, accepts the URL with a trailing slash (`/mcp/`) and accepts the ChatGPT origins.",
+      "The server answers 404 for `/.well-known/*` instead of returning the simulator page, which confused clients looking for authentication discovery.",
+      "The MCP `optimize_build` now splits the gain into tuning the worn piece, raising refine and grade, and swapping pieces (`gainByKind`), lists the changes in words (`changes`), and warns when HP drops, when part of the gain comes from unconfirmed rolls, and when it is only refine and grade. It also summarises the tuning of the current pieces in one step, warns when a swap gives up a piece with a proc, and `parse_share_link` no longer returns the raw preset (~5 KB) by default.",
+      "The MCP gained the `validate_build` tool: it checks class, level, slots, card sockets, enchants and refine of a build, and says what the calculator cannot measure, without fixing or ranking.",
+      "New `excludeMvpCards` filter in the item search, `scan_slot`, `evaluate_variants` and `optimize_build`: cards that drop from MVPs are no longer suggested (the classification is by the card, not by the target).",
+      "The `get_item` says whether a card is from an MVP and lists set partners; the item search accepts `withBonuses` to read what each candidate does; `evaluate_variants` refuses, with a status and code, the variant that breaks a build rule (such as a card left in a piece with no sockets)."
+    ]
+  },
+  {
     "v": "0.1.203-beta",
     "date": "01-11-2026",
     "logs": [

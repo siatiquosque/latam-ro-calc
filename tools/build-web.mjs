@@ -34,16 +34,7 @@ export async function buildWeb({ production = true, outputDirectory = defaultOut
   }
   rmSync(output, { recursive: true, force: true });
   mkdirSync(output, { recursive: true });
-  const result = await build({
-    absWorkingDir: root,
-    entryPoints: { main: resolve(root, 'src/main.ts'), styles: resolve(root, 'src/styles.css') },
-    outdir: output, bundle: true, splitting: true, format: 'esm', platform: 'browser',
-    target: 'es2022', minify: production, sourcemap: 'linked', metafile: true,
-    jsx: 'automatic',
-    define: { 'process.env.NODE_ENV': production ? '"production"' : '"development"' },
-    entryNames: production ? '[name].[hash]' : '[name]', chunkNames: 'chunk-[hash]', assetNames: 'media/[name].[hash]',
-    legalComments: 'external',
-    plugins: [browserDataPlugin(root), { name: 'environment', setup(builder) {
+  const environmentPlugin = { name: 'environment', setup(builder) {
       builder.onLoad({ filter: /src[\\/]environments[\\/]environment\.ts$/ }, () => {
         if (!production) return null;
         let contents = readFileSync(resolve(root, 'src/environments/environment.prod.ts'), 'utf8');
@@ -59,7 +50,31 @@ export async function buildWeb({ production = true, outputDirectory = defaultOut
         }
         return { contents, loader: 'ts' };
       });
-    } }],
+    } };
+  // Optional search engine runs off the UI thread. Its bundle is fetched only on a search.
+  const analysis = await build({
+    absWorkingDir: root, entryPoints: { 'build-analysis-worker': resolve(root, 'src/react/services/build-analysis.worker.ts') },
+    outdir: output, bundle: true, splitting: true, format: 'esm', platform: 'browser', target: 'es2022',
+    minify: production, sourcemap: 'linked', metafile: true,
+    entryNames: '[name].[hash]', chunkNames: 'analysis-[hash]',
+    define: { 'process.env.NODE_ENV': production ? '"production"' : '"development"' },
+    plugins: [browserDataPlugin(root), environmentPlugin], logLevel: 'warning',
+  });
+  const analysisEntry = Object.entries(analysis.metafile.outputs).find(([, meta]) => meta.entryPoint?.endsWith('build-analysis.worker.ts'));
+  if (!analysisEntry) throw new Error('Missing build analysis worker');
+  if (Object.keys(analysis.metafile.inputs).some(name => /(?:^|[\\/])mcp[\\/]|@modelcontextprotocol/.test(name))) throw new Error('MCP transport entered the local build analysis worker');
+  const analysisBytes = Object.entries(analysis.metafile.outputs).filter(([name]) => name.endsWith('.js')).reduce((sum, [, meta]) => sum + meta.bytes, 0);
+  if (production && analysisBytes > budgets.analysisWorkerError) throw new Error(`Optional build analysis exceeds budget: ${analysisBytes} > ${budgets.analysisWorkerError}`);
+  const result = await build({
+    absWorkingDir: root,
+    entryPoints: { main: resolve(root, 'src/main.ts'), styles: resolve(root, 'src/styles.css') },
+    outdir: output, bundle: true, splitting: true, format: 'esm', platform: 'browser',
+    target: 'es2022', minify: production, sourcemap: 'linked', metafile: true,
+    jsx: 'automatic',
+    define: { 'process.env.NODE_ENV': production ? '"production"' : '"development"', BUILD_ANALYSIS_WORKER_URL: JSON.stringify(basename(analysisEntry[0])) },
+    entryNames: production ? '[name].[hash]' : '[name]', chunkNames: 'chunk-[hash]', assetNames: 'media/[name].[hash]',
+    legalComments: 'external',
+    plugins: [browserDataPlugin(root), environmentPlugin],
     logLevel: 'info',
   });
   copyWebAssets(root, output);

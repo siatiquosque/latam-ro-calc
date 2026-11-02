@@ -49,8 +49,9 @@ export function createMcpServer(dataset: Dataset, shortener?: Shortener): McpSer
       instructions:
         'Simulador de dano de Ragnarok Online LATAM. Toda ferramenta que recebe uma build aceita o link do simulador em `build.share`, com overrides esparsos ' +
         'por cima: se a pessoa colar um link, use-o direto. Devolva sempre o `share` do resultado. Fluxo: list_classes → list_skills → search_items → calculate. ' +
-        'Para melhorar uma build: `optimize_build` (build inteira), `scan_slot` (achar a peça improvável de um slot), `optimize_slot`, `evaluate_variants`, ' +
-        '`explain_damage`, `optimize_stats`. Três cuidados: o alvo padrão (Dummy - Neutro) não tem defesa, então prefira um chefe real ou os dummies 9000001 a 9000004; ' +
+        'Entenda a situação, alvo, perfil e limites da pessoa; use get_skill para descrição/dependências, search_items com skill/classId/synergy:true e get_item/slot_options para pesquisar, e teste hipóteses com evaluate_variants. ' +
+        '`optimize_build` é uma busca automática opcional, não uma resposta universal; `scan_slot`, `optimize_slot`, `explain_damage` e `optimize_stats` ajudam a explorar. ' +
+        'Não deduza preço ou estágio de progressão do dano. Três cuidados: o alvo padrão (Dummy - Neutro) não tem defesa, então prefira um chefe real ou os dummies 9000001 a 9000004; ' +
         'passe `targets` com normal e chefe (e Médio e Grande) quando a build serve a mais de um; e não use `max` como objetivo (ignora crítico). ' +
         'Em dúvida sobre qual ferramenta usar, o alvo, burst contra DPS sustentado, proc contra peça estável ou como ler a resposta, chame `guide`.',
     },

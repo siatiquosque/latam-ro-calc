@@ -123,6 +123,7 @@ import { itemAllowsShield } from 'src/app/domain/weapon';
 import { AutoCastSimulation, buildAutoCastSimulation } from 'src/app/core/auto-cast';
 import { CustomItemDefinition, customDefinitionsForBuild, customItemDescriptionHtml, isCustomItem, validateCustomItems } from 'src/app/core/custom-items';
 import { shortenUrl } from 'src/app/core/shorten-url';
+import { defendedDummyRecords } from 'src/app/build-analysis/engine/dummies';
 import { decodeCustomBundle } from 'src/app/core/custom-item-library';
 
 type ImportMode = 'replace' | 'compare';
@@ -1052,7 +1053,7 @@ await ((_event?: unknown) => {
           this.customLibrary.registerRuntime(item);
           this.itemDescriptionStore.upsert(item.id, customItemDescriptionHtml(item));
         }
-        this.monsterDataMap = monsters;
+        this.monsterDataMap = { ...monsters, ...defendedDummyRecords(monsters) };
         this.hpSpTable = hpSpTable;
 
         // Show only classes released on LATAM (job icon present in the client GRF),
@@ -1829,6 +1830,24 @@ await ((_event?: unknown) => {
   /** The current build in the same preset shape the autosave / replay import use. */
   private currentPreset(): PresetModel {
     return toUpsertPresetModel(this.model, this.selectedCharacter) as unknown as PresetModel;
+  }
+
+  /** Detached input for a local search; never pass the mutable editor model to a worker. */
+  analysisSnapshot() {
+    const preset = this.currentPreset();
+    return structuredClone({ build: { preset: preset as unknown as Record<string, unknown>,
+      customItems: customDefinitionsForBuild([preset], this.items).map(item => ({ ...item })) }, effects: [...this.selectedChances] });
+  }
+
+  compareAnalysis(model: MainModel, fingerprint: string, targetId: number): void {
+    if (fingerprint !== JSON.stringify(this.analysisSnapshot())) throw new Error(this.text('improve.stale'));
+    if (!this.monsterDataMap[targetId]) throw new Error(this.text('improve.stale'));
+    this.selectedMonster = targetId;
+    this.relieveLevel = 0;
+    this.onMonsterChange();
+    this.selectedChances2 = [...this.selectedChances];
+    this.restoreCompareState(buildComparisonFromImport(model, this.compareSlotsForClass()));
+    this.statsSide = 'main';
   }
 
   /**

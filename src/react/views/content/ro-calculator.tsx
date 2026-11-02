@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, Suspense, lazy, useRef, useState } from 'react';
 import { Icon } from '../../ui/primitives';
 import { IconName } from '../../../app/ui/icon-names';
 import { Render, displayPipe, interpolate, classNames, parseStyle, normalizeStyle, identityKey } from '../render';
@@ -7,6 +7,8 @@ import { PanelSearch } from '../../ui/panel-search';
 import { TextKey } from '../../../app/i18n';
 import { useRichText, useText } from '../../state/use-text';
 import { useViewportBand } from '../../ui/viewport';
+
+const BuildImprovements = lazy(() => import('../build-improvements'));
 
 /** The stat each attribute-food picker belongs to, in the order they are rendered. */
 const FOOD_STATS: TextKey[] = ['stat.str', 'stat.agi', 'stat.vit', 'stat.int', 'stat.dex', 'stat.luk'];
@@ -36,6 +38,7 @@ export function Content({vm, services}: {vm: any; services: any}) {
 const t = useText();
 const rich = useRichText();
 const [pane, setPane] = useState<Pane>('build');
+const [showImprovements, setShowImprovements] = useState(false);
 // Summary groups folded on a phone, by title; wider screens always show every group.
 const [foldedGroups, setFoldedGroups] = useState<Record<string, boolean>>({});
 const toggleGroup = (title: string) => setFoldedGroups(folded => ({ ...folded, [title]: !folded[title] }));
@@ -48,7 +51,7 @@ const choosePane = (next: Pane) => {
   const top = shell.current ? shell.current.getBoundingClientRect().top + window.scrollY - margin : 0;
   if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top) });
 };
-return <>{(() => { const reductionPop = (context: any) => { const cats = context["cats"];
+return <>{showImprovements && <Suspense fallback={<p role="status">{t('improve.title')}…</p>}><BuildImprovements vm={vm} services={services} onClose={() => setShowImprovements(false)} /></Suspense>}{(() => { const reductionPop = (context: any) => { const cats = context["cats"];
 const sources = context["sources"];
 const target = context["target"]; return <><Render tag="div" props={{"className": ["reduction-pop"].filter(Boolean).join(' ')}}>{(() => { const __condition1 = !(cats?.length);  return __condition1 ? <><Render tag="div" props={{"className": ["reduction-empty"].filter(Boolean).join(' ')}}>{t('calc.reductionEmpty')}</Render></> : null; })()}
 {(cats ?? []).map((__entry2: any, __index2: number, __array2: any[]) => { const cat = __entry2; return <Fragment key={identityKey(__entry2)}><Render tag="div" props={{"className": ["reduction-cat"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["reduction-cat-title"].filter(Boolean).join(' ')}}>{interpolate(["",""], [cat.label])}</Render>
@@ -117,7 +120,7 @@ const target = context["target"]; return <><Render tag="div" props={{"className"
 <PaneSwitcher pane={pane} onPane={choosePane} />
 <Render tag="div" props={{"className": ["grid grid-nogutter calc-shell"].filter(Boolean).join(' '),
 "data-pane": pane,
-"reference": (element: any) => { shell.current = element; }}}><Render tag="div" props={{"className": ["ui-fluid col-7 editor_col calc-col calc-col--build"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["stats_stack"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["char_band"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["build_actions"].filter(Boolean).join(' ')}}><Render tag="button" props={{"type": "button",
+"reference": (element: any) => { shell.current = element; }}}><Render tag="div" props={{"className": ["ui-fluid col-7 editor_col calc-col calc-col--build"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["stats_stack"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["char_band"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["build_actions"].filter(Boolean).join(' ')}}><button type="button" className="ui-button ui-button-outlined" disabled={vm.isInProcessingPreset} onClick={() => setShowImprovements(true)}>{t('improve.title')}</button><Render tag="button" props={{"type": "button",
 "icon": "upload",
 "label": t('calc.import'),
 "tooltipPosition": "bottom",

@@ -57,6 +57,8 @@ export interface AtkSkillModel {
   cd: number | ((skillLevel: number) => number);
   levelList?: { label: string; value: any; }[];
   formula: (input: AtkSkillFormulaInput) => number;
+  /** Explicit mechanical dependencies for discovery and search; never inferred from a function's source. */
+  scaling?: { resources?: ('hp' | 'sp')[]; bonusKeys?: string[]; formulaText?: string };
   /** Adjust this skill's final hit chance, without changing basic attacks. */
   accuracy?: (input: AtkSkillFormulaInput & { accuracy: number }) => number;
   /** Flat skill damage added after the ATK ratio, before defenses and skill bonuses. */

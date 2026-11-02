@@ -6,6 +6,7 @@ import { ItemModel } from '../models/item.model';
 import { isCustomItem } from './custom-items';
 import { createNumberDropdownList } from '../utils/create-number-dropdown-list';
 import { getGradeList } from '../utils/to-grade-list';
+import { enchantCombinationError } from './equipment-rules';
 
 /**
  * What a slot offers once an item is in it: how many card sockets, which enchants each
@@ -27,6 +28,7 @@ export interface SlotDerivation {
 }
 
 export interface DeriveSlotInput {
+  currentEnchants?: (number | undefined)[];
   descriptor: EquipmentSlotDescriptor;
   /** The equipped item, or undefined when the slot is empty. */
   item: ItemModel | undefined;
@@ -115,10 +117,16 @@ export function deriveSlot(input: DeriveSlotInput): SlotDerivation {
   // slotted and unslotted Carburador share one. It overrides their old incomplete pools.
   const enchants = enchantPoolsFor(item);
   const positions = Array.isArray(enchants) ? enchants : [];
+  const selectedById = input.currentEnchants && /^Auto_/.test(item?.aegisName ?? '')
+    ? new Map([...mapEnchant.values()].map(enchant => [enchant.id, enchant])) : undefined;
 
   return {
     cardSlots: Math.min(slots || 0, descriptor.cardFields.length),
-    enchantLists: descriptor.enchantFields.map((field, index) => (field ? toEnchantOptions(positions[index], mapEnchant) : null)),
+    enchantLists: descriptor.enchantFields.map((field, index) => field ? toEnchantOptions(positions[index], mapEnchant).filter(option => {
+      if (!selectedById || option.value === input.currentEnchants[index]) return true;
+      const selected = input.currentEnchants.map((id, position) => selectedById.get(Number(position === index ? option.value : id)));
+      return !enchantCombinationError(item, selected);
+    }) : null),
     gradeList: descriptor.grade && canGrade ? GRADE_OPTIONS : [],
     refineList: refineListFor(input),
     optionSlots: optionSlotsFor(descriptor, item),

@@ -319,6 +319,8 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Third Flame Bomb',
+      scaling: { resources: ['hp'], bonusKeys: ['hp', 'hpPercent', 'vit', 'allStatus'],
+        formulaText: 'A razão inclui HP máximo / 5, nível da habilidade e POD, escalados pelo nível base. Os coeficientes variam com a versão da fórmula.' },
       label: '[V2] Third Flame Bomb Lv5',
       value: 'Third Flame Bomb==5',
       levelList: levelList('Third Flame Bomb', 5),

@@ -24,7 +24,7 @@ it('searches each field and keeps gains evaluated before its per-stage budget ru
   const result = searchComplements(initial, fields, 'max', patch => {
     calls++;
     return { metrics: { max: Object.values(patch.gear).reduce<number>((sum, value) => sum + Number(value), 0) } };
-  });
+  }, 48);
   expect(calls).toBeLessThanOrEqual(48);
   expect(Object.keys(result.patch.gear)).toHaveLength(4);
   expect(result.result.metrics.max).toBeGreaterThan(4);

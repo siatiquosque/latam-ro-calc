@@ -1,5 +1,14 @@
 # Servidor MCP
 
+A arquitetura, o uso sem IA e a lista separada de features da calculadora e do MCP
+estão em [Melhorias de build](build-analysis.md). Cálculos e buscas pertencem à
+camada compartilhada `src/app/build-analysis`; o MCP adapta essa camada ao protocolo.
+`optimize_build` é opcional: uma IA também pode consultar itens, regras e habilidades
+e medir hipóteses específicas com `evaluate_variants`, sem executar uma busca completa.
+
+Na calculadora, o botão **Encontrar melhorias** oferece a busca local, exploração de
+slots, atributos e análise de dano/upgrades, com revisão no painel de comparação.
+
 O MCP deixa uma IA usar a calculadora como ferramenta: carregar uma build (de um link do simulador ou
 montada campo a campo), consultar itens, habilidades e monstros, calcular dano e procurar melhorias. É o
 **mesmo motor** da interface web — nada é recalculado à parte. O endpoint é `/mcp` (HTTP) do Worker
@@ -10,7 +19,8 @@ montada campo a campo), consultar itens, habilidades e monstros, calcular dano e
 | Ferramenta | Para quê |
 |---|---|
 | `list_classes`, `list_skills` | ids de classe e as habilidades ofensivas (`"Nome==Nível"`) de cada uma |
-| `search_items`, `get_item`, `item_description` | achar peças por nome, slot ou chave de bônus; ficha e descrição pt-BR |
+| `search_items`, `get_item`, `item_description` | achar peças por nome, slot ou chave de bônus; ficha e descrição pt-BR; `excludeMvpCards` tira cartas de MVP, `withBonuses` mostra o que cada item faz, e o `get_item` traz `mvpCard` e os `partners` (conjuntos e combos) |
+| **`validate_build`** | audita uma build sem consertá-la: classe, nível, slot, encaixes de carta, encantamentos, refino, item sem bônus no calculador, carta de MVP (`constraints.excludeMvpCards`). Devolve `errors`/`warnings` com `code`, `path`, `itemId`, `unknowns` (o que não foi checado) e `engineVersion` |
 | `list_bonus_keys` | as chaves de bônus pesquisáveis (`atk`, `p_race_demon`, …) |
 | `search_monsters`, `get_monster` | alvos; o padrão é o boneco Neutro (21077) |
 | `calculate` | dano, DPS, atributos finais, tempos e um link para abrir no simulador |
@@ -109,8 +119,12 @@ entender por que uma peça não entrou. As buscas devolvem a CPU ao servidor a c
 ligue: depois da busca normal, os 4 melhores candidatos de cada slot em todas as combinações, aceitos só se o par
 vencer a build atual em mais de 0,1%. Ambos os slots precisam estar entre os percorridos e não travados.
 
-A resposta traz `procs`: o ganho de DPS de cada proc ainda não contado, medido na build final (até 10). A busca em
-si só conta os procs passados em `effects`; use o ganho para decidir se vale buscar de novo com o proc ligado.
+A resposta traz `procs`: o ganho individual de DPS de cada proc, medido contra a build final sem ele (até 10).
+`optimize_build` usa `procMode: "average"` por padrão (3 ataques/s); `off` desliga os procs adicionais e `active`
+os considera sempre ativos. `countProcs` continua compatível como atalho para off/active quando `procMode` não foi informado.
+`procContext` informa os efeitos contados e excluídos. A média enumera estados de até três procs com chance/duração
+conhecidas, supondo independência e ataques regulares; procs desconhecidos/excedentes não entram automaticamente.
+HP mínimo usa o estado sem procs adicionais. Cada avaliação pode resolver vários estados internos, sob o mesmo limite de tempo.
 Peças sem pool de bônus aleatório catalogado ficam fora da busca de rolagens e aparecem, com id e nome, em
 `complementSearch.uncataloguedRandomItems`.
 
@@ -140,7 +154,7 @@ Comparações da build de Inquisidor usadas na revisão estão em `docs/optimiza
 
 ### Refino alcançável, classes de alvo e procs
 
-- **Refino:** o padrão é +12, o teto que uma build alcança; acima disso é endgame alto e só é testado se `refine` pedir.
+- **Refino:** o padrão da busca é +12; sombrios respeitam o máximo +10. Valores maiores para equipamentos normais só são testados se `refine` pedir.
 - **Chefe e normal:** a mesma build rende diferente contra os dois (bônus e penetração por classe). Passe `targets` com um
   de cada; `perTarget` devolve o resultado em cada um e `context.classNote` avisa quando só um foi usado.
 - **Procs:** `procs[].gainPct` é o ganho com o proc ligado o tempo todo. `average` traz a chance, a duração, o tempo
@@ -238,8 +252,8 @@ Configuráveis por variável do Worker (bloco `vars` do `wrangler.jsonc`); o val
 |---|---|---|
 | `MAX_VARIANTS` | 100 | variantes por `evaluate_variants` |
 | `MAX_CONTRIBUTIONS` | 60 | soluções de `explain_damage` |
-| `MAX_SOLVES` | 2000 | cálculos de `optimize_build` e `optimize_stats` |
-| `MAX_SEARCH_MS` | 25000 | tempo máximo de uma busca, em ms; ao esgotar devolve a melhor build até então |
+| `MAX_SOLVES` | 10000 | avaliações de `optimize_build` e `optimize_stats` |
+| `MAX_SEARCH_MS` | 45000 | tempo máximo de uma busca, em ms; ao esgotar devolve a melhor build até então |
 | `MAX_OPTIMIZE_CANDIDATES` | 40 | candidatos de `optimize_slot` |
 | `MAX_COMPARE_BUILDS` | 4 | builds de `compare_builds` |
 | `MAX_TABLE_MONSTERS` | 20 | monstros de `damage_table` |
@@ -277,16 +291,16 @@ O gerador usa:
 - Encantamentos permitidos por item e posição, com suas restrições de obtenção.
 - Perfis de bônus aleatórios por combinador, respeitando posição e faixa,
   sem misturar moedas incompatíveis e sem tratar pools ausentes como livres.
-- Avaliação dessas escolhas com beam de largura 3, até 8 candidatos por soquete
-  e até 48 cálculos de complementos por movimento, repartidos conforme o
-  orçamento restante e os slots. O limite padrão do servidor é 2.000 cálculos.
+- Avaliação dessas escolhas com beam de largura 3, sem corte fixo de oito candidatos
+  por soquete. O esforço é repartido entre posições, movimentos e slots conforme o
+  orçamento restante. O limite padrão do servidor é 10.000 avaliações.
   O resultado é reproduzível por patch/link. A busca continua heurística: só pode afirmar
   o melhor resultado entre as configurações efetivamente examinadas.
 
 O levantamento do rAthena é referência; pools sem confirmação regional não
 geram rolagens. Selo de Loki e os quatro selos inferiores têm perfis regionais
-catalogados. O patch e o link incluem todos os complementos escolhidos. Procs
-só entram quando informados em `effects`. Ver `docs/random-options-audit.md`.
+catalogados. O patch e o link incluem todos os complementos escolhidos.
+Ver `docs/random-options-audit.md`.
 
 O MCP calcula o que o motor sabe. Antes de agir numa recomendação:
 
@@ -294,8 +308,9 @@ O MCP calcula o que o motor sabe. Antes de agir numa recomendação:
   muitos **não foram conferidos com replay**. Os maiores ganhos de uma busca são os que mais merecem conferência.
 - O **Óleo Ungido** aparece duas vezes (botão da classe e buff compartilhado) e o motor o fixa em Nv5; quem
   tem o Nv1 recebe um ganho menor no jogo.
-- Itens com efeito de proc (como o encanto Delírio) ficam de fora até serem listados em `effects`. O `warnings`
-  de `explain_damage` e o `procs` de `optimize_build` mostram os disponíveis e o ganho de cada um.
+- `calculate`, `optimize_slot` e `optimize_stats` usam efeitos explícitos. `scan_slot` e `evaluate_variants`
+  aceitam `procMode`, com padrão off. `optimize_build` usa média estimada por padrão. O painel visual de comparação
+  continua mostrando os efeitos selecionados; não representa uma média como um bônus permanente.
 - Links de compartilhamento nas respostas vêm encurtados (`/l/<código>`) quando `SHORTENER_URL` está configurada;
   veja [deploy-vps.md](deploy-vps.md).
 - Efeitos que o motor não modela não aparecem no número nem sempre são avisados: o aviso cobre itens com script
@@ -362,3 +377,38 @@ abre a descrição com "USE para… NÃO use para…", para a escolha não depen
 - **Cenários** (`mcp/src/tools/scenarios.spec.ts`): pedidos típicos, a ferramenta esperada e uma chamada que roda. O teste confere que a
   chamada responde e que o tópico do guia cita a ferramenta. A mesma tabela serve de corpus para medir um agente de verdade: dê a ele só
   o `ask` e as instruções, e compare a ferramenta e os argumentos que escolher com `tool` e `args`.
+
+### Ler o ganho: troca, refino/grau e ajuste
+
+O `optimize_build` testa por padrão com refino +12 e grau A, então um "+116%" mistura tudo. Os testes com agentes reais (duas builds de
+Inquisidor) mostraram que isso engana, e a resposta agora separa:
+
+- **`gainByKind`**: o ganho total quebrado em `ajuste` (a peça que você já usa, com os melhores soquetes e rolagens), `refinoGrau` (subir
+  o que você já usa até +12/A) e `troca` (outra peça). Cada passo de `steps` traz o seu `kind`.
+- **`changes`**: o que pôr onde, em palavras: peça de/para, refino, grau, soquetes e rolagens. O `patch` continua, para quem encadeia ferramentas.
+- **`alerts`** ganhou três avisos: queda de HP maior que 5% (com o `require` para repetir), quanto do ganho vem de rolagens do rAthena não
+  confirmadas (e o ganho sem elas), e a parcela do ganho que é só refino e grau.
+
+- **Um passo só para o ajuste:** o ajuste de tudo o que você já usa aparece como um passo (`kind: "ajuste"`, com a lista de `slots`), não
+  um por peça. `parse_share_link` não devolve mais o preset bruto (`buildInput`, ~5 KB) a não ser com `raw: true`: todas as ferramentas
+  aceitam o `share`.
+- **Procs perdidos:** se a busca troca uma peça com proc, `alerts` informa o ganho individual ligado e a estimativa média,
+  junto da política de procs usada para ordenar a busca.
+
+### Pesquisar uma skill sem otimizar
+
+1. `get_skill({ classId: 4262, skill: "Fogueira Espiritual", level: 5 })`: descrição do cliente, tempos e dependências documentadas da fórmula.
+2. `search_items({ classId: 4262, skill: "Fogueira Espiritual", synergy: true, slot: "headCard" })`: bônus diretos e HP/HP%/VIT relevantes.
+3. `get_item({ id: 300174 })`: descrição, bônus e condições da Carta Derreting. `slot_options` consulta opções do equipamento por posição.
+4. `evaluate_variants`: medir as combinações propostas na mesma build/alvo; `share_link` permite levá-las ao editor.
+
+Esse fluxo não chama o otimizador. `get_skill` cobre habilidades ofensivas; a documentação de dependências indiretas
+ainda é parcial (inclui Fogueira). Não encontrar um bônus nessa ficha não prova que ele seja irrelevante.
+Detalhes da divisão de recursos entre calculadora e MCP em [build-analysis.md](build-analysis.md).
+
+## Auditoria e cartas de MVP
+
+- `validate_build` é a primeira chamada de uma consultoria: um erro (`INVALID_SLOT`, `INCOMPATIBLE_CLASS`, `REQUIRED_LEVEL`, `INVALID_REFINE`, `INVALID_ENCHANT`, `ITEM_NOT_CALCULABLE`, `ITEM_NOT_AVAILABLE_LATAM`, `UNKNOWN_ITEM`, `MVP_CARD_EXCLUDED`) significa que o número daquela build não é confiável. Não valida pontos de atributo nem pré-requisitos de habilidade (vem em `unknowns`).
+- A classificação de carta de MVP está em `src/app/constants/mvp-cards.ts`. O LATAM não traz tabela de drops: a lista cruza o nome da carta com os MVPs de `constants/mvp.ts` e inclui à mão as que mudam de nome. Carta em dúvida está na lista (bloquear a mais é mais seguro). O filtro vale para a **carta**, nunca para o alvo.
+- `evaluate_variants` valida cada variante com as mesmas regras do `validate_build` e recusa a que quebra uma regra que a base respeitava (carta deixada em peça sem encaixe, peça que a classe não usa, carta de MVP com `excludeMvpCards`): ela volta em `errors` com `status: "invalid"` e `code`, sem número; erro de cálculo volta como `status: "failed"`; as medidas trazem `status: "ok"`. Erros que a própria base já tinha saem em `baselineIssues` e não bloqueiam as variantes. O `optimize_build` e o `scan_slot` não propõem a carta e, se a build já usa uma, mantêm-na e avisam em `alerts`.
+- Roteiro para o agente: tópico `consultoria` do `guide`.

@@ -45,7 +45,10 @@ export function registerJsonTool<A>(
   config: Parameters<McpServer['registerTool']>[1],
   handler: (args: A) => unknown | Promise<unknown>,
 ): void {
-  server.registerTool(name, config as any, (async (args: A) => {
+  // ChatGPT reads these three hints as required and frames a tool without them as one that writes. Everything here only reads
+  // or calculates; a tool that differs says so in its own `annotations`.
+  const annotations = { readOnlyHint: true, destructiveHint: false, openWorldHint: false, ...(config as { annotations?: object }).annotations };
+  server.registerTool(name, { ...config, annotations } as any, (async (args: A) => {
     try {
       await loadRandomPools();
       return await shortenShares(await handler(args), shorteners.get(server));

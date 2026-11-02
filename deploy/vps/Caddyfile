@@ -10,6 +10,12 @@ laro-calc.siatiquosque.com.br {
     handle @dynamic {
         reverse_proxy 127.0.0.1:8787
     }
+    # OAuth/MCP discovery probes (ChatGPT asks for /.well-known/oauth-protected-resource): there is no auth, so the answer is 404,
+    # not the simulator's index.html with a 200 that a client would try to parse as metadata.
+    @wellknown path /.well-known/*
+    handle @wellknown {
+        respond 404
+    }
     handle {
         root * /srv/tools/laro-calc/current
         @private path /_headers

@@ -77,6 +77,8 @@ export function registerCustomItemTools(server: McpServer, dataset: Dataset, sho
 
   registerJsonTool<{ items: unknown[] }>(server, 'create_custom_items', {
     title: 'Criar itens personalizados',
+    // The short form of a link is stored by the shortener (same input, same link): the only thing here that writes.
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     description: `Cria de 1 a ${CUSTOM_ITEM_LIMIT} itens de uma vez e devolve um link que importa todo o lote para o navegador. O servidor não armazena os itens.`,
     inputSchema: draftsSchema,
   }, async ({ items }) => {

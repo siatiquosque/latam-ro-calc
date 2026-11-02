@@ -20,6 +20,11 @@ import { MonsterRow } from '../data/monster-index';
 import { SLOT_TAGS } from '../data/slot-classifier';
 import { plainItemDesc } from '../data/text';
 import { compact, json, paged, registerJsonTool } from './helpers';
+import { findSkill, skillInfo } from 'src/app/build-analysis/engine/skill-info';
+import { skillSynergyKeys } from 'src/app/core/skill-synergy';
+import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
+import { partnerIndex } from 'src/app/build-analysis/engine/item-partners';
+import { SKILL_ID_BY_NAME } from 'src/app/skills';
 
 const slotEnum = z.enum(SLOT_TAGS);
 
@@ -35,10 +40,13 @@ const searchItemsSchema = () => ({
   bonus: z.array(z.string()).optional().describe('Chaves de bônus (veja list_bonus_keys).'),
   bonusMode: z.enum(['all', 'any']).optional().default('all'),
   skill: z.string().optional().describe('Id da habilidade: acha bônus de dano, recarga e conjuração dela.'),
+  synergy: z.boolean().optional().describe('Com skill e classId: inclui dependências indiretas documentadas (HP/HP%/VIT para Fogueira). Filtre equipamentos, cartas ou encantamentos por slot.'),
   minSlots: z.number().int().optional(),
   maxLevel: z.number().int().optional().describe('Nível necessário no máximo N.'),
   inCalcDb: z.boolean().optional().describe('true = só itens do calculador; false = só os que faltam cadastrar.'),
   latamOnly: z.boolean().optional().default(true),
+  withBonuses: z.boolean().optional().describe('Cada linha traz `bonuses`: até 6 bônus do item em texto curto (rótulo e valor), para ler os candidatos sem chamar get_item em cada um.'),
+  excludeMvpCards: z.boolean().optional().describe('Não devolve cartas que caem de MVP (a classificação é pela carta, não pelo alvo).'),
   limit: z.number().int().min(1).max(config.limits.maxSearchResults).optional().default(20),
   offset: z.number().int().min(0).optional().default(0),
 });
@@ -98,6 +106,11 @@ function bonusKeys(): { key: string; label: string }[] {
 }
 
 export function registerDiscoveryTools(server: McpServer, dataset: Dataset): void {
+  registerJsonTool<{ classId: number; skill: string; level?: number; formulaVersion?: 'current' | 'pre-rebalance' | 'rebalance-2026-02' }>(server, 'get_skill', {
+    title: 'Descrição e mecânicas da habilidade',
+    description: 'USE antes de pesquisar sinergias: descrição do cliente, tempos, crítico e dependências documentadas da fórmula. skill aceita nome interno, nome pt-BR, value ou id. Depois search_items com skill/classId/synergy:true e get_item/slot_options; confirme hipóteses com evaluate_variants. Não precisa usar optimize_build.',
+    inputSchema: { classId: z.number().int(), skill: z.string(), level: z.number().int().min(1).optional(), formulaVersion: z.enum(['current', 'pre-rebalance', 'rebalance-2026-02']).optional() },
+  }, ({ classId, skill, level, formulaVersion }) => json(skillInfo(dataset.classes.newInstance(classId), skill, formulaVersion, level)));
   registerJsonTool(server, 'list_classes', {
     title: 'Listar classes',
     description: 'Lista as classes jogáveis no RO LATAM, com id interno, nome pt-BR e limites de nível. O id é o que as outras ferramentas esperam em `build.class`.',
@@ -107,12 +120,25 @@ export function registerDiscoveryTools(server: McpServer, dataset: Dataset): voi
   registerJsonTool<SearchFilters>(server, 'search_items', {
     title: 'Buscar itens',
     description:
-      'Busca itens por nome (sem distinção de acentos) e/ou por filtros estruturais. Cobre TANTO o banco do calculador quanto o banco completo do LATAM: itens marcados com `db: false` existem no jogo mas ainda não foram cadastrados no calculador, então aparecem só com nome/descrição e não podem ser usados em builds. Qualquer filtro estrutural (slot, classId, bonus, skill, minSlots, maxLevel) implica `db: true`, porque esses itens não têm dados mecânicos.',
+      'Busca itens por nome (sem distinção de acentos) e/ou por filtros estruturais. Cobre TANTO o banco do calculador quanto o banco completo do LATAM: itens marcados com `db: false` existem no jogo mas ainda não foram cadastrados no calculador, então aparecem só com nome/descrição e não podem ser usados em builds. Qualquer filtro estrutural (slot, classId, bonus, skill, minSlots, maxLevel) implica `db: true`, porque esses itens não têm dados mecânicos. `excludeMvpCards` tira cartas que caem de MVP; `withBonuses` traz o que cada item faz, em texto curto.',
     inputSchema: searchItemsSchema(),
   }, (filters) => {
     const char = filters.classId !== undefined ? dataset.classes.newInstance(filters.classId) : undefined;
-    const { total, rows } = dataset.itemIndex.search(filters, char);
-    return json(paged('items', total, rows, filters.offset ?? 0, toItemRow));
+    let search = filters;
+    if (filters.synergy) {
+      if (!char || !filters.skill) throw new Error('synergy requer classId e skill. Veja get_skill.');
+      const skill = findSkill(char, filters.skill);
+      const id = SKILL_ID_BY_NAME[skill.name];
+      search = { ...filters, skill: undefined, bonusMode: 'any', bonus: [...new Set([...(filters.bonus ?? []), ...skillSynergyKeys(skill), String(id), `cd__${id}`, `vct__${id}`, `fct__${id}`])] };
+    }
+    const { total, rows } = dataset.itemIndex.search(search, char);
+    const bonusesOf = (id: number): string[] | undefined => {
+      if (!filters.withBonuses) return undefined;
+      const script = dataset.itemIndex.record(id)?.script;
+      if (!script) return undefined;
+      return itemBonusScriptEntries(script).slice(0, 6).map(([key, values]) => `${bonusKeyLabel(key)}: ${[].concat(values as never).slice(0, 2).join(' / ')}`);
+    };
+    return json(paged('items', total, rows, filters.offset ?? 0, (row) => compact({ ...toItemRow(row), bonuses: bonusesOf(row.id) })));
   });
 
   registerJsonTool<{ id: number }>(server, 'get_item', {
@@ -144,6 +170,9 @@ export function registerDiscoveryTools(server: McpServer, dataset: Dataset): voi
         enName: rec.enName,
         aegisName: rec.aegisName,
         inCalcDb: true,
+        mvpCard: MVP_CARD_IDS.has(id) || undefined,
+        // Pieces the scripts name as set or combo partners: they pay only together, so test them as one (evaluate_variants).
+        partners: partnerIndex(dataset).of(id).slice(0, 12).map((partner) => ({ id: partner, name: dataset.itemIndex.get(partner)?.name, slot: partnerIndex(dataset).slotOf(partner) })),
         presentInLatam: !!rec.presentInLatam,
         slots: rec.slots || 0,
         slotTags: row.slotTags ?? [],

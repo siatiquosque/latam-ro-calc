@@ -107,7 +107,8 @@ export async function handleMcp(request: Request, env: McpEnv, ctx: ExecutionCon
     );
   }
 
-  if (url.pathname !== '/mcp') {
+  // A pasted URL often ends in a slash; it is the same endpoint.
+  if (url.pathname !== '/mcp' && url.pathname !== '/mcp/') {
     return problem(404, -32001, 'Not found.');
   }
 

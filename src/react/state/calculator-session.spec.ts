@@ -95,6 +95,42 @@ describe('localizeItemNames', () => {
 describe('plain calculator session', () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+  it('keeps analysis snapshots detached and rejects a suggestion after the source build changes', async () => {
+    const { session } = makeSession();
+    session.start();
+    await vi.advanceTimersByTimeAsync(1500);
+    const original = session.model.str;
+    const snapshot = session.analysisSnapshot();
+    snapshot.build.preset['str'] = original + 10;
+    expect(session.model.str).toBe(original);
+    const fingerprint = JSON.stringify(session.analysisSnapshot());
+    const suggestion = structuredClone(session.model);
+    session.model.str = original + 1;
+    expect(() => session.compareAnalysis(suggestion, fingerprint, 9000002)).toThrow('A build mudou');
+    expect(session.isEnableCompare).toBe(false);
+    expect(session.model.str).toBe(original + 1);
+    session.dispose();
+  });
+
+  it('compares a suggestion against its chosen defended target and preserves the main build', async () => {
+    const { session } = makeSession();
+    session.start();
+    await vi.advanceTimersByTimeAsync(1500);
+    const original = structuredClone(session.model);
+    const suggestion = { ...structuredClone(session.model), str: session.model.str + 1 };
+    session.selectedChances = ['chosen proc'];
+    const fingerprint = JSON.stringify(session.analysisSnapshot());
+    session.compareAnalysis(suggestion, fingerprint, 9000002);
+    expect(session.model).toEqual(original);
+    expect(session.selectedMonster).toBe(9000002);
+    expect(session.monsterDataMap[9000002].stats.defense).toBe(512);
+    expect(session.relieveLevel).toBe(0);
+    expect(session.selectedChances2).toEqual(['chosen proc']);
+    expect(session.isEnableCompare).toBe(true);
+    expect(session.model2['str']).toBe(suggestion.str);
+    session.dispose();
+  });
+
   it('finds localized EP19 monsters by real map and keeps the maps in the target summary', async () => {
     const { session } = makeSession();
     session.start();

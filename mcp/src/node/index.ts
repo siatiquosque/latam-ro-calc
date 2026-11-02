@@ -11,7 +11,7 @@ const site = createSite({
   links: sqliteLinks(resolve(process.env['LINKS_DB'] ?? 'data/links.sqlite')),
   vars: { ...process.env, PUBLIC_APP_ORIGIN: origin,
     ALLOWED_HOSTS: process.env['ALLOWED_HOSTS'] ?? new URL(origin).hostname,
-    ALLOWED_ORIGINS: process.env['ALLOWED_ORIGINS'] ?? `https://claude.ai,${origin}` },
+    ALLOWED_ORIGINS: process.env['ALLOWED_ORIGINS'] ?? `https://claude.ai,https://chatgpt.com,https://chat.openai.com,${origin}` },
 });
 
 const server = createServer(async (req, res) => {

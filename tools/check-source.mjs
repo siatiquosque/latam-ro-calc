@@ -19,10 +19,11 @@ for (const name of names) {
   const file = program.getSourceFile(name);
   const imports = new Map();
   const local = relative(root, name).replaceAll('\\', '/');
-  const isolated = /^(src\/app\/core|src\/app\/i18n|worker|mcp)\//.test(local);
+  const isolated = /^(src\/app\/core|src\/app\/build-analysis|src\/app\/i18n|worker|mcp)\//.test(local);
   function boundary(node, value) {
     if (/^src\/react\//.test(local) && /^(?:@angular\/|rxjs(?:\/|$)|zone\.js(?:\/|$)|tslib(?:\/|$))/.test(value)) report(file, node, `Removed framework import in React source: ${value}`);
     if (!isolated) return;
+    if (local.startsWith('src/app/build-analysis/') && (/^(?:@modelcontextprotocol\/|node:)/.test(value) || /(?:^|\/)mcp\//.test(value))) report(file, node, `Transport/server dependency is forbidden in shared build analysis: ${value}`);
     if (/^(?:@angular\/|primeng(?:\/|$)|rxjs(?:\/|$)|react(?:\/|$)|react-dom(?:\/|$))/.test(value) || /(?:^|\/)layout\//.test(value)) report(file, node, `Framework/UI import is forbidden in ${local.split('/')[0]}: ${value}`);
   }
   for (const statement of file.statements) {

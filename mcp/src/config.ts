@@ -28,7 +28,7 @@ const DEFAULTS = {
 
   /** Browser-based MCP clients send Origin; native/CLI ones send none (and must be
    *  allowed, or the primary use case breaks). */
-  allowedOrigins: ['https://claude.ai', 'https://laro-calc.siatiquosque.com.br', 'http://localhost:4200'],
+  allowedOrigins: ['https://claude.ai', 'https://chatgpt.com', 'https://chat.openai.com', 'https://laro-calc.siatiquosque.com.br', 'http://localhost:4200'],
 
   limits: {
     maxOptimizeCandidates: 40,
@@ -39,9 +39,9 @@ const DEFAULTS = {
     /** Leave-one-out solves `explain_damage` will run. */
     maxContributions: 60,
     /** Solves one `optimize_build` call may spend. Each costs ~4 ms of CPU (more with `rotationDps`). */
-    maxSolves: 2000,
+    maxSolves: 10_000,
     /** Wall-clock allowance of one search call, in ms. It returns the best build found so far when it runs out. */
-    maxSearchMs: 25_000,
+    maxSearchMs: 45_000,
     maxSearchResults: 50,
   },
 };

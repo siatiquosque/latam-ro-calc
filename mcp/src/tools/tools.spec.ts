@@ -55,6 +55,7 @@ describe('tool surface', () => {
         'guide',
         'get_item',
         'get_monster',
+        'get_skill',
         'item_description',
         'list_bonus_keys',
         'list_classes',
@@ -71,9 +72,22 @@ describe('tool surface', () => {
         'share_link',
         'slot_options',
         'uncatalogued_pools',
+        'validate_build',
         'validate_custom_items',
       ].sort(),
     );
+  });
+});
+
+describe('tool annotations', () => {
+  it('declares the three hints ChatGPT requires on every tool, and marks only the link makers as writers', async () => {
+    const tools = (await client.listTools()).tools;
+    for (const tool of tools) {
+      expect(tool.annotations, tool.name).toMatchObject({ destructiveHint: false, openWorldHint: false });
+      expect(typeof tool.annotations?.readOnlyHint, tool.name).toBe('boolean');
+    }
+    const writers = tools.filter((tool) => tool.annotations?.readOnlyHint === false).map((tool) => tool.name).sort();
+    expect(writers).toEqual(['create_custom_items', 'share_link']);
   });
 });
 
@@ -424,6 +438,18 @@ describe('regressions', () => {
     expect(data.objective).toBe('rotationDps');
   }, 120_000);
 
+  it('optimize_build splits the gain by kind, lists the changes in words and flags a drop in HP', async () => {
+    const build = { ...inquisitor, rotation: undefined, gear: { weapon: 560032, weaponRefine: 8, weaponGrade: 'D', boot: 470073, bootRefine: 11, bootGrade: 'C' } };
+    const { data } = await call('optimize_build', { build, slots: ['weapon', 'boot'], target: { monsterId: 9000002 }, maxSolves: 400 });
+    expect(Object.keys(data.gainByKind).every((kind) => ['ajuste', 'refinoGrau', 'troca'].includes(kind))).toBe(true);
+    expect(data.steps.every((step: any) => ['ajuste', 'refinoGrau', 'troca'].includes(step.kind))).toBe(true);
+    expect(data.changes.length).toBeGreaterThan(0);
+    for (const change of data.changes) expect(typeof change.slot).toBe('string');
+    const weapon = data.changes.find((change: any) => change.slot === 'weapon');
+    expect(weapon.refine).toMatch(/→/);
+    expect(JSON.stringify(data.changes)).not.toMatch(/undefined/);
+  }, 60_000);
+
   it('scan_slot skips items LATAM has not shipped and rejects a slot that is not equipment', async () => {
     const { data } = await call('scan_slot', { build: inquisitor, slot: 'boot', limit: 40, topSockets: 0 });
     expect(data.ranking.map((row: any) => row.id)).not.toContain(470328);
@@ -482,8 +508,22 @@ describe('bridge', () => {
     expect(data.build.className).toBe('Falcão do Vento');
     expect(data.gear.weapon).toMatchObject({ id: 700016, name: 'Arco de Apoio Certeiro', refine: 11 });
     expect(data.summary).toMatch(/Falcão do Vento nível 200\/50/);
-    expect(data.buildInput.preset).toBeTruthy();
+    // The raw preset is 5 KB nobody needs (every tool takes the `share`): only on request.
+    expect(data.buildInput).toBeUndefined();
+    const raw = await call('parse_share_link', { share: calc.share, raw: true });
+    expect(raw.data.buildInput.preset).toBeTruthy();
+    expect(raw.bytes).toBeGreaterThan(data ? JSON.stringify(data).length : 0);
   });
+
+  it('optimize_build warns about a proc it walks away from, and collapses the tuning of worn pieces into one step', async () => {
+    // Bota Desconhecida VIT carries a 5% / 10 s proc the search does not count; the Greva de Runas wins without it.
+    const build = { class: 4262, level: 236, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', stats: { str: 120, agi: 50, vit: 120, int: 80, dex: 120, luk: 63, pow: 100, con: 43 },
+      gear: { weapon: 560027, weaponRefine: 11, boot: 470073, bootRefine: 11, headMiddle: 410233, headLower: 420210 } };
+    const { data } = await call('optimize_build', { build, slots: ['weapon', 'boot', 'headMiddle', 'headLower'], target: { monsterId: 9000002 }, maxSolves: 500 });
+    expect(data.steps.filter((step: any) => step.kind === 'ajuste').length).toBeLessThanOrEqual(1);
+    const lost = (data.alerts as string[]).find((alert) => /deixa de usar o proc/.test(alert));
+    if (data.patch.gear.boot !== 470073) expect(lost).toMatch(/Bota Desconhecida VIT/);
+  }, 90_000);
 
   it('share_link can arm a comparison without solving', async () => {
     const { data } = await call('share_link', {

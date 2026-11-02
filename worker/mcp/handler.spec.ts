@@ -187,6 +187,19 @@ describe('transport guards', () => {
     expect((await rpc({ jsonrpc: '2.0', id: 6, method: 'tools/list' }, { Origin: 'https://evil.example.com' })).status).toBe(403);
   });
 
+  it('serves the same endpoint with a trailing slash, and accepts the ChatGPT origins', async () => {
+    const init = { jsonrpc: '2.0', id: 9, method: 'ping' };
+    const slashed = await call(new Request('https://laro-calc.siatiquosque.com.br/mcp/', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' },
+      body: JSON.stringify(init),
+    }));
+    expect(slashed.status).toBe(200);
+    for (const origin of ['https://chatgpt.com', 'https://chat.openai.com']) {
+      expect((await rpc(init, { Origin: origin })).status).toBe(200);
+    }
+  });
+
   it('answers preflight with the headers browser clients need', async () => {
     const res = await call(
       new Request('https://laro-calc.siatiquosque.com.br/mcp', { method: 'OPTIONS', headers: { Origin: 'https://claude.ai' } }),

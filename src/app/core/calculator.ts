@@ -220,68 +220,79 @@ export class Calculator {
 
   private skillName: SKILL_NAME = '' as any;
   private allStatus = createRawTotalBonus();
+
+  /**
+   * A per-source bonus record (one per equipped piece, skill and buff, ~100 of them on every pass). It reads through to the
+   * all-zero `allStatus` and keeps only what is written on itself: copying its ~300 keys for each record was most of the time
+   * the engine spent on a build. `getObjSummary` lists own keys, which is every non-zero bonus.
+   */
+  private blankBonus(initial?: Partial<EquipmentSummaryModel>): EquipmentSummaryModel {
+    const record = Object.create(this.allStatus) as EquipmentSummaryModel;
+
+    return initial ? Object.assign(record, initial) : record;
+  }
   private totalEquipStatus = createRawTotalBonus();
   private pvpContext: PvpContext = { ...DEFAULT_PVP_CONTEXT };
   private equipStatus: Partial<Record<ItemTypeEnum, EquipmentSummaryModel>> = {
-    weapon: { ...this.allStatus },
-    weaponCard1: { ...this.allStatus },
-    weaponCard2: { ...this.allStatus },
-    weaponCard3: { ...this.allStatus },
-    weaponCard4: { ...this.allStatus },
-    weaponEnchant1: { ...this.allStatus },
-    weaponEnchant2: { ...this.allStatus },
-    weaponEnchant3: { ...this.allStatus },
-    ammo: { ...this.allStatus },
-    headUpper: { ...this.allStatus },
-    headUpperRefine: { ...this.allStatus },
-    headUpperCard: { ...this.allStatus },
-    headUpperEnchant1: { ...this.allStatus },
-    headUpperEnchant2: { ...this.allStatus },
-    headUpperEnchant3: { ...this.allStatus },
-    headMiddle: { ...this.allStatus },
-    headMiddleCard: { ...this.allStatus },
-    headMiddleEnchant1: { ...this.allStatus },
-    headMiddleEnchant2: { ...this.allStatus },
-    headMiddleEnchant3: { ...this.allStatus },
-    headLower: { ...this.allStatus },
-    headLowerCard: { ...this.allStatus },
-    headLowerEnchant1: { ...this.allStatus },
-    headLowerEnchant2: { ...this.allStatus },
-    headLowerEnchant3: { ...this.allStatus },
-    armor: { ...this.allStatus },
-    armorRefine: { ...this.allStatus },
-    armorCard: { ...this.allStatus },
-    armorEnchant1: { ...this.allStatus },
-    armorEnchant2: { ...this.allStatus },
-    armorEnchant3: { ...this.allStatus },
-    shield: { ...this.allStatus },
-    shieldRefine: { ...this.allStatus },
-    shieldCard: { ...this.allStatus },
-    shieldEnchant1: { ...this.allStatus },
-    shieldEnchant2: { ...this.allStatus },
-    shieldEnchant3: { ...this.allStatus },
-    garment: { ...this.allStatus },
-    garmentRefine: { ...this.allStatus },
-    garmentCard: { ...this.allStatus },
-    garmentEnchant1: { ...this.allStatus },
-    garmentEnchant2: { ...this.allStatus },
-    garmentEnchant3: { ...this.allStatus },
-    boot: { ...this.allStatus },
-    bootRefine: { ...this.allStatus },
-    bootCard: { ...this.allStatus },
-    bootEnchant1: { ...this.allStatus },
-    bootEnchant2: { ...this.allStatus },
-    bootEnchant3: { ...this.allStatus },
-    accLeft: { ...this.allStatus },
-    accLeftCard: { ...this.allStatus },
-    accLeftEnchant1: { ...this.allStatus },
-    accLeftEnchant2: { ...this.allStatus },
-    accLeftEnchant3: { ...this.allStatus },
-    accRight: { ...this.allStatus },
-    accRightCard: { ...this.allStatus },
-    accRightEnchant1: { ...this.allStatus },
-    accRightEnchant2: { ...this.allStatus },
-    accRightEnchant3: { ...this.allStatus },
+    weapon: this.blankBonus(),
+    weaponCard1: this.blankBonus(),
+    weaponCard2: this.blankBonus(),
+    weaponCard3: this.blankBonus(),
+    weaponCard4: this.blankBonus(),
+    weaponEnchant1: this.blankBonus(),
+    weaponEnchant2: this.blankBonus(),
+    weaponEnchant3: this.blankBonus(),
+    ammo: this.blankBonus(),
+    headUpper: this.blankBonus(),
+    headUpperRefine: this.blankBonus(),
+    headUpperCard: this.blankBonus(),
+    headUpperEnchant1: this.blankBonus(),
+    headUpperEnchant2: this.blankBonus(),
+    headUpperEnchant3: this.blankBonus(),
+    headMiddle: this.blankBonus(),
+    headMiddleCard: this.blankBonus(),
+    headMiddleEnchant1: this.blankBonus(),
+    headMiddleEnchant2: this.blankBonus(),
+    headMiddleEnchant3: this.blankBonus(),
+    headLower: this.blankBonus(),
+    headLowerCard: this.blankBonus(),
+    headLowerEnchant1: this.blankBonus(),
+    headLowerEnchant2: this.blankBonus(),
+    headLowerEnchant3: this.blankBonus(),
+    armor: this.blankBonus(),
+    armorRefine: this.blankBonus(),
+    armorCard: this.blankBonus(),
+    armorEnchant1: this.blankBonus(),
+    armorEnchant2: this.blankBonus(),
+    armorEnchant3: this.blankBonus(),
+    shield: this.blankBonus(),
+    shieldRefine: this.blankBonus(),
+    shieldCard: this.blankBonus(),
+    shieldEnchant1: this.blankBonus(),
+    shieldEnchant2: this.blankBonus(),
+    shieldEnchant3: this.blankBonus(),
+    garment: this.blankBonus(),
+    garmentRefine: this.blankBonus(),
+    garmentCard: this.blankBonus(),
+    garmentEnchant1: this.blankBonus(),
+    garmentEnchant2: this.blankBonus(),
+    garmentEnchant3: this.blankBonus(),
+    boot: this.blankBonus(),
+    bootRefine: this.blankBonus(),
+    bootCard: this.blankBonus(),
+    bootEnchant1: this.blankBonus(),
+    bootEnchant2: this.blankBonus(),
+    bootEnchant3: this.blankBonus(),
+    accLeft: this.blankBonus(),
+    accLeftCard: this.blankBonus(),
+    accLeftEnchant1: this.blankBonus(),
+    accLeftEnchant2: this.blankBonus(),
+    accLeftEnchant3: this.blankBonus(),
+    accRight: this.blankBonus(),
+    accRightCard: this.blankBonus(),
+    accRightEnchant1: this.blankBonus(),
+    accRightEnchant2: this.blankBonus(),
+    accRightEnchant3: this.blankBonus(),
   };
   private extraOptions: Record<string, number>[] = [];
   private weaponData = new Weapon();
@@ -1518,7 +1529,7 @@ export class Calculator {
       }
     };
 
-    this.equipStatus['extra'] = { ...this.allStatus };
+    this.equipStatus['extra'] = this.blankBonus();
     for (const scripts of this.extraOptions) {
       for (const [attr, value] of Object.entries(scripts)) {
         if (this.equipStatus['extra'][attr]) {
@@ -1534,7 +1545,7 @@ export class Calculator {
     this.baseEquipmentStat = {};
     this.finalMultipliers = [];
     for (const [itemType, itemData] of this.equipItem) {
-      this.equipStatus[itemType] = { ...this.allStatus };
+      this.equipStatus[itemType] = this.blankBonus();
       if (!itemData) {
         continue;
       }
@@ -1593,7 +1604,7 @@ export class Calculator {
           continue;
         }
 
-        this.equipStatus[skillName] = { ...this.allStatus, [attr]: val };
+        this.equipStatus[skillName] = this.blankBonus({ [attr]: val });
 
         updateTotalStatus(attr as any, val);
 
@@ -1611,7 +1622,7 @@ export class Calculator {
         if (attr === 'atk') continue;
         if (attr === 'matk') continue;
 
-        this.equipStatus[skillName] = { ...this.allStatus, [attr]: val };
+        this.equipStatus[skillName] = this.blankBonus({ [attr]: val });
 
         updateTotalStatus(attr as any, val);
 
@@ -1628,7 +1639,7 @@ export class Calculator {
         const val = Number(value);
         // if (attr === 'atk' || attr === 'matk') val = 0;
 
-        this.equipStatus[buffName] = { ...this.allStatus, [attr]: val };
+        this.equipStatus[buffName] = this.blankBonus({ [attr]: val });
 
         updateTotalStatus(attr as any, value);
       }
@@ -1638,7 +1649,7 @@ export class Calculator {
         const val = Number(value);
         if (attr === 'atk' || attr === 'matk') continue;
 
-        this.equipStatus[buffName] = { ...this.allStatus, [attr]: val };
+        this.equipStatus[buffName] = this.blankBonus({ [attr]: val });
 
         updateTotalStatus(attr as any, value);
       }
