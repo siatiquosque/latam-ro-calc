@@ -7,7 +7,7 @@
  */
 import { CompareState } from 'src/app/core/compare-state';
 import { decodeShared, encodeBuild } from 'src/app/core/share-codec';
-import { isShortLink } from 'src/app/core/share-link-input';
+import { isShortLink, shortLinkForBareSlug } from 'src/app/core/share-link-input';
 import { buildSharePath, readShareToken } from 'src/app/core/share-path';
 import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { MainModel } from 'src/app/models/main.model';
@@ -51,9 +51,15 @@ export function parseShare(input: string): DecodedShare {
   return decoded;
 }
 
-/** Expand a shortened link, or pass anything else through untouched. */
-export const resolveIfShort = async (share: string, shortenerUrl: string, shortener?: Shortener): Promise<string> =>
-  isShortLink(share, shortenerUrl) ? resolveShortLink(share, undefined, shortener) : share;
+/**
+ * Expand a shortened link, or pass anything else through untouched. A bare slug (`Yi3vF1A`) is shaped like a token, so it is
+ * only taken for a short link when it does not decode as a build.
+ */
+export const resolveIfShort = async (share: string, shortenerUrl: string, shortener?: Shortener): Promise<string> => {
+  if (isShortLink(share, shortenerUrl)) return resolveShortLink(share, undefined, shortener);
+  const bare = shortLinkForBareSlug(share, shortenerUrl);
+  return bare && !decodeShared(share.trim()) ? resolveShortLink(bare, undefined, shortener) : share;
+};
 
 /**
  * Follow a short link to the real share URL. People paste the shortened form because

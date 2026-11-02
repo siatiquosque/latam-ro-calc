@@ -638,10 +638,12 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
       // share of it, the target's shield), not the character's crit stat: a skill that crits "half as much" or a target with a crit
       // shield shows here and nowhere in the stats.
       const dmg = (baseline.solved.calc.getTotalSummary() as any).dmg ?? {};
-      const breakdown = dmg.skillCriRateBreakdown as { total?: number; effective?: number; isCapped?: boolean; steps?: { label: string; value: number; kind: string; detail?: string }[] } | undefined;
+      const breakdown = dmg.skillCriRateBreakdown as { total?: number; effective?: number; isCapped?: boolean; lostToTarget?: number; steps?: { label: string; value: number; kind: string; detail?: string }[] } | undefined;
       out['crit'] = {
         skillChancePct: round(dmg.skillCriRateToMonster ?? 0, 2),
         ...(breakdown?.isCapped ? { cappedAt100: true } : {}),
+        // Points the target's crit shield took off the chance (0 when it took none), so the reader sees what the target cost.
+        lostToTargetPct: round(breakdown?.lostToTarget ?? 0, 2),
         basicAttackChancePct: round(dmg.basicCriRate ?? 0, 2),
         steps: (breakdown?.steps ?? []).map((step) => compact({ label: step.label, value: step.value, kind: step.kind, detail: step.detail })),
         note: (dmg.skillCriRateToMonster ?? 0) === 0

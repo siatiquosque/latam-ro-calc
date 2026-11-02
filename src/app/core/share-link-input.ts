@@ -41,6 +41,15 @@ export const isShortLink = (input: string | null | undefined, shortenerUrl: stri
 };
 
 /**
+ * The shortener URL for a bare slug such as `Yi3vF1A`, or `null` when the text is not slug-shaped. A slug is also shaped
+ * like a share token, so the caller decides by trying to decode it first.
+ */
+export const shortLinkForBareSlug = (input: string | null | undefined, shortenerUrl: string): string | null => {
+  const slug = (input ?? '').trim();
+  return shortenerUrl && SLUG_PATTERN.test(slug) ? `${trimUrl(shortenerUrl)}/${slug}` : null;
+};
+
+/**
  * Classify pasted text, or `null` when it is not a link we can use.
  *
  * Chat clients wrap links in `<…>` and people paste them with trailing

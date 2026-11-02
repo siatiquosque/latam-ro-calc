@@ -50,6 +50,13 @@ describe('short links', () => {
     }
   });
 
+  it.each(['calculate', 'validate_build', 'parse_share_link'])('%s resolves a bare short-link slug', async (name) => {
+    const viaSlug = await call(name, name === 'parse_share_link' ? { share: 'abc123' } : { build: { share: 'abc123' } });
+    const viaUrl = await call(name, name === 'parse_share_link' ? { share: shortUrl } : { build: { share: shortUrl } });
+    expect(viaSlug.error).toBeUndefined();
+    expect(JSON.stringify(viaSlug.build ?? viaSlug.errors)).toBe(JSON.stringify(viaUrl.build ?? viaUrl.errors));
+  });
+
   it('validate_build accepts a valid short link and reads the same build as the long one', async () => {
     const viaShort = await call('validate_build', { build: { share: shortUrl } });
     const viaLong = await call('validate_build', { build: { share: longShare } });

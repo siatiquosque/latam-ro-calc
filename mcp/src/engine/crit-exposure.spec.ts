@@ -28,6 +28,10 @@ describe('critical chance of a skill', () => {
     // A dummy without crit shield: the same build rolls more.
     const dummy = await call('explain_damage', { build, target: { monsterId: 9000002 }, parts: ['crit'] });
     expect(dummy.crit.skillChancePct).toBeGreaterThan(boss.crit.skillChancePct);
+    // What the target cost is stated, and it is exactly the gap to the unshielded rate.
+    expect(boss.crit.lostToTargetPct).toBeGreaterThan(0);
+    expect(dummy.crit.lostToTargetPct).toBe(0);
+    expect(boss.crit.skillChancePct + boss.crit.lostToTargetPct).toBe(dummy.crit.skillChancePct);
   });
 
   it('a skill that cannot crit says 0 and why', async () => {

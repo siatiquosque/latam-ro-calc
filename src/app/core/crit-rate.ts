@@ -37,6 +37,8 @@ export interface CritRateBreakdown {
   effective: number;
   /** True when `total` was clamped, i.e. the build is over the cap. */
   isCapped: boolean;
+  /** Crit points the target's shield took off `total` (the same formula with no shield, minus `total`). 0 when it removed none. */
+  lostToTarget?: number;
 }
 
 /** The character's own crit, before anything about the skill or the target. Shared by both
@@ -154,17 +156,20 @@ export function computeSkillCritRate(input: SkillCritRateInput): CritRateBreakdo
   };
 
   let total: number;
+  let unshielded: number;
   if (isKatar) {
     steps.push(shieldStep(criShield, targetLuk));
     if (skillCriPercentage !== 1) steps.push(pctStep);
     total = Math.max(0, floor(character.value + skillCri - criShield) * skillCriPercentage);
+    unshielded = Math.max(0, floor(character.value + skillCri) * skillCriPercentage);
   } else {
     if (skillCriPercentage !== 1) steps.push(pctStep);
     steps.push(shieldStep(criShield, targetLuk));
     total = Math.max(0, floor((character.value + skillCri) * skillCriPercentage) - criShield);
+    unshielded = Math.max(0, floor((character.value + skillCri) * skillCriPercentage));
   }
 
-  return finish(floor(total), steps);
+  return { ...finish(floor(total), steps), lostToTarget: floor(unshielded) - floor(total) };
 }
 
 /**

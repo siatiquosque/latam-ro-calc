@@ -1,5 +1,21 @@
 [
   {
+    "v": "0.1.210-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "MCP: o código curto de um link (por exemplo Yi3vF1A), sem a URL, passa a ser aceito como build em todas as ferramentas, inclusive parse_share_link.",
+      "MCP: explain_damage mostra em lostToTargetPct quantos pontos de chance de crítico o escudo de crítico do alvo retirou."
+    ],
+    "logs_es": [
+      "MCP: el código corto de un enlace (por ejemplo Yi3vF1A), sin la URL, pasa a aceptarse como build en todas las herramientas, incluido parse_share_link.",
+      "MCP: explain_damage muestra en lostToTargetPct cuántos puntos de probabilidad de crítico quitó el escudo de crítico del objetivo."
+    ],
+    "logs_en": [
+      "MCP: a link's short code (for example Yi3vF1A), without the URL, is now accepted as a build in every tool, including parse_share_link.",
+      "MCP: explain_damage reports in lostToTargetPct how many crit chance points the target's crit shield removed."
+    ]
+  },
+  {
     "v": "0.1.209-beta",
     "date": "02-11-2026",
     "logs": [
