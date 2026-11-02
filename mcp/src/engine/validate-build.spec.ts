@@ -69,7 +69,7 @@ describe('validate_build', () => {
 });
 
 describe('evaluate_variants and the build rules', () => {
-  it('refuses a variant above the trait maximum, but only warns about points beyond the level budget', async () => {
+  it('refuses a trait above its maximum, and labels explicitly requested excess points as hypothetical', async () => {
     const { Client } = await import('@modelcontextprotocol/sdk/client/index.js');
     const { InMemoryTransport } = await import('@modelcontextprotocol/sdk/inMemory.js');
     const { createMcpServer } = await import('../mcp-server');
@@ -78,11 +78,12 @@ describe('evaluate_variants and the build rules', () => {
     await Promise.all([createMcpServer(dataset).connect(b), client.connect(a)]);
     const result = JSON.parse(((await client.callTool({ name: 'evaluate_variants', arguments: {
       build: fixtures['b1'], target: { monsterId: 9000002 }, metrics: ['dps'],
+      validationMode: 'hypothetical',
       variants: [{ label: 'pow 130', patch: { stats: { pow: 130 } } }, { label: 'mais str', patch: { stats: { str: 130, agi: 130 } } }],
     } })) as any).content[0].text);
     expect(result.errors).toEqual([expect.objectContaining({ label: 'pow 130', status: 'invalid', code: 'INVALID_STAT' })]);
     const measured = result.results.find((row: any) => row.label === 'mais str');
-    expect(measured.status).toBe('ok');
+    expect(measured.status).toBe('hypothetical');
     expect(measured.warnings.join(' ')).toContain('Atributos usam');
   });
 });

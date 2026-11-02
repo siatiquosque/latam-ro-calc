@@ -55,6 +55,14 @@ export const buildInputSchema = z
       .describe('Link de compartilhamento do simulador (URL completa, encurtada, fragmento antigo #/?b=… ou o token puro). Base da build.'),
     preset: stringMap(z.unknown()).optional().describe('Preset bruto, alternativa ao `share`.'),
     customItems: z.array(stringMap(z.unknown())).max(20).optional().describe('Definições de itens personalizados usadas apenas nesta requisição.'),
+    customAttachments: stringMap(z.object({
+      itemId: z.number().int().positive(),
+      cards: z.array(z.number().int().positive().nullable()).max(4),
+      enchants: z.array(z.number().int().positive().nullable()).max(4),
+      bas: z.array(z.string().nullable()).max(5),
+      refine: z.number().int().min(0).max(20).optional(),
+      grade: z.enum(['', 'D', 'C', 'B', 'A']).optional(),
+    })).optional().describe('Anexos/refino/grau dos itens personalizados, por slot.'),
 
     class: z.number().int().optional().describe('Id interno da classe (ex.: 4261 Elementalista). Veja list_classes.'),
     level: z.number().int().min(1).max(300).optional(),
@@ -107,7 +115,7 @@ export const compactBuildSchema = z
   .looseObject({
     share: z.string().optional().describe('Link do simulador (URL completa, encurtada, fragmento antigo #/?b=… ou token). Base da build.'),
   })
-  .describe('Build: `share` com overrides esparsos por cima, ou os campos de `calculate.build` (class, level, jobLevel, stats, gear, atkSkill, skills, options, rotation, consumables, aspdPotion, propertyAtk, preset, customItems).')
+  .describe('Build: share com overrides esparsos; aceita os campos de calculate.build, incluindo personalizados e customAttachments.')
   .pipe(buildInputSchema);
 
 export interface ResolvedBuild {
@@ -132,6 +140,7 @@ function applyOverrides(model: any, input: BuildInput, warnings: string[], datas
   if (input.aspdPotion !== undefined) model.aspdPotion = input.aspdPotion;
   if (input.consumables) model.consumables = [...input.consumables];
   if (input.rotation) model.rotation = [...input.rotation];
+  if (input.customAttachments) model.customAttachments = { ...model.customAttachments, ...structuredClone(input.customAttachments) };
 
   for (const [stat, value] of Object.entries(input.stats ?? {})) {
     if (value !== undefined) model[stat] = value;

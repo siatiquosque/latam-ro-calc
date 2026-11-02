@@ -12,6 +12,7 @@ import { BuildPatch, compactPatchSchema } from '../engine/variants';
 import { targetSchema } from './calculate';
 import { json, registerJsonTool } from './helpers';
 import { createOptimizationOperations, requireSchema } from 'src/app/build-analysis/operations/optimize';
+import { createSynergyOperations, FindSynergiesArgs } from 'src/app/build-analysis/operations/synergies';
 
 const metricEnum = z.enum(METRICS);
 
@@ -22,6 +23,26 @@ const variantSchema = z.object({
 
 export function registerOptimizationTools(server: McpServer, dataset: Dataset, shortener?: Shortener): void {
   const operations = createOptimizationOperations(dataset, config, shortener);
+  const synergies = createSynergyOperations(dataset, config, shortener);
+  registerJsonTool<FindSynergiesArgs>(server, 'find_synergies', {
+    title: 'Consultar requisitos de conjuntos',
+    description: 'Consulta conjuntos: allOf/anyOf e expressão original. equipmentRequirementsMet só confere equipamentos. includePatches gera patches legais e verifica ativação no motor. Confirme o ganho em evaluate_variants.',
+    inputSchema: {
+      build: compactBuildSchema.optional(),
+      itemIds: z.array(z.number().int().positive()).min(1).max(30).optional().describe('Itens de interesse; inclui referências inversas e itens da build.'),
+      bonusKeys: z.array(z.string()).min(1).max(30).optional().describe('Filtrar pelas chaves mecânicas informadas.'),
+      limit: z.number().int().min(1).max(30).optional(),
+      offset: z.number().int().min(0).optional(),
+      includePatches: z.boolean().optional().describe('Requer build. Busca limitada, sem upgrades implícitos.'),
+      target: targetSchema,
+      lock: z.array(z.string()).optional().describe('Slots preservados nos patches.'),
+      exclude: z.array(z.number().int()).optional().describe('IDs proibidos nos patches.'),
+      mvpPolicy: z.enum(['allow', 'exclude-new', 'none']).optional().describe('Política de MVP dos patches; padrão allow.'),
+      allowChanges: z.array(z.enum(['refine', 'grade', 'stats', 'skills'])).optional().describe('Autoriza estas mudanças adicionais nos patches. Padrão: só equipamentos/soquetes.'),
+      maxRefine: z.number().int().min(0).max(20).optional(),
+      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional(),
+    },
+  }, args => synergies.findSynergies(args).then(json));
   registerJsonTool<{
     procMode?: ProcMode;
     procHitsPerSecond?: number;
@@ -29,6 +50,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     target?: TargetArg;
     effects?: string[];
     variants: { label: string; patch: BuildPatch }[];
+    targets?: { monsterId: number }[];
+    validationMode?: 'strict' | 'hypothetical';
     excludeMvpCards?: boolean;
     metrics?: Metric[];
     require?: z.infer<typeof requireSchema>[];
@@ -37,23 +60,23 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'evaluate_variants', {
     title: 'Avaliar variantes de uma build',
     description:
-      'USE para testar hipóteses que você já tem (dezenas de trocas de uma vez, em uma chamada). NÃO use para descobrir candidatos: para isso `scan_slot` ou `optimize_build`. ' +
-      'Resolve de uma vez várias variações de uma mesma build (trocar peça, carta, encantamento, buff, atributo, habilidade) e devolve as métricas de cada uma, ordenadas. ' +
-      'Cada variante é só o que muda: `patch` tem o mesmo formato dos overrides de `build` e mescla por chave sobre a base. ' +
-      '`require` descarta quem não cumpre um piso ou teto (ex.: hp mínimo). `rotationDps` usa a `rotation` da build. ' +
+      'Testa hipóteses em lote: peças, cartas, enchants, buffs, atributos e skills. patch mescla overrides de build por chave. Retorna métricas ordenadas e links dos três primeiros. ' +
+      'Padrão: só variantes legais; validationMode:hypothetical permite hipóteses explícitas. require impõe pisos/tetos; rotationDps lê rotation. Para descobrir candidatos: search_items, find_synergies ou scan_slot. ' +
       `Máximo de ${config.limits.maxVariants} variantes por chamada.`,
     inputSchema: {
       procHitsPerSecond: z.number().min(0.1).max(30).optional(),
-      procMode: z.enum(['off', 'active', 'average']).optional().describe('Procs desligados, sempre ativos ou média estimada por chance/duração. optimize_build usa average por padrão; efeitos desconhecidos não são assumidos ativos.'),
+      procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
 
       build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional().describe('Efeitos de proc a ativar em todas as variantes (veja `availableEffects` de `calculate`).'),
       variants: z.array(variantSchema).min(1),
-      excludeMvpCards: z.boolean().optional().describe('Variante que traz carta de MVP (que a build ainda não usa) volta em `errors` com MVP_CARD_EXCLUDED, sem número.'),
+      targets: z.array(z.object({ monsterId: z.number().int() })).min(1).max(5).optional().describe('Substitui target. Retorna perTarget; ordena pelo primeiro (rankingTarget), sem agregar DPS. require vale em todos.'),
+      validationMode: z.enum(['strict', 'hypothetical']).optional().describe('strict (padrão): só variantes legais. hypothetical: permite erros herdados e excesso de pontos, com status hypothetical e avisos. Novos erros estruturais são recusados.'),
+      excludeMvpCards: z.boolean().optional().describe('strict recusa qualquer MVP; hypothetical tolera apenas as herdadas. Retorna MVP_CARD_EXCLUDED para variantes recusadas.'),
       metrics: z.array(metricEnum).optional().describe(`O que devolver. Padrão: ${DEFAULT_METRICS.join(', ')}.`),
       require: z.array(requireSchema).optional(),
-      sortBy: metricEnum.optional().describe('Métrica de ordenação (maior primeiro). Padrão: dps.'),
+      sortBy: metricEnum.optional().describe('Métrica de ordenação (maior primeiro, exceto hitsToKill: menor primeiro). Padrão: dps.'),
       limit: z.number().int().min(1).max(50).optional().default(10),
     },
   }, (args) => operations.evaluateVariants(args).then(json));
@@ -80,15 +103,12 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'scan_slot', {
     title: 'Varrer um slot inteiro',
     description:
-      'USE para achar a peça improvável de um slot ou conferir se algo fora do óbvio vence. NÃO use para montar a build inteira (`optimize_build`) nem para comparar poucos ids (`optimize_slot`). ' +
-      'Mede, com o motor real, TODOS os itens do LATAM que a classe e o nível podem usar naquele slot (centenas, em segundos), sem filtrar por palavra-chave: ' +
-      'serve para achar a peça improvável que nenhuma busca por bônus traria. O resto da build fica como está no link. ' +
-      '`base: "tuned"` (padrão) compara contra a peça atual já com os melhores cartas, encantamentos e rolagens; `"current"` compara contra ela como veio. ' +
-      'Os `topSockets` melhores da varredura nua recebem a busca de cartas, encantamentos e rolagens catalogadas e o ranking final usa esses valores. ' +
-      'Cada linha traz os parceiros de conjunto (outros slots) para testar em `evaluate_variants`. Refino e grau seguem o padrão ideal (+12, A) ou os tetos passados.',
+      'Explora itens LATAM de um slot, legais para classe/nível, sem filtro prévio por bônus. Para poucos IDs use optimize_slot; para a build inteira, optimize_build. ' +
+      'Mede peças nuas e ajusta soquetes/rolagens nos topSockets melhores. base:tuned compara com a peça atual ajustada; current preserva como veio. Refino/grau usam +12/A ou os limites pedidos. ' +
+      'partners indica conjuntos para testar juntos em evaluate_variants. includePatches devolve as configurações medidas. Busca limitada por tempo e avaliações: confira stopped.',
     inputSchema: {
       procHitsPerSecond: z.number().min(0.1).max(30).optional(),
-      procMode: z.enum(['off', 'active', 'average']).optional().describe('Procs desligados, sempre ativos ou média estimada por chance/duração. optimize_build usa average por padrão; efeitos desconhecidos não são assumidos ativos.'),
+      procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
 
       build: compactBuildSchema,
       slot: z.string().describe('Slot a varrer, ex.: "weapon", "armor", "boot", "accLeft", "headMiddle".'),
@@ -164,17 +184,12 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
   }>(server, 'optimize_build', {
     title: 'Procurar uma build melhor',
     description:
-      'USE para uma busca automática dentro dos limites da situação (peças, cartas, encantamentos, rolagens, refino e grau). É opcional: consulte dados e teste hipóteses com `evaluate_variants` quando isso responder melhor ao pedido. NÃO use para um slot só com candidatos conhecidos (`optimize_slot`), nem para varrer tudo de um slot (`scan_slot`), nem para atributos (`optimize_stats`). ' +
-      'Percorre os slots de equipamento trocando a peça que mais melhora a métrica e repete até nada melhorar (subida de encosta). ' +
-      'Testa equipamentos e seus complementos legais: cartas por categoria, encantamentos por posição e bônus aleatórios de catálogos regionais. ' +
-      'Com `combos` (padrão) também testa trocas de **duas peças juntas** quando o script de uma cita a outra (conjuntos), que uma troca isolada não enxerga. ' +
-      '`targets` mede contra vários monstros com peso (ex.: um Médio e um Grande: a penalidade de tamanho só aparece no Grande); `candidates` fixa os itens a testar num slot; ' +
-      '`lock` trava slots, `exclude` proíbe itens, `require` impõe pisos (ex.: hp mínimo). Devolve o caminho das trocas com o ganho de cada uma e um `patch` pronto para `evaluate_variants`. ' +
-      '`pairs` testa dois slots trocados juntos mesmo sem conjunto que os ligue. `procs` na resposta mostra o ganho de cada proc ainda não contado (passe-o em `effects` para a busca contá-lo). '
-      + 'Busca heurística limitada pelo orçamento, sem garantia global. Pools aleatórios desconhecidos não são inventados. Confira a cobertura e o orçamento retornados.',
+      'Busca automática de equipamentos pelo mesmo core da UI: subida de encosta, complementos legais e pares de peças. Não redistribui atributos (optimize_stats). ' +
+      'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require impõem restrições. Retorna caminho, ganhos e patch para evaluate_variants. ' +
+      'procs mostra efeitos ainda não contados; effects ativa os indicados. Heurística limitada, sem garantia global; confira coverage e stopped. Pools desconhecidos não são inventados. Para hipóteses pontuais use evaluate_variants; para um slot use optimize_slot ou scan_slot.',
     inputSchema: {
       equipmentMode: z.enum(['current', 'replace']).optional().describe('current mantém peças, refino e grau e ajusta só complementos. replace (padrão) procura substituições e upgrades.'),
-      procMode: z.enum(['off', 'active', 'average']).optional().describe('Procs desligados, sempre ativos ou média estimada por chance/duração. optimize_build usa average por padrão; efeitos desconhecidos não são assumidos ativos.'),
+      procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
 
       build: compactBuildSchema,
       target: targetSchema,
@@ -182,23 +197,23 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
         .describe('Alvos com peso (padrão 1). Vale para max, min e dps; as demais métricas não dependem do alvo.'),
       effects: z.array(z.string()).optional(),
       objective: metricEnum.optional().describe('O que maximizar. Padrão: o do `profile`.'),
-      profile: z.enum(['sustained', 'burst']).optional().describe('Que tipo de build buscar. `sustained` (padrão): o ciclo da rotação em regime, onde ASPD, conjuração e pós-conjuração contam (`rotationDps`, ou `dps` sem rotação). `burst`: a abertura da rotação com as recargas livres (`burstDps`, ou `avgHit` sem rotação). A resposta traz os dois perfis para a build base e a final.'),
+      profile: z.enum(['sustained', 'burst']).optional().describe('sustained (padrão): rotationDps, ou dps sem rotação. burst: abertura com recargas livres (burstDps), ou avgHit sem rotação. Retorna os dois perfis.'),
       slots: z.array(z.string()).optional().describe('Slots a percorrer. Padrão: equipamentos e peças sombrias.'),
       lock: z.array(z.string()).optional().describe('Slots que não mudam.'),
       exclude: z.array(z.number().int()).optional().describe('Ids de itens que não podem entrar.'),
       excludeMvpCards: z.boolean().optional().describe('Não recomenda carta que cai de MVP (por carta, não pelo alvo). Uma carta de MVP que você já usa é mantida e sai em `alerts`.'),
-      mvpPolicy: z.enum(['allow', 'exclude-new', 'none']).optional().describe('allow permite MVP; exclude-new preserva as existentes sem adicionar; none exige build final sem MVP. Tem precedência sobre excludeMvpCards e strictMvp; sem política explícita, mantém o comportamento dessas flags.'),
-      strictMvp: z.boolean().optional().describe('Modo estrito: a build final não tem nenhuma carta de MVP. As que você já usa saem primeiro e os soquetes são procurados de novo sem elas (`mvpFree: true` na resposta); falha se uma está numa peça travada em `lock`.'),
+      mvpPolicy: z.enum(['allow', 'exclude-new', 'none']).optional().describe('allow permite MVP; exclude-new mantém as existentes; none remove todas. Prevalece sobre as flags legadas; ausente, preserva seu comportamento.'),
+      strictMvp: z.boolean().optional().describe('Legado de mvpPolicy:none: remove MVP existentes, busca soquetes sem MVP e retorna mvpFree. Falha se uma carta estiver em peça travada.'),
       candidates: stringMap(z.array(z.number().int()).max(60)).optional().describe('Itens a testar por slot, no lugar da seleção automática. Ex.: { "boot": [470069, 470115, 470094] }.'),
       combos: z.boolean().optional().default(true).describe('Testar também trocas de duas peças ligadas por um conjunto.'),
       pairs: z.array(z.array(z.string()).length(2)).max(6).optional().describe('Pares de slots a trocar juntos mesmo sem conjunto que os ligue, ex.: [["garment","boot"]]. Testa os melhores candidatos de cada slot em todas as combinações, depois da busca normal.'),
-      detail: z.boolean().optional().default(false).describe('Resposta completa: contexto do alvo, candidatos por slot (ids), alternativas que perderam, as notas que explicam cada bloco e o resumo da busca de complementos (centenas de tokens a mais). O padrão traz só os números, o caminho e os `alerts`.'),
-      levelChecks: z.boolean().optional().default(true).describe('Para as peças que mudaram, compara a nova com a atual no refino e grau que você tem hoje e também nos ideais (`levelCheck`): mostra a peça que só vence evoluída, ou que vence agora e perde depois. false economiza cálculos.'),
+      detail: z.boolean().optional().default(false).describe('Inclui contexto do alvo, IDs candidatos, alternativas, notas e resumo de complementos. Padrão: números, caminho e alerts.'),
+      levelChecks: z.boolean().optional().default(true).describe('Compara peças trocadas no refino/grau atual e nos ideais (levelCheck). false economiza avaliações.'),
       procHitsPerSecond: z.number().min(0.1).max(30).optional().describe('Ataques por segundo para estimar a média dos procs (cada ataque rola a chance). Sem isso, mostra 1, 3 e 5 por segundo; mais alvos atingidos por habilidade em área contam como mais ataques.'),
-      countProcs: z.boolean().optional().describe('Conta, em cada build testada, todos os procs que ela oferece (inclusive os de peças recém-trocadas), em vez de só os de `effects`. Dobra o custo dos cálculos de builds com procs.'),
+      countProcs: z.boolean().optional().describe('Inclui procs de todas as peças testadas além de effects. Aumenta o custo. Prefira procMode explícito.'),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas, encantamentos e rolagens catalogadas. false preserva a busca somente de peças.'),
-      refine: z.number().int().min(0).max(20).optional().describe('Refino das peças testadas (inclusive as que a build já usa). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
-      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau. Padrão: grau A, o ideal, nas peças que aceitam grau (inclusive as que a build já usa). Informe só para limitar: então testa sem grau e todos os graus até o teto, e a build base também deve respeitá-lo.'),
+      refine: z.number().int().min(0).max(20).optional().describe('Refino testado, inclusive nas peças atuais. Padrão +12; sombrios respeitam +10.'),
+      maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau, padrão A. Se informado, testa sem grau e até o teto; a build inicial também deve respeitá-lo.'),
       candidatesPerSlot: z.number().int().min(1).max(60).optional().default(12),
       rounds: z.number().int().min(1).max(4).optional().default(2),
       maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),

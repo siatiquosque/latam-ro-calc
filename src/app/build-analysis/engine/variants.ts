@@ -41,6 +41,7 @@ export function applyPatch(base: BuildInput, patch: BuildPatch): BuildInput {
   merged.stats = { ...base.stats, ...defined(patch.stats) };
   merged.gear = { ...base.gear, ...patch.gear };
   merged.options = { ...base.options, ...patch.options };
+  merged.customAttachments = { ...base.customAttachments, ...patch.customAttachments };
   merged.skills = {
     active: { ...base.skills?.active, ...patch.skills?.active },
     passive: { ...base.skills?.passive, ...patch.skills?.passive },

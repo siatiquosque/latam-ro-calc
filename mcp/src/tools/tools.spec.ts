@@ -62,6 +62,7 @@ describe('tool surface', () => {
         'list_skills',
         'evaluate_variants',
         'explain_damage',
+        'find_synergies',
         'optimize_build',
         'optimize_slot',
         'optimize_stats',
@@ -403,7 +404,7 @@ describe('regressions', () => {
   });
 
   it('avgHit is the average hit with crit and accuracy, between min and max', async () => {
-    const { data } = await call('evaluate_variants', { build: windhawk, variants: [{ label: 'base', patch: {} }], metrics: ['avgHit', 'min', 'max'], target: { monsterId: 21077 } });
+    const { data } = await call('evaluate_variants', { build: windhawk, validationMode: 'hypothetical', variants: [{ label: 'base', patch: {} }], metrics: ['avgHit', 'min', 'max'], target: { monsterId: 21077 } });
     const m = data.results[0].metrics;
     expect(m.avgHit).toBeGreaterThan(0);
     expect(m.avgHit).toBeLessThanOrEqual(m.max * 1.5);
@@ -438,7 +439,7 @@ describe('regressions', () => {
   }, 60_000);
 
   it('evaluate_variants warns when a swapped-in piece is left with empty sockets', async () => {
-    const { data } = await call('evaluate_variants', { build: { ...inquisitor, rotation: undefined }, variants: [{ label: 'vil', patch: { gear: { weapon: 560037 } } }, { label: 'base', patch: {} }] });
+    const { data } = await call('evaluate_variants', { build: { ...inquisitor, rotation: undefined }, validationMode: 'hypothetical', variants: [{ label: 'vil', patch: { gear: { weapon: 560037 } } }, { label: 'base', patch: {} }] });
     const vil = data.results.find((row: any) => row.label === 'vil');
     const base = data.results.find((row: any) => row.label === 'base');
     expect(vil.emptySockets.join(' ')).toMatch(/Vil Invernal.*carta.*encantamento/);

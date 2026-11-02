@@ -10,7 +10,9 @@ import { Shortener } from '../engine/share';
 import { BuildPatch, decodeOnce } from '../engine/variants';
 import { targetSchema } from './calculate';
 import { createBuildContext } from './context';
-import { createOptimizationOperations, deltaPct, evaluate, meets, requireSchema, roundMetrics } from './optimize';
+import { createOptimizationOperations, deltaPct, meets, requireSchema, roundMetrics } from './optimize';
+import { evaluationCache } from '../engine/evaluate';
+import { validateBuild } from '../engine/validate';
 import { AnalysisRuntime } from '../runtime';
 
 const MAIN = ['str', 'agi', 'vit', 'int', 'dex', 'luk'] as const;
@@ -52,35 +54,39 @@ async function optimizeStats({ build, target, effects = [], objective = 'dps', l
     const budgetCap = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
     const base = decodeOnce(await normalizeShare(build, shortener));
+    const validation = validateBuild(base, dataset);
+    if (!validation.valid) throw new Error(`Build inválida para redistribuir atributos: ${validation.errors.slice(0, 3).map(issue => `${issue.code}: ${issue.message}`).join(' ')} Use validate_build e corrija a entrada.`);
+    if (lock.some(stat => ![...MAIN, ...TRAITS].includes(stat as never))) throw new Error('lock contém atributo desconhecido.');
     const { monster } = resolveTarget(dataset, target?.monsterId);
     const wanted: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp', ...rules.map((rule) => rule.metric)])];
-    const start = evaluate(base, undefined, dataset, monster, effects, wanted);
+    const memo = evaluationCache();
+    const start = memo.evaluate(base, undefined, dataset, monster, effects, wanted);
     const startValue = start.metrics[objective];
     if (!startValue) throw new Error(`A build não produz ${objective} para otimizar.`);
+    const score = (value: number) => objective === 'hitsToKill' ? -value : value;
 
     const model = start.rb.model as unknown as Levels;
     const points = new BaseStateCalculator().setClass(start.rb.char).setLevel(model['level'])
       .setMainStatusLevels(MAIN.map((stat) => model[stat])).setTraitStatusLevels(TRAITS.map((stat) => model[stat])).calculate().summary;
     const groups: Group[] = [
-      { name: 'main', stats: MAIN, floor: 1, cap: CAP.main, cost: (level) => mainCost[Math.min(level, CAP.main)], budget: Math.max(points.totalPoint, points.usedPoint) },
+      { name: 'main', stats: MAIN, floor: 1, cap: Math.min(CAP.main, start.rb.char.maxBaseStat), cost: (level) => mainCost[Math.min(level, CAP.main)], budget: points.totalPoint },
     ];
     if (start.rb.char.isAllowTraitStat()) {
-      groups.push({ name: 'trait', stats: TRAITS, floor: 0, cap: CAP.trait, cost: (level) => level, budget: Math.max(points.totalTraitPoint, points.usedTraitPoint) });
+      groups.push({ name: 'trait', stats: TRAITS, floor: 0, cap: CAP.trait, cost: (level) => level, budget: points.totalTraitPoint });
     }
 
     const levels: Levels = Object.fromEntries([...MAIN, ...TRAITS].map((stat) => [stat, model[stat] ?? 0]));
     const frozen = new Set(lock);
-    let solves = 1;
-    let value = startValue;
+    let value = score(startValue);
     let metrics = start.metrics;
     let exhausted = false;
     const run = (candidate: Levels) => {
-      if (solves >= budgetCap || pace.timeUp()) { exhausted = true; return null; }
-      solves++;
+      if (memo.misses >= budgetCap || pace.timeUp()) { exhausted = true; return null; }
       try {
         const patch: BuildPatch = { stats: candidate };
-        const result = evaluate(base, patch, dataset, monster, effects, wanted);
-        return { value: result.metrics[objective], metrics: result.metrics, ok: meets(result.metrics, rules) };
+        const result = memo.evaluate(base, patch, dataset, monster, effects, wanted);
+        const metric = result.metrics[objective];
+        return { value: metric === undefined ? undefined : score(metric), metrics: result.metrics, ok: meets(result.metrics, rules) };
       } catch { return null; }
     };
     const used = (group: Group, at: Levels) => group.stats.reduce((sum, stat) => sum + group.cost(at[stat]), 0);
@@ -122,7 +128,7 @@ async function optimizeStats({ build, target, effects = [], objective = 'dps', l
           const at = raise(group, freed, to, step * 2);
           if (at[to] === levels[to]) continue;
           const r = run(at);
-          if (r?.ok && r.value !== undefined && r.value > (best?.value ?? value * 1.001)) best = { at, value: r.value, metrics: r.metrics };
+          if (r?.ok && r.value !== undefined && r.value > (best?.value ?? value + Math.abs(value) * 0.001)) best = { at, value: r.value, metrics: r.metrics };
         }
         if (best) {
           Object.assign(levels, best.at);
@@ -136,6 +142,9 @@ async function optimizeStats({ build, target, effects = [], objective = 'dps', l
 
     const changes = Object.fromEntries([...MAIN, ...TRAITS].filter((stat) => levels[stat] !== model[stat]).map((stat) => [stat, { from: model[stat], to: levels[stat] }]));
     const finalBuild = resolveBuild({ ...base, stats: { ...base.stats, ...levels } }, dataset);
+    const finalValidation = validateBuild({ ...base, stats: { ...base.stats, ...levels } }, dataset);
+    if (!finalValidation.valid) throw new Error(`A redistribuição não passou na validação: ${finalValidation.errors.map(issue => issue.code).join(', ')}.`);
+    if (!meets(metrics, rules)) throw new Error('Nenhuma redistribuição encontrada atende a require neste orçamento.');
     const shown: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp'])];
 
     return {
@@ -147,9 +156,12 @@ async function optimizeStats({ build, target, effects = [], objective = 'dps', l
       points: groups.map((group) => ({ group: group.name, budget: group.budget, used: used(group, levels), before: used(group, model) })),
       patch: { stats: Object.fromEntries(Object.keys(changes).map((stat) => [stat, levels[stat]])) },
       share: shareOf(finalBuild),
-      solves,
+      solves: memo.misses,
+      evaluations: { uniqueEvaluations: memo.misses, cacheHits: memo.hits },
+      complete: !exhausted,
+      stoppedReason: exhausted ? memo.misses >= budgetCap ? 'maxSolves' : 'deadline' : 'converged',
       stopped: exhausted ? 'orçamento de cálculos ou de tempo esgotado: o resultado pode estar incompleto' : 'convergiu',
-      note: 'Busca heurística por trocas entre pares de atributos; tetos de 130 (base) e 100 (traits) e custos do próprio simulador. Confirme os limites no jogo.',
+      note: 'Busca heurística por pares de atributos, com limites da classe e custos do simulador; não prova ótimo global. Contadores medem avaliações novas, não os solves internos de cada passo de rotação.',
     };
   }
 

@@ -14,9 +14,11 @@ import { Dataset } from '../data/dataset';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
 import { BuildInput, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
-import { DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile, readMetrics } from '../engine/metrics';
+import { DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
-import { solveWithInput } from '../engine/solve';
+import { evaluate, evaluationCache } from '../engine/evaluate';
+// Preserve imports used by older callers while evaluation is owned by the engine layer.
+export { evaluate, evaluationCache } from '../engine/evaluate';
 import { applyPatch, BuildPatch, decodeOnce } from '../engine/variants';
 import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
 import { validateBuild } from '../engine/validate';
@@ -25,7 +27,7 @@ import { complementChoices, damageContext, keptSockets, REACHABLE_REFINE, releva
 import { enchantCombinationError, refineLimitFor } from 'src/app/core/equipment-rules';
 import { partnerIndex } from '../engine/item-partners';
 import { pacing } from '../engine/pacing';
-import { procData, procEstimate, procUptime, prepareProcPolicy, ProcPolicy, ProcMode } from '../engine/proc';
+import { procData, procEstimate, prepareProcPolicy, ProcMode } from '../engine/proc';
 import { CHECK_DUMMIES, isUndefended } from '../engine/dummies';
 import { AspdPotionList, AspdPotionStackable } from 'src/app/constants/aspd-potion-list';
 import { targetSchema } from './calculate';
@@ -44,117 +46,6 @@ export const requireSchema = z.object({
   max: z.number().optional(),
 });
 
-export function evaluate(
-  base: BuildInput,
-  patch: BuildPatch | undefined,
-  dataset: Dataset,
-  monster: any,
-  effects: string[],
-  wanted: readonly Metric[],
-  more: { monster: any; weight: number }[] = [],
-  weight = 1,
-  autoProcs: ProcPolicy = false,
-) {
-  return evaluateResolved(resolveBuild(patch ? applyPatch(base, patch) : base, dataset), base, patch, dataset, monster, effects, wanted, more, weight, autoProcs);
-}
-
-type Evaluation = ReturnType<typeof evaluate>;
-
-/**
- * `evaluate` for a build the caller already resolved. The search asks about the same build many times (a card tried in the
- * quick pass and again in the full one, a worn piece met again on the next round: about a quarter of all the calculations of
- * a real search were repeats), so it keeps what it measured: the metrics are a pure function of the resolved build, the
- * target and the effects. A repeat costs the key, not the ~5 ms calculation, and does not count against the budget.
- * `solved` (the live calculator) is only there on a fresh calculation: anything that reads it uses `fresh`.
- */
-export function evaluationCache(limit = 4000) {
-  const store = new Map<string, { metrics: Metrics; procEvaluation: Evaluation['procEvaluation'] }>();
-  const cache = {
-    hits: 0,
-    /** Calculations the cache did not have (what the budget pays for). */
-    misses: 0,
-    evaluate(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset, monster: any, effects: string[], wanted: readonly Metric[], more: { monster: any; weight: number }[] = [], weight = 1, autoProcs: ProcPolicy = false): Evaluation {
-      const rb = resolveBuild(patch ? applyPatch(base, patch) : base, dataset);
-      const policy = typeof autoProcs === 'object' ? `${autoProcs.mode}:${autoProcs.hitsPerSecond}:${autoProcs.metadata.size}` : String(autoProcs);
-      const key = [monster?.id ?? monster?.name, effects.join('|'), wanted.join(','), more.map((aim) => `${aim.monster?.id ?? aim.monster?.name}:${aim.weight}`).join(','), weight, policy, JSON.stringify(rb.model), JSON.stringify(rb.customItems ?? [])].join('§');
-      const known = store.get(key);
-      if (known) {
-        cache.hits++;
-        return { rb, solved: undefined as unknown as Evaluation['solved'], metrics: { ...known.metrics }, procEvaluation: known.procEvaluation };
-      }
-      cache.misses++;
-      const result = evaluateResolved(rb, base, patch, dataset, monster, effects, wanted, more, weight, autoProcs);
-      if (store.size >= limit) store.delete(store.keys().next().value as string);
-      store.set(key, { metrics: { ...result.metrics }, procEvaluation: result.procEvaluation });
-
-      return result;
-    },
-  };
-
-  return cache;
-}
-
-function evaluateResolved(
-  rb: ResolvedBuild,
-  base: BuildInput,
-  patch: BuildPatch | undefined,
-  dataset: Dataset,
-  monster: any,
-  effects: string[],
-  wanted: readonly Metric[],
-  more: { monster: any; weight: number }[],
-  weight: number,
-  autoProcs: ProcPolicy,
-) {
-  let first = solveWithInput(rb, dataset, monster, effects);
-  if (autoProcs === true) {
-    // Procs only exist on the calculator after a solve, and a swapped-in piece brings its own: count whatever this build offers.
-    const offered = ((first.calc.chanceList ?? []) as any[]).map(chance => chance?.name).filter((name): name is string => !!name && !effects.includes(name));
-    if (offered.length) { effects = [...effects, ...offered]; first = solveWithInput(rb, dataset, monster, effects); }
-  }
-  const solved = { ...first, rb, effects };
-  const metrics = readMetrics(solved, wanted);
-  const procEvaluation: { counted: string[]; uncounted: string[] } = { counted: [], uncounted: [] };
-  if (autoProcs === true) procEvaluation.counted = effects.filter(effect => (first.calc.chanceList ?? []).some(chance => chance.name === effect));
-  if (typeof autoProcs === 'object') {
-    const offered = (first.calc.chanceList ?? []).filter(chance => chance?.name && !effects.includes(chance.name));
-    const known = offered.map(chance => ({ chance, data: chance.ratePct && chance.durationSeconds ? chance : autoProcs.metadata.get(chance.itemId) }))
-      .filter(entry => entry.data?.ratePct && entry.data?.durationSeconds);
-    // Enumerate independent on/off states exactly for up to three known procs. Never assume an unknown proc is permanent.
-    const counted = known.slice(0, 3);
-    procEvaluation.counted = counted.map(entry => entry.chance.name);
-    procEvaluation.uncounted = offered.map(chance => chance.name).filter(name => !procEvaluation.counted.includes(name));
-    const damageMetrics = wanted.filter(metric => ['dps', 'avgHit', 'rotationDps', 'burstDps'].includes(metric));
-    for (const metric of damageMetrics) metrics[metric] = 0;
-    for (let mask = 0; mask < 2 ** counted.length; mask++) {
-      let probability = 1;
-      const active = [...effects];
-      counted.forEach(({ chance, data }, index) => {
-        const uptime = procUptime(data.ratePct, data.durationSeconds, autoProcs.hitsPerSecond);
-        probability *= mask & 2 ** index ? uptime : 1 - uptime;
-        if (mask & 2 ** index) active.push(chance.name);
-      });
-      const state = mask === 0 ? readMetrics(solved, damageMetrics) : readMetrics({ ...solveWithInput(rb, dataset, monster, active), rb, effects: active }, damageMetrics);
-      for (const metric of damageMetrics) if (state[metric] !== undefined) metrics[metric] += probability * state[metric];
-    }
-  }
-
-  // Further targets re-target the same calculator (the gear pass does not change with the monster), and
-  // only the damage figures depend on it. Done last: it leaves the calculator on the final target.
-  if (more.length) {
-    const fields = wanted.filter(metric => ['max', 'min', 'dps', 'avgHit', 'rotationDps', 'burstDps'].includes(metric));
-    const sums: Record<string, number> = Object.fromEntries(fields.map(key => [key, (metrics[key] ?? 0) * weight]));
-    let total = weight;
-    for (const aim of more) {
-      const next = evaluate(base, patch, dataset, aim.monster, effects, wanted, [], 1, autoProcs);
-      for (const key of fields) sums[key] += (next.metrics[key] ?? 0) * aim.weight;
-      total += aim.weight;
-    }
-    for (const key of fields) if (metrics[key] !== undefined) metrics[key] = sums[key] / total;
-  }
-
-  return { rb, solved, metrics, procEvaluation };
-}
 
 function unconfirmed(rb: ResolvedBuild, changes: BuildPatch, dataset: Dataset) {
   const rolled = changes.options ?? {};
@@ -410,9 +301,12 @@ export type EvaluateVariantsArgs = {
     procHitsPerSecond?: number;
     build: BuildInput;
     target?: TargetArg;
+    /** First target owns the ranking; requirements must hold on every target. */
+    targets?: { monsterId: number }[];
+    validationMode?: 'strict' | 'hypothetical';
     effects?: string[];
     variants: { label: string; patch: BuildPatch }[];
-    /** A variant that adds a card dropped by an MVP is `invalid` (MVP_CARD_EXCLUDED), not measured. */
+    /** Strict mode rejects any MVP card; hypothetical mode only tolerates inherited ones. */
     excludeMvpCards?: boolean;
     metrics?: Metric[];
     require?: z.infer<typeof requireSchema>[];
@@ -491,9 +385,10 @@ export function createOptimizationOperations(dataset: Dataset, config: AnalysisR
 
 const shareOf = (rb: ResolvedBuild): string => buildShareUrl(toPreset(rb.model, rb.char), config.appOrigin, null, rb.customItems);
 
-async function evaluateVariants({ build, target, effects = [], variants, excludeMvpCards = false, metrics, procMode = 'off', procHitsPerSecond, require: rules = [], sortBy = 'dps', limit = 10 }: EvaluateVariantsArgs) {
+async function evaluateVariants({ build, target, targets, validationMode = 'strict', effects = [], variants, excludeMvpCards = false, metrics, procMode = 'off', procHitsPerSecond, require: rules = [], sortBy = 'dps', limit = 10 }: EvaluateVariantsArgs) {
     const policy = await prepareProcPolicy(dataset, procMode, procHitsPerSecond);
-    const measure = (...args: Parameters<typeof evaluate>) => { args[8] = policy; return evaluate(...args); };
+    const memo = evaluationCache();
+    const measure = (...args: Parameters<typeof evaluate>) => { args[8] = policy; return memo.evaluate(...args); };
     if (variants.length > config.limits.maxVariants) {
       throw new Error(`No máximo ${config.limits.maxVariants} variantes por chamada (recebi ${variants.length}). Divida em lotes.`);
     }
@@ -501,30 +396,40 @@ async function evaluateVariants({ build, target, effects = [], variants, exclude
     const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric)])];
 
     const base = decodeOnce(await normalizeShare(build, shortener));
-    const { monster } = resolveTarget(dataset, target?.monsterId);
-    const baseline = measure(base, undefined, dataset, monster, effects, wanted);
+    if (target && targets) throw new Error('Use target ou targets, não ambos.');
+    if (targets && (targets.length < 1 || targets.length > 5)) throw new Error('Use de 1 a 5 alvos.');
+    const aims = (targets ?? [{ monsterId: target?.monsterId ?? config.defaultTargetId }]).map(aim => resolveTarget(dataset, aim.monsterId));
+    const baselines = aims.map(aim => measure(base, undefined, dataset, aim.monster, effects, wanted));
+    const baseline = baselines[0];
+    const perTarget = (values: Metrics[]) => aims.map((aim, i) => ({
+      monsterId: aim.id,
+      metrics: roundMetrics(values[i], shown),
+      deltaPct: Object.fromEntries(shown.map(k => [k, deltaPct(values[i][k], baselines[i].metrics[k])])),
+    }));
 
-    const scored: { label: string; rb: ResolvedBuild; metrics: Metrics; notes: string[] }[] = [];
+    const scored: { label: string; rb: ResolvedBuild; metrics: Metrics; values: Metrics[]; notes: string[]; hypothetical: boolean }[] = [];
     const errors: { label: string; status: 'invalid' | 'failed'; code: string; error: string }[] = [];
     let belowRequire = 0;
-    // What the base already breaks does not count against a variant; only what the variant adds does.
+    // Only the explicit hypothetical mode can inherit errors from the base.
     const issueKey = (issue: { code: string; path: string; itemId?: number }) => `${issue.code}|${issue.path}|${issue.itemId ?? ''}`;
     const baseIssues = validateBuild(base, dataset, { excludeMvpCards });
     const known = new Set(baseIssues.errors.map(issueKey));
     for (const variant of variants) {
       try {
-        // A variant that breaks a rule the base respected (a card left in a piece without sockets, a piece the class cannot wear,
-        // an MVP card when asked) is refused before it is measured: the answer must not carry a number for it.
-        const added = validateBuild(applyPatch(base, variant.patch), dataset, { excludeMvpCards }).errors.filter((issue) => !known.has(issueKey(issue)));
-        // Points beyond the level's budget are a hypothesis worth measuring ("what if more POD"), so it is reported, not refused.
-        const broken = added.filter((issue) => issue.code !== 'INSUFFICIENT_STAT_POINTS');
-        const notes = added.filter((issue) => issue.code === 'INSUFFICIENT_STAT_POINTS').map((issue) => issue.message);
+        // Strict mode validates the whole resulting build, including errors inherited from the base.
+        const issues = validateBuild(applyPatch(base, variant.patch), dataset, { excludeMvpCards }).errors;
+        const added = issues.filter(issue => !known.has(issueKey(issue)));
+        // Hypothetical mode preserves the legacy experiments: inherited errors and excess point budgets are explicit.
+        // New structural errors (slots, class, etc.) are still refused in either mode.
+        const broken = validationMode === 'strict' ? issues : added.filter(issue => issue.code !== 'INSUFFICIENT_STAT_POINTS');
+        const notes = validationMode === 'hypothetical' ? issues.map(issue => `${issue.code}: ${issue.message}`) : [];
         if (broken.length) {
           errors.push({ label: variant.label, status: 'invalid', code: broken[0].code, error: broken.slice(0, 3).map((issue) => issue.message).join(' ') });
           continue;
         }
-        const { rb, metrics: values } = measure(base, variant.patch, dataset, monster, effects, wanted);
-        if (meets(values, rules)) scored.push({ label: variant.label, rb, metrics: values, notes });
+        const measured = aims.map(aim => measure(base, variant.patch, dataset, aim.monster, effects, wanted));
+        const values = measured.map(entry => entry.metrics);
+        if (values.every(value => meets(value, rules))) scored.push({ label: variant.label, rb: measured[0].rb, metrics: values[0], values, notes, hypothetical: issues.length > 0 });
         else belowRequire++;
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
@@ -532,20 +437,30 @@ async function evaluateVariants({ build, target, effects = [], variants, exclude
       }
     }
 
-    scored.sort((a, b) => (b.metrics[sortBy] ?? -Infinity) - (a.metrics[sortBy] ?? -Infinity));
+    const sortOrder = sortBy === 'hitsToKill' ? 'asc' : 'desc';
+    scored.sort((a, b) => sortOrder === 'asc'
+      ? (a.metrics[sortBy] ?? Infinity) - (b.metrics[sortBy] ?? Infinity)
+      : (b.metrics[sortBy] ?? -Infinity) - (a.metrics[sortBy] ?? -Infinity));
 
     return {
       sortedBy: sortBy,
+      sortOrder,
+      rankingTarget: aims[0].id,
+      validationMode,
       engineVersion: APP_VERSION,
+      baselineValid: baseIssues.valid,
       baseline: roundMetrics(baseline.metrics, shown),
+      ...(targets ? { baselinePerTarget: aims.map((aim, i) => ({ monsterId: aim.id, metrics: roundMetrics(baselines[i].metrics, shown) })) } : {}),
       ...(baseIssues.errors.length ? { baselineIssues: baseIssues.errors.slice(0, 5).map((issue) => `${issue.code} ${issue.path}: ${issue.message}`) } : {}),
       tested: variants.length,
+      evaluations: { uniqueEvaluations: memo.misses, cacheHits: memo.hits },
       results: scored.slice(0, limit).map((entry, rank) =>
         compact({
           label: entry.label,
-          status: 'ok',
+          status: entry.hypothetical ? 'hypothetical' : 'ok',
           metrics: roundMetrics(entry.metrics, shown),
           deltaPct: Object.fromEntries(shown.map((k) => [k, deltaPct(entry.metrics[k], baseline.metrics[k])])),
+          perTarget: targets ? perTarget(entry.values) : undefined,
           warnings: entry.rb.warnings.length || entry.notes.length ? [...entry.rb.warnings, ...entry.notes] : undefined,
           emptySockets: emptySocketsOf(dataset, baseline.rb, entry.rb),
           // A link costs a compression pass, so only the front of the ranking gets one.

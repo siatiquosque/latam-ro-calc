@@ -108,7 +108,7 @@ function bonusKeys(): { key: string; label: string }[] {
 export function registerDiscoveryTools(server: McpServer, dataset: Dataset): void {
   registerJsonTool<{ classId: number; skill: string; level?: number; formulaVersion?: 'current' | 'pre-rebalance' | 'rebalance-2026-02' }>(server, 'get_skill', {
     title: 'Descrição e mecânicas da habilidade',
-    description: 'USE antes de pesquisar sinergias: descrição do cliente, tempos, crítico e dependências documentadas da fórmula. skill aceita nome interno, nome pt-BR, value ou id. Depois search_items com skill/classId/synergy:true e get_item/slot_options; confirme hipóteses com evaluate_variants. Não precisa usar optimize_build.',
+    description: 'Consulta descrição, tempos, crítico e dependências observadas nos callbacks da habilidade. Aceita nome, value ou id. Use search_items/find_synergies para investigar e evaluate_variants para confirmar estados concretos.',
     inputSchema: { classId: z.number().int(), skill: z.string(), level: z.number().int().min(1).optional(), formulaVersion: z.enum(['current', 'pre-rebalance', 'rebalance-2026-02']).optional() },
   }, ({ classId, skill, level, formulaVersion }) => json(skillInfo(dataset.classes.newInstance(classId), skill, formulaVersion, level)));
   registerJsonTool(server, 'list_classes', {

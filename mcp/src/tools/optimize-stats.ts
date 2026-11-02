@@ -29,19 +29,17 @@ export function registerStatTools(server: McpServer, dataset: Dataset, shortener
   }>(server, 'optimize_stats', {
     title: 'Redistribuir os pontos de atributo',
     description:
-      'USE depois de escolher as peças, para redistribuir atributos. NÃO use para trocar equipamento. ' +
-      'Move pontos entre os atributos (FOR/AGI/VIT/INT/DES/SOR e, nas classes de 4ª, POD/STA/SAB/FEI/CON/CRV) para maximizar a métrica, ' +
-      'sem gastar mais do que o nível permite (o custo dos atributos base cresce com o nível do atributo; o das traits é 1 por nível). ' +
-      'Pontos ainda não gastos entram na conta. `lock` trava atributos; `require` impõe pisos (ex.: hp mínimo). ' +
-      'Subida de encosta por trocas entre pares, limitada pelo orçamento de cálculos: não prova o ótimo global.',
+      'Redistribui atributos base/traits após escolher equipamentos. Requer build legal; respeita pontos e limites da classe, lock e require. ' +
+      'Maximiza a métrica, exceto hitsToKill (minimiza). Cache não consome maxSolves; interrupções trazem complete:false e stoppedReason. ' +
+      'Heurística por pares, sem prova de ótimo global.',
     inputSchema: {
       build: compactBuildSchema,
       target: targetSchema,
       effects: z.array(z.string()).optional(),
-      objective: z.enum(METRICS).optional().describe('O que maximizar. Padrão: dps.'),
+      objective: z.enum(METRICS).optional().describe('Métrica a melhorar; hitsToKill minimiza. Padrão: dps.'),
       lock: z.array(z.enum([...MAIN, ...TRAITS])).optional().describe('Atributos que não mudam.'),
       require: z.array(requireSchema).optional(),
-      maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
+      maxSolves: z.number().int().min(10).optional().describe('Teto de avaliações novas, incluindo a base; cache não consome. O servidor impõe o dele.'),
     },
   }, (args) => operations.optimizeStats(args).then(json));
 }

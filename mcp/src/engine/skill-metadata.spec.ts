@@ -35,6 +35,16 @@ describe('every class: what a formula reads is documented', () => {
 });
 
 describe('Inquisitor skill metadata', () => {
+  it('exposes conditional skill reads and restores the class methods after inspection', () => {
+    const char = inquisitor();
+    const before = char.skillState.isActive('Oleum Sanctum');
+    const info = skillInfo(char, 'Explosion Blaster');
+    expect(info.dependencies.skills.some(entry => entry.skill === 'Oleum Sanctum')).toBe(true);
+    expect(info.dependencies.coverage).toBe('observed-branches');
+    expect(char.skillState.isActive('Oleum Sanctum')).toBe(before);
+    expect(Object.prototype.hasOwnProperty.call(char, 'isSkillActive')).toBe(false);
+  });
+
   // A skill whose formula reads POD must say so: the item search (`synergy`) and the agent rely on it to look for POD.
   it.each(['First Brand', 'Second Faith', 'Third Punish', 'Second Judgement', 'Third Consecration', 'Second Flame', 'Explosion Blaster', 'Massive Flame Blaster', 'Third Flame Bomb'])(
     '%s documents its POD dependency', (name) => {

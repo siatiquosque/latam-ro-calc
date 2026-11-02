@@ -30,7 +30,8 @@ montada campo a campo), consultar itens, habilidades e monstros, calcular dano e
 | **`optimize_build`** | percorre os slots trocando a melhor peça até nada melhorar (ver abaixo); `strictMvp` exige build final sem carta de MVP; a resposta traz `coverage` |
 | **`optimize_stats`** | redistribui os pontos de atributo/traits dentro do orçamento do nível (ver abaixo) |
 | **`uncatalogued_pools`** | itens sem pool de bônus aleatório confirmado + rascunho de pool do rAthena (ver abaixo) |
-| **`evaluate_variants`** | várias variações de uma build numa só chamada (ver abaixo) |
+| **`evaluate_variants`** | variantes legais ou hipóteses explícitas, com até cinco alvos por lote |
+| **`find_synergies`** | cláusulas de conjuntos, requisitos AND/OR e limites da extração, sem busca automática |
 | **`explain_damage`** | de onde vem o dano e o que o número não conta |
 | **`slot_options`** | os encantamentos que cada soquete de uma peça aceita |
 | `parse_share_link`, `share_link` | link ↔ build; aceita o link curto, o longo e o token puro |
@@ -48,6 +49,20 @@ sobrevivência por dano sem ver). Cada passo estima o ganho de mover N níveis p
 melhores pares com cálculo real e reduz N (8, 4, 2, 1). Resposta: `changes` (de → para), `points` (usado/orçamento),
 `patch` e `share`. Heurística: não prova o ótimo global; confirme os tetos no jogo.
 
+A build inicial deve passar na validação, incluindo o orçamento de pontos: a busca
+não aumenta o orçamento para acomodar uma entrada ilegal. Respeita também o teto
+específico da classe. Para hipóteses deliberadamente ilegais use `evaluate_variants`
+com `validationMode: hypothetical`. `hitsToKill` é minimizado. Se nenhuma solução
+encontrada cumpre `require`, retorna erro em vez de anunciar uma sugestão abaixo do piso.
+
+`maxSolves` conta avaliações novas, incluindo a base; acertos do cache não consomem
+esse orçamento. `evaluations` informa `uniqueEvaluations` e `cacheHits`. Interrupções
+retornam o melhor estado legal encontrado, com `complete: false` e `stoppedReason`
+(`maxSolves` ou `deadline`); término da busca local usa `converged`, sem prova global.
+Os contadores não medem os solves internos adicionais de cada passo de rotação.
+Essa semântica já vale para atributos; o orçamento da busca de equipamentos ainda
+tem a passada final de soquetes separada, pendente de unificação.
+
 ### `uncatalogued_pools`
 
 A fila de itens cujo pool de bônus aleatório ainda não foi confirmado no LATAM. Sem `itemId`, lista (com `query`,
@@ -62,7 +77,7 @@ e a busca ignora o item.
 
 ```jsonc
 { "build": { "share": "…" },
-  "variants": [ { "label": "mais POD", "patch": { "stats": { "pow": 130 } } },
+  "variants": [ { "label": "mais POD", "patch": { "stats": { "pow": 100 } } },
                 { "label": "sem Mantra", "patch": { "skills": { "active": { "Powerful Faith": 0 } } } } ],
   "metrics": ["max", "dps", "hp"],            // padrão: max, min, dps, hitsToKill
   "require": [ { "metric": "hp", "min": 150000 } ],
@@ -77,6 +92,62 @@ Métricas: `max`, `min`, `dps`, `rotationDps`, `hitsToKill`, `critRate`, `hp`, `
 `mdef`, `flee`, `hit`, `aspd`, `crit`. `rotationDps` lê a `rotation` da build (o campo `rotation` também é um
 override) e usa o mesmo ciclo do painel de rotação — `simulateRotationOf`, em `src/app/core/rotation-dps.ts`.
 Os atalhos por passo (acúmulos por posição da rotação) são do painel e não entram aqui.
+
+O padrão é `validationMode: "strict"`: a **build resultante inteira** deve ser legal,
+incluindo pontos e erros herdados da base. Uma variante pode corrigir uma base ilegal.
+`baselineValid` e `baselineIssues` identificam a referência; ela não é uma recomendação.
+Para experimentos deliberados, `validationMode: "hypothetical"` permite excesso de
+pontos e erros já existentes, com `status: "hypothetical"` e avisos em cada resultado
+afetado. Novos erros estruturais continuam recusados. `status: "ok"` identifica as
+variantes legais. Atributos acima do limite da classe continuam sendo erros novos.
+
+`targets: [{ "monsterId": 21077 }, { "monsterId": 21066 }]` substitui `target` e
+aceita até cinco alvos. `baselinePerTarget` e `results[].perTarget` devolvem métricas
+e ganhos por alvo; os campos principais e a ordenação usam o primeiro, identificado
+em `rankingTarget`. Não há agregação implícita de DPS. `require` deve valer em todos
+os alvos. `hitsToKill` ordena do menor para o maior; as demais métricas, do maior para
+o menor (`sortOrder`). O cache é local ao lote, com execução sequencial para preservar
+o estado do motor: `evaluations.uniqueEvaluations` conta avaliações não reutilizadas
+e `cacheHits` as reutilizadas, incluindo a base. Uma avaliação pode calcular vários
+estados de proc ou passos de rotação; esses contadores não são chamadas internas do motor.
+
+### `find_synergies`
+
+Consulta cláusulas condicionais por `build` e/ou `itemIds`, com filtro `bonusKeys`
+e paginação `limit`/`offset`. Inclui conjuntos e bônus condicionados a refino,
+grau, atributos ou habilidades, mesmo sem parceiro de equipamento.
+
+`allOf`/`anyOf` preservam AND/OR; `conditions` usa o parser de regras visuais do
+projeto. `unparsedExpression` mantém a sintaxe que ele ainda não decompõe, sem
+perder a expressão original. `conditionCoverage` distingue essa cobertura.
+`equipmentRequirementsMet` só verifica equipamentos, não ativação do bônus.
+
+O catálogo e o motor são a referência. Itens personalizados são indexados apenas
+na requisição da build, inclusive ao reabrir links; recebem `sourceConfidence:
+user-defined`, sem entrar no catálogo global. Anexos personalizados substituem
+os campos oficiais antigos, como no motor. `build.customAttachments` permite
+sobrescrever, por slot, os anexos/refino/grau persistidos no link; cada estado tem
+`itemId`, `cards`, `enchants`, `bas`, `refine` e `grade`. Variantes mesclam esse mapa
+por slot e validam os anexos com as mesmas regras dos itens personalizados.
+
+Por padrão, a consulta não calcula dano nem gera patches. `includePatches: true`
+requer build e tenta posicionar requisitos legais, respeitando `lock`, `exclude`
+e `mvpPolicy`. Peças novas entram +0/sem grau. Para autorizar mudanças adicionais,
+informe `allowChanges: ["refine", "grade", "stats", "skills"]` com apenas os tipos
+desejados. `maxRefine` e `maxGrade` limitam os upgrades propostos. A geração usa os
+limiares estruturados; não redistribui pontos para financiar um atributo nem muda
+classe ou nível. A sintaxe não estruturada continua disponível para hipóteses manuais.
+
+O próprio motor verifica a expressão completa no `target` informado, ou no alvo
+padrão, sem procs adicionais. Só devolve `patch` com `patchStatus: available` quando
+a build é válida e o bônus está ativo (`activation` informa valor, posição e alvo).
+`not-found` não prova impossibilidade; `budget-limited` informa interrupção; `failed`
+indica falha de cálculo. O lote limita a geração a 50 avaliações, 2.000 nós e ao
+tempo do runtime. `patchEvaluations` conta as avaliações. Não ranqueia dano nem
+promete patch mínimo: confirme o ganho com `evaluate_variants`.
+
+Itens sem bônus são válidos. Ausência de resultado pode ser limite da extração,
+nunca é, por si só, evidência de um erro no item ou no motor.
 
 ### `optimize_build`
 
@@ -408,9 +479,9 @@ Detalhes da divisão de recursos entre calculadora e MCP em [build-analysis.md](
 
 ## Auditoria e cartas de MVP
 
-- `validate_build` é a primeira chamada de uma consultoria: um erro (`INVALID_SLOT`, `INCOMPATIBLE_CLASS`, `REQUIRED_LEVEL`, `INVALID_REFINE`, `INVALID_ENCHANT`, `ITEM_NOT_CALCULABLE`, `ITEM_NOT_AVAILABLE_LATAM`, `UNKNOWN_ITEM`, `MVP_CARD_EXCLUDED`) significa que o número daquela build não é confiável. Não valida pontos de atributo nem pré-requisitos de habilidade (vem em `unknowns`).
+- `validate_build` é a primeira chamada de uma consultoria: um erro (`INVALID_SLOT`, `INCOMPATIBLE_CLASS`, `REQUIRED_LEVEL`, `INVALID_REFINE`, `INVALID_ENCHANT`, `ITEM_NOT_CALCULABLE`, `ITEM_NOT_AVAILABLE_LATAM`, `UNKNOWN_ITEM`, `MVP_CARD_EXCLUDED`) significa que o número daquela build não é confiável. Valida limites e orçamento de atributos; a árvore de habilidades é referência de avisos, conforme explicado abaixo.
 - A classificação de carta de MVP está em `src/app/constants/mvp-cards.ts`. O LATAM não traz tabela de drops: a lista cruza o nome da carta com os MVPs de `constants/mvp.ts` e inclui à mão as que mudam de nome. Carta em dúvida está na lista (bloquear a mais é mais seguro). O filtro vale para a **carta**, nunca para o alvo.
-- `evaluate_variants` valida cada variante com as mesmas regras do `validate_build` e recusa a que quebra uma regra que a base respeitava (carta deixada em peça sem encaixe, peça que a classe não usa, carta de MVP com `excludeMvpCards`): ela volta em `errors` com `status: "invalid"` e `code`, sem número; erro de cálculo volta como `status: "failed"`; as medidas trazem `status: "ok"`. Erros que a própria base já tinha saem em `baselineIssues` e não bloqueiam as variantes. O `optimize_build` e o `scan_slot` não propõem a carta e, se a build já usa uma, mantêm-na e avisam em `alerts`.
+- `evaluate_variants` valida cada variante com as mesmas regras do `validate_build` e recusa, no modo estrito padrão, qualquer variante com erros (carta deixada em peça sem encaixe, peça que a classe não usa, carta de MVP com `excludeMvpCards`): ela volta em `errors` com `status: "invalid"` e `code`, sem número; erro de cálculo volta como `status: "failed"`; as medidas trazem `status: "ok"`. No modo padrão estrito, erros herdados também bloqueiam a variante. Só `validationMode: "hypothetical"` permite erros herdados e excesso de pontos, identificados com status e avisos. O `optimize_build` e o `scan_slot` não propõem a carta e, se a build já usa uma, mantêm-na e avisam em `alerts`.
 - Roteiro para o agente: tópico `consultoria` do `guide`.
 
 ## Orçamento e cobertura da busca
@@ -418,7 +489,7 @@ Detalhes da divisão de recursos entre calculadora e MCP em [build-analysis.md](
 - O orçamento de cálculos do `optimize_build` tem fases: **descoberta** (medir cada item elegível sem soquetes; até 35%, repartidos entre os slots, o que um slot não usa passa ao seguinte), **ajuste do que a build já usa** (até 75% somados) e o resto para a busca de trocas e a passada final nos soquetes. Antes, os primeiros slots (a arma tem centenas de candidatos) consumiam um orçamento curto e a busca de trocas nem começava.
 - O líder do ranking por habilidade é sempre medido no objetivo real, mesmo com o orçamento esgotado: o melhor candidato parcial não se perde.
 - `coverage` na resposta: `slots` (alcançados/total e `notReached`), `candidates` (medidos/disponíveis e `notMeasured` por slot), `worn` (peças ajustadas), `sockets` (conferidos/total), `calculations` (descoberta, avaliação, reaproveitados) e `complete`. `complete: false` significa "o melhor entre o que foi medido", não "o melhor possível".
-- `validate_build` também confere limite de nível e de atributos, orçamento de pontos de atributo e habilidades desconhecidas ou com nível inexistente. Pré-requisitos, nível máximo, nível exigido e pontos da própria classe vêm da árvore do **kRO** (`data/skill-tree/rathena-skill-tree.json`, gerada por `tools/build-skill-tree.mjs` a partir de `skill_tree.yml` e `skill_db.yml` do rAthena): só aparecem como **avisos** (`SKILL_PREREQUISITE_NOT_MET`, `SKILL_ABOVE_TREE_MAX`, `SKILL_LEVEL_REQUIREMENT`, `SKILL_POINTS_OVER_BUDGET`), nunca como erro, porque a árvore não está confirmada no LATAM. Um pré-requisito só conta como faltando se o calculador guarda o nível aprendido dele (seletor passivo): um toggle desligado (Oleum Sanctum 5/0) não prova que a habilidade não foi aprendida. O orçamento de pontos (1 por nível de classe) soma só as habilidades que o calculador modela, então é um mínimo. No `evaluate_variants`, pontos além do orçamento do nível saem em `warnings` da variante; máximo de atributo, nível e habilidade inexistente recusam a variante.
+- `validate_build` também confere limite de nível e de atributos, orçamento de pontos de atributo e habilidades desconhecidas ou com nível inexistente. Pré-requisitos, nível máximo, nível exigido e pontos da própria classe vêm da árvore do **kRO** (`data/skill-tree/rathena-skill-tree.json`, gerada por `tools/build-skill-tree.mjs` a partir de `skill_tree.yml` e `skill_db.yml` do rAthena): só aparecem como **avisos** (`SKILL_PREREQUISITE_NOT_MET`, `SKILL_ABOVE_TREE_MAX`, `SKILL_LEVEL_REQUIREMENT`, `SKILL_POINTS_OVER_BUDGET`), nunca como erro, porque a árvore não está confirmada no LATAM. Um pré-requisito só conta como faltando se o calculador guarda o nível aprendido dele (seletor passivo): um toggle desligado (Oleum Sanctum 5/0) não prova que a habilidade não foi aprendida. O orçamento de pontos (1 por nível de classe) soma só as habilidades que o calculador modela, então é um mínimo. No `evaluate_variants`, pontos além do orçamento do nível recusam a variante por padrão; no modo explícito `hypothetical`, saem em `warnings` com `status: "hypothetical"`. Máximo de atributo, nível e habilidade inexistente continuam recusando erros novos.
 - Valores de referência do motor (habilidades do Inquisidor, builds de bancada, conjuntos): `mcp/src/engine/reference-golden.spec.ts`. É o que o calculador diz hoje, não o que o jogo diz; regenere com `UPDATE_GOLDEN=1` só para uma correção deliberada.
 
 ## Dependências das habilidades e pools do rAthena
@@ -435,3 +506,17 @@ Detalhes da divisão de recursos entre calculadora e MCP em [build-analysis.md](
 - **`solves`:** conta cálculos feitos (não repetições do cache); a passada final nos soquetes aparece à parte em `coverage.calculations.socketPass`.
 - **`strictMvp`:** no `optimize_build`, a build final não tem nenhuma carta de MVP (`mvpFree: true`): as que a build já usa saem primeiro (passo `semMvp`) e os soquetes são procurados de novo sem elas. Falha com mensagem clara se uma está numa peça travada em `lock`. `excludeMvpCards` continua sendo o modo brando (mantém as que você já usa e avisa).
 - **`atkSkill`:** aceita `Nome==nível`, o nome sem nível (usa o nível máximo), o nome em pt-BR ou o id. Habilidade que a classe não tem ou nível que ela não oferece é **erro** (com a orientação de usar `list_skills`); antes o cálculo trocava em silêncio pela habilidade padrão da classe e a resposta só mostrava o outro nome. Um link antigo cuja habilidade não existe mais continua caindo no padrão, com aviso em `warnings`.
+
+## Dependências condicionais das habilidades
+
+`get_skill.dependencies` rastreia os callbacks existentes de fórmula, crítico,
+precisão, dano fixo/final, fórmula customizada, segundo pacote e ratio. Expõe
+caminhos de entrada lidos e skills consultadas como ativas, em nível ativo ou
+aprendidas, com IDs e a origem de cada leitura. Usa amostragens ativas/inativas
+e numéricas e restaura as leituras locais da classe ao terminar.
+
+`coverage: observed-branches` é observação, não prova de todos os ramos possíveis
+nem de todo estado privado. Nenhum dano amostrado é usado como recomendação.
+`scaling` continua trazendo as dependências e descrições já existentes; use
+`dependencies` para formular hipóteses condicionais e `calculate`/`evaluate_variants`
+para verificar a build concreta. Não há outra tabela de fórmulas.

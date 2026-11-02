@@ -20,7 +20,7 @@ let client: Client;
 const build = {
   class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', rotation: ['Third Flame Bomb==5', 'Third Punish==5'],
   gear: { weapon: 560032, weaponRefine: 8, weaponGrade: 'D' },
-  stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 50, con: 50 },
+  stats: { str: 130, agi: 50, vit: 50, int: 1, dex: 80, luk: 30, pow: 100, sta: 47, con: 50 },
 };
 
 interface Scenario { ask: string; tool: string; topic: string; args: Record<string, unknown> }

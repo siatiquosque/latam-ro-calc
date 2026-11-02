@@ -1,5 +1,24 @@
 [
   {
+    "v": "0.1.208-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "Consultoria MCP: condições e conjuntos de itens, inclusive personalizados, com propostas verificadas pelo motor e comparação de variantes contra vários alvos.",
+      "Fichas de habilidades no MCP mostram dependências condicionais observadas; mudanças de atributos, habilidades, refino e grau nas propostas exigem autorização explícita na chamada.",
+      "Variantes validam pontos e compatibilidade por padrão, com modo explícito para hipóteses; a redistribuição de atributos respeita os pontos reais, reutiliza avaliações e informa resultados parciais."
+    ],
+    "logs_es": [
+      "Consultoría MCP: condiciones y conjuntos de objetos, incluidos los personalizados, con propuestas verificadas por el motor y comparación de variantes contra varios objetivos.",
+      "Las fichas de habilidades del MCP muestran dependencias condicionales observadas; los cambios de atributos, habilidades, refinamiento y grado en las propuestas requieren autorización explícita en la llamada.",
+      "Las variantes validan puntos y compatibilidad de forma predeterminada, con un modo explícito para hipótesis; la redistribución de atributos respeta los puntos reales, reutiliza evaluaciones e informa resultados parciales."
+    ],
+    "logs_en": [
+      "MCP consulting: item conditions and sets, including custom items, with proposals verified by the engine and variant comparisons across multiple targets.",
+      "MCP skill details show observed conditional dependencies; proposed stat, skill, refine and grade changes require explicit authorization in the call.",
+      "Variants validate points and compatibility by default, with an explicit hypothesis mode; stat redistribution respects actual points, reuses evaluations and reports partial results."
+    ]
+  },
+  {
     "v": "0.1.207-beta",
     "date": "02-11-2026",
     "logs": [

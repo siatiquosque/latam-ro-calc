@@ -11,6 +11,11 @@ import { BaseStateCalculator } from 'src/app/core/base-state-calculator';
 import { canUsedByClass } from 'src/app/utils';
 import { Dataset } from '../data/dataset';
 import { BuildInput, resolveBuild } from './build-input';
+import { itemContext } from './item-context';
+import { isCustomItem, validateCustomItems } from 'src/app/core/custom-items';
+import { ensureCustomAttachment } from 'src/app/core/custom-attachments';
+import { refineLimitFor } from 'src/app/core/equipment-rules';
+import { canGradeItem } from 'src/app/utils/can-grade';
 import { checkSkillTree, SkillTreeData } from './skill-tree';
 
 export interface BuildIssue { code: string; path: string; message: string; itemId?: number }
@@ -51,19 +56,40 @@ export function validateBuild(input: BuildInput, dataset: Dataset, constraints: 
   }
 
   const { model, char } = resolved;
+  dataset = itemContext(dataset, resolved);
   const usable = canUsedByClass(char);
 
   for (const descriptor of EQUIPMENT_SLOTS) {
     const slotId = model[descriptor.key];
-    const fields = [
+    const parent = resolved.items[slotId];
+    let custom: ReturnType<typeof ensureCustomAttachment>;
+    if (isCustomItem(parent)) {
+      const state = model.customAttachments?.[descriptor.key];
+      if (state && state.itemId === slotId) {
+        if (![state.cards, state.enchants, state.bas].every(Array.isArray)) {
+          errors.push({ code: 'INVALID_CUSTOM_ATTACHMENT', path: `customAttachments.${descriptor.key}`, message: 'Cartas, encantamentos e bônus precisam ser listas.' });
+          continue;
+        }
+        const checked = validateCustomItems([{ ...parent, defaultCards: state.cards.filter(id => id != null), defaultEnchants: state.enchants.filter(id => id != null), defaultBas: state.bas.filter(value => value != null) }], resolved.items);
+        for (const issue of checked.errors) errors.push({ code: 'INVALID_CUSTOM_ATTACHMENT', path: `customAttachments.${descriptor.key}.${issue.path}`, message: issue.message });
+        if (state.refine !== undefined && (!Number.isInteger(state.refine) || state.refine < 0 || state.refine > refineLimitFor(descriptor.key, parent))) {
+          errors.push({ code: 'INVALID_REFINE', path: `customAttachments.${descriptor.key}.refine`, message: 'Refino personalizado fora do limite.' });
+        }
+        if (state.grade !== undefined && (!['', 'D', 'C', 'B', 'A'].includes(state.grade) || state.grade && !canGradeItem(parent))) {
+          errors.push({ code: 'INVALID_GRADE', path: `customAttachments.${descriptor.key}.grade`, message: 'Grau personalizado fora do limite.' });
+        }
+      }
+      custom = ensureCustomAttachment(model, descriptor.key, parent);
+    }
+    const fields: { field: string; kind: 'piece' | 'card' | 'enchant'; id?: number; position?: number }[] = [
       ...(typeof slotId === 'number' && slotId > 0 ? [{ field: descriptor.key as string, kind: 'piece' as const }] : []),
-      ...descriptor.cardFields.map((field) => ({ field: field as string, kind: 'card' as const })),
-      ...descriptor.enchantFields.filter((field): field is NonNullable<typeof field> => !!field).map((field) => ({ field: field as string, kind: 'enchant' as const })),
+      ...(custom ? custom.cards.map((id, position) => ({ field: `${descriptor.key}CustomCard${position + 1}`, kind: 'card' as const, id: id ?? 0, position })) : descriptor.cardFields.map((field) => ({ field: field as string, kind: 'card' as const }))),
+      ...(custom ? custom.enchants.map((id, position) => ({ field: `${descriptor.key}CustomEnchant${position + 1}`, kind: 'enchant' as const, id: id ?? 0, position })) : descriptor.enchantFields.filter((field): field is NonNullable<typeof field> => !!field).map((field) => ({ field: field as string, kind: 'enchant' as const }))),
     ];
-    for (const { field, kind } of fields) {
-      const id = model[field];
+    for (const { field, kind, id: attachmentId, position: attachmentPosition } of fields) {
+      const id = attachmentId ?? model[field];
       if (typeof id !== 'number' || id <= 0) continue;
-      const path = `gear.${field}`;
+      const path = attachmentPosition === undefined ? `gear.${field}` : `customAttachments.${descriptor.key}.${kind === 'card' ? 'cards' : 'enchants'}.${attachmentPosition}`;
       const row = dataset.itemIndex.get(id);
       if (!row) {
         errors.push({ code: 'UNKNOWN_ITEM', path, itemId: id, message: `Item ${id} não existe no LATAM nem no calculador.` });
@@ -80,7 +106,7 @@ export function validateBuild(input: BuildInput, dataset: Dataset, constraints: 
         errors.push({ code: 'INVALID_SLOT', path, itemId: id, message: `${row.name} não é usado no slot ${descriptor.key}.` });
       }
       if (kind === 'card') {
-        const position = descriptor.cardFields.indexOf(field as never);
+        const position = attachmentPosition ?? descriptor.cardFields.indexOf(field as never);
         const sockets = dataset.itemIndex.get(slotId as number)?.slots ?? 0;
         if (position >= sockets) errors.push({ code: 'INVALID_SLOT', path, itemId: id, message: `${row.name}: a peça só tem ${sockets} encaixe(s).` });
         const listed = descriptor.cardListKey?.replace(/List$/, '');
@@ -92,9 +118,6 @@ export function validateBuild(input: BuildInput, dataset: Dataset, constraints: 
       if (!usable(record)) errors.push({ code: 'INCOMPATIBLE_CLASS', path, itemId: id, message: `${row.name} não é usável por esta classe.` });
       if ((record.requiredLevel ?? 0) > (model.level ?? 0)) {
         errors.push({ code: 'REQUIRED_LEVEL', path, itemId: id, message: `${row.name} exige nível ${record.requiredLevel}; a build é nível ${model.level}.` });
-      }
-      if (kind === 'piece' && (!record.script || Object.keys(record.script).length === 0) && !record.attack && !record.defense) {
-        warnings.push({ code: 'UNSUPPORTED_EFFECT', path, itemId: id, message: `${row.name} não tem bônus no calculador (conferir o texto do item).` });
       }
     }
   }

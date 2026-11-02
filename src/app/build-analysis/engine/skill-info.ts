@@ -2,6 +2,7 @@ import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { resolveSkillMeta, SKILL_ID_BY_NAME } from 'src/app/skills';
 import { SkillFormulaVersion } from 'src/app/skills/skill-formula-version';
 import { formulaInputs, skillSynergyKeys } from 'src/app/core/skill-synergy';
+import { skillDependencies } from './skill-dependencies';
 
 const fold = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 export function findSkill(char: CharacterBase, query: string, version: SkillFormulaVersion = 'current') {
@@ -47,6 +48,7 @@ export function skillInfo(char: CharacterBase, query: string, version: SkillForm
     crit: { canCrit: typeof skill.canCri === 'function' ? 'conditional' : !!skill.canCri, shareOfCharacterCrit: skill.baseCriPercentage ?? 1, flatCrit: skill.baseCri ?? 0, shareOfCritDamage: skill.criDmgPercentage ?? 1 },
     // The skill's shape, from the model: how many hits, which element, what else shapes the damage. Absent keys mean "not special".
     structure: structureOf(skill, selected),
+    dependencies: skillDependencies(char, skill),
     timing: { fixedCast: timing(skill.fct), variableCast: timing(skill.vct), afterCastDelay: timing(skill.acd), cooldown: timing(skill.cd) },
     scaling: { documented: !!skill.scaling || inputs.length > 0, inputs: inputs.map((input) => input.label), resources: skill.scaling?.resources ?? [], bonusKeys: skillSynergyKeys(skill), formula: skill.scaling?.formulaText,
       note: skill.scaling ? 'Dependências documentadas no motor; valide combinações com calculate/evaluate_variants.'

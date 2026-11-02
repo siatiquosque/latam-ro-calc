@@ -63,6 +63,7 @@ describe('evaluate_variants', () => {
     const { data: all } = await call('evaluate_variants', {
       build: BUILD,
       variants: [{ label: 'base', patch: {} }, { label: 'mais VIT', patch: { stats: { vit: 130 } } }],
+      validationMode: 'hypothetical',
       metrics: ['hp'],
     });
     const hpBase = all.baseline.hp;
@@ -70,6 +71,7 @@ describe('evaluate_variants', () => {
     const { data } = await call('evaluate_variants', {
       build: BUILD,
       variants: [{ label: 'base', patch: {} }, { label: 'mais VIT', patch: { stats: { vit: 130 } } }],
+      validationMode: 'hypothetical',
       metrics: ['hp'],
       require: [{ metric: 'hp', min: hpBase + 1 }],
     });
@@ -371,7 +373,7 @@ describe('optimize_build pairs and procs', () => {
 
 describe('optimize_stats', () => {
   // POD (the stat this skill scales with) starved, the points parked in STA and SAB.
-  const WASTED = { ...BUILD, stats: { ...BUILD.stats, pow: 40, sta: 60, wis: 40 } };
+  const WASTED = { ...BUILD, stats: { ...BUILD.stats, pow: 40, sta: 40, wis: 20 } };
 
   it('moves the points to what the skill scales with, within the points the level allows', async () => {
     const { data, isError } = await call('optimize_stats', { build: WASTED, objective: 'max', lock: ['con'] });
@@ -383,6 +385,7 @@ describe('optimize_stats', () => {
     const reread = (await call('calculate', { build: { share: data.share } })).data;
     expect(reread.damage.skill.max).toBe(data.final.max);
     const variants = (await call('evaluate_variants', { build: WASTED, variants: [{ label: 'sugestão', patch: data.patch }], metrics: ['max'] })).data;
+    expect(variants.errors).toBeUndefined();
     expect(variants.results[0].metrics.max).toBe(data.final.max);
   });
   it('respects a floor on another metric', async () => {

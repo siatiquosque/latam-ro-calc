@@ -13,15 +13,15 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
     title: 'Roteiro para melhorar uma build conversando',
     text:
       '0) `atkSkill` aceita `Nome==nível`, o nome sem nível, o nome em pt-BR ou o id; nome ou nível que não existe é erro. 1) `validate_build` no link: corrija o que for erro antes de medir e leia `unknowns`. 2) `explain_damage` (e `get_skill`) para ver o que a habilidade escala e o que mais pesa na fórmula. ' +
-      '3) Busque candidatos com `search_items`: slot, classId, `bonus`/`skill`/`synergy`, `maxLevel`, `excludeMvpCards` se a pessoa não quer carta de MVP, `withBonuses` para ler o que cada um faz. `get_item` traz `partners` (conjuntos e combos) e `slot_options` os encantamentos. ' +
+      '3) Busque candidatos com `search_items`: slot, classId, `bonus`/`skill`/`synergy`, `maxLevel`, `excludeMvpCards` se a pessoa não quer carta de MVP, `withBonuses` para ler o que cada um faz. `get_item` traz `partners` e `slot_options` os encantamentos. Use `find_synergies` com a build/itemIds para ler condições, incluindo personalizados; includePatches:true verifica propostas no motor. allowChanges autoriza mudanças adicionais de refino/grau/stats/skills; nunca as ative sem consentimento da pessoa. ' +
       '4) Teste em lote com `evaluate_variants` (patches independentes; mantenha refino e grau da peça atual quando a pergunta for "no mesmo nível"; conjunto = as peças juntas na mesma variante). ' +
       '5) Confirme o vencedor com `explain_damage` e em outro alvo (normal e chefe, Médio e Grande). 6) Diga o que foi testado: é a melhor entre as testadas, não a melhor possível; não some ganhos de variantes isoladas.',
   },
   'pesquisar-sinergias': {
     title: 'Pesquisar e testar combinações para uma habilidade',
-    text: 'Use get_skill com classId e skill (nome pt-BR, interno ou id): leia descrição, tempos e scaling. Para Fogueira Espiritual, HP máximo entra na fórmula: pesquise HP/HP%/VIT. ' +
+    text: 'Use get_skill com classId e skill (nome pt-BR, interno ou id): leia descrição, tempos, scaling e dependencies (leituras condicionais observadas, sem prova exaustiva). Para Fogueira Espiritual, HP máximo entra na fórmula: pesquise HP/HP%/VIT. ' +
       'search_items com classId, skill e synergy:true encontra bônus diretos e dependências documentadas; slot aceita equipamentos, enchant, headCard, weaponCard etc. ' +
-      'get_item traz descrição e bônus de cada candidato; slot_options informa os encantamentos e seus limites. Teste hipóteses completas com evaluate_variants, incluindo procMode:average e procHitsPerSecond quando fizer sentido. ' +
+      'find_synergies consulta cláusulas de conjuntos por build ou itemIds, com allOf/anyOf e conditions, inclusive personalizados desta build. includePatches:true verifica patches no motor; upgrades/stats/skills só com allowChanges explícito, e maxRefine/maxGrade limitam upgrades. Confirme o ganho em evaluate_variants. O catálogo e o motor são a referência; ausência de grupo pode ser limite do índice. get_item traz descrição e bônus de cada candidato; slot_options informa os encantamentos e seus limites. Teste hipóteses completas com evaluate_variants, incluindo procMode:average e procHitsPerSecond quando fizer sentido. ' +
       'Não precisa chamar optimize_build. Dependências não documentadas são desconhecidas, não prova de ausência de efeito. Observe nível mínimo: Nebulosa requer 240.',
   },
   fluxo: {
@@ -47,7 +47,7 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
     title: 'Comparar peças ou builds',
     text:
       'Poucos ids conhecidos de um slot: `optimize_slot` (cada candidato entra com os melhores soquetes; `complements: false` compara peças nuas). ' +
-      'Hipóteses variadas (trocar peça + carta + buff): `evaluate_variants`, até dezenas por chamada; use `slot_options` antes para não chutar ids de encantamento. ' +
+      'Hipóteses variadas (trocar peça + carta + buff): `evaluate_variants`, até dezenas por chamada. O padrão só aceita variantes legais; use validationMode:hypothetical para hipóteses explícitas com erros herdados ou excesso de pontos. targets retorna métricas por alvo, require vale em todos e a ordenação usa o primeiro (rankingTarget), sem soma de DPS; hitsToKill ordena menos golpes primeiro; use `slot_options` antes para não chutar ids de encantamento. ' +
       'Builds inteiras distintas: `compare_builds`. Máscaras que ocupam Meio e Baixo disputam os dois slots: compare-as com o par separado, não só no Meio.',
   },
   'achar-peca-improvavel': {
