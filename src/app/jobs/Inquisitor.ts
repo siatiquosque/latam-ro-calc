@@ -195,6 +195,7 @@ export class Inquisitor extends Sura {
   private readonly atkSkillList4th: AtkSkillModel[] = [
     {
       name: 'First Brand',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 450 + POD × 3) × nível base / 100.' },
       label: '[V2] First Brand Lv5',
       value: 'First Brand==5',
       levelList: levelList('First Brand', 5),
@@ -213,6 +214,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Second Faith',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 500 + POD × 4) × nível base / 100.' },
       label: '[V2] Second Faith Lv5',
       value: 'Second Faith==5',
       levelList: levelList('Second Faith', 5),
@@ -233,6 +235,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Third Punish',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 650 + POD × 5) × nível base / 100.' },
       label: '[V2] Third Punish Lv5',
       value: 'Third Punish==5',
       levelList: levelList('Third Punish', 5),
@@ -256,6 +259,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Second Judgement',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 525 + POD × 4) × nível base / 100.' },
       label: '[V2] Second Judgement Lv5',
       value: 'Second Judgement==5',
       levelList: levelList('Second Judgement', 5),
@@ -280,6 +284,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Third Consecration',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 650 + POD × 5) × nível base / 100.' },
       label: '[V2] Third Consecration Lv5',
       value: 'Third Consecration==5',
       levelList: levelList('Third Consecration', 5),
@@ -300,6 +305,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Second Flame',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 550 + POD × 4) × nível base / 100.' },
       label: '[V2] Second Flame Lv5',
       value: 'Second Flame==5',
       levelList: levelList('Second Flame', 5),
@@ -319,7 +325,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Third Flame Bomb',
-      scaling: { resources: ['hp'], bonusKeys: ['hp', 'hpPercent', 'vit', 'allStatus'],
+      scaling: { resources: ['hp'], bonusKeys: ['hp', 'hpPercent', 'vit', 'allStatus', 'pow', 'allTrait'],
         formulaText: 'A razão inclui HP máximo / 5, nível da habilidade e POD, escalados pelo nível base. Os coeficientes variam com a versão da fórmula.' },
       label: '[V2] Third Flame Bomb Lv5',
       value: 'Third Flame Bomb==5',
@@ -342,6 +348,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Explosion Blaster',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × 650 + POD × 3) × nível base / 100; com Oleum Sanctum ativo: (nível da habilidade × 850 + POD × 5) × nível base / 100.' },
       label: '[V2] Explosion Blaster Lv5',
       value: 'Explosion Blaster==5',
       levelList: levelList('Explosion Blaster', 5),
@@ -366,6 +373,7 @@ export class Inquisitor extends Sura {
     },
     {
       name: 'Massive Flame Blaster',
+      scaling: { bonusKeys: ['pow', 'allTrait'], formulaText: '(nível da habilidade × (800, ou 1100 contra Demônio e Bruto) + POD × 10) × nível base / 100.' },
       label: '[V2] Massive Flame Blaster Lv10',
       value: 'Massive Flame Blaster==10',
       levelList: levelList('Massive Flame Blaster', 10),

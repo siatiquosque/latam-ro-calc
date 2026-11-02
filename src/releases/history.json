@@ -1,5 +1,27 @@
 [
   {
+    "v": "0.1.206-beta",
+    "date": "02-11-2026",
+    "logs": [
+      "A busca de melhorias separa o orçamento de descoberta do de avaliação: com um orçamento curto ela agora chega a comparar peças de todos os slots em vez de gastar tudo nos primeiros, e a resposta traz `coverage` com o que foi e o que não foi medido.",
+      "O `validate_build` passou a conferir nível, limite e orçamento de pontos de atributo e habilidades inexistentes ou com nível inválido, e o `evaluate_variants` recusa a variante que quebra uma regra da build.",
+      "O `get_skill` passou a informar de quais atributos (POD, STA, SAB, FEI, CON, CRV), HP e SP a fórmula de cada habilidade depende, para todas as classes (antes só 9 habilidades diziam isso), e a busca por sinergia usa essas dependências.",
+      "O `validate_build` passou a conferir pré-requisitos, nível máximo, nível exigido e pontos das habilidades da classe contra a árvore de habilidades do kRO (rAthena), como avisos de referência, e o pool de rolagens do rAthena deixou de gerar alerta de \"não confirmado\" na busca."
+    ],
+    "logs_es": [
+      "La búsqueda de mejoras separa el presupuesto de descubrimiento del de evaluación: con un presupuesto corto ahora llega a comparar piezas de todos los slots en lugar de gastar todo en los primeros, y la respuesta trae `coverage` con lo que se midió y lo que no.",
+      "El `validate_build` ahora revisa nivel, límite y presupuesto de puntos de atributo y habilidades inexistentes o con nivel inválido, y el `evaluate_variants` rechaza la variante que rompe una regla de la build.",
+      "El `get_skill` ahora informa de qué atributos (POD, STA, SAB, FEI, CON, CRV), HP y SP depende la fórmula de cada habilidad, para todas las clases (antes solo 9 habilidades lo decían), y la búsqueda por sinergia usa esas dependencias.",
+      "El `validate_build` ahora revisa requisitos previos, nivel máximo, nivel exigido y puntos de las habilidades de la clase contra el árbol de habilidades del kRO (rAthena), como avisos de referencia, y el pool de rolls de rAthena dejó de generar alerta de \"no confirmado\" en la búsqueda."
+    ],
+    "logs_en": [
+      "The upgrade search separates the discovery budget from the evaluation budget: with a short budget it now reaches the pieces of every slot instead of spending it all on the first ones, and the answer carries `coverage` with what was and was not measured.",
+      "The `validate_build` now checks level, limits and budget of attribute points, and unknown skills or invalid skill levels, and `evaluate_variants` refuses a variant that breaks a build rule.",
+      "The `get_skill` now reports which attributes (POW, STA, WIS, SPL, CON, CRT), HP and SP each skill formula depends on, for every class (only 9 skills did before), and the synergy search uses those dependencies.",
+      "The `validate_build` now checks prerequisites, maximum level, required level and points of the class skills against the kRO skill tree (rAthena), as reference warnings, and the rAthena roll pool no longer raises an \"unconfirmed\" alert in the search."
+    ]
+  },
+  {
     "v": "0.1.205-beta",
     "date": "02-11-2026",
     "logs": [

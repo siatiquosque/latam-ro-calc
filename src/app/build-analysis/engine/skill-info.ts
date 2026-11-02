@@ -1,7 +1,7 @@
 import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { resolveSkillMeta, SKILL_ID_BY_NAME } from 'src/app/skills';
 import { SkillFormulaVersion } from 'src/app/skills/skill-formula-version';
-import { skillSynergyKeys } from 'src/app/core/skill-synergy';
+import { formulaInputs, skillSynergyKeys } from 'src/app/core/skill-synergy';
 
 const fold = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 export function findSkill(char: CharacterBase, query: string, version: SkillFormulaVersion = 'current') {
@@ -17,13 +17,16 @@ export function skillInfo(char: CharacterBase, query: string, version: SkillForm
   const levels = skill.levelList?.map(entry => Number(String(entry.value).split('==').at(-1))) ?? [Number(skill.value.split('==')[1]) || 1];
   const selected = level ?? (query.includes('==') ? Number(query.split('==')[1]) : Math.max(...levels));
   if (!levels.includes(selected)) throw new Error(`Nível inválido. Use: ${levels.join(', ')}.`);
+  const inputs = formulaInputs(skill);
   const timing = (value: number | ((level: number) => number)) => typeof value === 'function' ? value(selected) : value;
   return {
     name: skill.name, label: meta?.label ?? skill.label, id: meta?.id, value: `${skill.name}==${selected}`, levels, formulaVersion: version,
     description: meta?.description, damageType: skill.isMatk ? 'magical' : 'physical', melee: !!skill.isMelee,
     canCrit: typeof skill.canCri === 'function' ? 'conditional' : !!skill.canCri,
     timing: { fixedCast: timing(skill.fct), variableCast: timing(skill.vct), afterCastDelay: timing(skill.acd), cooldown: timing(skill.cd) },
-    scaling: { documented: !!skill.scaling, resources: skill.scaling?.resources ?? [], bonusKeys: skillSynergyKeys(skill), formula: skill.scaling?.formulaText,
-      note: skill.scaling ? 'Dependências documentadas no motor; valide combinações com calculate/evaluate_variants.' : 'Dependências ainda não documentadas: ausência de um bônus nesta ficha não prova que ele não afeta o dano.' },
+    scaling: { documented: !!skill.scaling || inputs.length > 0, inputs: inputs.map((input) => input.label), resources: skill.scaling?.resources ?? [], bonusKeys: skillSynergyKeys(skill), formula: skill.scaling?.formulaText,
+      note: skill.scaling ? 'Dependências documentadas no motor; valide combinações com calculate/evaluate_variants.'
+        : inputs.length ? `Entradas lidas da fórmula do motor (${inputs.map((input) => input.label).join(', ')}); efeitos de estados e buffs não estão aqui. Valide combinações com calculate/evaluate_variants.`
+        : 'Dependências ainda não documentadas: ausência de um bônus nesta ficha não prova que ele não afeta o dano.' },
   };
 }

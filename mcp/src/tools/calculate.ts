@@ -11,6 +11,7 @@ import { json, registerJsonTool } from './helpers';
 import { createCalculationOperations, targetSchema } from 'src/app/build-analysis/operations/calculate';
 import { createBuildContext } from 'src/app/build-analysis/operations/context';
 import { validateBuild, ValidateConstraints } from 'src/app/build-analysis/engine/validate';
+import { loadSkillTree, skillTreeLoaded } from 'src/app/build-analysis/engine/skill-tree';
 
 export const normalizeShare = (input: BuildInput, shortener?: Shortener) => createBuildContext(config, shortener).normalizeShare(input);
 
@@ -48,7 +49,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
         requireCalculableItems: z.boolean().optional(),
       }).optional(),
     },
-  }, ({ build, constraints }) => json(validateBuild(build, dataset, constraints)));
+  }, async ({ build, constraints }) => { await loadSkillTree(); return json(validateBuild(build, dataset, constraints, skillTreeLoaded())); });
 
   registerJsonTool<{ build: BuildInput; monsterIds: number[] }>(server, 'damage_table', {
     title: 'Dano contra vários monstros',

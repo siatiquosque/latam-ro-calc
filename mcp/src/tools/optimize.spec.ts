@@ -43,7 +43,7 @@ describe('evaluate_variants', () => {
       build: BUILD,
       variants: [
         { label: 'sem Mantra', patch: { skills: { active: { 'Powerful Faith': 0 } } } },
-        { label: 'mais POD', patch: { stats: { pow: 130 } } },
+        { label: 'refino +12', patch: { gear: { weaponRefine: 12 } } },
         { label: 'sem arma', patch: { gear: { weapon: null } } },
       ],
       metrics: ['max', 'dps', 'hp'],
@@ -52,7 +52,7 @@ describe('evaluate_variants', () => {
     expect(isError).toBe(false);
     expect(data.baseline.max).toBe(calculated.damage.skill.max);
     expect(data.tested).toBe(3);
-    expect(data.results.map((r: any) => r.label)).toEqual(['mais POD', 'sem Mantra', 'sem arma']);
+    expect(data.results.map((r: any) => r.label)).toEqual(['refino +12', 'sem Mantra', 'sem arma']);
     expect(data.results[0].deltaPct.dps).toBeGreaterThan(0);
     expect(data.results[2].deltaPct.dps).toBeLessThan(data.results[1].deltaPct.dps);
     // The first three results carry a link to open in the simulator.

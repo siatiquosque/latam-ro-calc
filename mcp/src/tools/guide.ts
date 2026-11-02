@@ -85,8 +85,8 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
     text:
       '`changes`: o que pôr onde, em palavras (peça, refino, grau, soquetes, rolagens). `gainByKind`: quanto do ganho é `ajuste` da peça atual, `refinoGrau` (subir o que você já usa até +12/A) e `troca` de peça: leia este antes de prometer "+100%". `steps`: o caminho, cada passo com seu `kind`. `patch`/`share`: a build final (`share` para reabrir ou continuar). Toda peça sugerida já é do LATAM (o que não é fica fora). ' +
       '`profiles`: sustentado e burst. `perTarget`: resultado em cada alvo. `levelCheck`: por peça trocada, o ganho no refino/grau de hoje (`now`) e nos ideais (`evolved`) e o `verdict`. ' +
-      '`alerts`: o que muda a leitura (alvo sem defesa, classe do alvo, penalidade de tamanho, ACERTO/ASPD, rolagens fora do catálogo). ' +
-      '`unconfirmedRolls`: rolagens vindas do rAthena (kRO), não confirmadas no LATAM. `detail: true` traz o contexto do alvo, candidatos, alternativas e as notas de cada bloco.',
+      '`coverage`: o que a busca olhou (slots alcançados, candidatos medidos e não medidos, soquetes conferidos, cálculos de descoberta e de avaliação) e se foi `complete`: o resultado é o melhor entre o que foi medido. `alerts`: o que muda a leitura (alvo sem defesa, classe do alvo, penalidade de tamanho, ACERTO/ASPD, rolagens fora do catálogo). ' +
+      '`unconfirmedRolls`: de onde vieram as rolagens do pool do rAthena (kRO), aceito como referência do LATAM. `detail: true` traz o contexto do alvo, candidatos, alternativas e as notas de cada bloco.',
   },
   tank: {
     title: 'Builds de tank',

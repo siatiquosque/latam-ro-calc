@@ -29,3 +29,24 @@ describe('last pass over the sockets', () => {
     expect(dps['found']).toBeGreaterThanOrEqual(dps['tao-gunka'] * 0.999);
   }, 300_000);
 });
+
+describe('coverage of the search', () => {
+  it('reaches the replacements even on a short budget, and says what it did not look at', async () => {
+    // Tuning the worn pieces used to take the whole of 800 calculations, so no replacement was ever compared.
+    const found = await call('optimize_build', { build: { preset: fixture.preset }, target: { monsterId: 20994 }, objective: 'dps', maxSolves: 800, procMode: 'off' });
+    expect(found.coverage.slots.searched).toBeGreaterThan(0);
+    expect(found.coverage.candidates.available).toBeGreaterThanOrEqual(found.coverage.candidates.measured);
+    expect(found.coverage.calculations.discovery).toBeGreaterThan(0);
+    expect(found.coverage.calculations.evaluation).toBeGreaterThan(0);
+    expect(found.coverage.complete).toBe(false);
+    // The best found so far is still an answer: never worse than the build it started from.
+    expect(found.final.dps).toBeGreaterThanOrEqual(found.baseline.dps);
+  }, 300_000);
+
+  it('with a budget too small for anything, says no slot was reached instead of pretending', async () => {
+    const found = await call('optimize_build', { build: { preset: fixture.preset }, target: { monsterId: 20994 }, objective: 'dps', maxSolves: 30, procMode: 'off' });
+    expect(found.coverage.complete).toBe(false);
+    expect(found.coverage.slots.notReached?.length ?? 0).toBeGreaterThan(0);
+    expect(found.final.dps).toBeGreaterThanOrEqual(found.baseline.dps);
+  }, 300_000);
+});

@@ -1,0 +1,1130 @@
+{
+ "skill:Asura Strike:boss-medium": {
+  "skill": {
+   "min": 5894029,
+   "max": 6277943,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 1,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Asura Strike:normal-large": {
+  "skill": {
+   "min": 4679070,
+   "max": 4974616,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 1,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Dragon Combo:boss-medium": {
+  "skill": {
+   "min": 311534,
+   "max": 331830,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Dragon Combo:normal-large": {
+  "skill": {
+   "min": 247316,
+   "max": 262938,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Fallen Empire:boss-medium": {
+  "skill": {
+   "min": 3023836,
+   "max": 3220818,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Fallen Empire:normal-large": {
+  "skill": {
+   "min": 2400502,
+   "max": 2552146,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Flash Combo:boss-medium": {
+  "skill": {
+   "min": 11293668,
+   "max": 11973917,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Flash Combo:normal-large": {
+  "skill": {
+   "min": 8946696,
+   "max": 9470191,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Lion Howling:boss-medium": {
+  "skill": {
+   "min": 865378,
+   "max": 921751,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 0.5,
+   "acd": 0,
+   "cd": 10
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Lion Howling:normal-large": {
+  "skill": {
+   "min": 686989,
+   "max": 730387,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 0.5,
+   "acd": 0,
+   "cd": 10
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Sky Blow:boss-medium": {
+  "skill": {
+   "min": 368298,
+   "max": 392289,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0.5,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Sky Blow:normal-large": {
+  "skill": {
+   "min": 292377,
+   "max": 310845,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0.5,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Earth Shaker:boss-medium": {
+  "skill": {
+   "min": 577749,
+   "max": 615386,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Earth Shaker:normal-large": {
+  "skill": {
+   "min": 458652,
+   "max": 487626,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Rampage Blast:boss-medium": {
+  "skill": {
+   "min": 1202006,
+   "max": 1280310,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 10
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Rampage Blast:normal-large": {
+  "skill": {
+   "min": 954172,
+   "max": 1014458,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 10
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Tiger Cannon:boss-medium": {
+  "skill": {
+   "min": 7758699,
+   "max": 8263710,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 2,
+   "fct": 0,
+   "acd": 1,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Tiger Cannon:normal-large": {
+  "skill": {
+   "min": 6160643,
+   "max": 6549411,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 2,
+   "fct": 0,
+   "acd": 1,
+   "cd": 3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Knuckle Arrow:boss-medium": {
+  "skill": {
+   "min": 327819,
+   "max": 349175,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Knuckle Arrow:normal-large": {
+  "skill": {
+   "min": 260228,
+   "max": 276670,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Lightning Ride:boss-medium": {
+  "skill": {
+   "min": 1081805,
+   "max": 1152270,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.5
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Lightning Ride:normal-large": {
+  "skill": {
+   "min": 858745,
+   "max": 913010,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 1,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.5
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Hell Gate:boss-medium": {
+  "skill": {
+   "min": 1598632,
+   "max": 1701854,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 2.8,
+   "fct": 0,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Hell Gate:normal-large": {
+  "skill": {
+   "min": 1271942,
+   "max": 1351413,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 2.8,
+   "fct": 0,
+   "acd": 1,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:First Brand:boss-medium": {
+  "skill": {
+   "min": 2286211,
+   "max": 2435143,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:First Brand:normal-large": {
+  "skill": {
+   "min": 1814932,
+   "max": 1929583,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.3
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Faith:boss-medium": {
+  "skill": {
+   "min": 4224658,
+   "max": 4499866,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Faith:normal-large": {
+  "skill": {
+   "min": 3353788,
+   "max": 3565650,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Punish:boss-medium": {
+  "skill": {
+   "min": 5646815,
+   "max": 5646815,
+   "hits": 3,
+   "critRate": 43,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Punish:normal-large": {
+  "skill": {
+   "min": 4474243,
+   "max": 4474243,
+   "hits": 3,
+   "critRate": 43,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Judgement:boss-medium": {
+  "skill": {
+   "min": 4844943,
+   "max": 5160558,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Judgement:normal-large": {
+  "skill": {
+   "min": 3846207,
+   "max": 4089177,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Consecration:boss-medium": {
+  "skill": {
+   "min": 1630284,
+   "max": 1736486,
+   "hits": 5,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Consecration:normal-large": {
+  "skill": {
+   "min": 1294217,
+   "max": 1375975,
+   "hits": 5,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Flame:boss-medium": {
+  "skill": {
+   "min": 5465376,
+   "max": 5821409,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Second Flame:normal-large": {
+  "skill": {
+   "min": 4338745,
+   "max": 4612828,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Flame Bomb:boss-medium": {
+  "skill": {
+   "min": 18564739,
+   "max": 19774108,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Third Flame Bomb:normal-large": {
+  "skill": {
+   "min": 14737808,
+   "max": 15668810,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Explosion Blaster:boss-medium": {
+  "skill": {
+   "min": 6223283,
+   "max": 6223283,
+   "hits": 1,
+   "critRate": 43,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Explosion Blaster:normal-large": {
+  "skill": {
+   "min": 4931125,
+   "max": 4931125,
+   "hits": 1,
+   "critRate": 43,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Massive Flame Blaster:boss-medium": {
+  "skill": {
+   "min": 5095381,
+   "max": 5427311,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 5
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Massive Flame Blaster:normal-large": {
+  "skill": {
+   "min": 4044801,
+   "max": 4300352,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 5
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "build:b1": {
+  "skill": {
+   "min": 22028650,
+   "max": 23417382,
+   "hits": 3,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 856,
+   "matk": 297,
+   "hit": 689,
+   "crit": 46,
+   "aspd": 179,
+   "maxHp": 224466,
+   "def": 804,
+   "mdef": 103
+  }
+ },
+ "build:b2": {
+  "skill": {
+   "min": 23365420,
+   "max": 23365420,
+   "hits": 1,
+   "critRate": 101,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0.7
+  },
+  "stats": {
+   "atk": 820,
+   "matk": 268,
+   "hit": 667,
+   "crit": 104,
+   "aspd": 177,
+   "maxHp": 140519,
+   "def": 359,
+   "mdef": 3
+  }
+ },
+ "build:weak": {
+  "skill": {
+   "min": 3753076,
+   "max": 3986915,
+   "hits": 3,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 1
+  },
+  "stats": {
+   "atk": 796,
+   "matk": 282,
+   "hit": 689,
+   "crit": 46,
+   "aspd": 178,
+   "maxHp": 204056,
+   "def": 804,
+   "mdef": 100
+  }
+ },
+ "set:lobo-cinzento:partners": [
+  300223
+ ]
+}

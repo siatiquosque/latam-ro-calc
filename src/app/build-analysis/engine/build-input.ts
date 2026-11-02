@@ -116,6 +116,8 @@ export interface ResolvedBuild {
   classInfo: ClassInfo | undefined;
   /** Non-fatal problems worth telling the agent about (unknown item ids, etc.). */
   warnings: string[];
+  /** Level, job level and stats the class limits changed silently (what was asked, and what the calculation used). */
+  adjusted: { field: string; from: number; to: number }[];
   items: Record<number, ItemModel>;
   customItems: CustomItemDefinition[];
 }
@@ -226,7 +228,12 @@ export function resolveBuild(input: BuildInput, dataset: Dataset): ResolvedBuild
   }
   const char = dataset.classes.newInstance(model.class);
 
+  const limited = ['level', 'jobLevel', ...STAT_KEYS] as const;
+  const before = Object.fromEntries(limited.map((field) => [field, model[field]]));
   clampLevels(model, char);
+  const adjusted = limited.filter((field) => typeof before[field] === 'number' && model[field] !== before[field])
+    .map((field) => ({ field, from: before[field] as number, to: model[field] as number }));
+  for (const { field, from, to } of adjusted) warnings.push(`${field}: ${from} está fora do limite da classe; o cálculo usou ${to}.`);
   applyJobBonus(model, char);
   applySkillMaps(model, char);
   resolveAtkSkill(model, char);
@@ -238,5 +245,5 @@ export function resolveBuild(input: BuildInput, dataset: Dataset): ResolvedBuild
     }
   }
 
-  return { model: model as ResolvedBuild['model'], char, classInfo: dataset.classes.get(model.class), warnings, items, customItems };
+  return { model: model as ResolvedBuild['model'], char, classInfo: dataset.classes.get(model.class), warnings, adjusted, items, customItems };
 }
