@@ -7,6 +7,8 @@ import { PanelSearch } from '../../ui/panel-search';
 import { TextKey } from '../../../app/i18n';
 import { useRichText, useText } from '../../state/use-text';
 import { useViewportBand } from '../../ui/viewport';
+import { BattlePill } from '../battle-pill';
+import { BattleTargetPicker, BattleTargetsTable } from '../battle-targets';
 
 const BuildImprovements = lazy(() => import('../build-improvements'));
 
@@ -50,6 +52,12 @@ const choosePane = (next: Pane) => {
   const margin = shell.current ? parseFloat(getComputedStyle(shell.current).scrollMarginTop) || 0 : 0;
   const top = shell.current ? shell.current.getBoundingClientRect().top + window.scrollY - margin : 0;
   if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top) });
+};
+// The pill's way back to the battle card: its pane first (phone and tablet show one at a time),
+// then the card itself once that pane has rendered.
+const gotoBattle = () => {
+  setPane('result');
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector('.hud-hero-strip')?.scrollIntoView({ block: 'center', behavior: 'smooth' })));
 };
 return <>{showImprovements && <Suspense fallback={<p role="status">{t('improve.title')}…</p>}><BuildImprovements vm={vm} services={services} onClose={() => setShowImprovements(false)} /></Suspense>}{(() => { const reductionPop = (context: any) => { const cats = context["cats"];
 const sources = context["sources"];
@@ -118,6 +126,7 @@ const target = context["target"]; return <><Render tag="div" props={{"className"
 "style": normalizeStyle(Object.assign({}, normalizeStyle({"width": "560px","max-width": "92vw"})))}}>{(() => { const __condition16 = vm.isShowAspdCurve;  return __condition16 ? <><Render tag="app-aspd-curve" props={{"aspd": (vm.totalSummary?.calc?.totalAspd || 0),
 "aspd2": (vm.isEnableCompare ? vm.totalSummary2?.calc?.totalAspd : null)}}></Render></> : null; })()}</Render>
 <PaneSwitcher pane={pane} onPane={choosePane} />
+<BattlePill vm={vm} onGoto={gotoBattle} />
 <Render tag="div" props={{"className": ["grid grid-nogutter calc-shell"].filter(Boolean).join(' '),
 "data-pane": pane,
 "reference": (element: any) => { shell.current = element; }}}><Render tag="div" props={{"className": ["ui-fluid col-7 editor_col calc-col calc-col--build"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["stats_stack"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["char_band"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["build_actions"].filter(Boolean).join(' ')}}><button type="button" className="ui-button ui-button-outlined" disabled={vm.isInProcessingPreset} onClick={() => setShowImprovements(true)}>{t('improve.title')}</button><Render tag="button" props={{"type": "button",
@@ -666,19 +675,8 @@ const i = __index59; return <Fragment key={identityKey(__entry59)}><>{(() => { c
 "showElementTableClick": (event: any) => vm.action(() => { const $event = event; vm.onShowElementalTableClick() }),
 "showBonusBreakdownClick": (event: any) => vm.action(() => { const $event = event; vm.showBonusBreakdown($event) }),
 "reductionRowClick": (event: any) => vm.action(() => { const $event = event; vm.openReductionRow($event,true) })}}></Render></Render></> : null; })()}</Render></Render>
-<Render tag="app-ui-accordion-tab" props={{"header": t('calc.battle')}}><Render tag="div" props={{"className": ["grid grid-nogutter battle_summary"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["col-12"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["hud-selectors-row"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["hud-selectors-col"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["joined_field battle-target-field"].filter(Boolean).join(' ')}}><Render tag="app-ui-dropdown" props={{"inputId": "monsterOpponentHud",
-"filterBy": "label,searchVal",
-"filterPlaceholder": t('calc.monsterFilter'),
-"scrollHeight": "400px",
-"placeholder": t('calc.monster'),
-"autoDisplayFirst": false,
-"resetFilterOnHide": true,
-"options": vm.groupMonsterList,
-"filter": true,
-"group": true,
-"value": vm.selectedMonster,
-"onModelChange": (value: any, event: any) => vm.action(() => { ((event: any) => vm.action(() => { const $event = event; (vm.selectedMonster = $event) }))(value); ((event: any) => vm.action(() => { const $event = event; vm.onMonsterChange() }))({value, originalEvent: event}); }),
-"template_group": (context: any) => { const group = context["$implicit"]; return <><Render tag="div" props={{"className": ["flex align-items-center font-bold dropdown_monster_group_label"].filter(Boolean).join(' ')}}><Render tag="span" props={{}}>{interpolate(["",""], [group.label])}</Render></Render></>; }}}></Render></Render></Render></Render></Render>
+<Render tag="app-ui-accordion-tab" props={{"header": t('calc.battle')}}><Render tag="div" props={{"className": ["grid grid-nogutter battle_summary"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["col-12"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["hud-selectors-row"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["hud-selectors-col"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["joined_field battle-target-field"].filter(Boolean).join(' ')}}><BattleTargetPicker vm={vm} /></Render></Render></Render></Render>
+<Render tag="div" props={{"className": "col-12"}}><BattleTargetsTable vm={vm} /></Render>
 <Render tag="div" props={{"className": ["col-12"].filter(Boolean).join(' ')}}><Render tag="app-battle-hud" props={{"totalSummary": vm.totalSummary,
 "totalSummary2": vm.totalSummary2,
 "isEnableCompare": vm.isEnableCompare,

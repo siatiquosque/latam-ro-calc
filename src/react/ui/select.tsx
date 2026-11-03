@@ -19,6 +19,14 @@ export interface SelectProps {
   filter?: boolean; filterBy?: string; filterPlaceholder?: string;
   optionFilter?: (option: any) => boolean;
   placeholder?: string; defaultLabel?: string; selectedItemsLabel?: string;
+  /** Shows this text on the trigger whatever is selected (a multiselect that adds to a list shown elsewhere). */
+  fixedLabel?: string;
+  /** Multiselect only: content under the search field, e.g. what is selected so far. */
+  panelHeader?: ReactNode;
+  /** Multiselect only: a pick closes the panel (a single choice that reuses the multiselect panel). */
+  closeOnSelect?: boolean;
+  /** Multiselect only: false hides the checkboxes. */
+  checks?: boolean;
   showClear?: boolean; showToggleAll?: boolean; resetFilterOnHide?: boolean;
   autoDisplayFirst?: boolean; autofocus?: boolean; scrollHeight?: string;
   className?: string; panelClassName?: string; emptyFilterMessage?: string;
@@ -31,7 +39,7 @@ export interface SelectProps {
 interface Row { option: any; group?: boolean; }
 export function Select({ options, value, onChange, kind = 'dropdown', optionLabel: labelKey = '', optionValue: valueKey = '',
   group = false, disabled = false, inputId, ariaLabel, ariaLabelledBy, filter = false, filterBy = 'label', filterPlaceholder = '',
-  placeholder = '', defaultLabel = '', selectedItemsLabel, showClear = false, showToggleAll = true,
+  placeholder = '', defaultLabel = '', selectedItemsLabel, fixedLabel, panelHeader, closeOnSelect = false, checks = true, showClear = false, showToggleAll = true,
   resetFilterOnHide = false, autoDisplayFirst = true, autofocus = false, scrollHeight = '200px', className = '', panelClassName = '',
   emptyFilterMessage, virtualScroll = false, virtualScrollItemSize = 38,
   optionGroupLabel = 'label', optionGroupChildren = ['items'], renderItem, renderSelected, renderGroup, renderFilterIcon,
@@ -67,8 +75,8 @@ export function Select({ options, value, onChange, kind = 'dropdown', optionLabe
     setActive(rows.findIndex(row => !row.group && !row.option?.disabled));
   }, [query, rows]);
   const selectedLeaves = multi ? leaves.filter(selected) : [];
-  const label = multi ? selectedLeaves.length > 3 ? fill(selectedItemsLabel ?? t('ui.select.selectedCount'), { 0: selectedLeaves.length }) : selectedLeaves.length ? selectedLeaves.map(labelOf).join(', ') : placeholder || defaultLabel || '\u00a0'
-    : selectedOption != null ? labelOf(selectedOption) : placeholder || '\u00a0';
+  const label = fixedLabel ?? (multi ? selectedLeaves.length > 3 ? fill(selectedItemsLabel ?? t('ui.select.selectedCount'), { 0: selectedLeaves.length }) : selectedLeaves.length ? selectedLeaves.map(labelOf).join(', ') : placeholder || defaultLabel || '\u00a0'
+    : selectedOption != null ? labelOf(selectedOption) : placeholder || '\u00a0');
   const hasValue = multi ? !!value?.length : value != null;
   const hide = (restore = false) => {
     if (!open) return;
@@ -88,7 +96,7 @@ export function Select({ options, value, onChange, kind = 'dropdown', optionLabe
   const choose = (option: any, event: SyntheticEvent) => {
     if (disabled || option?.disabled) return;
     onChange(chooseSelection(value, option, multi, false, disabled, valueKey, labelKey), event);
-    if (!multi) hide(true);
+    if (!multi || closeOnSelect) hide(true);
   };
   const onKey = (event: KeyboardEvent) => {
     if (disabled) return;
@@ -174,7 +182,7 @@ export function Select({ options, value, onChange, kind = 'dropdown', optionLabe
       style={virtualScroll ? { height: virtualScrollItemSize } : undefined} id={`${id}-option-${index}`} role="option" tabIndex={-1}
       aria-selected={selected(row.option)} aria-disabled={!!row.option?.disabled} onClick={event => choose(row.option, event)}
       onKeyDown={event => { if (event.key === 'Enter') choose(row.option, event); }}>
-      {multi && <span className={`ui-checkbox-box ${selected(row.option) ? 'ui-highlight' : ''}`}>{selected(row.option) && <Icon name="check" />}</span>}
+      {multi && checks && <span className={`ui-checkbox-box ${selected(row.option) ? 'ui-highlight' : ''}`}>{selected(row.option) && <Icon name="check" />}</span>}
       {renderItem ? <InsideOption.Provider value>{renderItem(row.option)}</InsideOption.Provider> : labelOf(row.option)}
     </li>;
   const control = <>
@@ -209,6 +217,7 @@ export function Select({ options, value, onChange, kind = 'dropdown', optionLabe
               : renderFilterIcon ? renderFilterIcon() : <Icon className="ui-dropdown-filter-icon" name="search" />}</div>}
           {multi && <button type="button" className="ui-link" aria-label={t('ui.select.closeOptions')} onClick={() => hide(true)}><Icon name="times" /></button>}
         </div>}
+        {multi && panelHeader}
         {cascade ? tree(options) : virtualScroll && rows.length > 0
           ? <VirtualList ref={viewport} items={rows} itemSize={virtualScrollItemSize} height={Math.min(parseFloat(scrollHeight) || 200, rows.length * virtualScrollItemSize)}
             className="ui-select-viewport" role="listbox" id={`${id}-list`} multiselectable={multi} renderItem={rowView} />

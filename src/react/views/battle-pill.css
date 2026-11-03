@@ -1,0 +1,105 @@
+/* The battle card in miniature, floating while the card is scrolled out of sight.
+   Sits under dialogs and popovers (they stack above 1000) and above the page. */
+.bp {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(380px, calc(100vw - 32px));
+  padding: 10px 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius, 6px);
+  background: var(--surface-card);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 40%);
+  color: var(--text-color);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.bp:hover,
+.bp:focus-visible {
+  border-color: var(--primary-color);
+}
+.bp-target {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.bp-name {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bp-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.bp-tag {
+  padding: 0 6px;
+  border-radius: 4px;
+  background: var(--stat-chip-bg, rgb(255 255 255 / 8%));
+  color: var(--text-color-secondary);
+  font-size: 0.72rem;
+}
+.bp-figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.bp-fig {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.bp-big {
+  overflow: hidden;
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bp-cap {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--text-color-secondary);
+}
+.bp-delta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-color-secondary);
+}
+.bp-delta.pos {
+  color: var(--green-400, #6ebe71);
+}
+.bp-delta.neg {
+  color: var(--red-400, #ff8980);
+}
+.bp-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+}
+.bp-worst {
+  padding-top: 6px;
+  border-top: 1px solid var(--surface-border);
+  font-size: 0.75rem;
+  color: var(--red-300, #ff9d94);
+  overflow-wrap: anywhere;
+}
+
+/* Phone: the bottom tab bar owns the edge, so the pill rides just above it. */
+@media (max-width: 767px) {
+  .bp {
+    right: 8px;
+    bottom: calc(var(--pane-bar-height, 56px) + env(safe-area-inset-bottom) + 8px);
+  }
+}

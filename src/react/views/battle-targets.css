@@ -1,0 +1,210 @@
+/* Extra targets: the build against several mobs, one compact table under the selector. */
+.bt-add {
+  width: 100%;
+  min-width: 0;
+}
+.bt {
+  margin-top: 8px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius, 6px);
+  background: var(--surface-card);
+}
+/* 15 rows would push the battle card away; the table scrolls inside itself, both ways. */
+.bt-scroll {
+  max-height: 280px;
+  overflow: auto;
+}
+.bt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.bt-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-card);
+  color: var(--text-color-secondary);
+  font-weight: 600;
+  text-align: left;
+}
+.bt-table th,
+.bt-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--surface-border);
+  white-space: nowrap;
+}
+.bt-table .bt-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+/* The name stays put while the other columns scroll under it. */
+.bt-table th.bt-name,
+.bt-table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  max-width: 180px;
+  overflow: hidden;
+  background: var(--surface-card);
+  text-overflow: ellipsis;
+  text-align: left;
+  font-weight: 400;
+}
+.bt-table thead th:first-child {
+  z-index: 3;
+  font-weight: 600;
+}
+.bt-sort,
+.bt-link,
+.bt-remove {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.bt-link {
+  color: var(--primary-color);
+  text-align: left;
+}
+.bt-link:hover {
+  text-decoration: underline;
+}
+.bt-remove {
+  color: var(--text-color-secondary);
+}
+.bt-remove:hover {
+  color: var(--red-400, #ff8980);
+}
+.bt-main,
+.bt-main th.bt-name {
+  background: var(--highlight-bg, #263545);
+}
+.bt-badge {
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--stat-chip-bg, rgb(255 255 255 / 8%));
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+.bt-badge--worst {
+  color: var(--red-300, #ff9d94);
+}
+.bt-badge--best {
+  color: var(--green-400, #6ebe71);
+}
+.bt-dmg {
+  font-weight: 600;
+}
+.bt-worst .bt-dmg {
+  color: var(--red-300, #ff9d94);
+}
+.bt-best .bt-dmg {
+  color: var(--green-400, #6ebe71);
+}
+
+/* The picker is one full-width list; its mode switch, count and Clear sit at the top of the panel. */
+.bt-add {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+.bt-add .ui-select-trigger {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bt-picked {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--surface-border);
+}
+.bt-picked-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+}
+.bt-count {
+  color: var(--text-color-secondary);
+}
+.bt-clear {
+  margin-left: auto;
+}
+.bt-multi {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius, 6px);
+  background: transparent;
+  color: var(--text-color-secondary);
+  font: inherit;
+  cursor: pointer;
+}
+.bt-multi--on {
+  border-color: var(--primary-color);
+  background: var(--highlight-bg, rgb(255 255 255 / 8%));
+  color: var(--text-color);
+}
+.bt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-height: 76px;
+  margin: 6px 0 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+.bt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 4px 1px 8px;
+  border-radius: 999px;
+  background: var(--stat-chip-bg, rgb(255 255 255 / 8%));
+  font-size: 0.75rem;
+}
+.bt-chip--card {
+  outline: 1px solid var(--primary-color);
+}
+/* In the battle card's joined field the list takes the whole row, as the plain dropdown did. */
+.battle-target-field app-ui-multi-select {
+  display: block;
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+.battle-target-field .ui-multiselect {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 0.45rem;
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+}
+.battle-target-field .ui-multiselect-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.battle-target-field .ui-multiselect-trigger {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.45);
+}

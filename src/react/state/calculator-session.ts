@@ -116,6 +116,7 @@ import { isDefenderKey, PlayerTargetProfile, PvpMode } from 'src/app/core/pvp';
 import { buildReductionCategories, collectContributingKeys, ReductionCategory, ReductionRow, reductionRowClickable as reductionRowClickableFn, sourcesContributeAnyKey } from '../../app/layout/pages/ro-calculator/reduction-breakdown';
 import { buildStatsSummary, statOriginFor, StatsSummaryView, SummaryHeadline, SummaryRow } from '../../app/layout/pages/ro-calculator/stats-summary';
 import { encodeBuild, decodeShared } from 'src/app/core/share-codec';
+import { EXTRA_TARGETS_STORAGE_KEY, ExtraTargetRow, critRateOf, describeTarget, readExtraTargets, sanitizeExtraTargets, worstTarget } from './extra-targets';
 import { shareEntryHref } from 'src/app/core/share-entry';
 import { buildSharePath, readShareToken, SHARE_PATH_PREFIX } from 'src/app/core/share-path';
 import { buildCharSpriteUrl, bareJobSprite } from 'src/app/domain/char-sprite-url';
@@ -454,6 +455,10 @@ export class CalculatorSession extends Store<number> {
   betelgeuseHp = normalizeBetelgeuseHp(Number(localStorage.getItem('betelgeuseHp')));
   readonly betelgeuseHpOptions = BETELGEUSE_HP_OPTIONS;
 
+  /** Extra targets tested alongside the main one; local preference, not part of a share link. */
+  extraMonsterIds: number[] = readExtraTargets(localStorage.getItem(EXTRA_TARGETS_STORAGE_KEY), this.selectedMonster);
+  extraTargetRows: ExtraTargetRow[] = [];
+
   get selectedMonsterModel(): MonsterModel {
     return withBetelgeuseHp(this.monsterDataMap[this.selectedMonster], this.betelgeuseHp);
   }
@@ -512,6 +517,8 @@ export class CalculatorSession extends Store<number> {
   private calculatorPvp = new Calculator();
   /** The compared build's PVP pass — its own instance, like calculator2 for the monster panel. */
   private calculatorPvp2 = new Calculator();
+  /** Scratch calculator for the extra targets: one solve per target, on the main build. */
+  private calculatorExtra = new Calculator();
   private controller = new CalculatorController();
   private stateCalculator = new BaseStateCalculator();
 
@@ -820,7 +827,7 @@ export class CalculatorSession extends Store<number> {
         }),
     );
     this.enchants = ens;
-    for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2]) {
+    for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2, this.calculatorExtra]) {
       calc.setMasterItems(this.items);
     }
   }
@@ -924,6 +931,7 @@ await ((_event?: unknown) => {
         }
         this.calculate();
         this.calcCompare();
+        this.calculateExtras();
         this.saveCurrentStateItemset();
         this.resetItemDescription();
         this.onSelectItemDescription(Boolean(this.selectedCompareItemDesc));
@@ -1001,6 +1009,7 @@ await ((_event?: unknown) => {
       })(value); this.publish(); })); return listenDebounced(this.updateChanceEvent, 300, (value) => { ((_event?: unknown) => {
           this.calculate();
           if (this.isEnableCompare) this.calcCompare();
+          this.calculateExtras();
           this.applySummaryTables();
         })(value); this.publish();
           this.chanceSettled.next(value); }, value => { ((_event?: unknown) => (this.isCalculating = true))(value); this.publish(); }); })();
@@ -1068,7 +1077,7 @@ await ((_event?: unknown) => {
         // Seeded from one list on purpose: three separate statements are how the PVP
         // compare calculator was added without one, which made every compare pass in the
         // PVP tab die inside setWeapon. A new instance is one entry away from working.
-        for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2]) {
+        for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2, this.calculatorExtra]) {
           calc.setMasterItems(this.items).setHpSpTable(hpSpTable);
         }
         this.refreshPvpTargets();
@@ -1192,7 +1201,7 @@ await ((_event?: unknown) => {
     if (item?.custom) this.customStudio?.edit(item as CustomItemDefinition);
   }
 
-  private prepare(calculator: Calculator, compareModel?: any, pvpTarget?: PlayerTargetProfile, pvpMode?: PvpMode) {
+  private prepare(calculator: Calculator, compareModel?: any, pvpTarget?: PlayerTargetProfile, pvpMode?: PvpMode, monster?: MonsterModel) {
     const { activeSkills, passiveSkills, selectedAtkSkill } = this.model;
     const { equipAtks, masteryAtks, activeSkillNames, learnedSkillMap } = this.selectedCharacter
       .setLearnSkills({
@@ -1317,8 +1326,8 @@ await ((_event?: unknown) => {
     }
 
     const chainInput: CalcChainInput = {
-      monster: this.selectedMonsterModel,
-      relieveLevel: this.relieveLevel,
+      monster: monster ?? this.selectedMonsterModel,
+      relieveLevel: monster ? normalizeMonsterRelieveLevel(monster.id, this.relieveLevel) : this.relieveLevel,
       playerTarget: pvpTarget,
       pvpMode,
       equipAtks: equippedAtks,
@@ -3750,7 +3759,103 @@ await ((_event?: unknown) => {
     this.calcStorage.writeRelieveLevel(this.relieveLevel);
     localStorage.setItem('monster', this.selectedMonster.toString());
     this.selectedMonsterName = this.monsterDataMap?.[this.selectedMonster]?.name;
+    this.storeExtraMonsters(this.extraMonsterIds);
     this.updateItemEvent.next(1);
+  }
+
+  /** Stores the extra targets: capped, deduped, never the main one. */
+  private storeExtraMonsters(ids: number[]) {
+    this.extraMonsterIds = sanitizeExtraTargets(ids, this.selectedMonster);
+    localStorage.setItem(EXTRA_TARGETS_STORAGE_KEY, JSON.stringify(this.extraMonsterIds));
+  }
+
+  /**
+   * The picker's list: every ticked monster. The one in the battle card stays where it is
+   * while it is ticked; unticking it hands the card to the first one left. Never empty.
+   */
+  setTargets(ids: number[]) {
+    const unique = [...new Set(ids)];
+    if (!unique.length) return;
+    const main = unique.includes(this.selectedMonster) ? this.selectedMonster : unique[0];
+    const changed = main !== this.selectedMonster;
+    this.selectedMonster = main;
+    this.storeExtraMonsters(unique.filter((id) => id !== main));
+    if (changed) this.onMonsterChange();
+    else this.calculateExtras();
+  }
+
+  /** Replaces the extra targets and re-solves them. */
+  setExtraMonsters(ids: number[]) {
+    this.storeExtraMonsters(ids);
+    this.calculateExtras();
+  }
+
+  removeExtraMonster(id: number) {
+    this.setExtraMonsters(this.extraMonsterIds.filter((value) => value !== id));
+  }
+
+  /** Drops every extra target; the card's monster stays, since the list is never empty. */
+  clearTargets() {
+    this.setTargets([this.selectedMonster]);
+  }
+
+  /** Every ticked monster, the card's one first. */
+  get targetIds(): number[] {
+    return [this.selectedMonster, ...this.extraMonsterIds];
+  }
+
+  /** Makes an extra target the main one; the old main target takes its place in the list. */
+  promoteExtraMonster(id: number) {
+    if (!this.extraMonsterIds.includes(id)) return;
+    const previous = this.selectedMonster;
+    this.selectedMonster = id;
+    this.extraMonsterIds = this.extraMonsterIds.map((value) => (value === id ? previous : value));
+    this.onMonsterChange();
+  }
+
+  /**
+   * Solves the user's rotation against each extra target on the main build. Same
+   * prepare/solve path as the main target, one scratch calculator, so the figures match
+   * what picking that monster as the main target would show.
+   */
+  private calculateExtras() {
+    if (!this.extraMonsterIds.length || !Object.keys(this.monsterDataMap).length) {
+      this.extraTargetRows = [];
+      return;
+    }
+    const mainChainInput = this.lastChainInput;
+    const rows: ExtraTargetRow[] = [];
+    for (const id of this.extraMonsterIds) {
+      const monster = this.monsterDataMap[id];
+      if (!monster) continue;
+      const calc = this.prepare(this.calculatorExtra, undefined, undefined, undefined, monster);
+      const summary = calc.getTotalSummary();
+      const view = this.lastChainInput ? this.solveRotation(calc, this.lastChainInput, summary) : null;
+      const cycle = view && !view.timingUnknown ? view.cycle : null;
+      rows.push({
+        id,
+        name: monster.name,
+        ...describeTarget(summary?.monster),
+        dps: cycle?.sustainedDps ?? 0,
+        perCycle: cycle?.damagePerCycle ?? 0,
+        critRate: cycle ? critRateOf(view) : null,
+        ttkText: view?.ttk?.text ?? null,
+        ttkSeconds: view?.ttk?.seconds ?? null,
+        cyclesToKill: view?.ttk ? view.cyclesToKill : null,
+      });
+    }
+    this.lastChainInput = mainChainInput;
+    this.extraTargetRows = rows;
+  }
+
+  /** Lowest-DPS target among the main one and the extras, for the floating pill. */
+  get worstTargetRow(): { name: string; dps: number } | null {
+    if (!this.extraTargetRows.length) return null;
+    const main = this.rotationView?.cycle;
+    const rows = main && !this.rotationView?.timingUnknown
+      ? [...this.extraTargetRows, { name: this.selectedMonsterName, dps: main.sustainedDps }]
+      : this.extraTargetRows;
+    return worstTarget(rows);
   }
 
   /** Whether the current target casts Aliviar, and so whether the level picker shows. */
