@@ -156,6 +156,8 @@ export function decodeStructuredBonusKey(key: string): string | undefined {
     const prop = m[1] === 'all' ? 'todas as propriedades' : (sub[m[1]] ?? m[1]);
     return `Dano Mágico por Propriedade (${prop})`;
   }
+  // matk_element_* — ATQM % applied only to magic of that element
+  if ((m = key.match(/^matk_element_(w+)$/))) return `ATQM % (magia de ${sub[m[1]] ?? m[1]})`;
   // p_/m_ damage vs a category subtype
   if ((m = key.match(/^([pm])_(size|element|race|class)_(\w+)$/))) {
     return `Dano ${atk[m[1]]} (${cat[m[2]]}: ${sub[m[3]] ?? m[3]})`;

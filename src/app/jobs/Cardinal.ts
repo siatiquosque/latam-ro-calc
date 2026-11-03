@@ -332,12 +332,12 @@ export class Cardinal extends ArchBishop {
       addBonus(totalBonus, 'p_size_l', mapL[mAndBookLv]);
     }
 
+    // The client text: "Aumenta seu dano mágico Sagrado e o dano de Flamen, Arbitrium e Chuva Milagrosa". The percentage is a
+    // holy-magic bonus for every skill, applied to the ATQM before the skill ratio (it only applies when the cast is Holy: Adoramus in
+    // Ancilla turns Neutral and loses it);
+    // the three named skills also carry the Fidus term inside their ratio.
     const fidusLv = this.learnLv('Fidus Animus');
-    if (fidusLv > 0) {
-      if (skillName === 'Framen' || skillName === 'Arbitrium' || skillName === 'Pneumaticus Procella') {
-        addBonus(totalBonus, 'm_my_element_holy', floor(fidusLv * 1.5));
-      }
-    }
+    if (fidusLv > 0) addBonus(totalBonus, 'matk_element_holy', floor(fidusLv * 1.5));
 
     return totalBonus;
   }

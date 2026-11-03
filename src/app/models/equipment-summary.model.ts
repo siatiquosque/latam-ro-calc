@@ -253,6 +253,7 @@ export interface EquipmentSummaryModel {
   m_my_element_wind: number;
   m_my_element_poison: number;
   m_my_element_holy: number;
+  matk_element_holy: number;
   m_my_element_dark: number;
   m_my_element_ghost: number;
   m_my_element_undead: number;

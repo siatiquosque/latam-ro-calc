@@ -200,6 +200,7 @@ export const createRawTotalBonus = (): EquipmentSummaryModel => {
     m_my_element_wind: 0,
     m_my_element_poison: 0,
     m_my_element_holy: 0,
+    matk_element_holy: 0,
     m_my_element_dark: 0,
     m_my_element_ghost: 0,
     m_my_element_undead: 0,

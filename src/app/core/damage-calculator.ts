@@ -2026,10 +2026,18 @@ export class DamageCalculator {
     const finalDmg = this.totalBonus[`final_${skillPropertyAtk?.toLowerCase()}`] || 0;
     const finalDmgMultiplier = this.toPercent(finalDmg + 100);
     const propertyMultiplier = this.getPropertyMultiplier(skillPropertyAtk);
+    // Measured on the Arbitrium/Adoramus/Judex replays (Holy vs Undead 1 = x1.25, Neutral vs Ghost 1 = x0.9): the target's element table
+    // lands after the soft MDEF is subtracted. The debuff/amplifier part (Infecção, Oratio, ...) still scales MATK up front.
+    const pureMultiplier = this.getPurePropertyMultiplier(skillPropertyAtk);
+    const tableMultiplier = pureMultiplier > 0 ? pureMultiplier : 1;
+    const earlyElementMultiplier = pureMultiplier > 0 ? round(propertyMultiplier / pureMultiplier, 4) : propertyMultiplier;
 
     const elementBonus = (this.totalBonus.m_my_element_all || 0) + (this.totalBonus[`m_my_element_${skillPropertyAtk.toLowerCase()}`] || 0);
     const myElementMultiplier = this.toPercent(100 + elementBonus);
-    const matkPercentMultiplier = this.toPercent(100 + this.totalBonus.matkPercent);
+    // Fidus Animus-style "dano mágico Sagrado": measured on Teste AB/Adoramus replays (Judex, Adoramus, Arbitrium) it lands in the
+    // ATQM% stage — ahead of the skill ratio — not in the m_my_element_* stage after it.
+    const matkPercentTotal = (this.totalBonus.matkPercent || 0) + (this.totalBonus[`matk_element_${skillPropertyAtk.toLowerCase()}`] || 0);
+    const matkPercentMultiplier = this.toPercent(100 + matkPercentTotal);
 
     const sMatkMultiplier = 1 + this.traitBonus.sMatk * 0.01;
     const cometMultiplier = this.getCometMultiplier();
@@ -2084,9 +2092,9 @@ export class DamageCalculator {
       // applied to the already-boosted MATK, and the target's soft MDEF is taken off
       // *once*, after the boost, instead of being scaled along with it. Locked to the
       // unit by ElementalMaster.poison-replay.spec.ts.
-      total = floor(total * propertyMultiplier);
+      total = floor(total * earlyElementMultiplier);
       push('Multiplicador elemental', total, ['vi', ...RESIST_REDUCTION_KEYS]);
-      emit('elementalMultiplier', 'Multiplicador elemental', total, ['vi', ...RESIST_REDUCTION_KEYS], { multiplier: propertyMultiplier });
+      emit('elementalMultiplier', 'Multiplicador elemental', total, ['vi', ...RESIST_REDUCTION_KEYS], { multiplier: earlyElementMultiplier });
       total = floor(total * sMatkMultiplier);
       push('S.ATQM', total, ['sMatk']);
       emit('sMatk', 'S.ATQM', total, ['sMatk'], { multiplier: sMatkMultiplier });
@@ -2108,8 +2116,8 @@ export class DamageCalculator {
         emit('monster', 'Monstro específico', total, ['m_monster'], { multiplier: monsterMultiplier });
       }
       total = floor(total * matkPercentMultiplier); //tested
-      push(`ATQM ${this.fmtCalc(this.totalBonus.matkPercent || 0)}%`, total, ['matkPercent']);
-      emit('matkPercent', `ATQM ${this.fmtCalc(this.totalBonus.matkPercent || 0)}%`, total, ['matkPercent'], { multiplier: matkPercentMultiplier });
+      push(`ATQM ${this.fmtCalc(matkPercentTotal)}%`, total, ['matkPercent']);
+      emit('matkPercent', `ATQM ${this.fmtCalc(matkPercentTotal)}%`, total, ['matkPercent'], { multiplier: matkPercentMultiplier });
       total = floor(total * cometMultiplier);
       if (cometMultiplier !== 1) {
         push('Cometa', total, ['comet']);
@@ -2138,6 +2146,11 @@ export class DamageCalculator {
         // No keys: this is the monster's own soft MDEF stat, not an equipment bonus.
         push(`DEFM -${this.fmtCalc(softMDef)}`, total);
         emit('softDefM', `DEFM -${this.fmtCalc(softMDef)}`, total);
+      }
+      if (tableMultiplier !== 1) {
+        total = floor(total * tableMultiplier);
+        push('Tabela de elementos', total);
+        emit('elementTable', 'Tabela de elementos', total, undefined, { multiplier: tableMultiplier });
       }
       total = floor(total * equipSkillMultiplier);
       if (equipSkillBonus !== 0) {
