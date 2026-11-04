@@ -1,0 +1,84 @@
+{
+ "name": "wh",
+ "target": 20994,
+ "rows": [
+  {
+   "seed": 1,
+   "fields": 7,
+   "all": {
+    "finalDps": 530589,
+    "baselineDps": 143486,
+    "unique": 3094,
+    "socket": 2839,
+    "secondPassEvaluations": 1587,
+    "secondPassGains": 0,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "armor.armorCard",
+     "boot.bootCard"
+    ],
+    "secondPassChanged": [],
+    "wallMs": 12529,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 530589,
+    "baselineDps": 143486,
+    "unique": 2817,
+    "socket": 2562,
+    "secondPassEvaluations": 1126,
+    "secondPassGains": 0,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "armor.armorCard",
+     "boot.bootCard"
+    ],
+    "secondPassChanged": [],
+    "wallMs": 10557,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 530589,
+    "baselineDps": 143486,
+    "unique": 2827,
+    "socket": 2572,
+    "secondPassEvaluations": 1185,
+    "secondPassGains": 0,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "armor.armorCard",
+     "boot.bootCard"
+    ],
+    "secondPassChanged": [],
+    "wallMs": 10455,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 267,
+   "nearSavedMs": 2074,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 277,
+   "savedMs": 1972
+  }
+ ],
+ "real": {
+  "all": {
+   "finalDps": 691185,
+   "unique": 12056,
+   "socket": 3185,
+   "wallMs": 47840
+  },
+  "near": {
+   "finalDps": 691185,
+   "unique": 10722,
+   "socket": 1851,
+   "wallMs": 42993
+  }
+ }
+}

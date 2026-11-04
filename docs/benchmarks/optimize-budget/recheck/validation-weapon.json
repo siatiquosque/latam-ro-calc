@@ -1,0 +1,35 @@
+{
+ "job": "weapon",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "b1, arma com 2 cartas e 3 encantamentos, busca completa (esforço 20000)",
+   "sameState": true,
+   "all": {
+    "finalDps": 5299221,
+    "unique": 21654,
+    "wallMs": 74192,
+    "secondPass": {
+     "startedWith": 5299221,
+     "evaluations": 1602,
+     "ms": 5450,
+     "uniqueBefore": 19303
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 5299221,
+    "unique": 20988,
+    "wallMs": 71355,
+    "secondPass": {
+     "startedWith": 5299221,
+     "evaluations": 936,
+     "ms": 3143,
+     "uniqueBefore": 19303
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

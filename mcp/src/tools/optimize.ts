@@ -12,6 +12,7 @@ import { BuildPatch, compactPatchSchema } from '../engine/variants';
 import { targetSchema } from './calculate';
 import { json, registerJsonTool } from './helpers';
 import { createOptimizationOperations, requireSchema } from 'src/app/build-analysis/operations/optimize';
+import { compactConstraintSchema, compactGoalSchema, ConstraintSpec, GoalSpec } from 'src/app/build-analysis/engine/goal-spec';
 import { createSynergyOperations, FindSynergiesArgs } from 'src/app/build-analysis/operations/synergies';
 
 const metricEnum = z.enum(METRICS);
@@ -55,6 +56,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     excludeMvpCards?: boolean;
     metrics?: Metric[];
     require?: z.infer<typeof requireSchema>[];
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
     sortBy?: Metric;
     limit?: number;
   }>(server, 'evaluate_variants', {
@@ -76,6 +79,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       excludeMvpCards: z.boolean().optional().describe('strict recusa qualquer MVP; hypothetical tolera apenas as herdadas. Retorna MVP_CARD_EXCLUDED para variantes recusadas.'),
       metrics: z.array(metricEnum).optional().describe(`O que devolver. Padrão: ${DEFAULT_METRICS.join(', ')}.`),
       require: z.array(requireSchema).optional(),
+      goal: compactGoalSchema.optional(),
+      constraints: compactConstraintSchema.optional(),
       sortBy: metricEnum.optional().describe('Métrica de ordenação (maior primeiro, exceto hitsToKill: menor primeiro). Padrão: dps.'),
       limit: z.number().int().min(1).max(50).optional().default(10),
     },
@@ -181,11 +186,13 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     rounds?: number;
     maxSolves?: number;
     require?: z.infer<typeof requireSchema>[];
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
   }>(server, 'optimize_build', {
     title: 'Procurar uma build melhor',
     description:
       'Busca automática de equipamentos pelo mesmo core da UI: subida de encosta, complementos legais e pares de peças. Não redistribui atributos (optimize_stats). ' +
-      'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require impõem restrições. Retorna caminho, ganhos e patch para evaluate_variants. ' +
+      'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require/constraints impõem restrições; goal: guide meta-e-restricoes. Retorna caminho, ganhos e patch para evaluate_variants. ' +
       'procs mostra efeitos ainda não contados; effects ativa os indicados. Heurística limitada, sem garantia global; confira coverage e stopped. Pools desconhecidos não são inventados. Para hipóteses pontuais use evaluate_variants; para um slot use optimize_slot ou scan_slot.',
     inputSchema: {
       equipmentMode: z.enum(['current', 'replace']).optional().describe('current mantém peças, refino e grau e ajusta só complementos. replace (padrão) procura substituições e upgrades.'),
@@ -218,6 +225,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       rounds: z.number().int().min(1).max(4).optional().default(2),
       maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
       require: z.array(requireSchema).optional(),
+      goal: compactGoalSchema.optional(),
+      constraints: compactConstraintSchema.optional(),
     },
   }, (args) => operations.optimizeBuild(args).then(json));
 

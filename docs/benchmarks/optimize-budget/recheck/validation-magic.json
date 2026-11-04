@@ -1,0 +1,25 @@
+{
+ "job": "magic",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "magus, busca completa (esforço 12000)",
+   "sameState": true,
+   "all": {
+    "finalDps": 170831,
+    "unique": 10677,
+    "wallMs": 50420,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 170831,
+    "unique": 10677,
+    "wallMs": 49336,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

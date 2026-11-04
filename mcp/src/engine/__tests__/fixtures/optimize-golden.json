@@ -1,6 +1,7 @@
 {
   "note": "DPS of the build optimize_build recommends (Betelgeuse 20994, refine +12, grade A, procs off, 20k calculations), measured with the same engine. Raise a floor when a change finds a better build; never lower one.",
   "recordedAt": "2026-11-02",
+  "recordedWith": { "strategy": "greedy-v1", "budgetMode": "legacy", "engineVersion": "0.1.210-beta", "dataVersion": "0.1.210-beta" },
   "tolerance": 0.02,
   "floors": { "b1": 4483842, "b2": 2225073, "weak": 5403123 }
 }

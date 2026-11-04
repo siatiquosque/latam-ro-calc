@@ -2,6 +2,7 @@
  * What an agent can rank builds on. One place decides how each number is read off a solved
  * calculator, so `evaluate_variants`, `explain_damage` and any later tool agree on it.
  */
+import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { Calculator } from 'src/app/core/calculator';
 import { CalcChainInput } from 'src/app/core/calculator-controller';
 import { isBasicAttack } from 'src/app/core/rotation';
@@ -14,7 +15,14 @@ export const METRICS = [
   'hp', 'sp', 'atk', 'def', 'softDef', 'mdef', 'flee', 'hit', 'aspd', 'crit',
 ] as const;
 
-export type Metric = (typeof METRICS)[number];
+/**
+ * Facts the feasibility judgement reads that are not figures to rank on, so they stay out of the public `METRICS` enum (and out of
+ * every tool schema). `minNoCri`: the lowest damage of a hit that does not crit, only when the engine computes it comparably.
+ * `canCri`: 1 if the chosen skill can crit. `hitChance`: the engine's chance (%) that the skill hits the target.
+ */
+export const INTERNAL_METRICS = ['minNoCri', 'canCri', 'hitChance'] as const;
+
+export type Metric = (typeof METRICS)[number] | (typeof INTERNAL_METRICS)[number];
 export type Metrics = Partial<Record<Metric, number>>;
 
 export const DEFAULT_METRICS: readonly Metric[] = ['max', 'min', 'dps', 'hitsToKill'];
@@ -77,6 +85,22 @@ export type Profile = 'sustained' | 'burst';
 export const objectiveFor = (profile: Profile, hasRotation: boolean): Metric =>
   profile === 'burst' ? (hasRotation ? 'burstDps' : 'avgHit') : (hasRotation ? 'rotationDps' : 'dps');
 
+/**
+ * The lowest damage of a hit that does not crit. For a skill that cannot crit that is `skillMinDamage`. For one that can, `skillMinDamage`
+ * is the crit path (max ATK plus the crit bonus), so the figure comes from `skillMinDamageNoCri`, which the engine computes without the
+ * per-hit rounding (`calcSkillDmgByTotalHit`) and without the multi-hit aura rounding. It is returned only where those steps change
+ * nothing (a single-hit skill on a class that does not override the rounding); otherwise the engine has no comparable figure: undefined.
+ */
+function noCritMinimum(solved: Solved, dmg: Record<string, unknown>, effected: boolean): number | undefined {
+  if (effected) return undefined; // with procs on, the engine only reports the effected crit-path minimum
+  if (dmg['skillCanCri'] === false) return num(dmg['skillMinDamage']);
+  if (dmg['skillCanCri'] !== true || (num(dmg['skillHit']) ?? 1) > 1) return undefined;
+  if (solved.rb.char.calcSkillDmgByTotalHit !== CharacterBase.prototype.calcSkillDmgByTotalHit) return undefined;
+  const raw = num(dmg['skillMinDamageNoCri']);
+
+  return raw && raw > 0 ? raw : undefined;
+}
+
 /** Read the requested numbers off a solved build. Only the rotation costs extra solves. */
 export function readMetrics(solved: Solved, wanted: readonly Metric[]): Metrics {
   const summary = solved.calc.getTotalSummary() as any;
@@ -110,6 +134,9 @@ export function readMetrics(solved: Solved, wanted: readonly Metric[]): Metrics 
       case 'hit': value = num(c.totalHit); break;
       case 'aspd': value = num(c.totalAspd); break;
       case 'crit': value = num(c.totalCri); break;
+      case 'minNoCri': value = noCritMinimum(solved, dmg, effected); break;
+      case 'canCri': value = typeof dmg.skillCanCri === 'boolean' ? Number(dmg.skillCanCri) : undefined; break;
+      case 'hitChance': value = num(dmg.skillAccuracy); break;
     }
     if (value !== undefined) out[metric] = value;
   }

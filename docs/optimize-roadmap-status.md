@@ -225,3 +225,349 @@ baseline versionada e, depois, gerador/algoritmos comparados por benchmark.
   nem tratar essa origem como evidência de erro das informações do motor/catálogo.
 
 As alterações deste reteste são locais; não constituem outra publicação nem commit.
+
+---
+
+## Revisão proposta em 03/11/2026 — metas de farm e restrições reais
+
+> **Escopo desta seção:** análise da interface pública do MCP `0.1.210-beta` e
+> regressões observadas na consultoria da build `5hTy6pd`; **não é nova inspeção
+> do código do repositório, benchmark A/B nem aceite das fases**. O histórico de
+> 02/11 acima foi preservado. Implementações abaixo são propostas até prova local.
+
+### Reteste de superfície: atualizar o estado, não reescrever o histórico
+
+- O MCP reconectado expôs **29 ferramentas**, incluindo `find_synergies` e
+  `get_build_context`. O último foi executado com sucesso, inclusive na
+  rejeição de builds inválidas. Assim, a nota histórica "não implementado" da
+  triagem de `0.1.208-beta` não descreve a superfície atual.
+- `evaluate_variants` aceitou múltiplos alvos, patches e rejeitou uma carta MVP
+  proibida; os testes de consultoria foram pontuais e não provam a completude
+  da busca automática.
+- **Bug de superfície reproduzido:** `optimize_slot` no slot de carta do topo
+  sugeriu Carta Celacanto Violento (ID 4529), mas a mesma build foi rejeitada
+  por `validate_build` como `MVP_CARD_EXCLUDED`. O contrato de `optimize_slot`
+  exposto não tem opção de excluir cartas MVP. Corrigir a política/validação
+  para qualquer ranking gerado por essa ferramenta e criar teste de regressão.
+- **Cobertura parcial:** `optimize_slot` testa até 40 candidatos por chamada.
+  A seleção automática deixou a Carta Ultra Limacina (ID 300377) de fora do
+  lote. Uma busca separada e paginada encontrou 107 IDs de cartas elegíveis à
+  categoria `headCard`; em três lotes a Ultra Limacina foi encontrada.
+  Distinguir `testedCandidates`, `eligibleCandidates` e `complete` e nunca
+  apresentar um resultado parcial como melhor global do slot.
+- **Validação de ocupação:** a combinação de equipamento de meio+baixo com
+  equipamento de meio foi aceita em um teste anterior; criar fixture de
+  conflito entre slots compartilhados antes de afirmar que foi corrigido.
+
+### Ajuste no roadmap de referência: Fase 2.5 — Goal & Constraint Engine (P0)
+
+Inserir **entre as fases 2 e 3** do `roadmap_optimize_mcp_laro.md`, sem descartar
+Greedy, Candidate Generator, Beam Search nem VNS:
+
+- `GoalSpec`: objetivo (`dps`, `farm`, `burst`, etc.), habilidade, alvos,
+  `maxHitsToKill`, critico efetivo minimo, precisão mínima e margem opcional.
+- `ConstraintSpec`: política MVP, limites de grau/refino, slots/cartas/
+  encantamentos travados, IDs indisponíveis, consumíveis permitidos/proibidos,
+  limite de consumíveis, buffs externos e permissão para reset de atributos.
+- **Separar habilidade aprendida de efeito ativo**: proibir aplicar Oleum
+  Sanctum durante o farm **não** significa remover o nível de habilidade
+  exigido como pré-requisito de Mão Explosiva. Modelar efeitos/estados
+  proibidos separadamente de habilidades aprendidas.
+- `FeasibilityEvaluator` no core compartilhado, consumindo métricas existentes:
+  classificar `invalid`, `infeasible`, `feasible` e `unknown` sem alterar a
+  matemática do motor. Resultados desconhecidos não contam como cumpridos.
+- Ranking de finalistas **lexicográfico**: legalidade → cumprir todos os alvos
+  → minimizar mudanças/refinos/buffs → margem e desempenho. Não usar média
+  ponderada que esconda o pior monstro; reportar gargalo e violações por alvo.
+- Durante a exploração, permitir estados temporariamente `infeasible` no Beam
+  quando puderem completar sinergias; não confundir isso com sugerir finais
+  inviáveis.
+- Reutilizar avaliações canônicas: metas e preferências de ranking não devem
+  invalidar resultados do motor se não modificarem os inputs do cálculo.
+- Manter **preços, liquidez e custo em zenys fora de escopo**: "menos trocas" não
+  equivale a "menor custo financeiro". Disponibilidade de itens informada pelo
+  jogador é restrição da busca, não estimativa de mercado.
+
+**Aceite da fase 2.5:** UI e MCP aplicam o mesmo contrato de objetivo/restrição;
+nenhum finalista viola uma hard constraint; múltiplos alvos são julgados
+individualmente; buscas antigas de DPS mantêm resultados compatíveis; o
+resultado explica por que cada candidato foi aceito/rejeitado.
+
+### Integração nas fases atuais
+
+- **Fase 0 (P0):** acrescentar regressões de MVP em `optimize_slot`, conflito de
+  slots, preservação de encantamentos, cobertura parcial e distinção entre
+  `hitsToKill` determinístico e chance real de abate.
+- **Fase 1 (P0):** concluir orçamento rígido **incluindo passada final de
+  soquetes**, antes de qualquer comparação séria de `Quality@budget`; separar
+  avaliação matemática de pontuação do objetivo.
+- **Fase 2:** preservar cláusulas AND/OR; gerar movimentos legais mínimos e
+  explicitar condições não suportadas, sem considerar catálogo incompleto
+  automaticamente incorreto.
+- **Fase 3:** aplicar `ConstraintSpec` antes de avaliar candidatos; preservar
+  diversidade de famílias, cartas do topo, botas sem grau e combinações de
+  acessórios; contabilizar universo elegível, testado e truncamentos.
+- **Fases 4–5:** selecionar estados por progresso para a meta, diversidade e
+  potencial de sinergia; manter o incumbent final viável e preservar a comparação
+  A/B contra Greedy com mesmo orçamento.
+- **Fase 6:** mover o perfil de farm para `GoalSpec`; refinar atributos apenas
+  quando opt-in; comparar fronteiras por viabilidade, HP, mudanças e dano.
+- **Fase 7:** `optimize_build` segue wrapper do mesmo Optimize da UI; `scan_slot`,
+  `optimize_slot` e `evaluate_variants` devem aplicar políticas consistentes;
+  não criar outro algoritmo no MCP.
+- **Fase 8:** incluir métricas `feasible@budget`, tempo até primeira build viável,
+  `worstTarget`, violações de critérios por alvo, completude e confiabilidade.
+
+### Confiabilidade: não prometer 2 hits garantidos com dano máximo
+
+`hitsToKill` calculado a partir do golpe crítico/máximo pode indicar que
+**dois críticos** matam, mas não necessariamente que **quaisquer dois ataques**
+matem. A primeira entrega de farm pode exigir mínimos explícitos de
+`effectiveCritRate` e `accuracy` e reportar a margem de dano; isso é um filtro
+conservador, não uma probabilidade calculada.
+
+Somente uma fase posterior, após validar distribuição de dano, crítico,
+acerto, procs e estados condicionais, poderá expor
+`killProbabilityWithinHits` com semântica e testes próprios. Não inferir
+`99%` a partir de `hitsToKill: 2`.
+
+### Fixture obrigatória: Inquisidor em `jor_ab02`
+
+- **Build de entrada:** `5hTy6pd`; salvar também **snapshot resolvido**,
+  atributos, encantamentos e versões do motor/dados para reprodutibilidade.
+- **Alvos:** `21544`, `21545`, `21542`, `21601`, `21539`.
+- **Meta:** até 2 golpes em **cada** alvo; crítico efetivo e acerto mínimos
+  declarados no cenário; identificar sempre o pior monstro.
+- **Hard constraints:** nenhuma carta MVP, grau máximo C, Abrasivo (ID 14536)
+  proibido, **efeito ativo** de Oleum proibido, Insígnia do Talento 5 travada,
+  Cordão do Inquisidor sem novos encantamentos, Casaco Pirata (ID 480174)
+  excluído e respeito a classe/nível/pontos.
+- **Preferências:** preservar equipamentos, permitir Bota Física do Éden II
+  (ID 470069), poucas fontes de buff e consumíveis, evitar refino caro sem
+  proibir todo upgrade; não estimar zenys.
+- **Referências conhecidas:** builds verificadas manualmente em
+  `L7P7qcS`, `GIPObNf` e `0TdaENM`. São *best-known fixtures* do cenário,
+  não ótimos globais nem saída garantida do algoritmo. Confirmar snapshots
+  e condições dos links antes de congelar métricas de regressão.
+- **Aceite:** encontrar ao menos uma solução compatível com as restrições em
+  um orçamento definido; reportar `feasible@budget`, qualidade, cobertura,
+  número de alterações e diferença em relação ao best-known. Comparar com
+  GreedyV1 e testar caso em que candidato isolado perde, mas conjunto vence.
+
+### Próxima sequência executável (sem reescrever o motor)
+
+1. Corrigir filtragem/validação e cobertura de candidatos em `optimize_slot`;
+   completar o orçamento único e o baseline do Optimize.
+2. Introduzir tipos/validação de `GoalSpec`, `ConstraintSpec` e julgamento de
+   viabilidade, mantendo as operações atuais compatíveis por adaptação.
+3. Criar o fixture `jor_ab02` resolvido e executar Greedy atual com orçamento
+   controlado, registrando alvos e violações.
+4. Integrar o novo julgamento ao Candidate Generator e à busca atual; **medir**
+   ganho antes de desenvolver Beam Search/VNS por obrigação arquitetural.
+5. Só promover novos algoritmos por benchmark de qualidade, custo,
+   reprodutibilidade e estabilidade.
+
+**Não realizado nesta revisão:** alterações no repositório, publicação,
+benchmark, commit ou push. Esta seção registra decisões propostas e evidência
+externa do MCP, não certificação de uma implementação concluída.
+
+## Blocos de execução: objetivo, gate e exclusões
+
+Um bloco por item da sequência acima. Cada bloco só começa quando o gate do
+anterior passa; "fora" lista o que não deve entrar no bloco, mesmo que pareça próximo.
+
+### Bloco 1 — Correções de `optimize_slot` e orçamento único
+
+- **Objetivo:** `optimize_slot` aplica a política MVP e a validação de ocupação;
+  distingue `testedCandidates`, `eligibleCandidates` e `complete`; a passada final
+  de soquetes entra no teto de avaliações; baseline versionada e identificada.
+- **Gate:** regressões de MVP, conflito de slots compartilhados, preservação de
+  encantamentos e cobertura parcial passam; nenhuma sugestão de `optimize_slot`
+  é rejeitada por `validate_build`; o teto de avaliações é medido incluindo a
+  finalização; versões de motor/dados/regras registradas nos benchmarks.
+- **Fora:** novo algoritmo, `GoalSpec`/`ConstraintSpec`, mudança no gerador de
+  candidatos, alteração de dados de itens ou fórmulas, qualquer comparação A/B.
+
+### Bloco 2 — `GoalSpec`, `ConstraintSpec` e julgamento de viabilidade
+
+- **Objetivo:** tipos e validação do contrato de objetivo/restrição no core
+  compartilhado; `FeasibilityEvaluator` classifica `invalid`, `infeasible`,
+  `feasible` e `unknown`; habilidade aprendida separada de efeito ativo proibido;
+  operações atuais adaptadas sem mudar o comportamento padrão.
+- **Gate:** UI e MCP usam o mesmo contrato; buscas antigas de DPS dão resultados
+  compatíveis com a baseline do bloco 1; `unknown` nunca conta como cumprido;
+  múltiplos alvos são julgados individualmente, com pior alvo e violações por alvo.
+- **Fora:** preço, liquidez e custo em zenys; `killProbabilityWithinHits` (sem
+  inferir probabilidade a partir de `hitsToKill`); mudanças na matemática do motor;
+  Beam e VNS.
+
+### Bloco 3 — Fixture `jor_ab02` e Greedy com orçamento controlado
+
+- **Objetivo:** fixture do Inquisidor com build `5hTy6pd`, snapshot resolvido,
+  atributos, encantamentos, versões, alvos e hard constraints; execução do Greedy
+  atual com orçamento fixo registrando alvos atendidos e violações.
+- **Gate:** snapshots e condições dos links `L7P7qcS`, `GIPObNf` e `0TdaENM`
+  confirmados antes de congelar métricas; execução reproduzível; `feasible@budget`,
+  cobertura, número de alterações e diferença para o best-known reportados.
+- **Fora:** tratar as builds de referência como ótimo global ou saída garantida;
+  congelar bugs de legalidade na baseline; otimizar o algoritmo.
+
+### Bloco 4 — Julgamento integrado ao Candidate Generator e à busca atual
+
+- **Objetivo:** aplicar `ConstraintSpec` antes de avaliar candidatos; preservar
+  diversidade (famílias, cartas do topo, botas sem grau, acessórios); contabilizar
+  universo elegível, testado e truncamentos; consumir o índice de `engine/synergies.ts`
+  e gerar movimentos legais mínimos.
+- **Gate:** nenhum finalista viola hard constraint; ganho **medido** contra o
+  Greedy do bloco 3 com o mesmo motor, catálogo, restrições e orçamento; seleção
+  de candidatos isolada do algoritmo no A/B; caso em que o candidato isolado perde,
+  mas o conjunto vence.
+- **Fora:** Beam e VNS por obrigação arquitetural; aposentar a extração antiga de
+  parceiros antes de equivalência e ganhos demonstrados; cache global; duplicar
+  fórmulas no MCP.
+
+### Bloco 5 — Promoção de novos algoritmos por benchmark
+
+- **Objetivo:** decidir Beam Search, VNS e demais estratégias por qualidade, custo,
+  reprodutibilidade e estabilidade medidos, com estados temporariamente `infeasible`
+  só na exploração.
+- **Gate:** A/B em orçamentos iguais contra Greedy, `feasible@budget`, tempo até a
+  primeira build viável, `worstTarget`, completude, memória e estabilidade; só então
+  mudar o padrão e planejar o rollout.
+- **Fora:** mudar o padrão sem o gate; pesquisa opcional da Fase 9 sem evidência
+  das fases anteriores; sugerir finais inviáveis.
+
+### Bloco 1 — estado (03/11/2026)
+
+Implementado localmente, sem commit: `excludeMvpCards` em `optimize_slot` (candidatos e
+complementos); `testedCandidates`/`eligibleCandidates`/`complete`; erro `SLOT_OCCUPIED` em
+`validate_build` e candidatos que criam conflito de slots de cabeça descartados em
+`optimize_slot`, `scan_slot` e `optimize_build`; testes do teto de `budgetMode: 'unified'`
+(30–800), de preservação de cartas/encantamentos em `swapPatch` e versão/estratégia/modo da
+baseline no golden e na saída do benchmark. `budgetMode: 'legacy'` continua o padrão: o gate
+de Quality@budget comparável vale apenas com `unified` explícito. Benchmark A/B não foi executado.
+
+### Bloco 2 — estado (03/11/2026)
+
+Implementado localmente, sem commit: contrato `GoalSpec`/`ConstraintSpec` (zod) em
+`src/app/build-analysis/engine/goal-spec.ts`; `judgeFeasibility` (`FeasibilityEvaluator`) em
+`engine/feasibility.ts`, com `invalid | infeasible | unknown | feasible`, veredito e violações por
+alvo e `worstTarget`; `unknown` (métrica ilegível, margem sem HP) nunca conta como cumprido.
+`forbiddenEffects` olha só o efeito ativo (`skillBuffMap`/`activeSkillMap`), nunca o nível aprendido
+(passivas). `optimize_build` e `evaluate_variants` aceitam `goal`/`constraints` (UI e MCP chamam as
+mesmas operações; o MCP anuncia um schema compacto e o tópico `meta-e-restricoes` do `guide` traz o
+contrato). `adaptSpecs` mapeia o spec sobre `lock`, `exclude`, `mvpPolicy`, `maxGrade`, `refine`,
+`require` e `target(s)`; flag explícita da chamada prevalece, e sem spec nada muda (golden e testes de
+orçamento passam). Em `optimize_build` o julgamento (`feasibility.baseline`/`final`) é posterior à
+busca; a busca ainda não filtra candidatos por `consumables`, `forbiddenEffects`, buffs e atributos
+(bloco 4). Não há controle novo na UI: ela usa o mesmo tipo `OptimizeBuildArgs`.
+O schema de `goal`/`constraints` no MCP é compacto, sem descrição por campo, para caber no teto de
+49 000 caracteres da lista de ferramentas (o contrato está no tópico `meta-e-restricoes` do `guide`).
+Benchmark A/B não foi executado.
+
+Margem, dano e abate garantido (Bloco 2): `margin` tem padrão 0 e, acima de 0, exige
+`minDano × maxHitsToKill ≥ HP × (1 + margin)`; a 0 vale o `hitsToKill` do motor (`ceil(HP / skillMinDamage)`).
+`skillMinDamage` é o mínimo do caminho crítico (ATK máximo + bônus de crítico) em habilidades que critam;
+sem crítico o motor expõe `skillMinDamageNoCri`, que só é comparável em habilidade de um golpe numa classe
+sem ajuste próprio por golpes (lido como a métrica interna `minNoCri`; fora disso, indefinido). Leituras
+internas novas (fora do enum público): `minNoCri`, `canCri`, `hitChance` (`skillAccuracy`). O relatório
+`feasibility.kill` separa `damageFeasible` (a meta de dano, sem exigir precisão nem crítico),
+`constraintsMet` (limites declarados: `minCritRate`, `minAccuracy`, `require`, restrições duras; são
+obrigatórios e não provam abate) e `reliability` (`guaranteed` | `conditional` | `unknown`, ausente se o
+dano não cumpre a meta). `conditional`: o abate depende de crítico < 100% ou o acerto é < 100%;
+`unknown`: falta dado (p.ex. dano sem crítico), nunca `guaranteed`. Nenhuma probabilidade é inventada;
+cada alvo é julgado e o pior decide. O `status` continua refletindo dano e restrições, não a certeza.
+
+### A/B dos blocos 1–2 e decisão sobre o bloco 3 (03/11/2026)
+
+Medição única (sem repetição), Betelgeuse 20994, dps, +12/A, procs off, builds `b1`, `b2`, `weak` e o
+Inquisidor da fixture. Greedy `unified` a 400/2 000/8 000/20 000 cálculos, `legacy` a 20 000, reinício
+do `unified` a partir do próprio resultado e busca larga (`candidatesPerSlot: 40`, `rounds: 4`).
+Critério fixado antes de ver os números: o bloco 3 só entra se a busca terminar sozinha e um reinício ou
+busca mais larga do mesmo Greedy achar mais de 2% acima.
+
+| build | u-400 | u-2000 | u-8000 | u-20000 | legacy-20000 | reinício | larga |
+|---|---|---|---|---|---|---|---|
+| b1 | 0,81 M | 1,15 M | 3,17 M | 3,85 M | 5,30 M | 3,85 M | 2,91 M (parou) |
+| b2 | 0,52 M | 0,82 M | 1,25 M | 1,56 M | 1,56 M | 1,56 M | 1,64 M |
+| weak | 0,37 M | 1,43 M | 3,08 M | 4,28 M | 5,29 M | 5,63 M | 4,25 M |
+| inq | 0,22 M | 0,34 M | 0,91 M | 1,10 M | 1,52 M | 1,10 M | 0,82 M |
+
+Leitura: o dps cresce com o orçamento até 8 000–20 000 em todos; o `unified` chega a 20 000 gastando
+17–19,7 mil (reserva de 15% para a passada final), então ainda é limitado por orçamento, e o `legacy`
+(com folga própria para soquetes, portanto não é igual orçamento) fica 0–38% acima. Reinício ganha
+apenas em `weak` (+31%, com o dobro do gasto total, sem igualdade de orçamento); busca larga ganha só em
+`b2` (+4,9%) e perde em três das quatro (conjunto de candidatos maior, resultado pior: dependência de
+caminho). Critério não atendido de forma consistente: **bloco 3 não será implementado**. A dependência de
+caminho e o ótimo local de `weak` ficam como pergunta para os blocos 4–5, a medir com orçamento igual.
+
+### Benchmark do orçamento (03/11/2026)
+
+Investigação sem novo algoritmo: relatório e tabelas em [optimize-budget-benchmark.md](optimize-budget-benchmark.md), artefatos
+em `docs/benchmarks/optimize-budget/`. Implementado localmente, sem commit: ledger por fase (`instrument`, interno, fora do MCP),
+`socketReserve` experimental (padrão 0,15 inalterado), contador de chamadas ao motor (`engineCallCount`), harness
+`optimize-budget.bench.spec.ts` (`BUDGET_BENCH=1`) e `tools/optimize-budget-report.mjs`.
+
+Resultado: classe **A (orçamento)**. Com o mesmo teto de busca do Legacy (20.000) o Unified reproduz o Legacy exatamente em
+b1, b2, weak e inq; o Legacy 20.000 custa 20,1–21,7 mil avaliações (2,6–3,3 mil na passada fora do teto) e o Unified 20.000 gasta
+18,1–19,7 mil com teto de busca 17.000. Nenhuma reserva fixa domina (8.000: reservas maiores ajudam; 20.000: ≤ 10% é igual ou melhor).
+Reinício (2×10.000) não ganha; busca larga ganha só em b2 (+4,9%, com outro universo de candidatos). O resultado não é monotônico no
+teto (22.000 pior que 20.000 em b1 e inq). Recomendação: sem Beam/VNS e sem bloco 3 por ora; `legacy` continua o padrão. A hipótese de
+reservar por necessidade absoluta da passada fica como proposta a testar com mais builds. Substitui a leitura "reinício/larga" do A/B de 03/11 como evidência
+de dependência de caminho: ali o orçamento não era igual.
+
+## Eficiência das avaliações (03/11/2026)
+
+Detalhes e tabelas em [optimize-budget-efficiency.md](optimize-budget-efficiency.md). Padrões inalterados.
+
+- O teto `maxSolves` também planeja o esforço por slot; só o esforço muda o caminho. Teto de busca 17000 com esforço planejado de 20000 fica a −1,3% (b1) e −1,5% (inq) do Legacy com 8% menos avaliações; o resultado de um teto menor é um prefixo exato da execução maior. A resposta ao esforço não é monotônica (E=24000 pior que 20000), então desacoplar dá reprodutibilidade, não qualidade, e piora tetos pequenos.
+- Passada de soquetes: a 2ª passada custa 49% da fase e não rendeu nada nas quatro builds; o ganho está em poucos campos de encantamento baratos. `socketRecheck: 'touched'` (interno) manteve o DPS idêntico em 6 de 6 execuções e poupou de 171 a 1488 avaliações. Candidato a padrão, aguardando aprovação e validação em outras classes.
+- Candidatos: só 8% dos candidatos de soquete são intercambiáveis; deduplicar não compensa. Parada por platô é insegura (a curva é em degraus tardios).
+- Sem evidência para Beam, VNS ou mudança no Candidate Generator.
+
+## Otimização direcionada do Greedy (03/11/2026)
+
+Detalhes em [optimize-targeted-greedy.md](optimize-targeted-greedy.md). Padrões inalterados.
+
+- `socketRecheck: 'touched'` **não é seguro**: −0,72% num caso adversarial (b1 com cartas sorteadas; `headMiddleCard` melhora depois que o elmo superior muda). Fica experimental.
+- `socketRecheck: 'near'` (peças não tocadas re-verificadas só contra os 5 melhores candidatos da 1ª passada): DPS idêntico em 13 de 13 casos, de 151 a 1407 avaliações a menos (0,8% a 11%); b1 93,7 s para 89,2 s, build física 47,8 s para 43,0 s. Pronto para promoção, aguardando aprovação.
+- Causa da trajetória não monotônica: só `fullEffort` (profundidade da busca de soquetes dos finalistas). `quickEffort` satura em 8 e `discoveryCap` nunca limita. DPS é monotônico e saturante na profundidade fixa (b1: 3,47 / 3,85 / 5,02 / 5,30 / 5,30 M para 100 / 150 / 200 / 300 / 500). Estabilizar custa 6% a 17% mais avaliações: sem economia.
+- Proposta, não implementada: parada por estagnação dentro de `searchComplements` (de 300 para 500 de profundidade, +2,9 mil avaliações sem ganho).
+
+## Validação final e promoção do `socketRecheck: near` (03/11/2026)
+
+Detalhes na seção 9 de [optimize-targeted-greedy.md](optimize-targeted-greedy.md). **Investigação de `socketRecheck` encerrada.**
+
+- Comparação a partir do mesmo estado (valor e avaliações únicas idênticos antes da 2ª passada): build mágica (Magus), arma com 2 cartas e 3 encantamentos (b1, busca completa) e 12 estados adversariais (b1, b2, Windhawk, Magus). DPS final do `near` igual ao do `all` em todos. b1 completa: 2ª passada de 1602 para 936 avaliações (5,5 s para 3,1 s), total 21654 para 20988.
+- Vencedores da 2ª passada completa: 9 campos; os 4 em peças não tocadas (as únicas que o `near` restringe) eram o 1º da 1ª passada; o pior ranque, 5, foi numa peça tocada (re-verificada por inteiro). O caso exato pedido (vencedor em 6º lugar ou pior) não pôde ser construído: a busca dirigida por avaliação direta não achou nenhuma troca isolada que mude o melhor candidato de outro campo.
+- **`near` é o padrão** (`all` preservado como `socketRecheck: 'all'`; `touched` segue experimental e não promovido). Sem mudança em `effortBudget`, `fullEffort`, Candidate Generator ou contratos do MCP. Testes: suíte `mcp/src` com 363 passando; o teste de regressão adversarial de `socketRecheck` rodado sem limite de tempo (a passada de soquetes dá fatia de tempo por campo).
+
+### Pendência futura: sensibilidade da busca de complementos aos limites de tempo por campo
+
+A passada final de soquetes e a `searchComplements` dão uma fatia de tempo por campo (`maxSearchMs`). Sob carga (processos em paralelo ou máquina lenta) a fatia corta a busca antes do fim e a contagem de avaliações muda (3587 contra 3509 no teste adversarial); o DPS pode mudar junto. Hoje só isso é conhecido: a contagem é determinística apenas com `maxSearchMs` elevado, e o teste de regressão o eleva. **Não investigado**: se a qualidade (não só a contagem) cai de forma relevante com a fatia curta, e se a fatia deve ser medida em avaliações em vez de milissegundos para dar reprodutibilidade. Registrado como pendência; fora do escopo da retomada atual.
+
+## Retomada: Goal & Constraint Engine (04/11/2026) — inventário, lacunas e menor incremento
+
+**Aviso:** `roadmap_optimize_mcp_laro.md` não existe no repositório nem no disco desta máquina; esta seção parte só deste documento (Fase 2.5 e Blocos 1–5). Nada aqui foi implementado. Smoke da UI após a promoção do `near`: `e2e/build-improvements.spec.ts` passou (5 de 5); a UI não passa `socketRecheck`, então roda o padrão `near`.
+
+**Já existe (blocos 1–2, local, sem commit):** `GoalSpec`/`ConstraintSpec` (`engine/goal-spec.ts`), `judgeFeasibility` com `invalid | infeasible | unknown | feasible`, violações e pior alvo por alvo (`engine/feasibility.ts`, `feasibility.spec.ts`), `adaptSpecs` mapeando o spec sobre `lock`/`exclude`/`mvpPolicy`/`maxGrade`/`refine`/`require`/alvos, relatório `feasibility.baseline/final` em `optimize_build` e julgamento por variante em `evaluate_variants`.
+
+**Lacunas (lidas no código; ainda não reproduzidas por teste):**
+
+1. **Sem gradiente para a meta.** No Greedy, `meets(metrics, rules)` é um filtro: movimento que não cumpre as regras é descartado (`optimize.ts`, ~1122, 1153, 1223). Se a build inicial não cumpre a meta e nenhum movimento isolado a cumpre, nenhum é aceito, mesmo que reduza a distância. O ranking é por DPS, não lexicográfico (legalidade → cumprir → margem → desempenho) como a Fase 2.5 exige.
+2. **Multi-alvo na busca.** A busca filtra por `meets` nas métricas do alvo principal; com mais alvos, `dps`/`max`/`min` viram média ponderada e `hitsToKill`/`critRate`/`hit` não são agregados por alvo (`evaluate.ts`, ~125). O julgamento por alvo só acontece depois da busca (`judgeSearch`). Isso contradiz "não usar média que esconda o pior monstro".
+3. **Restrições fora do espaço de busca.** `forbiddenEffects`, `consumables`, `allowExternalBuffs`, `allowStatReset` só são julgados no final. Como o Greedy muda apenas equipamento e soquetes, não os viola sozinho; só importam se a build base já viola ou quando outras buscas (stats, buffs) entrarem. Não é lacuna do Greedy hoje.
+4. **Candidate Generator sem o contrato.** Universo elegível, testado e truncado ainda não é contabilizado; `exclude`/`lock`/MVP chegam por `adaptSpecs`, mas não há veredito por candidato ("aceito/rejeitado porque").
+5. **Fixture `jor_ab02` (bloco 3) não existe.** Os links `5hTy6pd`, `L7P7qcS`, `GIPObNf`, `0TdaENM` não estão no repositório; o mais próximo é `inquisitor-optimization.json`. Também não há métrica `feasible@budget`.
+
+**Menor incremento proposto (não implementado):** um predicado `rulesHold(build)` no Greedy, usado nos mesmos três pontos de `meets`, que (a) julga as regras em cada alvo, não só no principal, e (b) quando a build corrente não cumpre, aceita o movimento que mais reduz a distância à meta (o `gap` que `judgeTarget` já calcula) antes de comparar DPS, voltando ao DPS assim que cumprir. Sem spec, `rules` vazio e o comportamento atual intacto (golden e testes de orçamento). Primeiro passo: dois testes que falham hoje, sem mudar código: (1) build inicial infeasível sem movimento único viável, com meta `maxHitsToKill`; (2) dois alvos onde o principal cumpre e o secundário não. Só depois implementar. Custo: avaliações extras por alvo só para contendores que passam no alvo principal.
+
+Fora desta etapa, como pedido: Beam, VNS, novas heurísticas de orçamento, fórmulas e catálogos.
+
+### Jor_ab02 e `feasible@budget` (04/11/2026)
+
+Fixture local dos quatro links (`mcp/src/engine/__tests__/fixtures/jor-ab02.json`), início `gear-only` derivado e benchmark em
+`docs/optimize-goal-search.md`. Resultado: a meta (2 golpes com 10% de folga nos 5 monstros) é cumprida a partir do `gear-only` com 300–2000
+avaliações e a partir do original com 800; os dois casos inviáveis (300) são orçamento insuficiente (distância 0,031). Alvos extras custam
+~1,5× fora de `solves` (medido, não refatorado). Refino de soquetes por DPS: cego confirmado em 4/26 campos, sem perda fim a fim; ajuste testado
+e revertido por custo.

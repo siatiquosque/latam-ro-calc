@@ -1,0 +1,441 @@
+{
+ "name": "b1",
+ "target": 20994,
+ "rows": [
+  {
+   "seed": 1,
+   "fields": 8,
+   "all": {
+    "finalDps": 1186419,
+    "baselineDps": 362730,
+    "unique": 3952,
+    "socket": 3748,
+    "secondPassEvaluations": 1874,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 64/140)"
+    ],
+    "wallMs": 20653,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 1177854,
+    "baselineDps": 362730,
+    "unique": 3645,
+    "socket": 3441,
+    "secondPassEvaluations": 1567,
+    "secondPassGains": 1,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)"
+    ],
+    "wallMs": 18056,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 1186419,
+    "baselineDps": 362730,
+    "unique": 3670,
+    "socket": 3466,
+    "secondPassEvaluations": 1592,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 5/5)"
+    ],
+    "wallMs": 18902,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 282,
+   "nearSavedMs": 1751,
+   "dpsDiffPct": -0.7219203333729496,
+   "savedEvaluations": 307,
+   "savedMs": 2597
+  },
+  {
+   "seed": 2,
+   "fields": 8,
+   "all": {
+    "finalDps": 1186419,
+    "baselineDps": 366417,
+    "unique": 3955,
+    "socket": 3748,
+    "secondPassEvaluations": 1874,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 64/140)"
+    ],
+    "wallMs": 19752,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 1177854,
+    "baselineDps": 366417,
+    "unique": 3648,
+    "socket": 3441,
+    "secondPassEvaluations": 1567,
+    "secondPassGains": 1,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)"
+    ],
+    "wallMs": 17918,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 1186419,
+    "baselineDps": 366417,
+    "unique": 3673,
+    "socket": 3466,
+    "secondPassEvaluations": 1592,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 5/5)"
+    ],
+    "wallMs": 17943,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 282,
+   "nearSavedMs": 1809,
+   "dpsDiffPct": -0.7219203333729496,
+   "savedEvaluations": 307,
+   "savedMs": 1834
+  },
+  {
+   "seed": 3,
+   "fields": 8,
+   "all": {
+    "finalDps": 1186419,
+    "baselineDps": 365463,
+    "unique": 3955,
+    "socket": 3748,
+    "secondPassEvaluations": 1874,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 64/140)"
+    ],
+    "wallMs": 20231,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 1177854,
+    "baselineDps": 365463,
+    "unique": 3648,
+    "socket": 3441,
+    "secondPassEvaluations": 1567,
+    "secondPassGains": 1,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)"
+    ],
+    "wallMs": 18790,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 1186419,
+    "baselineDps": 365463,
+    "unique": 3673,
+    "socket": 3466,
+    "secondPassEvaluations": 1592,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 5/5)"
+    ],
+    "wallMs": 18460,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 282,
+   "nearSavedMs": 1771,
+   "dpsDiffPct": -0.7219203333729496,
+   "savedEvaluations": 307,
+   "savedMs": 1441
+  },
+  {
+   "seed": 4,
+   "fields": 8,
+   "all": {
+    "finalDps": 1186419,
+    "baselineDps": 350121,
+    "unique": 3956,
+    "socket": 3748,
+    "secondPassEvaluations": 1874,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 64/140)"
+    ],
+    "wallMs": 20080,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 1177854,
+    "baselineDps": 350121,
+    "unique": 3649,
+    "socket": 3441,
+    "secondPassEvaluations": 1567,
+    "secondPassGains": 1,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)"
+    ],
+    "wallMs": 18427,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 1186419,
+    "baselineDps": 350121,
+    "unique": 3674,
+    "socket": 3466,
+    "secondPassEvaluations": 1592,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 5/5)"
+    ],
+    "wallMs": 18738,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 282,
+   "nearSavedMs": 1342,
+   "dpsDiffPct": -0.7219203333729496,
+   "savedEvaluations": 307,
+   "savedMs": 1653
+  },
+  {
+   "seed": 5,
+   "fields": 8,
+   "all": {
+    "finalDps": 1186419,
+    "baselineDps": 336297,
+    "unique": 3955,
+    "socket": 3748,
+    "secondPassEvaluations": 1874,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 64/140)"
+    ],
+    "wallMs": 19533,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 1177854,
+    "baselineDps": 336297,
+    "unique": 3648,
+    "socket": 3441,
+    "secondPassEvaluations": 1567,
+    "secondPassGains": 1,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)"
+    ],
+    "wallMs": 16918,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 1186419,
+    "baselineDps": 336297,
+    "unique": 3673,
+    "socket": 3466,
+    "secondPassEvaluations": 1592,
+    "secondPassGains": 2,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "headUpper.headUpperCard",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant2",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "boot.bootCard",
+     "accRight.accRightEnchant2"
+    ],
+    "secondPassChanged": [
+     "headUpper.headUpperEnchant1 +4.67% (rank 44/53)",
+     "headMiddle.headMiddleCard +0.73% (rank 5/5)"
+    ],
+    "wallMs": 16852,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 282,
+   "nearSavedMs": 2681,
+   "dpsDiffPct": -0.7219203333729496,
+   "savedEvaluations": 307,
+   "savedMs": 2615
+  }
+ ]
+}

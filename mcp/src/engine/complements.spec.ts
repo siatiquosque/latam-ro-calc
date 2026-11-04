@@ -1,7 +1,8 @@
 import { expect, it } from 'vitest';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { loadRandomPools, randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
-import { complementChoices, searchComplements } from './complements';
+import { complementChoices, searchComplements, swapPatch } from './complements';
+import { resolveBuild } from 'src/app/build-analysis/engine/build-input';
 import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
 
 await loadRandomPools();
@@ -54,4 +55,18 @@ it('counts penetration of the target race and class, and the size penalty, among
   const rb = resolveBuild({ class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037 } } as any, dataset);
   const keys = relevantKeys(solve(rb, dataset, resolveTarget(dataset, undefined).monster));
   expect(keys).toEqual(expect.arrayContaining(['ignore_size_penalty', 'p_pene_class_boss', 'p_pene_race_all', 'pene_res', 'p_class_boss']));
+});
+
+it('keeps the enchants and cards of a worn piece, and clears only the swapped slot when replacing it', () => {
+  const rb = resolveBuild({ class: 4257, level: 200, jobLevel: 50, stats: { agi: 100, dex: 130, pow: 60, con: 40 }, gear: { weapon: 700016, weaponRefine: 11, weaponCard1: 4628, armor: 2301, armorCard: 4302 } } as never, dataset);
+  const worn = swapPatch(dataset, rb, 'weapon', 700016) as { gear: Record<string, unknown>; options?: unknown };
+  // Re-tuning the worn weapon (refine/grade) must not touch its cards or its random options.
+  expect(Object.keys(worn.gear).every(key => key === 'weaponRefine' || key === 'weaponGrade')).toBe(true);
+  expect(worn.options).toBeUndefined();
+
+  const other = Object.values(dataset.items).find(item => item.itemTypeId === 1 && item.id !== 700016 && dataset.itemIndex.get(item.id)?.slotTags?.includes('weapon' as never))!;
+  const swapped = swapPatch(dataset, rb, 'weapon', other.id) as { gear: Record<string, unknown>; options: Record<string, unknown> };
+  // Nothing outside the weapon's own fields is cleared: the armor card stays.
+  expect(Object.keys(swapped.gear).every(key => key.startsWith('weapon'))).toBe(true);
+  expect(swapped.gear['armorCard']).toBeUndefined();
 });

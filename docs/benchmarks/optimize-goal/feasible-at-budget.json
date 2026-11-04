@@ -1,0 +1,1201 @@
+{
+ "goals": {
+  "hits2": {
+   "maxHitsToKill": 2
+  },
+  "hits2-margin10": {
+   "maxHitsToKill": 2,
+   "margin": 0.1
+  }
+ },
+ "constraints": {
+  "maxGrade": "C",
+  "maxRefine": 12
+ },
+ "references": {
+  "grauC": {
+   "status": "infeasible",
+   "violations": []
+  },
+  "invernal": {
+   "status": "feasible",
+   "violations": []
+  },
+  "semGrau": {
+   "status": "infeasible",
+   "violations": []
+  }
+ },
+ "rows": [
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 113,
+    "unique": 140,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 188,
+    "unique": 504
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    23304627.4,
+    43171590.6
+   ],
+   "wallMs": 6756
+  },
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    24421061,
+    45170715
+   ],
+   "wallMs": 1201
+  },
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 113,
+    "unique": 112,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    23106318,
+    42356285
+   ],
+   "wallMs": 1449
+  },
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": true,
+   "firstFeasible": {
+    "evaluations": 1,
+    "unique": 96,
+    "phase": "baseline"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    26284189,
+    49093656
+   ],
+   "wallMs": 1236
+  },
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    22705838,
+    41956037
+   ],
+   "wallMs": 1165
+  },
+  {
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    20005731,
+    37281260
+   ],
+   "wallMs": 1206
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 267,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 188,
+    "unique": 504
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18216505.6,
+    34667602.4
+   ],
+   "wallMs": 5458
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    19375335,
+    36515276
+   ],
+   "wallMs": 1110
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 179,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18363817,
+    34525711
+   ],
+   "wallMs": 1141
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    19544055,
+    38367457
+   ],
+   "wallMs": 1104
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 110,
+    "unique": 109,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18030141,
+    33938866
+   ],
+   "wallMs": 1091
+  },
+  {
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 179,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    15769180,
+    29990702
+   ],
+   "wallMs": 1161
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 267,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 188,
+    "unique": 504
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    23304627.4,
+    43171590.6
+   ],
+   "wallMs": 5079
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 289,
+    "unique": 320,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 400,
+    "unique": 1216
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    23304627.4,
+    54011986.8
+   ],
+   "wallMs": 13134
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 619,
+    "unique": 634,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 1052,
+    "unique": 3068
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 7,
+   "dps": [
+    23304627.4,
+    72255786.8
+   ],
+   "wallMs": 33138
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    24421061,
+    45170715
+   ],
+   "wallMs": 1108
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 245,
+    "unique": 244,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 4,
+   "dps": [
+    24421061,
+    56471337
+   ],
+   "wallMs": 3036
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 179,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    23106318,
+    42356285
+   ],
+   "wallMs": 1142
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 281,
+    "unique": 280,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "steps": 4,
+   "dps": [
+    23106318,
+    52580742
+   ],
+   "wallMs": 2939
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    26284189,
+    49093656
+   ],
+   "wallMs": 1097
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 245,
+    "unique": 244,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    26284189,
+    65439304
+   ],
+   "wallMs": 2861
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    22705838,
+    41956037
+   ],
+   "wallMs": 1125
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 246,
+    "unique": 245,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 4,
+   "dps": [
+    22705838,
+    52083880
+   ],
+   "wallMs": 3016
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 121,
+    "unique": 120,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    20005731,
+    37281260
+   ],
+   "wallMs": 1117
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 273,
+    "unique": 272,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    20005731,
+    48954072
+   ],
+   "wallMs": 2810
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 300,
+   "feasible": false,
+   "startedFeasible": false,
+   "firstFeasible": null,
+   "bestGap": {
+    "worst": 0.031,
+    "total": 0.031
+   },
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 188,
+    "unique": 504
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:infeasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18216505.6,
+    34667602.4
+   ],
+   "wallMs": 4952
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 500,
+    "unique": 723,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 400,
+    "unique": 1216
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    18216505.6,
+    47698967.8
+   ],
+   "wallMs": 15134
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 684,
+    "unique": 715,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 1052,
+    "unique": 3068
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "steps": 9,
+   "dps": [
+    18216505.6,
+    64144488.2
+   ],
+   "wallMs": 36393
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    19375335,
+    36515276
+   ],
+   "wallMs": 1118
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21544",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 245,
+    "unique": 244,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    19375335,
+    50193224
+   ],
+   "wallMs": 2684
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": false,
+   "startedFeasible": false,
+   "firstFeasible": null,
+   "bestGap": {
+    "worst": 0.031,
+    "total": 0.031
+   },
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:infeasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18363817,
+    34525711
+   ],
+   "wallMs": 1088
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21545",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 367,
+    "unique": 366,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    18363817,
+    46735160
+   ],
+   "wallMs": 3099
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 100,
+    "unique": 99,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    19544055,
+    38367457
+   ],
+   "wallMs": 1104
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21542",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 245,
+    "unique": 244,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "steps": 6,
+   "dps": [
+    19544055,
+    56205555
+   ],
+   "wallMs": 2838
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 180,
+    "unique": 179,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    18030141,
+    33938866
+   ],
+   "wallMs": 1249
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21601",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 282,
+    "unique": 281,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "steps": 5,
+   "dps": [
+    18030141,
+    46293534
+   ],
+   "wallMs": 3216
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 300,
+    "unique": 299,
+    "phase": "socket"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "unique": 308
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 3,
+   "dps": [
+    15769180,
+    29990702
+   ],
+   "wallMs": 1391
+  },
+  {
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21539",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 368,
+    "unique": 367,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "unique": 808
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "steps": 6,
+   "dps": [
+    15769180,
+    42118461
+   ],
+   "wallMs": 2805
+  }
+ ]
+}

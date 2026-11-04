@@ -92,13 +92,14 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     complements?: boolean;
     refine?: number;
     maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
+    excludeMvpCards?: boolean;
   }>(server, 'optimize_slot', {
     title: 'Otimizar um slot',
     description:
       `USE quando já há poucos candidatos conhecidos para um slot (até ${config.limits.maxOptimizeCandidates}). NÃO use para descobrir candidatos (\`scan_slot\`) nem para a build inteira (\`optimize_build\`). Testa candidatos para um slot e ordena pelo ganho de DPS. No máximo ${config.limits.maxOptimizeCandidates} candidatos por chamada. ` +
       'Cada candidato entra com os melhores cartas e encantamentos que ele aceita (`complements`, padrão), porque duas peças com o mesmo ATQ diferem em soquetes e encantamentos; ' +
       'os cartas e encantamentos da peça antiga que a nova não comporta são retirados. `withoutSockets` mostra o DPS da peça nua. Só itens do LATAM entram; os demais vão em `skippedNotInLatam`. ' +
-      'O link devolvido já vem com a comparação armada (peça atual → peça sugerida), então o jogador abre o simulador e vê a diferença.',
+      'O link devolvido já vem com a comparação armada (peça atual → peça sugerida), então o jogador abre o simulador e vê a diferença. `complete` só é true quando todos os `eligibleCandidates` foram testados; senão o ranking é parcial, não o melhor do slot.',
     inputSchema: {
       build: compactBuildSchema,
       slot: z.string().describe('Campo do equipamento a variar, ex.: "weapon", "armor", "boot", "accLeft".'),
@@ -110,6 +111,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       complements: z.boolean().optional().default(true).describe('Buscar também cartas e encantamentos de cada candidato. false compara só as peças nuas.'),
       refine: z.number().int().min(0).max(20).optional().describe('Refino de cada candidato (e da peça atual, para medir o que subir o refino vale). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau de cada candidato que aceita grau (e da peça atual). Padrão: A, o ideal; informe só para limitar.'),
+      excludeMvpCards: z.boolean().optional().describe('Não sugerir cartas de MVP, nem como candidato nem como complemento.'),
     },
   }, (args) => operations.optimizeSlot(args).then(json));
 }

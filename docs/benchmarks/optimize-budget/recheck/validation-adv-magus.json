@@ -1,0 +1,109 @@
+{
+ "job": "adv:magus",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "magus, cartas sorteadas, equipamento mantido, esforço 300",
+   "sameState": true,
+   "all": {
+    "finalDps": 169245,
+    "unique": 3445,
+    "wallMs": 15689,
+    "secondPass": {
+     "startedWith": 169245,
+     "evaluations": 1403,
+     "ms": 6330,
+     "uniqueBefore": 2041
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 169245,
+    "unique": 3445,
+    "wallMs": 11574,
+    "secondPass": {
+     "startedWith": 169245,
+     "evaluations": 1403,
+     "ms": 4552,
+     "uniqueBefore": 2041
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "magus, cartas sorteadas, equipamento mantido, esforço 1500",
+   "sameState": true,
+   "all": {
+    "finalDps": 169245,
+    "unique": 4531,
+    "wallMs": 14979,
+    "secondPass": {
+     "startedWith": 167191,
+     "evaluations": 1740,
+     "ms": 5831,
+     "uniqueBefore": 2790
+    },
+    "secondPassChanges": [
+     {
+      "field": "armor.armorCard",
+      "gainPct": 1.23,
+      "firstPassRank": 1,
+      "candidates": 187,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "near": {
+    "finalDps": 169245,
+    "unique": 4114,
+    "wallMs": 13517,
+    "secondPass": {
+     "startedWith": 167191,
+     "evaluations": 1323,
+     "ms": 4207,
+     "uniqueBefore": 2790
+    },
+    "secondPassChanges": [
+     {
+      "field": "armor.armorCard",
+      "gainPct": 1.23,
+      "firstPassRank": 1,
+      "candidates": 5,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "magus, cartas sorteadas, equipamento mantido, esforço 4000",
+   "sameState": true,
+   "all": {
+    "finalDps": 169245,
+    "unique": 4683,
+    "wallMs": 14459,
+    "secondPass": {
+     "startedWith": 169245,
+     "evaluations": 1266,
+     "ms": 3922,
+     "uniqueBefore": 3416
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 169245,
+    "unique": 4077,
+    "wallMs": 12151,
+    "secondPass": {
+     "startedWith": 169245,
+     "evaluations": 660,
+     "ms": 2030,
+     "uniqueBefore": 3416
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

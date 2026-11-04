@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import fixture from './__tests__/fixtures/inquisitor-fogueira-optimization.json';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { loadRandomPools } from 'src/app/core/random-option-catalog';
-import { evaluate, evaluationCache } from 'src/app/build-analysis/engine/evaluate';
+import { engineCallCount, evaluate, evaluationCache } from 'src/app/build-analysis/engine/evaluate';
 import { AverageProcPolicy } from 'src/app/build-analysis/engine/proc';
 
 await loadRandomPools();
@@ -61,6 +61,19 @@ describe('evaluation cache of the search', () => {
     expect(again.metrics).toEqual(first.metrics);
     expect(again.metrics).toEqual(fresh.metrics);
     expect(again.rb.model.headUpperCard).toBe(300174);
+  });
+
+  it('a cache hit is neither a new evaluation nor an engine call; a miss is exactly one call (one target, no procs)', () => {
+    const memo = evaluationCache();
+    const patch = { gear: { headUpperCard: 300174 } };
+    const before = engineCallCount();
+    memo.evaluate(build, patch, dataset, monster, [], ['dps']);
+    const afterMiss = engineCallCount();
+    memo.evaluate(build, patch, dataset, monster, [], ['dps']);
+    expect(memo.misses).toBe(1);
+    expect(memo.hits).toBe(1);
+    expect(afterMiss - before).toBe(1);
+    expect(engineCallCount()).toBe(afterMiss);
   });
 
   it('does not mix builds, targets, effects or metrics', () => {

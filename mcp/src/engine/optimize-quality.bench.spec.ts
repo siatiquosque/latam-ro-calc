@@ -16,6 +16,7 @@ import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { createMcpServer } from '../mcp-server';
 import { config } from '../config';
+import { APP_VERSION } from '../../../src/app/core/app-version';
 
 const BOSS = 20994;
 
@@ -34,7 +35,9 @@ describe.skipIf(!process.env['BENCH'])('optimizer quality', () => {
     const dps = measured.results[0].metrics.dps as number;
     const floor = (golden.floors as Record<string, number>)[name];
 
-    console.info(`${name}: ${dps} (floor ${floor})`);
+    // A floor is only comparable to the engine/data it was recorded with: say so when they differ.
+    const stale = golden.recordedWith.engineVersion !== APP_VERSION ? ` [floor recorded with ${golden.recordedWith.engineVersion} (${golden.recordedWith.strategy}, ${golden.recordedWith.budgetMode}); running ${APP_VERSION}]` : '';
+    console.info(`${name}: ${dps} (floor ${floor})${stale}`);
     expect(dps).toBeGreaterThanOrEqual(floor * (1 - golden.tolerance));
   }, 900_000);
 });

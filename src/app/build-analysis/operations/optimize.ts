@@ -16,12 +16,14 @@ import { SlotTag } from '../data/slot-classifier';
 import { BuildInput, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
 import { DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
-import { evaluate, evaluationCache } from '../engine/evaluate';
+import { engineCallCount, evaluate, evaluationCache } from '../engine/evaluate';
 // Preserve imports used by older callers while evaluation is owned by the engine layer.
 export { evaluate, evaluationCache } from '../engine/evaluate';
 import { applyPatch, BuildPatch, decodeOnce } from '../engine/variants';
 import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
-import { validateBuild } from '../engine/validate';
+import { adaptSpecs, ConstraintSpec, GoalSpec, goalRequirements, judgedMetrics, Requirement, requireSchema } from '../engine/goal-spec';
+import { compareStanding, constraintViolations, FeasibilityReport, goalStanding, improvesStanding, judgeFeasibility, RankedStanding, TargetReading } from '../engine/feasibility';
+import { introducesHeadConflict, validateBuild } from '../engine/validate';
 import { APP_VERSION } from 'src/app/core/app-version';
 import { complementChoices, damageContext, keptSockets, REACHABLE_REFINE, relevantKeys, searchComplements, socketOptions, swapPatch, searchRefineFor } from '../engine/complements';
 import { enchantCombinationError, refineLimitFor } from 'src/app/core/equipment-rules';
@@ -38,13 +40,7 @@ import { compact } from './compact';
 
 type TargetArg = z.infer<typeof targetSchema>;
 
-const metricEnum = z.enum(METRICS);
-
-export const requireSchema = z.object({
-  metric: metricEnum,
-  min: z.number().optional(),
-  max: z.number().optional(),
-});
+export { requireSchema };
 
 
 function unconfirmed(rb: ResolvedBuild, changes: BuildPatch, dataset: Dataset) {
@@ -310,6 +306,9 @@ export type EvaluateVariantsArgs = {
     excludeMvpCards?: boolean;
     metrics?: Metric[];
     require?: z.infer<typeof requireSchema>[];
+    /** Per-target rules (judged on every target) and hard constraints; see `goal-spec.ts`. Absent: the call behaves as before. */
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
     sortBy?: Metric;
     limit?: number;
   };
@@ -343,9 +342,24 @@ export type ExplainDamageArgs = {
     maxContributions?: number;
   };
 
+/** Share of a `unified` budget held back for the final socket pass. A heuristic, measured in docs/optimize-budget-benchmark.md. */
+const DEFAULT_SOCKET_RESERVE = 0.15;
+/** How many of the first socket pass's best measured candidates a `near` re-check keeps for a piece nothing changed on. */
+const NEAR_RUNNERS_UP = 5;
+
 export type OptimizeBuildArgs = {
     /** `legacy` (default, the preserved baseline): the final socket pass has its own allowance outside the budget. `unified`: the pass is paid from the same calculation budget (the last 15% is reserved for it), so Quality@budget is comparable across strategies. */
     budgetMode?: 'legacy' | 'unified';
+    /** Experiment, not exposed by the MCP: share of the `unified` budget held back for the final socket pass (default 0.15, 0 to 0.9). Ignored in `legacy`. */
+    socketReserve?: number;
+    /** Experiment, not exposed by the MCP: adds `budgetReport` (who paid for what, per phase) to the result. Nothing else changes. */
+    instrument?: boolean;
+    /** Experiment, not exposed by the MCP: the budget the effort per slot is planned from (screening, tuning, shares), apart from `maxSolves`, which then only stops the search. Default: the search ceiling, so the effort follows the cap as it always did. */
+    effortBudget?: number;
+    /** What the second pass over the sockets re-checks (internal, not exposed by the MCP). `near` (default): every field, but the pieces the first pass did not change are re-checked only against the best few candidates it measured; `all`: every field against every candidate (the fallback and the reference); `touched`: only the fields of pieces the first pass changed (experiment; measured to miss a cross-piece dependency). */
+    socketRecheck?: 'all' | 'touched' | 'near';
+    /** Experiment, not exposed by the MCP: plans one of the three efforts per slot from its own budget instead of `effortBudget`, to tell which of them moves the path. */
+    effortParts?: { quick?: number; full?: number; discoveryCap?: number; /** A fixed full effort (calculations of complements per finalist), the same whatever the budget. */ fullFixed?: number };
     equipmentMode?: 'current' | 'replace';
     procMode?: ProcMode;
     build: BuildInput;
@@ -377,7 +391,13 @@ export type OptimizeBuildArgs = {
     rounds?: number;
     maxSolves?: number;
     require?: z.infer<typeof requireSchema>[];
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
   };
+
+/** The proc policy a search runs under when the caller does not name one. */
+const optimizeProcMode = (procMode: ProcMode | undefined, countProcs: boolean | undefined): ProcMode =>
+  procMode ?? (countProcs === undefined ? 'average' : countProcs ? 'active' : 'off');
 
 export type SlotOptionsArgs = { itemId: number; query?: string; limit?: number; detail?: boolean };
 
@@ -387,7 +407,9 @@ export function createOptimizationOperations(dataset: Dataset, config: AnalysisR
 
 const shareOf = (rb: ResolvedBuild): string => buildShareUrl(toPreset(rb.model, rb.char), config.appOrigin, null, rb.customItems);
 
-async function evaluateVariants({ build, target, targets, validationMode = 'strict', effects = [], variants, excludeMvpCards = false, metrics, procMode = 'off', procHitsPerSecond, require: rules = [], sortBy = 'dps', limit = 10 }: EvaluateVariantsArgs) {
+async function evaluateVariants(args: EvaluateVariantsArgs) {
+    const { goal, constraints } = args;
+    const { build, target, targets, validationMode = 'strict', effects = [], variants, excludeMvpCards = false, metrics, procMode = 'off', procHitsPerSecond, require: rules = [], sortBy = 'dps', limit = 10 } = adaptSpecs(args);
     const policy = await prepareProcPolicy(dataset, procMode, procHitsPerSecond);
     const memo = evaluationCache();
     const measure = (...args: Parameters<typeof evaluate>) => { args[8] = policy; return memo.evaluate(...args); };
@@ -395,7 +417,7 @@ async function evaluateVariants({ build, target, targets, validationMode = 'stri
       throw new Error(`No máximo ${config.limits.maxVariants} variantes por chamada (recebi ${variants.length}). Divida em lotes.`);
     }
     const shown: Metric[] = [...new Set<Metric>([...(metrics ?? DEFAULT_METRICS), sortBy])];
-    const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric)])];
+    const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric), ...judgedMetrics(goal)])];
 
     const base = decodeOnce(await normalizeShare(build, shortener));
     if (target && targets) throw new Error('Use target ou targets, não ambos.');
@@ -409,7 +431,7 @@ async function evaluateVariants({ build, target, targets, validationMode = 'stri
       deltaPct: Object.fromEntries(shown.map(k => [k, deltaPct(values[i][k], baselines[i].metrics[k])])),
     }));
 
-    const scored: { label: string; rb: ResolvedBuild; metrics: Metrics; values: Metrics[]; notes: string[]; hypothetical: boolean }[] = [];
+    const scored: { label: string; rb: ResolvedBuild; metrics: Metrics; values: Metrics[]; notes: string[]; hypothetical: boolean; feasibility?: FeasibilityReport }[] = [];
     const errors: { label: string; status: 'invalid' | 'failed'; code: string; error: string }[] = [];
     let belowRequire = 0;
     // Only the explicit hypothetical mode can inherit errors from the base.
@@ -431,8 +453,21 @@ async function evaluateVariants({ build, target, targets, validationMode = 'stri
         }
         const measured = aims.map(aim => measure(base, variant.patch, dataset, aim.monster, effects, wanted));
         const values = measured.map(entry => entry.metrics);
-        if (values.every(value => meets(value, rules))) scored.push({ label: variant.label, rb: measured[0].rb, metrics: values[0], values, notes, hypothetical: issues.length > 0 });
-        else belowRequire++;
+        if (!goal && !constraints) {
+          if (values.every(value => meets(value, rules))) scored.push({ label: variant.label, rb: measured[0].rb, metrics: values[0], values, notes, hypothetical: issues.length > 0 });
+          else belowRequire++;
+          continue;
+        }
+        // With a spec every target is judged on its own; only a fully feasible variant is ranked (unknown never counts as met).
+        const feasibility = judgeFeasibility({
+          dataset, base, build: applyPatch(base, variant.patch), goal, constraints, require: args.require ?? [],
+          // Legality was settled above (mode-aware); the judgement adds the constraints and the goal.
+          issues: [],
+          readings: aims.map((aim, i) => ({ monsterId: aim.id, name: aim.monster.name, hp: aim.monster.stats?.health, metrics: values[i] })),
+        });
+        if (feasibility.status === 'invalid') errors.push({ label: variant.label, status: 'invalid', code: feasibility.violations[0].code, error: feasibility.violations.slice(0, 3).map(violation => violation.message).join(' ') });
+        else if (feasibility.status !== 'feasible') belowRequire++;
+        else scored.push({ label: variant.label, rb: measured[0].rb, metrics: values[0], values, notes, hypothetical: issues.length > 0, feasibility });
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         errors.push({ label: variant.label, status: 'failed', code: /refino máximo/.test(message) ? 'INVALID_REFINE' : /não é permitido na posição|ncantament/.test(message) ? 'INVALID_ENCHANT' : 'INVALID_BUILD', error: message });
@@ -463,6 +498,7 @@ async function evaluateVariants({ build, target, targets, validationMode = 'stri
           metrics: roundMetrics(entry.metrics, shown),
           deltaPct: Object.fromEntries(shown.map((k) => [k, deltaPct(entry.metrics[k], baseline.metrics[k])])),
           perTarget: targets ? perTarget(entry.values) : undefined,
+          feasibility: entry.feasibility,
           warnings: entry.rb.warnings.length || entry.notes.length ? [...entry.rb.warnings, ...entry.notes] : undefined,
           emptySockets: emptySocketsOf(dataset, baseline.rb, entry.rb),
           // A link costs a compression pass, so only the front of the ranking gets one.
@@ -478,7 +514,10 @@ async function evaluateVariants({ build, target, targets, validationMode = 'stri
 async function scanSlot({ build, slot, target, effects = [], objective: objectiveArg, profile = 'sustained', base: baseMode = 'tuned', query, limit = 15, topSockets = 12, refine, maxGrade, maxSolves, includePatches = false, excludeMvpCards = false, procMode = 'off', procHitsPerSecond }: ScanSlotArgs) {
     const noCards = excludeMvpCards ? new Set(MVP_CARD_IDS) : new Set<number>();
     const policy = await prepareProcPolicy(dataset, procMode, procHitsPerSecond);
-    const measure = (...args: Parameters<typeof evaluate>) => { args[8] = policy; return evaluate(...args); };
+    const measure = (...args: Parameters<typeof evaluate>) => {
+      if (introducesHeadConflict(args[0], args[1], dataset)) throw new Error('head slot conflict');
+      args[8] = policy; return evaluate(...args);
+    };
     if (!MAIN_ITEM_SLOTS.includes(slot)) throw new Error(`"${slot}" não é um slot de equipamento. Use um destes: ${MAIN_ITEM_SLOTS.join(', ')}.`);
     const budget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
@@ -663,20 +702,52 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     return out;
   }
 
-async function optimizeBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [] }: OptimizeBuildArgs) {
+async function searchBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', socketReserve = DEFAULT_SOCKET_RESERVE, instrument = false, effortBudget, socketRecheck = 'near', effortParts, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [], goal, constraints }: OptimizeBuildArgs) {
+    if (!(socketReserve >= 0 && socketReserve <= 0.9)) throw new Error('socketReserve deve estar entre 0 e 0,9.');
+    const startedAt = Date.now();
     mvpPolicy ??= strictMvp ? 'none' : avoidMvp ? 'exclude-new' : 'allow';
     strictMvp = mvpPolicy === 'none';
     avoidMvp = mvpPolicy !== 'allow';
-    const resolvedProcMode = procMode ?? (countProcs === undefined ? 'average' : countProcs ? 'active' : 'off');
+    const resolvedProcMode = optimizeProcMode(procMode, countProcs);
     const procPolicy = await prepareProcPolicy(dataset, resolvedProcMode, procHitsPerSecond);
     const memo = evaluationCache();
+    // Budget ledger: who paid for what. Unit of the budget (`solves`): one evaluation that the cache did not have, that is one build
+    // against the first target (extra targets and averaged procs add engine calls to it, not budget). The ledger keeps four things
+    // apart: unique evaluations (cache misses), uncached evaluations (calls that skip the cache), cache hits and engine calls.
+    const PHASES = ['baseline', 'discovery', 'search', 'socket', 'levelCheck', 'report'] as const;
+    type Phase = (typeof PHASES)[number];
+    const ledger = Object.fromEntries(PHASES.map((name) => [name, { unique: 0, uncached: 0, cacheHits: 0, engineCalls: 0 }])) as Record<Phase, { unique: number; uncached: number; cacheHits: number; engineCalls: number }>;
+    let phase: Phase = 'baseline';
+    /** Every complete build the search accepted, with what it had spent by then: the best result up to each budget. */
+    const checkpoints: { spent: number; phase: Phase; value: number }[] = [];
+    const slotLog: Record<string, unknown>[] = [];
+    const socketLog: { slot: string; field: string; candidates: number; tried: number; winnerRank: number | null; gainPct: number | null; firstPassRank: number | null }[] = [];
+    /** Where the second socket pass started (instrument only): value, unique evaluations and clock, to compare the re-check modes from the same state. */
+    let secondPass: { startedWith: number; uniqueBefore: number; startedAt: number } | undefined;
+    const measured = <T>(cached: boolean, run: () => T): T => {
+      const hits = memo.hits, misses = memo.misses, calls = engineCallCount();
+      try { return run(); } finally {
+        const row = ledger[phase];
+        row.cacheHits += memo.hits - hits; row.unique += memo.misses - misses; row.engineCalls += engineCallCount() - calls;
+        if (!cached && engineCallCount() > calls) row.uncached++;
+      }
+    };
+    let stopCause: string | undefined;
+    const stopFor = (cause: string) => { stopCause ??= cause; return true; };
     // What the search has calculated, counted where the calculation happens (a cache hit costs nothing, and the final socket pass has
     // its own allowance and is reported apart): one number for the budget, the answer and the coverage. It used to be attempts minus
     // hits, which went negative once the pass that does not count attempts began to hit the cache (`solves: -2`).
     let polishFresh = 0;
-    const spent = () => 1 + memo.misses - polishFresh;
-    const evalBuild = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return memo.evaluate(...args); };
-    const evalFresh = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return evaluate(...args); };
+    /** Evaluations that only read the goal on the other targets: they are not candidates, so they do not spend the budget. */
+    let sideFresh = 0;
+    const spent = () => 1 + memo.misses - polishFresh - sideFresh;
+    const evalBuild = (...args: Parameters<typeof evaluate>) => {
+      if (introducesHeadConflict(args[0], args[1], dataset)) throw new Error('head slot conflict');
+      args[8] = procPolicy; return measured(true, () => memo.evaluate(...args));
+    };
+    const evalFresh = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return measured(false, () => evaluate(...args)); };
+    /** `evaluate` without the cache and with the caller's own proc policy (reports after the search): still on the ledger. */
+    const evalRaw = (...args: Parameters<typeof evaluate>) => measured(false, () => evaluate(...args));
     const requestedBudget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
     const pace = pacing(config.limits.maxSearchMs);
     const base = decodeOnce(await normalizeShare(build, shortener));
@@ -687,20 +758,28 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     const rankMetric: Metric = proxy ?? objective;
     const profileObjectives = { sustained: objectiveFor('sustained', hasRotation), burst: objectiveFor('burst', hasRotation) };
     const shown: Metric[] = [...new Set<Metric>([objective, 'max', 'dps', 'hp'])];
-    const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric)])];
+    const goalOn = goalRequirements(goal).length > 0;
+    // The minimum hit lets the ranking read HP / min, which moves where `hitsToKill` (an integer) does not.
+    const goalWanted: Metric[] = goalOn ? [...new Set<Metric>([...judgedMetrics(goal), 'min'])] : [];
+    const wanted: Metric[] = [...new Set<Metric>([...shown, ...rules.map((r) => r.metric), ...goalWanted])];
     const searchWanted: Metric[] = proxy ? [...new Set<Metric>([...wanted.filter((metric) => metric !== objective), proxy])] : wanted;
 
-    const aims = (targets ?? [{ monsterId: target?.monsterId ?? config.defaultTargetId }]).map((aim) => ({
-      monster: resolveTarget(dataset, aim.monsterId).monster,
-      weight: (aim as { weight?: number }).weight ?? 1,
-    }));
+    const aims = (targets ?? [{ monsterId: target?.monsterId ?? config.defaultTargetId }]).map((aim) => {
+      const resolved = resolveTarget(dataset, aim.monsterId);
+
+      return { id: resolved.id, monster: resolved.monster, weight: (aim as { weight?: number }).weight ?? 1 };
+    });
     const monster = aims[0].monster;
     const more = aims.slice(1);
     const baseline = evalFresh(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
     // Both limits apply; a wall-clock stop returns the best measured build so far.
     const unified = budgetMode === 'unified';
-    // Unified: the search stops at 85% and the final socket pass spends the rest; the stages after it stop at the full budget.
-    const budget = unified && complements ? Math.floor(requestedBudget * 0.85) : requestedBudget;
+    // Unified: the search stops at (1 - socketReserve) of the budget and the final socket pass spends the rest; the stages after it stop at the full budget.
+    const budget = unified && complements ? Math.floor(requestedBudget * (1 - socketReserve)) : requestedBudget;
+    if (effortBudget !== undefined && !(effortBudget > 0)) throw new Error('effortBudget deve ser positivo.');
+    const plan = effortBudget ?? budget;
+    const outOfBudget = () => (spent() >= budget && stopFor('search-budget')) || (pace.timeUp() && stopFor('time'));
+    const outOfTotalBudget = () => (spent() >= requestedBudget && stopFor('total-budget')) || (pace.timeUp() && stopFor('time'));
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);
     if (maxGrade !== undefined) {
       const above = MAIN_ITEM_SLOTS.filter(slot => GRADES.indexOf(baseline.rb.model[`${slot}Grade`] ?? '') > gradeLimit);
@@ -745,7 +824,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     // Screening (every eligible item measured bare) is the discovery phase and has its own budget: 35% of the calculations, shared
     // out slot by slot with what an earlier slot did not use passed on. Without it the first slots (the weapon has hundreds of
     // candidates) took the whole of a short budget and the later slots, and the search itself, never started.
-    const discoveryBudget = Math.floor(budget * 0.35);
+    const discoveryBudget = Math.floor(plan * 0.35);
+    phase = 'discovery';
     for (const [slotPosition, slot] of walk.entries()) {
       const worn = baseline.rb.model[slot];
       if (equipmentMode === 'current') { pools.set(slot, worn ? [worn] : []); continue; }
@@ -771,7 +851,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       const scored: { id: number; value: number }[] = [];
       const slotShare = Math.max(6, Math.floor((discoveryBudget - discovery) / (walk.length - slotPosition)));
       for (const row of ordered.slice(0, slotShare)) {
-        if (spent() >= budget || pace.timeUp()) break;
+        if (outOfBudget()) break;
         await pace.breathe();
         discovery++;
         try {
@@ -868,12 +948,34 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         : (ItemOptionMap.get(target as ItemTypeEnum) ?? []).map(index => [String(index), null]))),
     });
 
-    const outOfBudget = () => spent() >= budget || pace.timeUp();
-    const outOfTotalBudget = () => spent() >= requestedBudget || pace.timeUp();
     let current = base;
     let value = baseValue;
     let metrics = baseline.metrics;
     let rb = baseline.rb;
+
+    // Goal: hard constraints and `require` stay filters; the goal is a ranking (see `compareStanding`). Without goal rules none of this runs.
+    const standingFor = (patch: BuildPatch | undefined, tried: { metrics: Metrics }, objectiveValue: number): RankedStanding => {
+      if (!goalOn) return { feasible: true, worst: 0, total: 0, value: objectiveValue };
+      const readings: TargetReading[] = [{ monsterId: aims[0].id, hp: monster.stats?.health, metrics: tried.metrics }];
+      // Each other target is read on its own (a weighted average would hide a failing one); the reads are off the budget.
+      for (const aim of aims.slice(1)) {
+        const before = memo.misses;
+        try {
+          readings.push({ monsterId: aim.id, hp: aim.monster.stats?.health, metrics: evalBuild(current, patch, dataset, aim.monster, effects, goalWanted, [], 1, countProcs).metrics });
+        } catch { readings.push({ monsterId: aim.id, metrics: {} }); }
+        sideFresh += memo.misses - before;
+      }
+
+      return { ...goalStanding(readings, goal), value: objectiveValue };
+    };
+    let standing: RankedStanding = standingFor(undefined, baseline, baseValue);
+    const goalTrace = { startedFeasible: standing.feasible, firstFeasible: standing.feasible ? { evaluations: 1, unique: memo.misses, phase: 'baseline' as string } : undefined };
+    // A constraint the base already breaks cannot be repaired by the search; only a new violation makes a candidate illegal.
+    const inheritedViolations = new Set(constraints ? constraintViolations(constraints, dataset, baseline.rb.model, baseline.rb.model).map((violation) => `${violation.code}:${violation.message}`) : []);
+    const lawful = (model: Parameters<typeof constraintViolations>[3]) => !constraints || constraintViolations(constraints, dataset, baseline.rb.model, model).every((violation) => inheritedViolations.has(`${violation.code}:${violation.message}`));
+    /** Whether `candidate` replaces what the search holds: the objective alone without a goal, the lexicographic order with one. */
+    const takes = (candidate: Chosen) => (goalOn ? improvesStanding(candidate.standing, standing) : candidate.value > value * 1.001);
+    const ahead = (candidate: Chosen, incumbent: Chosen | null) => !incumbent || (goalOn ? compareStanding(candidate.standing, incumbent.standing) > 0 : candidate.value > incumbent.value);
     let changes: BuildPatch = { gear: {} };
     const steps: Record<string, unknown>[] = [];
     /** For each slot, how its alternatives scored the last time the slot was evaluated: what lost, and by how much. */
@@ -882,8 +984,11 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     let tunedSlots = 0;
     const slotCoverage = new Map<string, { available: number; measured: number }>();
 
-    type Chosen = { move: Move; patch: BuildPatch; value: number; metrics: Metrics; rb: ResolvedBuild };
+    type Chosen = { move: Move; patch: BuildPatch; value: number; metrics: Metrics; rb: ResolvedBuild; standing: RankedStanding };
     const accept = (best: Chosen) => {
+      checkpoints.push({ spent: spent(), phase, value: best.value });
+      if (best.standing.feasible && !goalTrace.firstFeasible) goalTrace.firstFeasible = { evaluations: spent(), unique: memo.misses, phase };
+      standing = best.standing;
       const swaps = best.move.changes.map(([target, id]) => {
         const from = rb.model[target];
         const { dropped } = keptSockets(dataset, rb, target, id);
@@ -941,14 +1046,16 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
 
     // Round -1 tunes what the build already wears (best cards, enchants and catalogued rolls) before anything is compared with it:
     // otherwise a worn piece the link left bare loses to a replacement that the walk happened to reach first.
+    let valueAfterTuning: number | undefined;
     for (let round = complements ? -1 : 0; round < rounds && !exhausted; round++) {
       const tuning = round < 0;
+      if (!tuning) valueAfterTuning ??= value;
       let improved = false;
       for (const [slotIndex, slot] of walk.entries()) {
         if (searchedAt.get(slot) === version) continue;
         // Discovery (35%) and tuning what is worn (40% more) leave a quarter of the calculations for the walk: a short budget spent
         // on the sockets of the current pieces never looks at a replacement. What was not reached is reported in `coverage`.
-        if (tuning && spent() >= Math.floor(budget * 0.75)) break;
+        if (tuning && spent() >= Math.floor(plan * 0.75)) break;
         let best: Chosen | null = null;
         const seen: { to: [string, number][]; grades: Record<string, string>; value: number; against: number }[] = [];
         if (!tuning) considered.set(slot, seen);
@@ -956,12 +1063,13 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         if (!moves.length) continue;
         if (tuning) tunedSlots++;
         const remainingSlots = walk.length - slotIndex + (rounds - round - 1) * walk.length;
-        const share = Math.max(0, Math.floor((budget - spent()) / Math.max(1, remainingSlots)));
+        const shareAt = (budgetFor: number) => Math.max(0, Math.floor((budgetFor - spent()) / Math.max(1, remainingSlots)));
+        const share = shareAt(plan);
         // Three stages, so every candidate is judged with the same care as the piece it competes with: all of them bare, a quick
         // search of sockets and rolls for the best dozen, the full search for the best few. A small even share for each candidate
         // (what this used to give) cannot find the right enchant among eight, and the worn piece, which had the full search, won.
-        const quickEffort = tuning ? 0 : Math.max(4, Math.min(8, Math.floor(share / (2 * Math.max(1, Math.min(12, moves.length))))));
-        const fullEffort = Math.max(0, tuning ? share - 1 : Math.floor(share / 3));
+        const quickEffort = tuning ? 0 : Math.max(4, Math.min(8, Math.floor(shareAt(effortParts?.quick ?? plan) / (2 * Math.max(1, Math.min(12, moves.length))))));
+        const fullEffort = Math.max(0, tuning ? share - 1 : effortParts?.fullFixed ?? Math.floor(shareAt(effortParts?.full ?? plan) / 3));
         const solveFor = (candidatePatch: BuildPatch) => {
           if (outOfBudget()) { exhausted = true; return null; }
           try { return evalBuild(current, candidatePatch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs); } catch { return null; }
@@ -970,8 +1078,10 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         const entries: { move: Move; patch: BuildPatch; tried: Tried; fields: BuildPatch[][] }[] = [];
         // Discovery (measuring every candidate bare) may take at most half of the slot's share, so a long list of candidates cannot
         // leave nothing for the sockets of the ones that matter. What the cap leaves unmeasured is reported in `coverage`.
-        const discoveryCap = tuning ? Infinity : Math.max(12, Math.floor(share / 2));
+        const discoveryCap = tuning ? Infinity : Math.max(12, Math.floor(shareAt(effortParts?.discoveryCap ?? plan) / 2));
         let discovered = 0;
+        let selectedCount = 0;
+        phase = 'discovery';
         for (const move of moves) {
           await pace.breathe();
           const key = moveKey(move);
@@ -989,6 +1099,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
             /* a candidate that does not resolve is simply not a candidate */
           }
         }
+        phase = 'search';
         if (!tuning) slotCoverage.set(slot, { available: moves.length, measured: Math.max(slotCoverage.get(slot)?.measured ?? 0, entries.length) });
         const valueOf = (entry: { tried: Tried }) => entry.tried.metrics[rankMetric] ?? -Infinity;
         const refineEntry = (entry: (typeof entries)[number], effort: number) => {
@@ -1021,6 +1132,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
           }
           const finalists = entries.filter((candidate) => candidate.fields.length);
           const selected = tuning ? finalists.slice(0, 1) : withFamilies(finalists, 3);
+          selectedCount = selected.length;
           const effort = tuning ? fullEffort : Math.floor(fullEffort * 3 / Math.max(1, selected.length));
           for (const entry of selected) { await pace.breathe(); refineEntry(entry, effort); }
         }
@@ -1039,13 +1151,15 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         }
         for (const entry of contenders) {
           const candidate = entry.tried.metrics[objective];
-          if (candidate === undefined || !meets(entry.tried.metrics, rules)) continue;
+          if (candidate === undefined || !meets(entry.tried.metrics, rules) || !lawful(entry.tried.rb.model)) continue;
           seen.push({ to: entry.move.changes, grades: entry.move.grades, value: candidate, against: value });
-          if (!best || candidate > best.value) best = { move: entry.move, patch: entry.patch, value: candidate, metrics: entry.tried.metrics, rb: entry.tried.rb };
+          const chosen: Chosen = { move: entry.move, patch: entry.patch, value: candidate, metrics: entry.tried.metrics, rb: entry.tried.rb, standing: standingFor(entry.patch, entry.tried, candidate) };
+          if (ahead(chosen, best)) best = chosen;
         }
         // 0,1% is the floor: below it the "gain" is rounding in the engine, and the walk would chase noise.
         if (!exhausted && !tuning) searchedAt.set(slot, version);
-        if (best && best.value > value * 1.001) {
+        slotLog.push({ round, slot, spent: spent(), share, quick: quickEffort, full: fullEffort, discoveryCap: tuning ? null : discoveryCap, moves: moves.length, discovered, selected: selectedCount, best: best ? JSON.stringify(best.move.changes) : null, bestValue: best?.value ?? null, before: value, accepted: !!best && takes(best) });
+        if (best && takes(best)) {
           accept(best); improved = true; version++; solvedMoves.clear();
           if (tuning) { steps[steps.length - 1]['atual'] = true; steps[steps.length - 1]['kind'] = 'ajuste'; }
         }
@@ -1053,6 +1167,8 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       }
       if (!improved && !tuning) break;
     }
+    valueAfterTuning ??= value;
+    phase = 'search';
 
     // Pairs the user names: the best few candidates of each slot, every combination, applied only if both together beat the build.
     const PAIR_TOP = 4;
@@ -1067,41 +1183,56 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
           const patch = patchFor(move);
           const tried = evalBuild(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
           const candidate = tried.metrics[objective];
-          if (candidate !== undefined && meets(tried.metrics, rules) && (!best || candidate > best.value)) best = { move, patch, value: candidate, metrics: tried.metrics, rb: tried.rb };
+          if (candidate !== undefined && meets(tried.metrics, rules) && lawful(tried.rb.model)) {
+            const chosen: Chosen = { move, patch, value: candidate, metrics: tried.metrics, rb: tried.rb, standing: standingFor(patch, tried, candidate) };
+            if (ahead(chosen, best)) best = chosen;
+          }
         } catch { /* not a candidate */ }
       }
-      if (best && best.value > value * 1.001) accept(best);
+      if (best && takes(best)) accept(best);
     }
 
     // Last pass over the sockets. The search ranks cards and enchants by the script keys it expects to matter and tries the best
     // few; a card that wins for a reason the ranking does not see (Carta Derreting scales with HP) is never tried, and the answer
     // keeps a worse one. So the build it ends with is checked field by field against every legal card and enchant, in the time
     // the search left, with its own allowance so a long walk cannot starve it.
-    const polish = { fields: 0, total: 0, tried: 0, improved: 0 };
+    const polish = { fields: 0, total: 0, tried: 0, improved: 0, goalBlocked: 0 };
     const polishFrom = memo.misses;
+    const valueBeforeSocket = value;
+    const spentBeforeSocket = spent();
+    let fieldTimeCuts = 0;
+    phase = 'socket';
     if (complements) {
       const allowanceMs = Math.max(25_000, Math.round(config.limits.maxSearchMs * 0.5));
       const polishPace = pacing(allowanceMs);
       const polishEnd = Date.now() + allowanceMs;
       const relevant = new Set(relevantKeys(baseline.solved.calc, aims.map((aim) => aim.monster)));
       const score = (id: number) => Object.keys(dataset.items[id]?.script ?? {}).filter((key) => relevant.has(key) || key.startsWith('chance__')).length;
+      const touchedSlots = new Set<string>();
+      // The best few candidates the first pass measured for each field: a change elsewhere can only reorder what was already close.
+      const near = new Map<string, number[]>();
       for (let pass = 0; pass < 2; pass++) {
+        if (pass === 1) secondPass = { startedWith: value, uniqueBefore: memo.misses, startedAt: Date.now() };
         let changed = false;
         // Every socket gets an equal share of what is left, so the first slots cannot spend the allowance (a weapon has hundreds of
         // legal cards) and leave the garment and the boots unchecked.
-        const fields = walk.flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).map((option) => ({ slot, option })) : []));
+        const fields = walk.filter((slot) => pass === 0 || socketRecheck !== 'touched' || touchedSlots.has(slot)).flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).map((option) => ({ slot, option })) : []));
         if (pass === 0) polish.total = fields.length;
         for (const [position, { slot, option }] of fields.entries()) {
-          if (polishPace.timeUp() || (unified && outOfTotalBudget())) break;
+          if ((polishPace.timeUp() && stopFor('time:socket')) || (unified && outOfTotalBudget())) break;
           const itemId = rb.model[slot];
           if (!(itemId > 0) || !socketOptions(dataset, slot, itemId).some((entry) => entry.field === option.field)) continue;
           const fieldEnd = Date.now() + Math.max(250, (polishEnd - Date.now()) / (fields.length - position));
           polish.fields++;
+          const triedBefore = polish.tried;
           const current_ = (rb.model as unknown as Record<string, number | undefined>)[option.field];
           let best: { id: number; ranked: number } | undefined;
-          const candidates = option.ids.filter((id) => id !== current_ && !banned.has(id)).sort((a, b) => score(b) - score(a) || a - b);
+          const fieldKey = `${slot}.${option.field}`;
+          const ordered = option.ids.filter((id) => id !== current_ && !banned.has(id)).sort((a, b) => score(b) - score(a) || a - b);
+          const candidates = pass > 0 && socketRecheck === 'near' && !touchedSlots.has(slot) && near.has(fieldKey) ? ordered.filter((id) => near.get(fieldKey)!.slice(0, NEAR_RUNNERS_UP).includes(id)) : ordered;
+          const measuredHere: { id: number; ranked: number }[] = [];
           for (const id of candidates) {
-            if (polishPace.timeUp() || Date.now() > fieldEnd || (unified && outOfTotalBudget())) break;
+            if ((polishPace.timeUp() && stopFor('time:socket')) || (Date.now() > fieldEnd && ++fieldTimeCuts) || (unified && outOfTotalBudget())) break;
             await polishPace.breathe();
             const patch: BuildPatch = { gear: { [option.field]: id } };
             if (option.kind === 'enchant') {
@@ -1112,27 +1243,43 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
             polish.tried++;
             try {
               // Scanned without the proc average (it doubles the cost of a build with a proc); the winner is measured in full below.
-              const tried = memo.evaluate(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, false);
+              const tried = measured(true, () => memo.evaluate(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, false));
               const ranked = tried.metrics[rankMetric];
+              if (ranked !== undefined) measuredHere.push({ id, ranked });
               if (ranked !== undefined && (!best || ranked > best.ranked)) best = { id, ranked };
             } catch { /* not a candidate */ }
           }
+          if (pass === 0) near.set(fieldKey, measuredHere.sort((a, b) => b.ranked - a.ranked).map((entry) => entry.id));
+          const logged = { slot, field: option.field, candidates: candidates.length, tried: polish.tried - triedBefore, winnerRank: best ? candidates.indexOf(best.id) : null, gainPct: null as number | null, firstPassRank: pass > 0 && best ? (near.get(fieldKey)?.indexOf(best.id) ?? -1) + 1 : null };
+          socketLog.push(logged);
           if (!best) continue;
           const patch: BuildPatch = { gear: { [option.field]: best.id } };
           const full = evalBuild(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
           const candidate = full.metrics[objective];
-          if (candidate === undefined || !meets(full.metrics, rules) || candidate <= value * 1.001) continue;
-          accept({ move: { anchor: slot, changes: [[slot, itemId]], grades: { [slot]: (rb.model as unknown as Record<string, string>)[`${slot}Grade`] ?? '' } }, patch, value: candidate, metrics: full.metrics, rb: full.rb });
+          if (candidate === undefined || !meets(full.metrics, rules) || !lawful(full.rb.model)) continue;
+          const chosen: Chosen = { move: { anchor: slot, changes: [[slot, itemId]], grades: { [slot]: (rb.model as unknown as Record<string, string>)[`${slot}Grade`] ?? '' } }, patch, value: candidate, metrics: full.metrics, rb: full.rb, standing: standingFor(patch, full, candidate) };
+          if (!takes(chosen)) {
+            // The field's best by DPS was refused; with a goal, count the ones the goal refused (the ranking above is still by DPS).
+            if (goalOn && candidate > value * 1.001) polish.goalBlocked++;
+            continue;
+          }
+          accept(chosen);
           steps[steps.length - 1]['kind'] = 'ajuste';
           steps[steps.length - 1]['polish'] = `${option.field}: ${dataset.items[best.id]?.name}`;
           polish.improved++;
+          touchedSlots.add(slot);
+          logged.gainPct = steps[steps.length - 1]['gainPct'] as number | null;
           changed = true;
         }
         if (!changed) break;
       }
     }
 
+    const polishEndedAt = Date.now();
+    const polishEndedMisses = memo.misses;
     polishFresh = unified ? 0 : memo.misses - polishFrom;
+    const valueAfterSocket = value;
+    phase = 'levelCheck';
 
     // The walk compares everything at the ideal refine and grade. A piece can lose to the worn one at the level the player has
     // today and win once both are raised (a better enchant, a bonus that unlocks at a grade), or the other way round: for the
@@ -1191,6 +1338,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
 
     // The search is over: what the profiles, targets and reports below calculate is not part of what the budget paid for.
     const searchedCalcs = spent();
+    phase = 'report';
 
 
     // Both kinds of build side by side: a piece can win the opening and lose the long fight.
@@ -1237,11 +1385,11 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
     let countedProcs: string[] | undefined;
     const lostProcs: string[] = [];
     try {
-      const last = evaluate(current, undefined, dataset, monster, effects, [objective], more, aims[0].weight, false);
-      const firstOff = evaluate(base, undefined, dataset, monster, effects, [objective], more, aims[0].weight, false);
+      const last = evalRaw(current, undefined, dataset, monster, effects, [objective], more, aims[0].weight, false);
+      const firstOff = evalRaw(base, undefined, dataset, monster, effects, [objective], more, aims[0].weight, false);
       const keptProcs = new Set(((last.solved.calc.chanceList ?? []) as { name?: string }[]).map((chance) => chance?.name));
       for (const chance of ((baseline.solved.calc.chanceList ?? []) as any[]).filter((entry) => entry?.name && !keptProcs.has(entry.name) && !effects.includes(entry.name)).slice(0, 5)) {
-        const withProc = evaluate(base, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
+        const withProc = evalRaw(base, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
         const gain = deltaPct(withProc, firstOff.metrics[objective]);
         const average = procEstimate(await procData(dataset, chance), gain, procHitsPerSecond ?? 3);
         const expected = average?.expectedGainPct ? Object.values(average.expectedGainPct)[0] : undefined;
@@ -1250,7 +1398,7 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       if (resolvedProcMode === 'active') countedProcs = evalFresh(current, undefined, dataset, monster, effects, [objective]).solved.effects;
       else for (const chance of ((last.solved.calc.chanceList ?? []) as any[]).filter(chance => chance?.name && !effects.includes(chance.name)).slice(0, 10)) {
         if (outOfTotalBudget()) break;
-        const withProc = evaluate(current, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
+        const withProc = evalRaw(current, undefined, dataset, monster, [...effects, chance.name], [objective], more, aims[0].weight, false).metrics[objective];
         const gainPct = deltaPct(withProc, last.metrics[objective]);
         const average = procEstimate(await procData(dataset, chance), gainPct, procHitsPerSecond);
         procs.push({ effect: chance.name, label: chance.label, gainPct, ...(average ? { average } : {}) });
@@ -1361,16 +1509,59 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
       ...(skippedNotInLatam.length ? { skippedNotInLatam } : {}),
       ...(alerts.length ? { alerts } : {}),
       solves: searchedCalcs,
+      ...(goalOn ? { goalSearch: {
+        feasible: standing.feasible,
+        startedFeasible: goalTrace.startedFeasible,
+        ...(goalTrace.firstFeasible ? { firstFeasible: goalTrace.firstFeasible } : {}),
+        ...(standing.feasible ? {} : { bestGap: { worst: round(standing.worst, 4), total: round(standing.total, 4) } }),
+        stoppedBy: stopCause ?? 'completed',
+        // `counted` is what the budget paid (`solves`); the reads of the other targets are real engine work outside it.
+        evaluations: { counted: searchedCalcs, otherTargets: sideFresh, unique: memo.misses },
+        socketFieldsRefusedByGoal: polish.goalBlocked,
+        note: standing.feasible ? 'A meta foi cumprida em todos os alvos.' : 'A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível.',
+      } } : {}),
       ...(memo.hits ? { reused: memo.hits } : {}),
       screening,
       procContext: { mode: resolvedProcMode, hitsPerSecond: procHitsPerSecond ?? 3,
         counted: finalProcEvaluation.counted,
         uncounted: finalProcEvaluation.uncounted,
-        baselineOff: evaluate(base, undefined, dataset, monster, effects, [objective], more, aims[0].weight).metrics[objective],
-        finalOff: evaluate(current, undefined, dataset, monster, effects, [objective], more, aims[0].weight).metrics[objective],
+        baselineOff: evalRaw(base, undefined, dataset, monster, effects, [objective], more, aims[0].weight).metrics[objective],
+        finalOff: evalRaw(current, undefined, dataset, monster, effects, [objective], more, aims[0].weight).metrics[objective],
         note: 'Média estimada por estados ativo/inativo de até 3 procs com chance e duração conhecidas, independentes e ataques regulares. HP mínimo é verificado sem os procs adicionais. A comparação visual usa os efeitos explicitamente selecionados.' },
       limits: { refine: refine ?? REACHABLE_REFINE, maxGrade: maxGrade ?? 'A' },
       coverage,
+      ...(instrument ? { budgetReport: (() => {
+        const rows = PHASES.map((name) => ledger[name]);
+        const sum = (pick: (row: (typeof rows)[number]) => number) => rows.reduce((total, row) => total + pick(row), 0);
+        const verification = { unique: ledger.levelCheck.unique + ledger.report.unique, uncached: ledger.levelCheck.uncached + ledger.report.uncached };
+        return {
+          unit: 'solves: evaluations the cache did not have (one build against the first target); engine calls are counted apart',
+          mode: budgetMode,
+          requested: requestedBudget,
+          searchBudget: budget,
+          socketReserve: unified && complements ? socketReserve : null,
+          effortBudget: plan,
+          wallClockMs: Date.now() - startedAt,
+          stoppedReason: stopCause ?? 'completed',
+          totalEngineCalls: sum((row) => row.engineCalls),
+          uniqueEvaluations: memo.misses,
+          uncachedEvaluations: sum((row) => row.uncached),
+          cacheHits: memo.hits,
+          discoveryEvaluations: ledger.discovery.unique,
+          searchEvaluations: ledger.search.unique,
+          socketEvaluations: ledger.socket.unique,
+          finalVerificationEvaluations: verification.unique + verification.uncached,
+          phases: ledger,
+          // `inCap` is what the cap counted; `socketOutsideCap` is the legacy pass, which has its own allowance.
+          budgeted: { inCap: searchedCalcs, socketOutsideCap: polishFresh, effective: searchedCalcs + polishFresh, unused: Math.max(0, requestedBudget - searchedCalcs - polishFresh) },
+          socket: { availableAtStart: unified ? Math.max(0, requestedBudget - spentBeforeSocket) : null, used: ledger.socket.unique, fields: polish.fields, totalFields: polish.total, fieldTimeCuts },
+          checkpoints,
+          socketLog,
+          secondPass: secondPass ? { startedWith: secondPass.startedWith, evaluations: polishEndedMisses - secondPass.uniqueBefore, ms: polishEndedAt - secondPass.startedAt, uniqueBefore: secondPass.uniqueBefore } : null,
+          slotLog,
+          bestScoreByPhase: { baseline: baseValue, discovery: baseValue, tuning: valueAfterTuning ?? baseValue, search: valueBeforeSocket, socket: valueAfterSocket, final: value },
+        };
+      })() } : {}),
       ...(strictMvp ? { mvpFree: !ITEM_ID_KEYS.some((key) => MVP_CARD_IDS.has(rb.model[key])) } : {}),
       ...(exhausted ? { stopped: `orçamento de cálculos ou de tempo esgotado (${searchedCalcs} de ${budget}): pode haver trocas melhores que a busca não alcançou. Restrinja \`slots\`, fixe \`candidates\`, use \`complements: false\` ou aumente \`maxSolves\` para a busca caber.` } : {}),
       ...(baseline.rb.warnings.length ? { warnings: baseline.rb.warnings } : {}),
@@ -1390,6 +1581,31 @@ async function optimizeBuild({ build, target, targets, effects = [], objective: 
         note: 'Heurística (peças, conjuntos, graus e complementos); patch/link incluem cartas, encantamentos e rolagens. Antes de comparar, a peça que a build já usa é ajustada com os melhores cartas, encantamentos e rolagens catalogadas (passos com `atual`), mesmo que o link não os traga. Não prova ótimo global.',
       } : {}),
     };
+  }
+
+/** The goal and constraints against the build the search started from and the one it ended with, each target judged on its own. */
+async function judgeSearch(args: OptimizeBuildArgs, result: { patch: BuildPatch }, explicit: Requirement[]) {
+    const { goal, constraints, effects = [], require: rules = [] } = args;
+    const base = decodeOnce(await normalizeShare(args.build, shortener));
+    const final = applyPatch(base, result.patch);
+    const policy = await prepareProcPolicy(dataset, optimizeProcMode(args.procMode, args.countProcs), args.procHitsPerSecond);
+    const wanted = judgedMetrics(goal, rules);
+    const aims = (args.targets ?? [{ monsterId: args.target?.monsterId ?? config.defaultTargetId }]).map((aim) => resolveTarget(dataset, aim.monsterId));
+    const judge = (build: BuildInput, tolerateInherited: boolean) => judgeFeasibility({
+      dataset, base, build, goal, constraints, require: explicit, tolerateInherited,
+      readings: aims.map(({ id, monster }): TargetReading => ({ monsterId: id, name: monster.name, hp: monster.stats?.health, metrics: evaluate(build, undefined, dataset, monster, effects, wanted, [], 1, policy).metrics })),
+    });
+
+    // The base's own errors cannot be repaired by a search, so the final build is not called invalid for them; the baseline is judged as it is.
+    return { baseline: judge(base, false), final: judge(final, true) };
+  }
+
+async function optimizeBuild(args: OptimizeBuildArgs) {
+    const adapted = adaptSpecs(args);
+    // The goal's rules rank candidates inside the search; only what the caller put in `require` filters them.
+    const { goalSearch, ...result } = (await searchBuild({ ...adapted, require: args.require ?? [] })) as Awaited<ReturnType<typeof searchBuild>> & { goalSearch?: unknown };
+
+    return args.goal || args.constraints ? { ...result, feasibility: { ...(await judgeSearch(adapted, result, args.require ?? [])), ...(goalSearch ? { search: goalSearch } : {}) } } : result;
   }
 
 async function slotOptions({ itemId, query, limit = 40, detail = false }: SlotOptionsArgs) {

@@ -9,14 +9,37 @@ import { APP_VERSION } from 'src/app/core/app-version';
 import { JobBuffs } from 'src/app/constants/job-buffs';
 import { BaseStateCalculator } from 'src/app/core/base-state-calculator';
 import { canUsedByClass } from 'src/app/utils';
+import { HEAD_SLOTS, resolveHeadSlotOccupancy } from 'src/app/utils/head-gear-slots';
+import { ItemTypeEnum } from 'src/app/constants/item-type.enum';
 import { Dataset } from '../data/dataset';
 import { BuildInput, resolveBuild } from './build-input';
+import { applyPatch, BuildPatch } from './variants';
 import { itemContext } from './item-context';
 import { isCustomItem, validateCustomItems } from 'src/app/core/custom-items';
 import { ensureCustomAttachment } from 'src/app/core/custom-attachments';
 import { refineLimitFor } from 'src/app/core/equipment-rules';
 import { canGradeItem } from 'src/app/utils/can-grade';
 import { checkSkillTree, SkillTreeData, SKILL_TREE_SOURCE } from './skill-tree';
+
+/** Head slots whose item collides with a multi-slot head gear (a Middle+Lower mask) worn elsewhere. */
+export function headSlotConflicts(model: Record<string, any>, items: Record<number, any>): ItemTypeEnum[] {
+  const equipped: Partial<Record<ItemTypeEnum, any>> = {};
+  for (const slot of HEAD_SLOTS) {
+    const id = model[slot];
+    if (typeof id === 'number' && id > 0 && items[id]) equipped[slot] = items[id];
+  }
+  return resolveHeadSlotOccupancy(equipped).toClear;
+}
+
+/** True when `patch` creates a head-slot collision the base build did not have. Searches use it to drop such candidates. */
+export function introducesHeadConflict(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset): boolean {
+  const gear = (patch?.gear ?? {}) as Record<string, unknown>;
+  if (!HEAD_SLOTS.some((slot) => slot in gear)) return false;
+  const before = resolveBuild(base, dataset);
+  const after = resolveBuild(applyPatch(base, patch!), dataset);
+  const known = new Set(headSlotConflicts(before.model, before.items));
+  return headSlotConflicts(after.model, after.items).some((slot) => !known.has(slot));
+}
 
 export interface BuildIssue { code: string; path: string; message: string; itemId?: number }
 
@@ -121,6 +144,12 @@ export function validateBuild(input: BuildInput, dataset: Dataset, constraints: 
         errors.push({ code: 'REQUIRED_LEVEL', path, itemId: id, message: `${row.name} exige nível ${record.requiredLevel}; a build é nível ${model.level}.` });
       }
     }
+  }
+
+  // A Middle+Lower mask fills both slots: a different item in the slot it covers cannot be worn with it.
+  for (const slot of headSlotConflicts(model, resolved.items)) {
+    const id = model[slot] as number;
+    errors.push({ code: 'SLOT_OCCUPIED', path: `gear.${slot}`, itemId: id, message: `${dataset.itemIndex.get(id)?.name ?? id} disputa o slot ${slot} com uma peça que ocupa mais de um slot de cabeça.` });
   }
 
   // What the class limits changed silently is what the person did not ask for: the calculation is of another build.

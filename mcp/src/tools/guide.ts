@@ -88,6 +88,15 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
       '`coverage`: o que a busca olhou (slots alcançados, candidatos medidos e não medidos, soquetes conferidos, cálculos de descoberta e de avaliação) e se foi `complete`: o resultado é o melhor entre o que foi medido. `alerts`: o que muda a leitura (alvo sem defesa, classe do alvo, penalidade de tamanho, ACERTO/ASPD, rolagens fora do catálogo). ' +
       '`unconfirmedRolls`: de onde vieram as rolagens do pool do rAthena (kRO), aceito como referência do LATAM. `detail: true` traz o contexto do alvo, candidatos, alternativas e as notas de cada bloco.',
   },
+  'meta-e-restricoes': {
+    title: 'Meta por alvo e restrições duras (goal, constraints)',
+    text:
+      '`optimize_build` e `evaluate_variants` aceitam `goal` e `constraints` (a UI usa o mesmo contrato). `goal`: kind (dps|burst|farm), skill ("Nome==Nível"), targets [{ monsterId, weight? }] (até 5), maxHitsToKill, minCritRate (%), minAccuracy (HIT) e margin (padrão 0; com maxHitsToKill: minDano × maxHitsToKill ≥ HP × (1 + margin)). Cada regra vale em CADA alvo. ' +
+      '`constraints`: mvpPolicy (allow|exclude-new|none), maxGrade, maxRefine, lockedSlots (peça, refino, grau, cartas, encantamentos e rolagens como na base), unavailableIds, forbiddenEffects (proíbe o EFEITO ATIVO, ex. "Oleum Sanctum"; o nível aprendido como pré-requisito não é tocado), ' +
+      'consumables { allowed?, forbidden?, max? }, allowExternalBuffs:false (nenhum buff novo) e allowStatReset:false (atributos iguais aos da base). Flags explícitas da chamada (lock, exclude, mvpPolicy, maxGrade, refine, require, target/targets) prevalecem; sem goal/constraints nada muda. ' +
+      '`feasibility.status`: invalid (build ilegal ou quebra restrição dura), infeasible (legal, mas um alvo não cumpre), unknown (nada falha, mas algum número não pôde ser medido: nunca conta como cumprido) ou feasible. `targets[]` traz o veredito e as violações de cada alvo; `worstTarget` aponta o gargalo. ' +
+      '`maxHitsToKill` lê o `hitsToKill` do motor (ceil(HP / dano mínimo do caminho crítico)); não é probabilidade. Com ele, `feasibility.kill` separa três respostas: `damageFeasible` (o dano calculado cumpre a meta de golpes; não exige precisão nem crítico), `constraintsMet` (os limites que você declarou — minCritRate, minAccuracy, require, restrições duras — valem; são obrigatórios e não provam abate) e `reliability`: `guaranteed` (o abate não depende de crítico e todo golpe acerta), `conditional` (depende de crítico abaixo de 100% ou a chance de acerto é menor que 100%) ou `unknown` (falta dado, p.ex. dano sem crítico; nunca vira guaranteed). `reliability` some quando o dano não cumpre a meta. Vale o pior alvo. Em optimize_build o julgamento é da build base e da final; a busca já respeita lock/exclude/MVP/grau/refino/require, mas ainda não filtra candidatos pelas demais restrições. Preço e custo em zenys não entram.',
+  },
   tank: {
     title: 'Builds de tank',
     text:

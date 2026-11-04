@@ -1,0 +1,113 @@
+{
+ "job": "adv:b1",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "b1, cartas sorteadas, equipamento mantido, esforço 300",
+   "sameState": true,
+   "all": {
+    "finalDps": 1186419,
+    "unique": 3952,
+    "wallMs": 14685,
+    "secondPass": {
+     "startedWith": 1125297,
+     "evaluations": 1874,
+     "ms": 6474,
+     "uniqueBefore": 2077
+    },
+    "secondPassChanges": [
+     {
+      "field": "headUpper.headUpperEnchant1",
+      "gainPct": 4.67,
+      "firstPassRank": 2,
+      "candidates": 53,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headMiddle.headMiddleCard",
+      "gainPct": 0.73,
+      "firstPassRank": 1,
+      "candidates": 140,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "near": {
+    "finalDps": 1186419,
+    "unique": 3670,
+    "wallMs": 14393,
+    "secondPass": {
+     "startedWith": 1125297,
+     "evaluations": 1592,
+     "ms": 7179,
+     "uniqueBefore": 2077
+    },
+    "secondPassChanges": [
+     {
+      "field": "headUpper.headUpperEnchant1",
+      "gainPct": 4.67,
+      "firstPassRank": 2,
+      "candidates": 53,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headMiddle.headMiddleCard",
+      "gainPct": 0.73,
+      "firstPassRank": 1,
+      "candidates": 5,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "b1, cartas sorteadas, equipamento mantido, esforço 1500",
+   "sameState": true,
+   "all": {
+    "finalDps": 1215531,
+    "unique": 4578,
+    "wallMs": 18356,
+    "secondPass": {
+     "startedWith": 1215531,
+     "evaluations": 1672,
+     "ms": 5658,
+     "uniqueBefore": 2905
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 1215531,
+    "unique": 4446,
+    "wallMs": 14714,
+    "secondPass": {
+     "startedWith": 1215531,
+     "evaluations": 1540,
+     "ms": 5291,
+     "uniqueBefore": 2905
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "b1, cartas sorteadas, equipamento mantido, esforço 4000",
+   "sameState": true,
+   "all": {
+    "finalDps": 1215531,
+    "unique": 3740,
+    "wallMs": 12588,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 1215531,
+    "unique": 3740,
+    "wallMs": 12115,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

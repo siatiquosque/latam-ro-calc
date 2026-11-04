@@ -24,6 +24,15 @@ export function evaluate(
 type Evaluation = ReturnType<typeof evaluate>;
 
 /**
+ * Calls made to the calculation engine (`solveWithInput`) since the process started. One evaluation is one build against one
+ * target; it costs one call, or more with extra targets or an averaged proc policy. Read it as a difference around the work
+ * being measured (the engine is synchronous, so nothing else interleaves inside a single evaluation).
+ */
+let engineCalls = 0;
+export const engineCallCount = (): number => engineCalls;
+const solveCounted: typeof solveWithInput = (...args) => { engineCalls++; return solveWithInput(...args); };
+
+/**
  * `evaluate` for a build the caller already resolved. The search asks about the same build many times (a card tried in the
  * quick pass and again in the full one, a worn piece met again on the next round: about a quarter of all the calculations of
  * a real search were repeats), so it keeps what it measured: the metrics are a pure function of the resolved build, the
@@ -78,11 +87,11 @@ function evaluateResolved(
   weight: number,
   autoProcs: ProcPolicy,
 ) {
-  let first = solveWithInput(rb, dataset, monster, effects);
+  let first = solveCounted(rb, dataset, monster, effects);
   if (autoProcs === true) {
     // Procs only exist on the calculator after a solve, and a swapped-in piece brings its own: count whatever this build offers.
     const offered = ((first.calc.chanceList ?? []) as any[]).map(chance => chance?.name).filter((name): name is string => !!name && !effects.includes(name));
-    if (offered.length) { effects = [...effects, ...offered]; first = solveWithInput(rb, dataset, monster, effects); }
+    if (offered.length) { effects = [...effects, ...offered]; first = solveCounted(rb, dataset, monster, effects); }
   }
   const solved = { ...first, rb, effects };
   const metrics = readMetrics(solved, wanted);
@@ -106,7 +115,7 @@ function evaluateResolved(
         probability *= mask & 2 ** index ? uptime : 1 - uptime;
         if (mask & 2 ** index) active.push(chance.name);
       });
-      const state = mask === 0 ? readMetrics(solved, damageMetrics) : readMetrics({ ...solveWithInput(rb, dataset, monster, active), rb, effects: active }, damageMetrics);
+      const state = mask === 0 ? readMetrics(solved, damageMetrics) : readMetrics({ ...solveCounted(rb, dataset, monster, active), rb, effects: active }, damageMetrics);
       for (const metric of damageMetrics) if (state[metric] !== undefined) metrics[metric] += probability * state[metric];
     }
   }
