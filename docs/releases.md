@@ -38,6 +38,14 @@ preparada deve estar em um commit aprovado, para identificar a origem do build.
 Os primeiros deploys desta instalação foram snapshots de uma árvore de
 trabalho; seus metadados os identificam como `dirty`, sem fingir um commit limpo.
 
+## Sincronizar com o upstream
+
+O fork e o upstream numeram os patches a partir da mesma base, então a mesma versão pode ter
+notas diferentes. Ao sincronizar, as entradas já publicadas pelo fork não mudam, e cada versão
+do upstream entra como **uma entrada própria**, renumerada em sequência depois da versão atual
+do fork, com data e textos originais. Nunca se juntam notas de versões diferentes numa só.
+Procedimento completo na skill `sync-upstream`.
+
 ## Validar e empacotar
 
 ```sh
