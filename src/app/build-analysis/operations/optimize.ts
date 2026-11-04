@@ -14,7 +14,7 @@ import { Dataset } from '../data/dataset';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
 import { BuildInput, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
-import { DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile } from '../engine/metrics';
+import { DEFAULT_METRICS, Metric, Metrics, objectiveFor, Profile } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
 import { engineCallCount, evaluate, evaluationCache } from '../engine/evaluate';
 // Preserve imports used by older callers while evaluation is owned by the engine layer.

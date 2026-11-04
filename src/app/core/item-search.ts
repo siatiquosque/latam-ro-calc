@@ -51,6 +51,7 @@ const fixedKeys = [
     ...keysFor(type + '_pene_race', races), ...keysFor(type + '_pene_class', classes),
   ]),
   ...keysFor('m_my_element', elements),
+  ...keysFor('matk_element', ['holy']),
   ...keysFor('pene_res_race', races.filter(race => race !== 'all')),
   ...keysFor('pene_mres_race', races.filter(race => race !== 'all')),
   ...keysFor('cri_race', races.filter(race => race !== 'all')),
