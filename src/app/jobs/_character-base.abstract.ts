@@ -62,7 +62,9 @@ export interface AtkSkillModel {
    * also found by running it on a recording input (`formulaInputs`, core/skill-synergy.ts), never by reading its source text.
    */
   scaling?: { resources?: ('hp' | 'sp')[]; bonusKeys?: string[]; formulaText?: string };
-  /** Adjust this skill's final hit chance, without changing basic attacks. */
+  /** Adjust this skill's hit rate, without changing basic attacks. `accuracy` is the raw,
+   *  uncapped `100 + HIT − (HIT for 100%)`; the engine caps the result to 5..100 and rolls
+   *  perfect hit afterwards, as rAthena does. */
   accuracy?: (input: AtkSkillFormulaInput & { accuracy: number }) => number;
   /** Flat skill damage added after the ATK ratio, before defenses and skill bonuses. */
   flatDamage?: (input: AtkSkillFormulaInput) => number;
@@ -172,6 +174,8 @@ export interface SkillModel {
   bonus?: any;
   /** ragassets skill-icon id shown next to this option in the dropdown (optional). */
   icon?: number;
+  /** i18n key for an option that names something other than a level (a toxin); `label` is its pt-BR text. */
+  labelKey?: string;
 }
 
 export interface ActiveSkillModel {
@@ -182,6 +186,9 @@ export interface ActiveSkillModel {
   isMasteryAtk?: boolean;
   inputType: 'dropdown' | 'selectButton';
   label: string;
+  /** i18n key for a control that names a part of a skill rather than the skill itself, so the
+   *  client skill name is not laid over it ("Toxina aplicada" under Aplicar Toxina). */
+  labelKey?: string;
   isDebuff?: boolean;
   name: SKILL_NAME;
   dropdown: SkillModel[];

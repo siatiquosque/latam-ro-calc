@@ -36,6 +36,7 @@ export const SKILL_EFST: Record<string, number | number[]> = {
   'Rising Dragon': 410, // Dragão Ascendente
   'Gentle Touch - Alive': 427, // Chakra do Vigor
   'Vigor Explosion': 86, // Fúria Interior / EFST_EXPLOSIONSPIRITS
+  'Sacramentum': 472,
 };
 
 /**

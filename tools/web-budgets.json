@@ -1,7 +1,6 @@
 {
   "initialWarning": 2300000,
   "initialError": 2470000,
-  "totalBaseline": 2902123,
   "releaseVersionsLimit": 8000,
   "analysisWorkerError": 3500000,
   "componentStyleWarning": 6000,

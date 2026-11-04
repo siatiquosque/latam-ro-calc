@@ -1035,6 +1035,16 @@ export const ptBR = {
   'cs.previewSuffix': ' (Prévia)',
   'cs.inactiveForTarget': 'Inativo para o alvo selecionado. Aplica-se aos monstros listados na descrição.',
   'cs.debuffOnMonster': 'Debuff no monstro',
+  // Toxin names are the client's own item names (items 12717-12724), one per locale.
+  'cs.toxinApplied': 'Toxina aplicada',
+  'cs.toxin.12717': 'Curare',
+  'cs.toxin.12718': 'Vipera',
+  'cs.toxin.12719': 'Oblivium',
+  'cs.toxin.12720': 'Squamata',
+  'cs.toxin.12721': 'Cicuta',
+  'cs.toxin.12722': 'Pirexia',
+  'cs.toxin.12723': 'Waraitake',
+  'cs.toxin.12724': 'Beladona',
   'cs.reductionTitle': 'Redução: {label}',
   'cs.compareSuffix': '{label} (comparação)',
 
@@ -1272,6 +1282,12 @@ export const ptBR = {
 
   // The rotation column: the row list, its picker and the per-row hover notes.
   'rot.cap': 'ROTAÇÃO',
+  // The comparison strip above the card: one rotation needs no number, several do.
+  'rot.tab': 'Rotação',
+  'rot.tabNumbered': 'Rotação {n}',
+  'rot.tabsLabel': 'Rotações para comparar',
+  'rot.addTab': 'Adicionar rotação para comparar',
+  'rot.removeTab': 'Remover {name}',
   'rot.oneSkill': '{n} HABILIDADE',
   'rot.manySkills': '{n} HABILIDADES',
   'rot.clearTooltip': 'Remove todas as habilidades da rotação.',
@@ -1288,6 +1304,8 @@ export const ptBR = {
   'rot.critLabel': '• Crít.',
   'rot.critConditional': 'O crítico desta habilidade depende do estado atual do personagem — veja a condição em (i).',
   'rot.noCrit': '• Sem crít.',
+  'rot.hitLabel': '• Acerto',
+  'rot.tipHit': 'Só {pct}% dos usos sem crítico acertam este alvo; nos outros ele esquiva e o golpe não causa dano. A média e o DPS já descontam esses erros — mais Precisão aumenta essa chance.',
   'rot.noDamage': 'Não causa dano',
 
   'eq.needWeaponForShield': 'Equipe uma arma para poder usar escudo',

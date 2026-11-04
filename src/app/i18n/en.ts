@@ -1005,6 +1005,16 @@ export const catalog: TranslatedCatalog = {
   'cs.previewSuffix': ' (Preview)',
   'cs.inactiveForTarget': 'Inactive against the chosen target. It applies to the monsters named in the description.',
   'cs.debuffOnMonster': 'Debuff on the monster',
+  // Client item names (items_en, 12717-12724).
+  'cs.toxinApplied': 'Applied toxin',
+  'cs.toxin.12717': 'Paralysis',
+  'cs.toxin.12718': 'Leech End',
+  'cs.toxin.12719': 'Oblivion Curse',
+  'cs.toxin.12720': 'Death Hurt',
+  'cs.toxin.12721': 'Toxin',
+  'cs.toxin.12722': 'Pyrexia',
+  'cs.toxin.12723': 'Magic Mushroom',
+  'cs.toxin.12724': 'Venom Bleed',
   'cs.reductionTitle': 'Reduction: {label}',
   'cs.compareSuffix': '{label} (comparison)',
 
@@ -1229,6 +1239,11 @@ export const catalog: TranslatedCatalog = {
   'opt.headlineBottleneck': 'Current bottleneck: {component}',
 
   'rot.cap': 'ROTATION',
+  'rot.tab': 'Rotation',
+  'rot.tabNumbered': 'Rotation {n}',
+  'rot.tabsLabel': 'Rotations to compare',
+  'rot.addTab': 'Add a rotation to compare',
+  'rot.removeTab': 'Remove {name}',
   'rot.oneSkill': '{n} SKILL',
   'rot.manySkills': '{n} SKILLS',
   'rot.clearTooltip': 'Removes every skill from the rotation.',
@@ -1244,6 +1259,8 @@ export const catalog: TranslatedCatalog = {
   'rot.critLabel': '• Crit',
   'rot.critConditional': "This skill's crit depends on the character's current state — see the condition under (i).",
   'rot.noCrit': '• No crit',
+  'rot.hitLabel': '• Hit',
+  'rot.tipHit': 'Only {pct}% of the non-crit uses land on this target; it dodges the rest, and a miss deals no damage. The mean and the DPS already discount those misses — more HIT raises that chance.',
   'rot.noDamage': 'Deals no damage',
 
   'eq.needWeaponForShield': 'Equip a weapon to use a shield',
