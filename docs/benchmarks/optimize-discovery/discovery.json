@@ -1,0 +1,3367 @@
+{
+ "budgets": [
+  2000,
+  4000
+ ],
+ "rows": [
+  {
+   "case": "jor-original",
+   "note": "the study rules, nothing locked beyond them",
+   "maxSolves": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 635,
+    "unique": 634,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 462,
+    "skippedForBudget": 30,
+    "afterSearch": 17,
+    "unique": 2016,
+    "finalChecks": 10
+   },
+   "dps": [
+    23304627.4,
+    59158077.8
+   ],
+   "wallMs": 34036,
+   "piecesChanged": 29,
+   "changed": [
+    "weaponRefine",
+    "weaponGrade",
+    "shieldRefine",
+    "shieldCard",
+    "shieldEnchant1",
+    "shieldEnchant2",
+    "shieldEnchant3",
+    "headUpperCard",
+    "headUpperEnchant1",
+    "headUpperEnchant3",
+    "armorRefine",
+    "armorEnchant2",
+    "armorEnchant3",
+    "garmentRefine",
+    "boot",
+    "bootRefine",
+    "bootGrade",
+    "bootEnchant3",
+    "accLeftEnchant2",
+    "accLeftEnchant3",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "shadowShieldRefine",
+    "bootEnchant2",
+    "headMiddle",
+    "headLower",
+    "weaponCard1"
+   ],
+   "studyRules": [
+    "FIELD_LOCK: headUpperEnchant1 mudou (29085 → 29088).",
+    "FIELD_LOCK: accRightEnchant1 mudou (null → 310916).",
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4865).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "candidateAudit": {
+    "notSearched": {},
+    "pieces": {
+     "weapon": {
+      "catalog": 214,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 92,
+      "notRelevant": 122,
+      "screened": 42,
+      "truncated": {
+       "byShare": 50,
+       "byBareScore": 23
+      },
+      "pooled": 19,
+      "evaluated": 12,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shield": {
+      "catalog": 58,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 21,
+      "notRelevant": 37,
+      "screened": 21,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 6
+      },
+      "pooled": 15,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 187,
+      "notRelevant": 231,
+      "screened": 41,
+      "truncated": {
+       "byShare": 146,
+       "byBareScore": 20
+      },
+      "pooled": 21,
+      "evaluated": 11,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 65,
+      "notRelevant": 87,
+      "screened": 41,
+      "truncated": {
+       "byShare": 24,
+       "byBareScore": 20
+      },
+      "pooled": 21,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 52,
+      "notRelevant": 62,
+      "screened": 34,
+      "truncated": {
+       "byShare": 18,
+       "byBareScore": 20
+      },
+      "pooled": 14,
+      "evaluated": 9,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 96,
+      "notRelevant": 79,
+      "screened": 39,
+      "truncated": {
+       "byShare": 57,
+       "byBareScore": 22
+      },
+      "pooled": 17,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 1,
+       "mvp": 0
+      },
+      "relevant": 112,
+      "notRelevant": 62,
+      "screened": 43,
+      "truncated": {
+       "byShare": 69,
+       "byBareScore": 20
+      },
+      "pooled": 23,
+      "evaluated": 11,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 81,
+      "notRelevant": 57,
+      "screened": 42,
+      "truncated": {
+       "byShare": 39,
+       "byBareScore": 18
+      },
+      "pooled": 24,
+      "evaluated": 12,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 186,
+      "notRelevant": 108,
+      "screened": 43,
+      "truncated": {
+       "byShare": 143,
+       "byBareScore": 23
+      },
+      "pooled": 20,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 180,
+      "notRelevant": 113,
+      "screened": 41,
+      "truncated": {
+       "byShare": 139,
+       "byBareScore": 23
+      },
+      "pooled": 18,
+      "evaluated": 8,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 40,
+      "truncated": {
+       "byShare": 59,
+       "byBareScore": 27
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 28,
+      "notRelevant": 50,
+      "screened": 28,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 15
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 42,
+      "notRelevant": 60,
+      "screened": 42,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 29
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 34,
+      "notRelevant": 46,
+      "screened": 34,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 21
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 33,
+      "notRelevant": 32,
+      "screened": 33,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 20
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 30,
+      "notRelevant": 34,
+      "screened": 30,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 17
+      },
+      "pooled": 13,
+      "evaluated": 1,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     }
+    },
+    "fields": [
+     {
+      "field": "weaponCard1",
+      "legal": 301,
+      "offered": 130,
+      "tried": 271,
+      "locked": false
+     },
+     {
+      "field": "weaponCard2",
+      "legal": 301,
+      "offered": 130,
+      "tried": 27,
+      "locked": false
+     },
+     {
+      "field": "shieldCard",
+      "legal": 100,
+      "offered": 28,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant1",
+      "legal": 25,
+      "offered": 20,
+      "tried": 6,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant2",
+      "legal": 25,
+      "offered": 20,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant3",
+      "legal": 25,
+      "offered": 20,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 55,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 70,
+      "offered": 52,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 48,
+      "offered": 32,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 30,
+      "offered": 20,
+      "tried": 5,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 54,
+      "tried": 13,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant1",
+      "legal": 55,
+      "offered": 4,
+      "tried": 3,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant2",
+      "legal": 34,
+      "offered": 21,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant3",
+      "legal": 22,
+      "offered": 13,
+      "tried": 6,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 52,
+      "tried": 24,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 66,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant1",
+      "legal": 6,
+      "offered": 6,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant3",
+      "legal": 5,
+      "offered": 3,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 22,
+      "offered": 20,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 27,
+      "offered": 19,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 18,
+      "offered": 14,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 3,
+      "tried": 4,
+      "locked": false
+     }
+    ],
+    "known": [
+     {
+      "key": "armor",
+      "id": 450206,
+      "name": "Armadura Invernal",
+      "fate": "pooled"
+     },
+     {
+      "key": "armorEnchant1",
+      "id": 311164,
+      "name": "Flor Invernal (Gemini)",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "armorEnchant2",
+      "id": 311100,
+      "name": "Flor Invernal (Atirador)",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "boot",
+      "id": 470069,
+      "name": "Bota Física do Éden II",
+      "fate": "evaluated"
+     },
+     {
+      "key": "accLeftCard",
+      "id": 300368,
+      "name": "Carta Rgan Intermediário",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "accRightCard",
+      "id": 300366,
+      "name": "Carta Rgan Ínfimo",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "headLower",
+      "id": 420076,
+      "name": "Coleira de Espinhos",
+      "fate": "evaluated"
+     }
+    ]
+   }
+  },
+  {
+   "case": "jor-original",
+   "note": "the study rules, nothing locked beyond them",
+   "maxSolves": 4000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 1084,
+    "unique": 1083,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "evaluations": {
+    "counted": 4000,
+    "otherTargets": 1108,
+    "skippedForBudget": 52,
+    "afterSearch": 17,
+    "unique": 4016,
+    "finalChecks": 10
+   },
+   "dps": [
+    23304627.4,
+    74626248.6
+   ],
+   "wallMs": 64588,
+   "piecesChanged": 39,
+   "changed": [
+    "weaponRefine",
+    "weaponGrade",
+    "weaponCard1",
+    "shieldRefine",
+    "shieldEnchant1",
+    "shieldEnchant2",
+    "shieldEnchant3",
+    "headUpperCard",
+    "headUpperEnchant1",
+    "headUpperEnchant3",
+    "armorRefine",
+    "armorEnchant2",
+    "armorEnchant3",
+    "garmentRefine",
+    "boot",
+    "bootRefine",
+    "bootGrade",
+    "bootEnchant3",
+    "accLeftEnchant1",
+    "accLeftEnchant2",
+    "accLeftEnchant3",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "shadowShield",
+    "shadowShieldRefine",
+    "bootEnchant2",
+    "headMiddle",
+    "headLower",
+    "headMiddleCard",
+    "shadowWeapon",
+    "shadowArmor",
+    "shadowArmorEnchant2",
+    "shadowArmorEnchant3",
+    "shadowBoot",
+    "shadowBootEnchant2",
+    "shadowBootEnchant3",
+    "weaponCard2"
+   ],
+   "studyRules": [
+    "FIELD_LOCK: headUpperEnchant1 mudou (29085 → 29090).",
+    "FIELD_LOCK: accRightEnchant1 mudou (null → 310916).",
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4865).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "candidateAudit": {
+    "notSearched": {},
+    "pieces": {
+     "weapon": {
+      "catalog": 214,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 92,
+      "notRelevant": 122,
+      "screened": 79,
+      "truncated": {
+       "byShare": 13,
+       "byBareScore": 58
+      },
+      "pooled": 21,
+      "evaluated": 21,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "shield": {
+      "catalog": 58,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 21,
+      "notRelevant": 37,
+      "screened": 21,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 6
+      },
+      "pooled": 15,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 187,
+      "notRelevant": 231,
+      "screened": 79,
+      "truncated": {
+       "byShare": 108,
+       "byBareScore": 52
+      },
+      "pooled": 27,
+      "evaluated": 23,
+      "accepted": 1,
+      "pooledNotEvaluated": 4
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 65,
+      "notRelevant": 87,
+      "screened": 54,
+      "truncated": {
+       "byShare": 11,
+       "byBareScore": 31
+      },
+      "pooled": 23,
+      "evaluated": 23,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 52,
+      "notRelevant": 62,
+      "screened": 46,
+      "truncated": {
+       "byShare": 6,
+       "byBareScore": 32
+      },
+      "pooled": 14,
+      "evaluated": 14,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 96,
+      "notRelevant": 79,
+      "screened": 83,
+      "truncated": {
+       "byShare": 13,
+       "byBareScore": 63
+      },
+      "pooled": 20,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 1,
+       "mvp": 0
+      },
+      "relevant": 112,
+      "notRelevant": 62,
+      "screened": 85,
+      "truncated": {
+       "byShare": 27,
+       "byBareScore": 58
+      },
+      "pooled": 27,
+      "evaluated": 16,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 81,
+      "notRelevant": 57,
+      "screened": 81,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 55
+      },
+      "pooled": 26,
+      "evaluated": 13,
+      "accepted": 1,
+      "pooledNotEvaluated": 13
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 187,
+      "notRelevant": 107,
+      "screened": 87,
+      "truncated": {
+       "byShare": 100,
+       "byBareScore": 61
+      },
+      "pooled": 26,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 180,
+      "notRelevant": 113,
+      "screened": 85,
+      "truncated": {
+       "byShare": 95,
+       "byBareScore": 63
+      },
+      "pooled": 22,
+      "evaluated": 11,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 83,
+      "truncated": {
+       "byShare": 16,
+       "byBareScore": 58
+      },
+      "pooled": 25,
+      "evaluated": 19,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 28,
+      "notRelevant": 50,
+      "screened": 28,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 15
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 44,
+      "notRelevant": 58,
+      "screened": 44,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 29
+      },
+      "pooled": 15,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 34,
+      "notRelevant": 46,
+      "screened": 34,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 20
+      },
+      "pooled": 14,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 33,
+      "notRelevant": 32,
+      "screened": 33,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 18
+      },
+      "pooled": 15,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 30,
+      "notRelevant": 34,
+      "screened": 30,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 17
+      },
+      "pooled": 13,
+      "evaluated": 3,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     }
+    },
+    "fields": [
+     {
+      "field": "weaponCard1",
+      "legal": 301,
+      "offered": 130,
+      "tried": 272,
+      "locked": false
+     },
+     {
+      "field": "weaponCard2",
+      "legal": 301,
+      "offered": 130,
+      "tried": 272,
+      "locked": false
+     },
+     {
+      "field": "shieldCard",
+      "legal": 100,
+      "offered": 28,
+      "tried": 53,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant1",
+      "legal": 25,
+      "offered": 20,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant2",
+      "legal": 25,
+      "offered": 20,
+      "tried": 19,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant3",
+      "legal": 25,
+      "offered": 20,
+      "tried": 18,
+      "locked": false
+     },
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 55,
+      "tried": 18,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 70,
+      "offered": 52,
+      "tried": 19,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 48,
+      "offered": 32,
+      "tried": 17,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 30,
+      "offered": 20,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "headMiddleCard",
+      "legal": 141,
+      "offered": 55,
+      "tried": 12,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 54,
+      "tried": 29,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant1",
+      "legal": 55,
+      "offered": 4,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant2",
+      "legal": 34,
+      "offered": 21,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant3",
+      "legal": 22,
+      "offered": 13,
+      "tried": 12,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 52,
+      "tried": 52,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 66,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant1",
+      "legal": 6,
+      "offered": 6,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant3",
+      "legal": 5,
+      "offered": 3,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 22,
+      "offered": 20,
+      "tried": 20,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 27,
+      "offered": 19,
+      "tried": 19,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 18,
+      "offered": 14,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 18,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 3,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "shadowArmorEnchant2",
+      "legal": 30,
+      "offered": 15,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "shadowArmorEnchant3",
+      "legal": 6,
+      "offered": 4,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "shadowBootEnchant2",
+      "legal": 30,
+      "offered": 15,
+      "tried": 13,
+      "locked": false
+     },
+     {
+      "field": "shadowBootEnchant3",
+      "legal": 6,
+      "offered": 4,
+      "tried": 5,
+      "locked": false
+     }
+    ],
+    "known": [
+     {
+      "key": "armor",
+      "id": 450206,
+      "name": "Armadura Invernal",
+      "fate": "pooled"
+     },
+     {
+      "key": "armorEnchant1",
+      "id": 311164,
+      "name": "Flor Invernal (Gemini)",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "armorEnchant2",
+      "id": 311100,
+      "name": "Flor Invernal (Atirador)",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "boot",
+      "id": 470069,
+      "name": "Bota Física do Éden II",
+      "fate": "evaluated"
+     },
+     {
+      "key": "accLeftCard",
+      "id": 300368,
+      "name": "Carta Rgan Intermediário",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "accRightCard",
+      "id": 300366,
+      "name": "Carta Rgan Ínfimo",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "headLower",
+      "id": 420076,
+      "name": "Coleira de Espinhos",
+      "fate": "accepted"
+     }
+    ]
+   }
+  },
+  {
+   "case": "meister",
+   "note": "physical, another class; reference = the full gear of the same character",
+   "maxSolves": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 1383,
+    "unique": 1382,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21601:feasible",
+    "21542:feasible",
+    "21539:feasible"
+   ],
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 420,
+    "skippedForBudget": 36,
+    "afterSearch": 15,
+    "unique": 2014,
+    "finalChecks": 8
+   },
+   "dps": [
+    10863465,
+    77327080.5
+   ],
+   "wallMs": 26319,
+   "piecesChanged": 35,
+   "changed": [
+    "weapon",
+    "weaponRefine",
+    "weaponGrade",
+    "weaponEnchant0",
+    "weaponEnchant1",
+    "weaponEnchant2",
+    "weaponEnchant3",
+    "shield",
+    "shieldRefine",
+    "shieldCard",
+    "shieldEnchant2",
+    "shieldEnchant3",
+    "headUpper",
+    "headUpperGrade",
+    "headUpperCard",
+    "headUpperEnchant3",
+    "headMiddleCard",
+    "armorRefine",
+    "garment",
+    "garmentRefine",
+    "boot",
+    "bootRefine",
+    "bootGrade",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "headUpperEnchant1",
+    "headUpperEnchant2",
+    "shieldEnchant1",
+    "headLower",
+    "shadowWeapon",
+    "shadowWeaponRefine",
+    "shadowArmor",
+    "shadowArmorRefine"
+   ],
+   "candidateAudit": {
+    "notSearched": {},
+    "pieces": {
+     "weapon": {
+      "catalog": 214,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 96,
+      "notRelevant": 118,
+      "screened": 42,
+      "truncated": {
+       "byShare": 54,
+       "byBareScore": 23
+      },
+      "pooled": 19,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "shield": {
+      "catalog": 58,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 29,
+      "notRelevant": 29,
+      "screened": 29,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 13
+      },
+      "pooled": 16,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 205,
+      "notRelevant": 213,
+      "screened": 40,
+      "truncated": {
+       "byShare": 165,
+       "byBareScore": 21
+      },
+      "pooled": 19,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 68,
+      "notRelevant": 84,
+      "screened": 34,
+      "truncated": {
+       "byShare": 34,
+       "byBareScore": 20
+      },
+      "pooled": 14,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 57,
+      "notRelevant": 57,
+      "screened": 36,
+      "truncated": {
+       "byShare": 21,
+       "byBareScore": 20
+      },
+      "pooled": 16,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 122,
+      "notRelevant": 53,
+      "screened": 42,
+      "truncated": {
+       "byShare": 80,
+       "byBareScore": 23
+      },
+      "pooled": 19,
+      "evaluated": 12,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 128,
+      "notRelevant": 47,
+      "screened": 43,
+      "truncated": {
+       "byShare": 85,
+       "byBareScore": 20
+      },
+      "pooled": 23,
+      "evaluated": 13,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 98,
+      "notRelevant": 40,
+      "screened": 41,
+      "truncated": {
+       "byShare": 57,
+       "byBareScore": 21
+      },
+      "pooled": 20,
+      "evaluated": 13,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 213,
+      "notRelevant": 81,
+      "screened": 43,
+      "truncated": {
+       "byShare": 170,
+       "byBareScore": 23
+      },
+      "pooled": 20,
+      "evaluated": 11,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 208,
+      "notRelevant": 85,
+      "screened": 41,
+      "truncated": {
+       "byShare": 167,
+       "byBareScore": 23
+      },
+      "pooled": 18,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 39,
+      "truncated": {
+       "byShare": 60,
+       "byBareScore": 26
+      },
+      "pooled": 13,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 78,
+      "notRelevant": 0,
+      "screened": 38,
+      "truncated": {
+       "byShare": 40,
+       "byBareScore": 26
+      },
+      "pooled": 12,
+      "evaluated": 5,
+      "accepted": 0,
+      "pooledNotEvaluated": 7
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 102,
+      "notRelevant": 0,
+      "screened": 40,
+      "truncated": {
+       "byShare": 62,
+       "byBareScore": 26
+      },
+      "pooled": 14,
+      "evaluated": 4,
+      "accepted": 1,
+      "pooledNotEvaluated": 10
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 80,
+      "notRelevant": 0,
+      "screened": 38,
+      "truncated": {
+       "byShare": 42,
+       "byBareScore": 26
+      },
+      "pooled": 12,
+      "evaluated": 2,
+      "accepted": 0,
+      "pooledNotEvaluated": 10
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 1,
+      "screened": 38,
+      "truncated": {
+       "byShare": 26,
+       "byBareScore": 25
+      },
+      "pooled": 13,
+      "evaluated": 3,
+      "accepted": 0,
+      "pooledNotEvaluated": 10
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 0,
+      "screened": 38,
+      "truncated": {
+       "byShare": 26,
+       "byBareScore": 26
+      },
+      "pooled": 12,
+      "evaluated": 1,
+      "accepted": 0,
+      "pooledNotEvaluated": 11
+     }
+    },
+    "fields": [
+     {
+      "field": "weaponEnchant0",
+      "legal": 81,
+      "offered": 4,
+      "tried": 82,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant1",
+      "legal": 86,
+      "offered": 3,
+      "tried": 87,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant2",
+      "legal": 9,
+      "offered": 6,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant3",
+      "legal": 3,
+      "offered": 2,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "shieldCard",
+      "legal": 100,
+      "offered": 33,
+      "tried": 100,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant1",
+      "legal": 9,
+      "offered": 4,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant2",
+      "legal": 9,
+      "offered": 4,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant3",
+      "legal": 9,
+      "offered": 4,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 4,
+      "offered": 3,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 4,
+      "offered": 3,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 1,
+      "offered": 1,
+      "tried": 5,
+      "locked": false
+     },
+     {
+      "field": "headMiddleCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 14,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 95,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant1",
+      "legal": 64,
+      "offered": 12,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant2",
+      "legal": 64,
+      "offered": 12,
+      "tried": 6,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant3",
+      "legal": 64,
+      "offered": 12,
+      "tried": 6,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 73,
+      "tried": 22,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 92,
+      "tried": 23,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant1",
+      "legal": 6,
+      "offered": 6,
+      "tried": 2,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 3,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant3",
+      "legal": 5,
+      "offered": 4,
+      "tried": 2,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 12,
+      "offered": 8,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 12,
+      "offered": 8,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 12,
+      "offered": 8,
+      "tried": 8,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 5,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 13,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 4,
+      "tried": 5,
+      "locked": false
+     }
+    ],
+    "known": [
+     {
+      "key": "weapon",
+      "id": 560027,
+      "name": "Soqueira Primordial-LT",
+      "fate": "evaluated"
+     },
+     {
+      "key": "weaponCard1",
+      "id": 27361,
+      "name": "Carta Andarilho Poluto",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "weaponCard2",
+      "id": 4608,
+      "name": "Carta Cavaleiro Branco",
+      "fate": "notLegalOnTheAnswerPiece"
+     }
+    ]
+   }
+  },
+  {
+   "case": "meister",
+   "note": "physical, another class; reference = the full gear of the same character",
+   "maxSolves": 4000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 2454,
+    "unique": 2453,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21601:feasible",
+    "21542:feasible",
+    "21539:feasible"
+   ],
+   "evaluations": {
+    "counted": 4000,
+    "otherTargets": 873,
+    "skippedForBudget": 39,
+    "afterSearch": 15,
+    "unique": 4014,
+    "finalChecks": 8
+   },
+   "dps": [
+    10863465,
+    116296497.75
+   ],
+   "wallMs": 50522,
+   "piecesChanged": 50,
+   "changed": [
+    "weapon",
+    "weaponRefine",
+    "weaponGrade",
+    "weaponEnchant0",
+    "weaponEnchant1",
+    "weaponEnchant2",
+    "weaponEnchant3",
+    "shield",
+    "shieldRefine",
+    "shieldCard",
+    "shieldEnchant2",
+    "shieldEnchant3",
+    "headUpper",
+    "headUpperGrade",
+    "headUpperCard",
+    "headUpperEnchant2",
+    "headUpperEnchant3",
+    "headMiddleCard",
+    "armor",
+    "armorRefine",
+    "garment",
+    "garmentRefine",
+    "garmentGrade",
+    "boot",
+    "bootRefine",
+    "bootGrade",
+    "bootCard",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "headUpperEnchant1",
+    "shieldEnchant1",
+    "headLower",
+    "armorEnchant1",
+    "armorEnchant2",
+    "armorEnchant3",
+    "bootEnchant2",
+    "shadowWeapon",
+    "shadowWeaponRefine",
+    "shadowArmor",
+    "shadowArmorRefine",
+    "shadowShield",
+    "shadowShieldRefine",
+    "shadowBoot",
+    "shadowBootRefine",
+    "shadowEarring",
+    "shadowEarringRefine",
+    "shadowPendant",
+    "shadowPendantRefine"
+   ],
+   "candidateAudit": {
+    "notSearched": {},
+    "pieces": {
+     "weapon": {
+      "catalog": 214,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 96,
+      "notRelevant": 118,
+      "screened": 79,
+      "truncated": {
+       "byShare": 17,
+       "byBareScore": 58
+      },
+      "pooled": 21,
+      "evaluated": 17,
+      "accepted": 1,
+      "pooledNotEvaluated": 4
+     },
+     "shield": {
+      "catalog": 58,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 29,
+      "notRelevant": 29,
+      "screened": 29,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 12
+      },
+      "pooled": 17,
+      "evaluated": 17,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 205,
+      "notRelevant": 213,
+      "screened": 77,
+      "truncated": {
+       "byShare": 128,
+       "byBareScore": 53
+      },
+      "pooled": 24,
+      "evaluated": 18,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 68,
+      "notRelevant": 84,
+      "screened": 56,
+      "truncated": {
+       "byShare": 12,
+       "byBareScore": 41
+      },
+      "pooled": 15,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 58,
+      "notRelevant": 56,
+      "screened": 50,
+      "truncated": {
+       "byShare": 8,
+       "byBareScore": 33
+      },
+      "pooled": 17,
+      "evaluated": 17,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 122,
+      "notRelevant": 53,
+      "screened": 83,
+      "truncated": {
+       "byShare": 39,
+       "byBareScore": 61
+      },
+      "pooled": 22,
+      "evaluated": 14,
+      "accepted": 1,
+      "pooledNotEvaluated": 8
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 128,
+      "notRelevant": 47,
+      "screened": 82,
+      "truncated": {
+       "byShare": 46,
+       "byBareScore": 54
+      },
+      "pooled": 28,
+      "evaluated": 19,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 98,
+      "notRelevant": 40,
+      "screened": 83,
+      "truncated": {
+       "byShare": 15,
+       "byBareScore": 62
+      },
+      "pooled": 21,
+      "evaluated": 14,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 213,
+      "notRelevant": 81,
+      "screened": 87,
+      "truncated": {
+       "byShare": 126,
+       "byBareScore": 64
+      },
+      "pooled": 23,
+      "evaluated": 14,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 208,
+      "notRelevant": 85,
+      "screened": 84,
+      "truncated": {
+       "byShare": 124,
+       "byBareScore": 62
+      },
+      "pooled": 22,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 12
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 81,
+      "truncated": {
+       "byShare": 18,
+       "byBareScore": 65
+      },
+      "pooled": 16,
+      "evaluated": 9,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 78,
+      "notRelevant": 0,
+      "screened": 78,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 65
+      },
+      "pooled": 13,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 102,
+      "notRelevant": 0,
+      "screened": 81,
+      "truncated": {
+       "byShare": 21,
+       "byBareScore": 67
+      },
+      "pooled": 14,
+      "evaluated": 8,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 80,
+      "notRelevant": 0,
+      "screened": 80,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 68
+      },
+      "pooled": 12,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 1,
+      "screened": 64,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 51
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 0,
+      "screened": 64,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 51
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     }
+    },
+    "fields": [
+     {
+      "field": "weaponEnchant0",
+      "legal": 81,
+      "offered": 4,
+      "tried": 82,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant1",
+      "legal": 86,
+      "offered": 3,
+      "tried": 87,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant2",
+      "legal": 9,
+      "offered": 6,
+      "tried": 13,
+      "locked": false
+     },
+     {
+      "field": "weaponEnchant3",
+      "legal": 3,
+      "offered": 2,
+      "tried": 5,
+      "locked": false
+     },
+     {
+      "field": "shieldCard",
+      "legal": 100,
+      "offered": 33,
+      "tried": 100,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant1",
+      "legal": 9,
+      "offered": 4,
+      "tried": 23,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant2",
+      "legal": 9,
+      "offered": 4,
+      "tried": 26,
+      "locked": false
+     },
+     {
+      "field": "shieldEnchant3",
+      "legal": 9,
+      "offered": 4,
+      "tried": 26,
+      "locked": false
+     },
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 141,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 4,
+      "offered": 3,
+      "tried": 17,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 4,
+      "offered": 3,
+      "tried": 16,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 1,
+      "offered": 1,
+      "tried": 11,
+      "locked": false
+     },
+     {
+      "field": "headMiddleCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 123,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 95,
+      "tried": 33,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 73,
+      "tried": 47,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 92,
+      "tried": 47,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant2",
+      "legal": 15,
+      "offered": 12,
+      "tried": 5,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant3",
+      "legal": 15,
+      "offered": 12,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 12,
+      "offered": 8,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 12,
+      "offered": 8,
+      "tried": 10,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 12,
+      "offered": 8,
+      "tried": 11,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 17,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 4,
+      "tried": 7,
+      "locked": false
+     }
+    ],
+    "known": [
+     {
+      "key": "weapon",
+      "id": 560027,
+      "name": "Soqueira Primordial-LT",
+      "fate": "evaluated"
+     },
+     {
+      "key": "weaponCard1",
+      "id": 27361,
+      "name": "Carta Andarilho Poluto",
+      "fate": "notLegalOnTheAnswerPiece"
+     },
+     {
+      "key": "weaponCard2",
+      "id": 4608,
+      "name": "Carta Cavaleiro Branco",
+      "fate": "notLegalOnTheAnswerPiece"
+     }
+    ]
+   }
+  },
+  {
+   "case": "meister-sets",
+   "note": "weapon and shield locked: the gain must come from armor, garment, boot, headgear and accessory combinations",
+   "maxSolves": 2000,
+   "feasible": false,
+   "startedFeasible": false,
+   "firstFeasible": null,
+   "bestGap": {
+    "worst": 0.0585,
+    "total": 0.0585
+   },
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21601:feasible",
+    "21542:feasible",
+    "21539:infeasible"
+   ],
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 454,
+    "skippedForBudget": 26,
+    "afterSearch": 15,
+    "unique": 2014,
+    "finalChecks": 8
+   },
+   "dps": [
+    10863465,
+    54861901.5
+   ],
+   "wallMs": 24625,
+   "piecesChanged": 31,
+   "changed": [
+    "headUpper",
+    "headUpperGrade",
+    "headUpperCard",
+    "headUpperEnchant3",
+    "headMiddleCard",
+    "armorRefine",
+    "garment",
+    "garmentRefine",
+    "boot",
+    "bootRefine",
+    "bootGrade",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "headUpperEnchant1",
+    "headUpperEnchant2",
+    "headLower",
+    "bootEnchant2",
+    "shadowWeapon",
+    "shadowWeaponRefine",
+    "shadowArmor",
+    "shadowArmorRefine",
+    "shadowShield",
+    "shadowShieldRefine",
+    "shadowBoot",
+    "shadowBootRefine",
+    "shadowEarring",
+    "shadowEarringRefine",
+    "shadowPendant",
+    "shadowPendantRefine"
+   ],
+   "candidateAudit": {
+    "notSearched": {
+     "weapon": "locked",
+     "shield": "locked"
+    },
+    "pieces": {
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 205,
+      "notRelevant": 213,
+      "screened": 45,
+      "truncated": {
+       "byShare": 160,
+       "byBareScore": 27
+      },
+      "pooled": 18,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 3
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 68,
+      "notRelevant": 84,
+      "screened": 39,
+      "truncated": {
+       "byShare": 29,
+       "byBareScore": 25
+      },
+      "pooled": 14,
+      "evaluated": 9,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 57,
+      "notRelevant": 57,
+      "screened": 37,
+      "truncated": {
+       "byShare": 20,
+       "byBareScore": 21
+      },
+      "pooled": 16,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 122,
+      "notRelevant": 53,
+      "screened": 45,
+      "truncated": {
+       "byShare": 77,
+       "byBareScore": 26
+      },
+      "pooled": 19,
+      "evaluated": 11,
+      "accepted": 1,
+      "pooledNotEvaluated": 8
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 128,
+      "notRelevant": 47,
+      "screened": 46,
+      "truncated": {
+       "byShare": 82,
+       "byBareScore": 22
+      },
+      "pooled": 24,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 9
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 98,
+      "notRelevant": 40,
+      "screened": 44,
+      "truncated": {
+       "byShare": 54,
+       "byBareScore": 24
+      },
+      "pooled": 20,
+      "evaluated": 14,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 213,
+      "notRelevant": 81,
+      "screened": 47,
+      "truncated": {
+       "byShare": 166,
+       "byBareScore": 26
+      },
+      "pooled": 21,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 11
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 208,
+      "notRelevant": 85,
+      "screened": 44,
+      "truncated": {
+       "byShare": 164,
+       "byBareScore": 28
+      },
+      "pooled": 16,
+      "evaluated": 9,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 47,
+      "truncated": {
+       "byShare": 52,
+       "byBareScore": 30
+      },
+      "pooled": 17,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 78,
+      "notRelevant": 0,
+      "screened": 43,
+      "truncated": {
+       "byShare": 35,
+       "byBareScore": 30
+      },
+      "pooled": 13,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 102,
+      "notRelevant": 0,
+      "screened": 45,
+      "truncated": {
+       "byShare": 57,
+       "byBareScore": 31
+      },
+      "pooled": 14,
+      "evaluated": 8,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 80,
+      "notRelevant": 0,
+      "screened": 43,
+      "truncated": {
+       "byShare": 37,
+       "byBareScore": 31
+      },
+      "pooled": 12,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 1,
+      "screened": 43,
+      "truncated": {
+       "byShare": 21,
+       "byBareScore": 30
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 0,
+      "screened": 43,
+      "truncated": {
+       "byShare": 21,
+       "byBareScore": 31
+      },
+      "pooled": 12,
+      "evaluated": 4,
+      "accepted": 1,
+      "pooledNotEvaluated": 8
+     }
+    },
+    "fields": [
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 141,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 4,
+      "offered": 3,
+      "tried": 12,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 4,
+      "offered": 3,
+      "tried": 13,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 1,
+      "offered": 1,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "headMiddleCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 142,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 95,
+      "tried": 18,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant1",
+      "legal": 64,
+      "offered": 12,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant2",
+      "legal": 64,
+      "offered": 12,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant3",
+      "legal": 64,
+      "offered": 12,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 73,
+      "tried": 26,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 92,
+      "tried": 27,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant2",
+      "legal": 15,
+      "offered": 12,
+      "tried": 4,
+      "locked": false
+     },
+     {
+      "field": "bootEnchant3",
+      "legal": 15,
+      "offered": 12,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 12,
+      "offered": 8,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 12,
+      "offered": 8,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 12,
+      "offered": 8,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 7,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 17,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 4,
+      "tried": 6,
+      "locked": false
+     }
+    ]
+   }
+  },
+  {
+   "case": "meister-sets",
+   "note": "weapon and shield locked: the gain must come from armor, garment, boot, headgear and accessory combinations",
+   "maxSolves": 4000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 3893,
+    "unique": 3892,
+    "phase": "socket"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "statuses": [
+    "21544:feasible",
+    "21601:feasible",
+    "21542:feasible",
+    "21539:feasible"
+   ],
+   "evaluations": {
+    "counted": 4000,
+    "otherTargets": 894,
+    "skippedForBudget": 36,
+    "afterSearch": 15,
+    "unique": 4014,
+    "finalChecks": 8
+   },
+   "dps": [
+    10863465,
+    68372826.75
+   ],
+   "wallMs": 50234,
+   "piecesChanged": 36,
+   "changed": [
+    "headUpper",
+    "headUpperGrade",
+    "headUpperCard",
+    "headUpperEnchant2",
+    "headUpperEnchant3",
+    "headMiddleCard",
+    "armor",
+    "armorRefine",
+    "armorGrade",
+    "garment",
+    "garmentRefine",
+    "bootRefine",
+    "bootGrade",
+    "bootCard",
+    "accRightGrade",
+    "accRightEnchant1",
+    "accRightEnchant2",
+    "accRightEnchant3",
+    "headUpperEnchant1",
+    "headLower",
+    "armorEnchant1",
+    "armorEnchant2",
+    "armorEnchant3",
+    "shadowWeapon",
+    "shadowWeaponRefine",
+    "shadowArmor",
+    "shadowArmorRefine",
+    "shadowShield",
+    "shadowShieldRefine",
+    "shadowBoot",
+    "shadowBootRefine",
+    "shadowEarring",
+    "shadowEarringRefine",
+    "shadowPendant",
+    "shadowPendantRefine",
+    "armorCard"
+   ],
+   "candidateAudit": {
+    "notSearched": {
+     "weapon": "locked",
+     "shield": "locked"
+    },
+    "pieces": {
+     "headUpper": {
+      "catalog": 418,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 205,
+      "notRelevant": 213,
+      "screened": 83,
+      "truncated": {
+       "byShare": 122,
+       "byBareScore": 63
+      },
+      "pooled": 20,
+      "evaluated": 20,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headMiddle": {
+      "catalog": 152,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 68,
+      "notRelevant": 84,
+      "screened": 56,
+      "truncated": {
+       "byShare": 12,
+       "byBareScore": 41
+      },
+      "pooled": 15,
+      "evaluated": 15,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "headLower": {
+      "catalog": 114,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 58,
+      "notRelevant": 56,
+      "screened": 50,
+      "truncated": {
+       "byShare": 8,
+       "byBareScore": 30
+      },
+      "pooled": 20,
+      "evaluated": 20,
+      "accepted": 1,
+      "pooledNotEvaluated": 0
+     },
+     "armor": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 122,
+      "notRelevant": 53,
+      "screened": 90,
+      "truncated": {
+       "byShare": 32,
+       "byBareScore": 65
+      },
+      "pooled": 25,
+      "evaluated": 21,
+      "accepted": 1,
+      "pooledNotEvaluated": 4
+     },
+     "garment": {
+      "catalog": 175,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 129,
+      "notRelevant": 46,
+      "screened": 92,
+      "truncated": {
+       "byShare": 37,
+       "byBareScore": 59
+      },
+      "pooled": 33,
+      "evaluated": 28,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "boot": {
+      "catalog": 138,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 98,
+      "notRelevant": 40,
+      "screened": 91,
+      "truncated": {
+       "byShare": 7,
+       "byBareScore": 68
+      },
+      "pooled": 23,
+      "evaluated": 18,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "accLeft": {
+      "catalog": 294,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 213,
+      "notRelevant": 81,
+      "screened": 93,
+      "truncated": {
+       "byShare": 120,
+       "byBareScore": 68
+      },
+      "pooled": 25,
+      "evaluated": 18,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "accRight": {
+      "catalog": 293,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 208,
+      "notRelevant": 85,
+      "screened": 90,
+      "truncated": {
+       "byShare": 118,
+       "byBareScore": 70
+      },
+      "pooled": 20,
+      "evaluated": 17,
+      "accepted": 1,
+      "pooledNotEvaluated": 3
+     },
+     "shadowWeapon": {
+      "catalog": 101,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 99,
+      "notRelevant": 2,
+      "screened": 89,
+      "truncated": {
+       "byShare": 10,
+       "byBareScore": 73
+      },
+      "pooled": 16,
+      "evaluated": 10,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowShield": {
+      "catalog": 78,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 78,
+      "notRelevant": 0,
+      "screened": 78,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 65
+      },
+      "pooled": 13,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 7
+     },
+     "shadowArmor": {
+      "catalog": 102,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 102,
+      "notRelevant": 0,
+      "screened": 92,
+      "truncated": {
+       "byShare": 10,
+       "byBareScore": 74
+      },
+      "pooled": 18,
+      "evaluated": 13,
+      "accepted": 1,
+      "pooledNotEvaluated": 5
+     },
+     "shadowBoot": {
+      "catalog": 80,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 80,
+      "notRelevant": 0,
+      "screened": 80,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 68
+      },
+      "pooled": 12,
+      "evaluated": 6,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowEarring": {
+      "catalog": 65,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 1,
+      "screened": 64,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 51
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     },
+     "shadowPendant": {
+      "catalog": 64,
+      "excluded": {
+       "unavailable": 0,
+       "mvp": 0
+      },
+      "relevant": 64,
+      "notRelevant": 0,
+      "screened": 64,
+      "truncated": {
+       "byShare": 0,
+       "byBareScore": 51
+      },
+      "pooled": 13,
+      "evaluated": 7,
+      "accepted": 1,
+      "pooledNotEvaluated": 6
+     }
+    },
+    "fields": [
+     {
+      "field": "headUpperCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 141,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant1",
+      "legal": 4,
+      "offered": 3,
+      "tried": 21,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant2",
+      "legal": 4,
+      "offered": 3,
+      "tried": 18,
+      "locked": false
+     },
+     {
+      "field": "headUpperEnchant3",
+      "legal": 1,
+      "offered": 1,
+      "tried": 15,
+      "locked": false
+     },
+     {
+      "field": "headMiddleCard",
+      "legal": 141,
+      "offered": 72,
+      "tried": 142,
+      "locked": false
+     },
+     {
+      "field": "armorCard",
+      "legal": 188,
+      "offered": 95,
+      "tried": 187,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant2",
+      "legal": 15,
+      "offered": 12,
+      "tried": 24,
+      "locked": false
+     },
+     {
+      "field": "armorEnchant3",
+      "legal": 15,
+      "offered": 12,
+      "tried": 25,
+      "locked": false
+     },
+     {
+      "field": "garmentCard",
+      "legal": 138,
+      "offered": 73,
+      "tried": 72,
+      "locked": false
+     },
+     {
+      "field": "bootCard",
+      "legal": 150,
+      "offered": 92,
+      "tried": 55,
+      "locked": false
+     },
+     {
+      "field": "accLeftCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant1",
+      "legal": 12,
+      "offered": 8,
+      "tried": 11,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant2",
+      "legal": 12,
+      "offered": 8,
+      "tried": 12,
+      "locked": false
+     },
+     {
+      "field": "accLeftEnchant3",
+      "legal": 12,
+      "offered": 8,
+      "tried": 12,
+      "locked": false
+     },
+     {
+      "field": "accRightCard",
+      "legal": 0,
+      "offered": 0,
+      "tried": 1,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant1",
+      "legal": 6,
+      "offered": 5,
+      "tried": 9,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant2",
+      "legal": 15,
+      "offered": 15,
+      "tried": 20,
+      "locked": false
+     },
+     {
+      "field": "accRightEnchant3",
+      "legal": 5,
+      "offered": 4,
+      "tried": 11,
+      "locked": false
+     }
+    ]
+   }
+  }
+ ]
+}

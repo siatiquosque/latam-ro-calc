@@ -1,0 +1,882 @@
+{
+ "name": "b1",
+ "runId": "decoupled-23530-e20000",
+ "group": "decoupled",
+ "note": "effort planned from 20000, total cap 23530",
+ "versions": {
+  "app": "0.1.210-beta",
+  "gitHead": "1d7348ed",
+  "gitDirty": true,
+  "dataManifestSha": "992b605642586318",
+  "node": "v22.9.0"
+ },
+ "target": 20994,
+ "args": {
+  "target": {
+   "monsterId": 20994
+  },
+  "objective": "dps",
+  "refine": 12,
+  "maxGrade": "A",
+  "procMode": "off",
+  "instrument": true,
+  "budgetMode": "unified",
+  "maxSolves": 23530,
+  "effortBudget": 20000
+ },
+ "wallMs": 93297,
+ "result": {
+  "baselineDps": 576306,
+  "finalDps": 5299221,
+  "deltaPct": 819.52,
+  "solves": 21654,
+  "reused": 2928,
+  "stopped": null,
+  "coverage": {
+   "slots": {
+    "searched": 16,
+    "total": 16
+   },
+   "candidates": {
+    "measured": 675,
+    "available": 684,
+    "notMeasured": {
+     "armor": 1,
+     "shadowShield": 2,
+     "shadowPendant": 6
+    }
+   },
+   "worn": {
+    "tuned": 15,
+    "total": 16
+   },
+   "sockets": {
+    "checked": 33,
+    "total": 33
+   },
+   "calculations": {
+    "discovery": 3011,
+    "evaluation": 18643,
+    "reused": 2927
+   },
+   "complete": false
+  },
+  "screening": {
+   "weapon": {
+    "eligible": 93,
+    "tested": 93
+   },
+   "shield": {
+    "eligible": 28,
+    "tested": 28
+   },
+   "headUpper": {
+    "eligible": 202,
+    "tested": 190
+   },
+   "headMiddle": {
+    "eligible": 67,
+    "tested": 55
+   },
+   "headLower": {
+    "eligible": 56,
+    "tested": 48
+   },
+   "armor": {
+    "eligible": 121,
+    "tested": 121
+   },
+   "garment": {
+    "eligible": 127,
+    "tested": 127
+   },
+   "boot": {
+    "eligible": 97,
+    "tested": 97
+   },
+   "accLeft": {
+    "eligible": 211,
+    "tested": 211
+   },
+   "accRight": {
+    "eligible": 207,
+    "tested": 207
+   },
+   "shadowWeapon": {
+    "eligible": 98,
+    "tested": 98
+   },
+   "shadowShield": {
+    "eligible": 77,
+    "tested": 77
+   },
+   "shadowArmor": {
+    "eligible": 101,
+    "tested": 101
+   },
+   "shadowBoot": {
+    "eligible": 79,
+    "tested": 79
+   },
+   "shadowEarring": {
+    "eligible": 63,
+    "tested": 63
+   },
+   "shadowPendant": {
+    "eligible": 63,
+    "tested": 63
+   }
+  },
+  "steps": 13,
+  "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG0SJgYCwiXBScSKeSySSaVTaZS6XSQKCRHhzojWXh2Qj6XymYzBdShSTwENJgQqAxGOReKwBcLySAzOLJdLIoisGAhnUNfyRXzhmMOfrFaLtTA9oiqAAlLCPE0gDIy3ksiTc8gAdnlBoVMAAumxRngsCMzpp.NptNJPUGQ2GbXgAGYlPCBOOh0gAcWRDS.SURwczJHcWGQdWMFGkUd43GCRbDAFESFQLExK3tjMZuJp9g3SM3W1gmHLO8ZqxcQP2SIO24xpFWuxPzCG6gBVIZDAg8KNRSdmVcbrfIRMpkhp7IrrDrzcEHPXi8gAtXm-H0vlniaXjzZWH2-IWdh0YDtpGMGQuxfI8CEAkdFxkbRY1-a8AFkoDqOpHE2KIZH2A8ULQjC8HfOoq13T0tiQuoVDGbdNiCXgojYMtUB8TYdCCIpmJQU9U3TEAuOQe880oZ9.LQFBiKObQhDEliAJbOcQK7Yx.AogSYMYUdQK7bRTHAP4JBIzZI10iiwAMmA6h488.PMqBDMk4zZD0Cy6g0jtv17MzXI00dPOkbz7MsjSF1lWYvLYGJmOlHgnGjWtIuiphrIvMDErQaVHO4fhPRkqKMqYITH1EpREEQLJuE9XTtFqUrypSvi6sYRzq2k4xEKaor80RJrfMXbRZl4GTeoUoDQsq7g1KoKg1CTCrZijSqmOm2bmrLIzWq7TiVuTRg.s7Nrtpm3aQv62s9KwaabSgGIzHmxajuu261o-PYowQx6bru-bQMO5bbS.vbRqYULfvOtgt0Yai7CwGB7B4NgqEQMBGHQUEoIiUCcoopGUbRvBqODCI.F3YJcdR0EsySiq4u4ZyDjx0ENIx-rjFmPTyfxjTCdo37jCcH9OaZ4HGCpgqsj5pxanM68xhWeNDllOmnFuCw6jlhWSAayJghl9XRiScSIlrJxcpc2WDaN7XGP0i3Dbkn6wJyn89bGe2UFOzYqpk13RmsVypEq2Z9l9-2gqs5NeJ1839bDwzHYYgWY7GOPgpF8byO8i3IXKwPTZDtWxhzxhrd1wvRmLhPneTiuyqBocQZ4b2a8bMtkBKGJA-4fg9N91u6A70ua4lEg6iArvBGHhgx.SyObOj8APhgcF0CTJMCUYzfdG3lgd733eD-3o-D5P4.z9Pi-z6vy.b.vu-b9PwNF9gZfV6TZDQwoUBSyYRAqGHOoaF0AbBtu4EQoImBQCWAvJIJAYgSGAWkNgFRUAjCIJiRAAIP5Eg2MERsBghhQIwRQYInhUF4EeJA6BwREwwBusQEhbBwQMCeFAB4aNGEgGsIgTAAJEBJgBAACRDOIEgAIAEAn7owMwnDviw3WKgYcfCBGTGQOVPADwsSyPkWARRYj.EAmkWCFYbdiARGCHIuhuilEGKMVg2IbCoFnAsTovRyigRQHEJI8B0pcFsENjEdAqMwAAnyIwah-jkCBOCQCb4CDUCcNUXgfQJAQlJCoPZPxIArhYAAF52ABBuNRZZOEqCwOgMesQcGlPKWPAEdoMBZKSHUegJB5HnnqcAmR5BgjTCJrEswyBgFZGCPLYsAIJTICTBojBzi2DwDcAU7hmBOH.wtgCZZuxggLJgEjMRmzOFZi8HgVAGyeFbLYKiQBJAADkIS.m0WCB-GIRJTngnoFgboPSmHoAUu4-27dUGcOQmVEgdDnobIIAwB8qz-BQGgHAzhAB9awsQ8BIvgOHZF3DkBSnoMgJFVQiAvKgas1yGytyfG.SAd5Di7kTMQCc1ZowO4AhaMOKUwK7AozYbDAESRUF0JTP-WZqzKUwEkSLDuwKyytncao0gjxkSrKhW0ho7iABSKJLDxGpSsP4KNMLBCSJwLURAxFXGRiEgx1hfn6BGf4zcIh3EVDqL8zhgi0aoGldSpA1xfl4HpQAaXWFk6wBAMhSgBEmFAAIACaPDOEtCGac0ghiDwQntIwEQKZDKcOunA9xAA5KASgEFwIYJwqoohMDnmREoZ11h7IxCTO3J4.aumxMwWsUe3qqV4NbJg7hiLqXWDsKgswpACkGOouIcx8z24xBiPS4dndqVqFzPSto4xqXspbMYzIZgAQrHQGu4IVQzyZDBJ61A3qR1POAbyiVVQlUwAqReUhUIKH8qBdSu0aEk1lggACMBKIk14CUG-FFIx6CSIId4IgisaEWCGGARAdRp0CNQueUYKAICPLYFmZM0ySBQIBEWv.qNkDz2CKiZExDqWNgyBKzZIHaD6CrSQaZmikNsHwCQKEAIUFDHoJwLR1KX2IAMLy0V1LwSZCVSBrwRleleBEHMkAwnYYnJitSlFKA8UEEJakm6pGsBIrkVEihSKOzBH07iqFBKiWmagRZss8DGBItHHZnFhmnMmZJeZyzHmkWhR8wZxzxniVmbc1Zzz3BDnImdPacTdnkJ4HWEqpFABFdAnyP2XJEGjDZHKKYkIAL7LUxOId4L8P5DC-iAa65qYhsuRDERWNsiNMGdd8HhcqAC0AJ0RoKvYc6UvX.tHqG0kOh4gtBsCkUetZ.H50-HKny6whD25ZGMJOdwtBWmMCEZMThB26DSg2ad6l.QOvIABHshoqSUu8ZALd2N.CdjI1S-MjgR6yGlVWSUQzQJLDSM4ZitAoPD2JJolM3hCyYfnHmVYFG0PpEMqJpwjVFT4GyL.OWODsbgRYFBJw1ERXTmopbGVvTSSMh4FGEij.YmvEk9BBCDgSqKtVc8XgWrcAN47wuLoPbD9he3yfkMM1fOBcwAJL0RivQ5BbxYIxC4Fx1csBF9r3XvQLj8ClzLmrS96uNeEbDKsbA2gsTEeCYcqVgjJtiGmgHiArcgB2epyRqCrAXiKN8G6BAQPDgE2cG2LRPGpgmWox4PHw-nrUWIwRACkEgBaOhvHyO3s3Q.-B77itJzNdZc7jrCfCMTbBH19Ag3.VzYvJObr2aq9TYBENkb33HgLaa6T6X8DOdagdSAFQgNSOFuusJSc737uPYYGAF74Y2DuAsCUJT0J3d7DYHaOIhbvjt24.EznMxs9rDgO4xH4PyD8HK.VoAA/",
+  "budgetReport": {
+   "unit": "solves: evaluations the cache did not have (one build against the first target); engine calls are counted apart",
+   "mode": "unified",
+   "requested": 23530,
+   "searchBudget": 20000,
+   "socketReserve": 0.15,
+   "effortBudget": 20000,
+   "wallClockMs": 93296,
+   "stoppedReason": "completed",
+   "totalEngineCalls": 21668,
+   "uniqueEvaluations": 21662,
+   "uncachedEvaluations": 6,
+   "cacheHits": 2928,
+   "discoveryEvaluations": 2897,
+   "searchEvaluations": 14719,
+   "socketEvaluations": 3289,
+   "finalVerificationEvaluations": 762,
+   "phases": {
+    "baseline": {
+     "unique": 0,
+     "uncached": 1,
+     "cacheHits": 0,
+     "engineCalls": 1
+    },
+    "discovery": {
+     "unique": 2897,
+     "uncached": 0,
+     "cacheHits": 79,
+     "engineCalls": 2897
+    },
+    "search": {
+     "unique": 14719,
+     "uncached": 0,
+     "cacheHits": 2573,
+     "engineCalls": 14719
+    },
+    "socket": {
+     "unique": 3289,
+     "uncached": 0,
+     "cacheHits": 151,
+     "engineCalls": 3289
+    },
+    "levelCheck": {
+     "unique": 748,
+     "uncached": 0,
+     "cacheHits": 124,
+     "engineCalls": 748
+    },
+    "report": {
+     "unique": 9,
+     "uncached": 5,
+     "cacheHits": 1,
+     "engineCalls": 14
+    }
+   },
+   "budgeted": {
+    "inCap": 21654,
+    "socketOutsideCap": 0,
+    "effective": 21654,
+    "unused": 1876
+   },
+   "socket": {
+    "availableAtStart": 5913,
+    "used": 3289,
+    "fields": 66,
+    "totalFields": 33,
+    "fieldTimeCuts": 0
+   },
+   "checkpoints": [
+    {
+     "spent": 2038,
+     "phase": "search",
+     "value": 659334
+    },
+    {
+     "spent": 2183,
+     "phase": "search",
+     "value": 714630
+    },
+    {
+     "spent": 2510,
+     "phase": "search",
+     "value": 854811
+    },
+    {
+     "spent": 2659,
+     "phase": "search",
+     "value": 907971
+    },
+    {
+     "spent": 2816,
+     "phase": "search",
+     "value": 1006026
+    },
+    {
+     "spent": 2889,
+     "phase": "search",
+     "value": 1157403
+    },
+    {
+     "spent": 2981,
+     "phase": "search",
+     "value": 1256673
+    },
+    {
+     "spent": 3068,
+     "phase": "search",
+     "value": 1330230
+    },
+    {
+     "spent": 3721,
+     "phase": "search",
+     "value": 1439316
+    },
+    {
+     "spent": 4911,
+     "phase": "search",
+     "value": 1781727
+    },
+    {
+     "spent": 5495,
+     "phase": "search",
+     "value": 1965885
+    },
+    {
+     "spent": 6658,
+     "phase": "search",
+     "value": 2116866
+    },
+    {
+     "spent": 8132,
+     "phase": "search",
+     "value": 2369439
+    },
+    {
+     "spent": 8715,
+     "phase": "search",
+     "value": 2660775
+    },
+    {
+     "spent": 9530,
+     "phase": "search",
+     "value": 2790486
+    },
+    {
+     "spent": 10904,
+     "phase": "search",
+     "value": 3063951
+    },
+    {
+     "spent": 12270,
+     "phase": "search",
+     "value": 3330810
+    },
+    {
+     "spent": 14708,
+     "phase": "search",
+     "value": 3426837
+    },
+    {
+     "spent": 16171,
+     "phase": "search",
+     "value": 3481005
+    },
+    {
+     "spent": 16799,
+     "phase": "search",
+     "value": 3677850
+    },
+    {
+     "spent": 17224,
+     "phase": "search",
+     "value": 3736680
+    },
+    {
+     "spent": 17926,
+     "phase": "socket",
+     "value": 4403667
+    },
+    {
+     "spent": 18465,
+     "phase": "socket",
+     "value": 4443039
+    },
+    {
+     "spent": 18468,
+     "phase": "socket",
+     "value": 4568643
+    },
+    {
+     "spent": 19158,
+     "phase": "socket",
+     "value": 4861536
+    },
+    {
+     "spent": 19172,
+     "phase": "socket",
+     "value": 4926942
+    },
+    {
+     "spent": 19219,
+     "phase": "socket",
+     "value": 5020818
+    },
+    {
+     "spent": 19228,
+     "phase": "socket",
+     "value": 5299221
+    }
+   ],
+   "socketLog": [
+    {
+     "slot": "weapon",
+     "field": "weaponCard1",
+     "candidates": 300,
+     "tried": 300,
+     "winnerRank": 60,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant1",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": 17.85
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant2",
+     "candidates": 74,
+     "tried": 74,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant3",
+     "candidates": 154,
+     "tried": 154,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldCard",
+     "candidates": 99,
+     "tried": 99,
+     "winnerRank": 24,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant1",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant2",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant3",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperCard",
+     "candidates": 140,
+     "tried": 140,
+     "winnerRank": 51,
+     "gainPct": 0.89
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant1",
+     "candidates": 3,
+     "tried": 3,
+     "winnerRank": 0,
+     "gainPct": 2.83
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant2",
+     "candidates": 3,
+     "tried": 3,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant3",
+     "candidates": 1,
+     "tried": 1,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "headMiddle",
+     "field": "headMiddleCard",
+     "candidates": 140,
+     "tried": 140,
+     "winnerRank": 1,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorCard",
+     "candidates": 187,
+     "tried": 187,
+     "winnerRank": 36,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant1",
+     "candidates": 53,
+     "tried": 53,
+     "winnerRank": 1,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant2",
+     "candidates": 4,
+     "tried": 4,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant3",
+     "candidates": 2,
+     "tried": 2,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "garment",
+     "field": "garmentCard",
+     "candidates": 137,
+     "tried": 137,
+     "winnerRank": 17,
+     "gainPct": null
+    },
+    {
+     "slot": "boot",
+     "field": "bootCard",
+     "candidates": 149,
+     "tried": 149,
+     "winnerRank": 27,
+     "gainPct": null
+    },
+    {
+     "slot": "boot",
+     "field": "bootEnchant2",
+     "candidates": 14,
+     "tried": 14,
+     "winnerRank": 1,
+     "gainPct": 6.41
+    },
+    {
+     "slot": "boot",
+     "field": "bootEnchant3",
+     "candidates": 14,
+     "tried": 14,
+     "winnerRank": 10,
+     "gainPct": 1.35
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftCard",
+     "candidates": 0,
+     "tried": 0,
+     "winnerRank": null,
+     "gainPct": null
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftEnchant2",
+     "candidates": 19,
+     "tried": 19,
+     "winnerRank": 13,
+     "gainPct": null
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftEnchant3",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightCard",
+     "candidates": 0,
+     "tried": 0,
+     "winnerRank": null,
+     "gainPct": null
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightEnchant2",
+     "candidates": 19,
+     "tried": 19,
+     "winnerRank": 13,
+     "gainPct": 1.91
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightEnchant3",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": 5.54
+    },
+    {
+     "slot": "shadowShield",
+     "field": "shadowShieldEnchant2",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowShield",
+     "field": "shadowShieldEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowArmor",
+     "field": "shadowArmorEnchant2",
+     "candidates": 29,
+     "tried": 29,
+     "winnerRank": 18,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowArmor",
+     "field": "shadowArmorEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowBoot",
+     "field": "shadowBootEnchant2",
+     "candidates": 29,
+     "tried": 29,
+     "winnerRank": 18,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowBoot",
+     "field": "shadowBootEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponCard1",
+     "candidates": 300,
+     "tried": 300,
+     "winnerRank": 115,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant1",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant2",
+     "candidates": 74,
+     "tried": 74,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "weapon",
+     "field": "weaponEnchant3",
+     "candidates": 154,
+     "tried": 154,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldCard",
+     "candidates": 99,
+     "tried": 99,
+     "winnerRank": 24,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant1",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant2",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "shield",
+     "field": "shieldEnchant3",
+     "candidates": 24,
+     "tried": 24,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperCard",
+     "candidates": 140,
+     "tried": 140,
+     "winnerRank": 27,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant1",
+     "candidates": 3,
+     "tried": 3,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant2",
+     "candidates": 3,
+     "tried": 3,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "headUpper",
+     "field": "headUpperEnchant3",
+     "candidates": 1,
+     "tried": 1,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "headMiddle",
+     "field": "headMiddleCard",
+     "candidates": 140,
+     "tried": 140,
+     "winnerRank": 1,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorCard",
+     "candidates": 187,
+     "tried": 187,
+     "winnerRank": 36,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant1",
+     "candidates": 53,
+     "tried": 53,
+     "winnerRank": 1,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant2",
+     "candidates": 4,
+     "tried": 4,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "armor",
+     "field": "armorEnchant3",
+     "candidates": 2,
+     "tried": 2,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "garment",
+     "field": "garmentCard",
+     "candidates": 137,
+     "tried": 137,
+     "winnerRank": 17,
+     "gainPct": null
+    },
+    {
+     "slot": "boot",
+     "field": "bootCard",
+     "candidates": 149,
+     "tried": 149,
+     "winnerRank": 27,
+     "gainPct": null
+    },
+    {
+     "slot": "boot",
+     "field": "bootEnchant2",
+     "candidates": 14,
+     "tried": 14,
+     "winnerRank": 1,
+     "gainPct": null
+    },
+    {
+     "slot": "boot",
+     "field": "bootEnchant3",
+     "candidates": 14,
+     "tried": 14,
+     "winnerRank": 10,
+     "gainPct": null
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftCard",
+     "candidates": 0,
+     "tried": 0,
+     "winnerRank": null,
+     "gainPct": null
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftEnchant2",
+     "candidates": 19,
+     "tried": 19,
+     "winnerRank": 13,
+     "gainPct": null
+    },
+    {
+     "slot": "accLeft",
+     "field": "accLeftEnchant3",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightCard",
+     "candidates": 0,
+     "tried": 0,
+     "winnerRank": null,
+     "gainPct": null
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightEnchant2",
+     "candidates": 19,
+     "tried": 19,
+     "winnerRank": 13,
+     "gainPct": null
+    },
+    {
+     "slot": "accRight",
+     "field": "accRightEnchant3",
+     "candidates": 9,
+     "tried": 9,
+     "winnerRank": 3,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowShield",
+     "field": "shadowShieldEnchant2",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowShield",
+     "field": "shadowShieldEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowArmor",
+     "field": "shadowArmorEnchant2",
+     "candidates": 29,
+     "tried": 29,
+     "winnerRank": 18,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowArmor",
+     "field": "shadowArmorEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowBoot",
+     "field": "shadowBootEnchant2",
+     "candidates": 29,
+     "tried": 29,
+     "winnerRank": 18,
+     "gainPct": null
+    },
+    {
+     "slot": "shadowBoot",
+     "field": "shadowBootEnchant3",
+     "candidates": 5,
+     "tried": 5,
+     "winnerRank": 0,
+     "gainPct": null
+    }
+   ],
+   "bestScoreByPhase": {
+    "baseline": 576306,
+    "discovery": 576306,
+    "tuning": 1330230,
+    "search": 3736680,
+    "socket": 5299221,
+    "final": 5299221
+   }
+  }
+ }
+}

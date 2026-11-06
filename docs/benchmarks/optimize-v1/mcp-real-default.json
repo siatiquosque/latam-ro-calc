@@ -1,0 +1,228 @@
+{
+  "rows": [
+    {
+      "name": "meister",
+      "mode": "general",
+      "runtime": "mcp",
+      "procMode": "average",
+      "maxSearchMs": 45000,
+      "maxSolves": 10000,
+      "wallMs": 45200,
+      "engineCalls": 13178,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 10000,
+        "effectiveLimit": 10000,
+        "counted": 1676,
+        "cacheHits": 3,
+        "cacheMisses": 1690,
+        "uncachedEvaluations": 13,
+        "engineCalls": 13178,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 8
+          },
+          "discovery": {
+            "unique": 1668,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 13052
+          },
+          "search": {
+            "unique": 7,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 56
+          },
+          "socket": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 46
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 8,
+            "cacheHits": 0,
+            "engineCalls": 16
+          }
+        },
+        "feasibilityVerificationCalls": 16,
+        "stoppedBy": "time",
+        "hardTotalLimit": false
+      },
+      "baseline": 17922698.21,
+      "dps": 28931872.78,
+      "reproduced": 28931872.782500003,
+      "patchDps": 28931872.782500003,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgMxDSYEVlMPaI0EiPB07nCiUgLCveXIRWMTaa0Vas2mi1Sy2Sm0Su3mq2O20O53W7Wy-WGyLaE1OsUAXTYozwWBGZ00-G02mkQhAwdDpAASngAGYlPCBIMhsMAcWRDS.SUR8bDAFESFQLEwfXtjMZpNoLnHs6Ry5WsExjBRpHXpNxamYQ3UAKpDIYEExOWYAdnmMqHo-HyGTaZIGey5gXY4I7mpdR4micscHWBH2.QbarjC7dNmUSbJ7PS8vHcYvB4094pnnp8XBBfTDSB.MabqeACyUB1HUjibFEMj7NSqA.JsOjGLw05sIhKArumJjflhHh7kcswIWgKAAde3ZRFERQERR761lGsxznRFZXkBjHaMxeh-BI.6bJG2jGFs4C8TAdQ4Wucw8VAfG7sg-HcJGc5gGJdQUTevCzJofYyXx9FSNpPZ6eJFEcVpOnfjEiEMFkQSzPw.zWWgtmSeudZsM55KMPJ-ENto6HfkoiCIFk3DTlG077MFoVuXhbAxT5RGbNIThBSFjB5qe64gO4iJYFQVBqCmYWzFGvBNgVRWpklCndlGda0YVxWMBpVFCTkOrNTVBmcU4IlVS1Zntdo-WYYViZQDEZilUJaXjVQk3TbVflRto05FOOjAqIgdhYDA9g8HoHwwOC6ApimBJRCw13Xbo90sA9T2PS9z1va9H3vV9n0-d9f2-QD-1A4Dr2BuAJ1nRdYGhhQoC7kwiBUB2dSQegGzXblIjeVASzemwSQkDEEho2kbAVKgIxEJiiAAtDPIbMEpYGEMOPUxQwSeBTeCPEwOPs2wyYwFNxD8yA4IME8UAPOgqCi9YiCYACiApgCAASIbiCQALIwCpbUowZii98.3rKgHZKyrkzIKFeAPFiRsm2AZta8rAIG2CKzUsgxARMExtC075uu.7tOxFLONnH7jvOxbQJQOIutY7ZDP48gMToIwaMAvkjC48ESRpxnWffMTsvkMEVt4PoJBgACSRULJKe5ciABedgAqO1vUqLKhYOgVKxPTPd91SAKJlgGBN0kdT0CQJtrmPaOG.XbDTMGyAAr8yBo1kwQrC2Wv6imtvU5HbDwG47fy5gcsWHUYwAtfuzBBfMBUKQj8K8-bA5l4ZKfzfFeIBUQoxIAAclrmvCcQDoYxB5KgCE9AsDdCAWdNisdrBmG9hTUWYEQokCFstR.BAGDZTlv4KA0BCaiyJNYWIbJ4CyXEjQ.WBoSHICJFUIgcC.ZAMwUwwE1hxyfFQciOIECATTDJHLUYJQYgAhaB2VkuC7BgExEjGAdcKZCzTEjU.cthGaIonI3B1JKyxytqQR4yI5YkLng0WOAApFElh4hAJWH8NRMF86cCwJwEoAIriIE4Bg9ANduaiySGOEQscKh1DCaLVWMtUAmKAUga4YS8ASIANLrCbtYAgGRWQAhTCgAEABNBWosWjbwQR-EO4JdSMBEGmPiotJqE1jgAOSgEoYmhMGCiyqKITAa5kRKBidYWSMQUzeyeO0pem8aZrBIHUFJIjGaVhpvLahfC7AUzMKQdursdriF9ufb2MQYgSJ2TEHuBBTwSLaOMIBiiKwe0yGYAEKx0B3KAVUVcmQwRJNQCk3ZwQwJoylvtAEVRrEwH7uuDmUJuZaKGO0yw-FgiKJpIE7ALzsV4CUOdFMtCRj0F1szbwRBDhAMTBYIYYBEB1GOSrCCa5RgoAgNA4IOZUzHxIDjAEXTEaZ2QFJIBqJkRsyAaWDImin6BNoPoIZJBj521pcEfAJAoSwopvQfxmqyYIwMNC-RqDMjWMCV4LFq8vAiDPiAcmQx9pklsiwlArJ6AcK4VNQVWAiTGzTtzIkN5gi0M9ewzhNc-U40DdSImjAiQMXDawr1BBo3cP9fG4NSaOKpsjd6zNsaA1BsTUSBkQCsoZFzua8NYE8DrGsUSAAiugZBSK2CohEDLR.SjM5l20AAX3GpicQ7xYAwGhui8goBJpEE6TU2ItKMZ8qYDE74CtzEAFoATokpkC0Wa7mlgk3egHddchbiC0GwPW1wvmYI7ecn4oUYVCKsAUSITZ3C0FnowNWkxRY-roLZR.gGgH5BiGU9.qyGBgF1PbCDU0ylMx2MExDL8OBfM5sFOWJR01AksAbUWjC0CEc.aLKByAUyKwvhR8458rBqPIwbSRYweVsEcf3ImRs-gKUpWU4EE9O3AJ7QguhFYB00MrhkPAowiTQ38QnIToIIQcGsezEdXUx14AnXAK6D0Li6GMEZkGuhTNvTBi6pTumToEl6NdXochbrGfMywC410Lima8ywXoFx.BWb8UQcdJ1p2wxAOrfa3Y2BtCQlrRpEqMZLqg1rHDiBosgFfg63WFMrDriKN8KaBBAkdh1WcJL8d0ySOto8DV5XggVGtlrVWyNSYgBaMynjDGQCQZQ1S9DtKmzzrkQosRK7eW2Q3Vur5u6khXvXE2Y9U3z0zb3WOdDjwb0gHHhTeham-G7zYCoKaM1BWdMmgWbrvWN4wYaDXBDg22DuAsAEtLGXx5xE6d8b26rc5qZmN1tYcBY50eI.QfgQ6h1AA/",
+      "patch": {
+        "gear": {
+          "weapon": 560032,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "weaponEnchant0": 311305,
+          "weaponEnchant1": 311348
+        },
+        "options": {},
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (1676 de 10000): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 8
+          },
+          "discovery": {
+            "unique": 1668,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 13052
+          },
+          "search": {
+            "unique": 7,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 56
+          },
+          "socket": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 46
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 72.28340000000026,
+          "discovery": 38645.39919999998,
+          "search": 163.94230000000243,
+          "socket": 0,
+          "levelCheck": 0,
+          "report": 108.20540000002802,
+          "feasibility": 36.64439999999013
+        },
+        "stoppedReason": "time",
+        "wallClockMs": 45147
+      }
+    }
+  ]
+}

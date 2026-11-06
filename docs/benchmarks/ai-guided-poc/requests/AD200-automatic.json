@@ -1,0 +1,7 @@
+{
+  "experiment": "AD200",
+  "budget": 200,
+  "automatic": {
+    "maxSolves": 10000
+  }
+}

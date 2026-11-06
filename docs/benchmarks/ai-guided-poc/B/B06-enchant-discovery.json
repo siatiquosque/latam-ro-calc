@@ -1,0 +1,321 @@
+{
+  "batchName": "B06-enchant-discovery",
+  "budget": 200,
+  "previousCalls": 42,
+  "calls": 0,
+  "cumulativeCalls": 42,
+  "wallMs": 165.03369999999995,
+  "cpu": {
+    "user": 235000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "hypothesis": "Find an enchant for the exact skill, then intersect it with Winter Armor's legal socket pool; this tests piece-and-socket dependency.",
+      "tool": "search_items",
+      "args": {
+        "slot": "enchant",
+        "skill": "5244",
+        "classId": 4262,
+        "withBonuses": true,
+        "limit": 12
+      },
+      "calls": 0,
+      "wallMs": 33.56190000000015,
+      "cpu": {
+        "user": 62000,
+        "system": 0
+      },
+      "requestBytes": 78,
+      "responseBytes": 603,
+      "isError": false,
+      "result": {
+        "total": 3,
+        "shown": 3,
+        "offset": 0,
+        "items": [
+          {
+            "id": 311306,
+            "name": "Cristal Invernal (Técnica)",
+            "db": true,
+            "slot": "enchant",
+            "bonuses": [
+              "5244: 10 / 4---5"
+            ]
+          },
+          {
+            "id": 313371,
+            "name": "Encanto de Sucata",
+            "db": true,
+            "slot": "enchant",
+            "bonuses": [
+              "5244: EQUIP_ID[560011]15",
+              "5330: EQUIP_ID[700021]15",
+              "5353: EQUIP_ID[570012||580012]15",
+              "5405: EQUIP_ID[820005]15",
+              "5406: EQUIP_ID[800010]15",
+              "5407: EQUIP_ID[810006]15"
+            ]
+          },
+          {
+            "id": 311166,
+            "name": "Flor Invernal (Espiritual)",
+            "db": true,
+            "slot": "enchant",
+            "bonuses": [
+              "2332: 15 / 7===15",
+              "2518: 15 / 7===15",
+              "5244: 11===15",
+              "Redução de Recarga de Explosão Espiritual: 11===0.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "A permanent ranged/trait multiplier may raise non-critical minimum enough even without achieving 100% crit.",
+      "tool": "search_items",
+      "args": {
+        "slot": "headCard",
+        "bonus": [
+          "range",
+          "pAtk",
+          "cRate"
+        ],
+        "bonusMode": "any",
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 12
+      },
+      "calls": 0,
+      "wallMs": 2.735899999999674,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 123,
+      "responseBytes": 1067,
+      "isError": false,
+      "result": {
+        "total": 6,
+        "shown": 6,
+        "offset": 0,
+        "items": [
+          {
+            "id": 300360,
+            "name": "Carta Alga Brilhante",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "ATQ: 10",
+              "P.ATQ: 1",
+              "Dano corpo a corpo: 3 / 9===2",
+              "Conj. Variável: 11===5",
+              "Custo de SP das habilidades: 7"
+            ]
+          },
+          {
+            "id": 300244,
+            "name": "Carta Disfarçado",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "Conj. Variável: -5 / 1---1",
+              "Dano à distância: 9===1 / 11===2"
+            ]
+          },
+          {
+            "id": 300363,
+            "name": "Carta Limacina",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "ATQ: 10",
+              "P.ATQ: 1",
+              "Dano à distância: 3 / 9===2",
+              "Conj. Variável: 11===5",
+              "Custo de SP das habilidades: 7"
+            ]
+          },
+          {
+            "id": 300192,
+            "name": "Carta Sakray",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "P.ATQ: 1 / EQUIP_ID[300193]===3",
+              "S.ATQM: 1 / EQUIP_ID[300193]===3",
+              "Pós-conjuração: 5 / EQUIP_ID[300193]===10"
+            ]
+          },
+          {
+            "id": 300193,
+            "name": "Carta Tiara",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "P.ATQ: 1",
+              "S.ATQM: 1",
+              "Pós-conjuração: 5"
+            ]
+          },
+          {
+            "id": 300377,
+            "name": "Carta Ultra Limacina",
+            "db": true,
+            "slot": "headCard",
+            "bonuses": [
+              "Dano físico %: 5",
+              "Dano mágico %: 5",
+              "P.ATQ: 3---2",
+              "S.ATQM: 3---2",
+              "Conj. Fixa: 11===0.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Compare the armor alternative with permanent attack, CON and ranged bonuses; do not equip its MVP card partner.",
+      "tool": "get_item",
+      "args": {
+        "id": 450217
+      },
+      "calls": 0,
+      "wallMs": 106.70119999999997,
+      "cpu": {
+        "user": 141000,
+        "system": 0
+      },
+      "requestBytes": 13,
+      "responseBytes": 2635,
+      "isError": false,
+      "result": {
+        "id": 450217,
+        "name": "Traje de Freeoni",
+        "enName": "Phreeoni Wing Suit [1]",
+        "aegisName": "Phreeoni_Wing_Suits",
+        "inCalcDb": true,
+        "partners": [
+          {
+            "id": 4649,
+            "name": "Carta Freeoni Espacial"
+          },
+          {
+            "id": 4121,
+            "name": "Carta Freeoni"
+          }
+        ],
+        "presentInLatam": true,
+        "slots": 1,
+        "slotTags": [
+          "armor"
+        ],
+        "requiredLevel": 200,
+        "weaponLevel": 2,
+        "defense": 10,
+        "usableClass": [
+          "all"
+        ],
+        "description": "Um macacão planador feito para paraquedistas. Tem um lindo desenho de Freeoni.\n-------------------------\nCON +3.\nATQ +100.\n-------------------------\nA cada 2 refinos:\nATQ +15.\nA cada 4 refinos:\nP.ATQ +1.\n-------------------------\nRefino +7 ou mais:\nDano físico à distância +10%.\nRefino +9 ou mais:\nPrecisão perfeita +15.\nRefino +11 ou mais:\nPós-conjuração -15%.\nDano físico à distância +15% adicional.\n-------------------------\nGrau D ou mais:\nATQ +40 adicional.\nDano físico +5%.\nGrau C ou mais:\nCON +5 adicional.\nGrau B ou mais:\nDano físico contra todos os tamanhos +15%.\nGrau A ou mais:\nP.ATQ +7.\n-------------------------\nConjunto\n[Carta Freeoni]\nA cada 2 refinos da armadura:\nDano físico à distância +3%.\nA cada 3 refinos da armadura:\nDano físico contra chefes +8%.\n-------------------------\nConjunto\n[Carta Freeoni Espacial]\nP.ATQ +10. T.CRÍT +5.\nA cada 3 refinos da armadura:\nDano crítico +4%.\n-------------------------\nConjunto\nMascote Freeoni\nDano físico +7%.\nVelocidade de ataque +2.\n-------------------------\nTipo: Armadura\nDEF: 10 DEFM: 0\nPeso: 150\nNível do equip.: 2\nNível necessário: 200\nClasses: Todas",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "con",
+            "label": "CON",
+            "values": [
+              "3",
+              "GRADE[armor==C]===5"
+            ]
+          },
+          {
+            "key": "atk",
+            "label": "ATQ",
+            "values": [
+              "100",
+              "2---15",
+              "GRADE[armor==D]===40"
+            ]
+          },
+          {
+            "key": "pAtk",
+            "label": "P.ATQ",
+            "values": [
+              "4---1",
+              "EQUIP_ID[4649]===10",
+              "GRADE[armor==A]===7"
+            ]
+          },
+          {
+            "key": "range",
+            "label": "Dano à distância",
+            "values": [
+              "7===10",
+              "11===15",
+              "EQUIP_ID[4121]2---3"
+            ]
+          },
+          {
+            "key": "perfectHit",
+            "label": "Precisão perfeita",
+            "values": [
+              "9===15"
+            ]
+          },
+          {
+            "key": "acd",
+            "label": "Pós-conjuração",
+            "values": [
+              "11===15"
+            ]
+          },
+          {
+            "key": "p_class_boss",
+            "label": "Dano Físico (Classe: Chefe)",
+            "structured": "Dano Físico (Classe: Chefe)",
+            "values": [
+              "EQUIP_ID[4121]3---8"
+            ]
+          },
+          {
+            "key": "cRate",
+            "label": "T.CRIT",
+            "values": [
+              "EQUIP_ID[4649]===5"
+            ]
+          },
+          {
+            "key": "criDmg",
+            "label": "Dano crítico",
+            "values": [
+              "EQUIP_ID[4649]3---4"
+            ]
+          },
+          {
+            "key": "atkPercent",
+            "label": "Dano físico %",
+            "values": [
+              "EQUIP[Q-pet Phreeoni]===7",
+              "GRADE[armor==D]===5"
+            ]
+          },
+          {
+            "key": "aspd",
+            "label": "Vel.Atq",
+            "values": [
+              "EQUIP[Q-pet Phreeoni]===2"
+            ]
+          },
+          {
+            "key": "p_size_all",
+            "label": "Dano Físico (Tamanho: Todos)",
+            "structured": "Dano Físico (Tamanho: Todos)",
+            "values": [
+              "GRADE[armor==B]===15"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

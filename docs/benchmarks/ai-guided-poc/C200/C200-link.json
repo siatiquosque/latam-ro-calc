@@ -1,0 +1,238 @@
+{
+  "batchName": "C200-link",
+  "budget": 200,
+  "previousCalls": 195,
+  "calls": 5,
+  "cumulativeCalls": 200,
+  "wallMs": 71.32799999999997,
+  "cpu": {
+    "user": 62000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {},
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwJlMIBzedI7iwyDqxikAHZZPXG-mW23jZsi7UzLm6gBVIZDAgmWbcJz1sdYSfTgiV6uUwLmcdTmceVt1HiaJxCEDL1f774kKgWJgd8i8WbaJwXc.7tfIa.3jmMIdP-gnHmd8Vz3AhvzvRhnU2TsSx3FcAFkoDqOpHE2KJtFmfZW1QHxNh0YxO07e00BQDcazrEjcIPNsjlmM8cJQCDfwfaQok0aRsNIr8b0goc2O0HQGO45imGggSF2CMAzCgCQj2HYtjC2cAZLk8ity5PRVJgOoB3k7gi2A6TZJ00TGAfJ8OOU4y5LM-9Zg4.sbNM3jf2gyy2LYGIcLJKRMP4ZTvLQMl1NrDoQCC0kmD0ihpGLXhYLYJREEQLJeCCQSkpSxhQp4LLUrsngnE7N9koK1yxKK9L7SoKg1DNLJuGfKJiJALBavqxgYr2eLO1qdq6qrRgzNYqJ.GkBiOqGwq9jG6q2qmhqzPEqJJJqhMoBiMxGuaxd1vjTbtu6uLi07IoZ0YFREDsWl7Dyg4wEYdBSTAiI2P4TtlKoAEntJK6cwiPhFOCb7HuevAAHEfOqSTuFkOMfvBszXtiqJjFmetQd.vAzP.2dZu0YwgIRsHSTMqHguqASidqaSVzGFZy0OR84acW4LDqBmmZIXLVS0.nRiSbipAMzsjI5sYheo3mon5znRmsbT5N4bgztaun5cVky6l58WBZBbKRcAqSJdGA3Uplk2Be.VsbRIGIjf4JzTZtugShiS25bGfUSDqX9HbPDXvYYP2mE98APhgEF0DNM0ELzChQBbJhECoDk6mQ9ANmCdwRCitElnIYIkntiQs4oYIKlQEYiDRRAgXj3ls7YX4higB1iArthPGrvBHiYduu5ASsYE2zui7YEEGCeKAHmeofrEQTAgUQM0gQACVzcQSCBdOgVdxgzCHjFaXWVAORXtfJmQVK8AedFj9PsBz531egUPvAgRWW3iAiYIT9Hs-C.b8P4N1iLPduZx-5PxfpfIE8AoDiH3nnMkzcQBCxiNSLOQJ8iMELsXZAmCnpgCBBiMuqAh7XzwPoEgJCkhUFkmgq4WAABedggRThvq2IeKgsDoD9rEJuPC.F.yBImDAaCkh1HoCQU.lIxFZyPhPEA0wAakLMMgLOWRgiMybDvfUyAzR3zrlAtg8A3DsMXpgBepsgRWN2MEcxMBvo73sUPCGXgSR2KXg4tgSIM4kAAOQkNUfjYI8cYi8lQKCegWBujKOjrxOBisbTVyHghFKJBR5bUYHYggDAVxhWCOEKA0B7ZDwJNYWIrIEFyQqYvZALJ6DIAJFUIgkTB7KK1nJOxM5PgJIRHEYJQJpgkgXqMd2QIWgchZOkuwj1Z60iBEkauo9qxpxMQvPpMB94VTROU5R8dGlmDgdfUgEJ8FsGsPk2RDQ4EAClESWHiMolYMlHpoWLpwb0RAd5XABCQt.1h0C0L7kPJI04RBwIqHUEFQ917PVQO7IeSBrggrwMMgA0usNB1zkAZBZECM0KAgQAE0l5DxaJo6JwJQEggdIwEQ1Y6nKIOvbOBAA5KASgy6l1MSAKoohMCUgREoKF1hZIxDNDaJ4Q94yKNIfXNYvskX9OCN8W89dF4HOKXYauZhSDsLfldcQf8zE2hiDEYZ2qHbKLUAiOowy2jjGUdMm8n81iHy-ugW1lcSCbkyJ-BFqAkU6rYAhLOiydlVAhDAfhRTu6IFJLklZQw5WWHksEaZyAIBAlzoiSleAlAxzNJUkY9B95-G8ICfl8YLBDDAIgOoRq15IUpKMFAEAwlsAhlWIxJB25Ag5anJ6yANLBCRAiOuQ9vgZB2fYvNtB9BDyqEY..zNgj4BIEmoEVchj0E4A-ZRMbEAGEWZshJmQIR5q8Jmtg0w4AMBXdXWkJJfLKMqSgJpBBWm0M2gOrABIT6EL7gSB8wRP2NPyS0tp-725AdbMqckQ4IMNO-TBv9HTAPAaQwSaCqGv3Qd-e0gDCGQPkm4O4hEGQ8EXogwhPA6wIQEgAIroDiQmkASIRDPTsTM36FcAC.NU0TiHeLAGA8c03kFAAdX5MQpmDOZrLEAvamBQoxEvW8QIAC0QIUQ10De4skGmtMnL00kUe4gZ2ti9YrDjZqQCabwfOtuNosjGDfO4WgMjcnr0mEPbzdAyR2IC8o-IMQSUuIaLQjuG62ARZJa3atR7HEcBOT3ZKC8SjfvgZYQ.KKrDRPMZkJRwRQmGOXiVgryiEGEFydVk5FWh73P4cqY.Mk2yVpJfAbApIh7capNEqpN4BMfqoRkPAowCTx0PUg3rWBSSgnBGE4TC1RN4HE3APEstdB7ZYJ5lg.3jtHdOyd47WZhg-MQZtyOeJeiy16HIWWL3dAXAuLLd7p2vu9AuPwS7QxrticjlJxOIBN60limwNouEd70o0ipqlsRgSZcQFDkATiRA72.NXKwYUigYk2gQPNHJt1nER4gmsIyb6PHXeTyuN8d7r3TmkaHTb2vnAS5tJLVaARHrfHJyZSPIv057SZz.mn0DaYs1ZsKb41OMol2Z3T.npx88eFoNg4jAfKmW96bRbAVCHUYAO9lB0Gia5AIl5AQJosMDAHFgs3cLAlBvagLLewtfgPZRiG0a68HLZmJzkAaw4BwMa4UQTgmgA/",
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 67,
+            "canCri": 1,
+            "minNoCri": 5232640,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 17573740,
+            "dps": 19375335,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 4,
+            "critRate": 69,
+            "canCri": 1,
+            "minNoCri": 4872137,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 16362996,
+            "dps": 18363817,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 58,
+            "canCri": 1,
+            "minNoCri": 6073889,
+            "hitChance": 70,
+            "conditionalEffects": 0,
+            "min": 20399062,
+            "dps": 19544055,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 68,
+            "canCri": 1,
+            "minNoCri": 4826098,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 16208373,
+            "dps": 18030141,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 60,
+            "canCri": 1,
+            "minNoCri": 4543777,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 15260203,
+            "dps": 15769180,
+            "hit": 667
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "infeasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 4,
+                "message": "hitsToKill 4 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 4 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": false,
+          "constraintsMet": true
+        },
+        "worstTarget": {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "reason": "hitsToKill 4 fora do pedido (máx 2)."
+        }
+      },
+      "changes": []
+    }
+  ]
+}

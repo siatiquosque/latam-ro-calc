@@ -1,0 +1,542 @@
+{
+ "b1": {
+  "total": 1718,
+  "distinct": 1575,
+  "rows": [
+   {
+    "slot": "weapon",
+    "field": "weaponCard1",
+    "kind": "card",
+    "candidates": 301,
+    "classes": 242,
+    "guarded": 108
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant1",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant2",
+    "kind": "enchant",
+    "candidates": 75,
+    "classes": 75,
+    "guarded": 0
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant3",
+    "kind": "enchant",
+    "candidates": 155,
+    "classes": 155,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldCard",
+    "kind": "card",
+    "candidates": 100,
+    "classes": 92,
+    "guarded": 24
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant1",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant2",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant3",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperCard",
+    "kind": "card",
+    "candidates": 141,
+    "classes": 127,
+    "guarded": 39
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant1",
+    "kind": "enchant",
+    "candidates": 4,
+    "classes": 4,
+    "guarded": 4
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant2",
+    "kind": "enchant",
+    "candidates": 4,
+    "classes": 4,
+    "guarded": 4
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant3",
+    "kind": "enchant",
+    "candidates": 1,
+    "classes": 1,
+    "guarded": 1
+   },
+   {
+    "slot": "headMiddle",
+    "field": "headMiddleCard",
+    "kind": "card",
+    "candidates": 141,
+    "classes": 127,
+    "guarded": 39
+   },
+   {
+    "slot": "armor",
+    "field": "armorCard",
+    "kind": "card",
+    "candidates": 188,
+    "classes": 154,
+    "guarded": 53
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant1",
+    "kind": "enchant",
+    "candidates": 54,
+    "classes": 54,
+    "guarded": 0
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant2",
+    "kind": "enchant",
+    "candidates": 5,
+    "classes": 5,
+    "guarded": 0
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant3",
+    "kind": "enchant",
+    "candidates": 2,
+    "classes": 2,
+    "guarded": 0
+   },
+   {
+    "slot": "garment",
+    "field": "garmentCard",
+    "kind": "card",
+    "candidates": 138,
+    "classes": 129,
+    "guarded": 59
+   },
+   {
+    "slot": "boot",
+    "field": "bootCard",
+    "kind": "card",
+    "candidates": 150,
+    "classes": 147,
+    "guarded": 65
+   },
+   {
+    "slot": "boot",
+    "field": "bootEnchant2",
+    "kind": "enchant",
+    "candidates": 15,
+    "classes": 15,
+    "guarded": 0
+   },
+   {
+    "slot": "boot",
+    "field": "bootEnchant3",
+    "kind": "enchant",
+    "candidates": 15,
+    "classes": 15,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftCard",
+    "kind": "card",
+    "candidates": 0,
+    "classes": 0,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftEnchant2",
+    "kind": "enchant",
+    "candidates": 20,
+    "classes": 20,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftEnchant3",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightCard",
+    "kind": "card",
+    "candidates": 0,
+    "classes": 0,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightEnchant2",
+    "kind": "enchant",
+    "candidates": 20,
+    "classes": 20,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightEnchant3",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowShield",
+    "field": "shadowShieldEnchant2",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 6,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowShield",
+    "field": "shadowShieldEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 6,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowArmor",
+    "field": "shadowArmorEnchant2",
+    "kind": "enchant",
+    "candidates": 30,
+    "classes": 30,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowArmor",
+    "field": "shadowArmorEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 5,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowBoot",
+    "field": "shadowBootEnchant2",
+    "kind": "enchant",
+    "candidates": 30,
+    "classes": 30,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowBoot",
+    "field": "shadowBootEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 5,
+    "guarded": 0
+   }
+  ]
+ },
+ "inq": {
+  "total": 1718,
+  "distinct": 1575,
+  "rows": [
+   {
+    "slot": "weapon",
+    "field": "weaponCard1",
+    "kind": "card",
+    "candidates": 301,
+    "classes": 242,
+    "guarded": 108
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant1",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant2",
+    "kind": "enchant",
+    "candidates": 75,
+    "classes": 75,
+    "guarded": 0
+   },
+   {
+    "slot": "weapon",
+    "field": "weaponEnchant3",
+    "kind": "enchant",
+    "candidates": 155,
+    "classes": 155,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldCard",
+    "kind": "card",
+    "candidates": 100,
+    "classes": 92,
+    "guarded": 24
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant1",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant2",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "shield",
+    "field": "shieldEnchant3",
+    "kind": "enchant",
+    "candidates": 25,
+    "classes": 25,
+    "guarded": 0
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperCard",
+    "kind": "card",
+    "candidates": 141,
+    "classes": 127,
+    "guarded": 39
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant1",
+    "kind": "enchant",
+    "candidates": 4,
+    "classes": 4,
+    "guarded": 4
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant2",
+    "kind": "enchant",
+    "candidates": 4,
+    "classes": 4,
+    "guarded": 4
+   },
+   {
+    "slot": "headUpper",
+    "field": "headUpperEnchant3",
+    "kind": "enchant",
+    "candidates": 1,
+    "classes": 1,
+    "guarded": 1
+   },
+   {
+    "slot": "headMiddle",
+    "field": "headMiddleCard",
+    "kind": "card",
+    "candidates": 141,
+    "classes": 127,
+    "guarded": 39
+   },
+   {
+    "slot": "armor",
+    "field": "armorCard",
+    "kind": "card",
+    "candidates": 188,
+    "classes": 154,
+    "guarded": 53
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant1",
+    "kind": "enchant",
+    "candidates": 54,
+    "classes": 54,
+    "guarded": 0
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant2",
+    "kind": "enchant",
+    "candidates": 5,
+    "classes": 5,
+    "guarded": 0
+   },
+   {
+    "slot": "armor",
+    "field": "armorEnchant3",
+    "kind": "enchant",
+    "candidates": 2,
+    "classes": 2,
+    "guarded": 0
+   },
+   {
+    "slot": "garment",
+    "field": "garmentCard",
+    "kind": "card",
+    "candidates": 138,
+    "classes": 129,
+    "guarded": 59
+   },
+   {
+    "slot": "boot",
+    "field": "bootCard",
+    "kind": "card",
+    "candidates": 150,
+    "classes": 147,
+    "guarded": 65
+   },
+   {
+    "slot": "boot",
+    "field": "bootEnchant2",
+    "kind": "enchant",
+    "candidates": 15,
+    "classes": 15,
+    "guarded": 0
+   },
+   {
+    "slot": "boot",
+    "field": "bootEnchant3",
+    "kind": "enchant",
+    "candidates": 15,
+    "classes": 15,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftCard",
+    "kind": "card",
+    "candidates": 0,
+    "classes": 0,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftEnchant2",
+    "kind": "enchant",
+    "candidates": 20,
+    "classes": 20,
+    "guarded": 0
+   },
+   {
+    "slot": "accLeft",
+    "field": "accLeftEnchant3",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightCard",
+    "kind": "card",
+    "candidates": 0,
+    "classes": 0,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightEnchant2",
+    "kind": "enchant",
+    "candidates": 20,
+    "classes": 20,
+    "guarded": 0
+   },
+   {
+    "slot": "accRight",
+    "field": "accRightEnchant3",
+    "kind": "enchant",
+    "candidates": 10,
+    "classes": 10,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowShield",
+    "field": "shadowShieldEnchant2",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 6,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowShield",
+    "field": "shadowShieldEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 6,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowArmor",
+    "field": "shadowArmorEnchant2",
+    "kind": "enchant",
+    "candidates": 30,
+    "classes": 30,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowArmor",
+    "field": "shadowArmorEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 5,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowBoot",
+    "field": "shadowBootEnchant2",
+    "kind": "enchant",
+    "candidates": 30,
+    "classes": 30,
+    "guarded": 0
+   },
+   {
+    "slot": "shadowBoot",
+    "field": "shadowBootEnchant3",
+    "kind": "enchant",
+    "candidates": 6,
+    "classes": 5,
+    "guarded": 0
+   }
+  ]
+ }
+}

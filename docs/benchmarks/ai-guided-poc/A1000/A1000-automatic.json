@@ -1,0 +1,1044 @@
+{
+  "batchName": "A1000-automatic",
+  "budget": 1000,
+  "previousCalls": 0,
+  "calls": 990,
+  "cumulativeCalls": 990,
+  "wallMs": 3349.3369,
+  "cpu": {
+    "user": 4125000,
+    "system": 281000
+  },
+  "rows": [
+    {
+      "tool": "optimize_build-core",
+      "args": {
+        "build": {
+          "preset": {
+            "skillFormulaVersion": "current",
+            "class": 4262,
+            "level": 236,
+            "jobLevel": 50,
+            "sex": 1,
+            "hairStyle": 8,
+            "hairColor": 1,
+            "str": 120,
+            "jobStr": 10,
+            "agi": 50,
+            "jobAgi": 10,
+            "vit": 120,
+            "jobVit": 6,
+            "int": 80,
+            "jobInt": 8,
+            "dex": 120,
+            "jobDex": 8,
+            "luk": 63,
+            "jobLuk": 1,
+            "pow": 100,
+            "jobPow": 9,
+            "jobSta": 6,
+            "jobWis": 4,
+            "jobSpl": 3,
+            "con": 43,
+            "jobCon": 5,
+            "jobCrt": 6,
+            "selectedAtkSkill": "Explosion Blaster==5",
+            "rawOptionTxts": [
+              "p_element_neutral:8",
+              "p_race_plant:9",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              "range:10",
+              null,
+              null,
+              null,
+              null,
+              null,
+              "spPercent:2",
+              "mdef:3",
+              "cri:3",
+              "atk:13",
+              "hpPercent:1",
+              "aspd:1",
+              null,
+              null,
+              null,
+              null,
+              "pow:5",
+              null,
+              null,
+              null,
+              "spl:3",
+              "cRate:5",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "weapon": 560026,
+            "weaponRefine": 11,
+            "weaponCard1": 27361,
+            "weaponCard2": 4608,
+            "headUpper": 19481,
+            "headUpperRefine": 12,
+            "headUpperCard": 4582,
+            "headUpperEnchant1": 29085,
+            "headUpperEnchant2": 29689,
+            "headUpperEnchant3": 4702,
+            "headMiddle": 410093,
+            "armor": 450177,
+            "armorRefine": 11,
+            "armorCard": 4392,
+            "armorEnchant1": 310533,
+            "armorEnchant2": 310502,
+            "armorEnchant3": 310480,
+            "shield": 460014,
+            "shieldRefine": 9,
+            "shieldCard": 4609,
+            "shieldEnchant1": 29534,
+            "shieldEnchant2": 29531,
+            "shieldEnchant3": 29531,
+            "garment": 20964,
+            "garmentRefine": 8,
+            "garmentCard": 300270,
+            "boot": 22005,
+            "bootRefine": 4,
+            "bootEnchant2": 4875,
+            "bootEnchant3": 4822,
+            "accLeft": 490107,
+            "accLeftCard": 300278,
+            "accLeftEnchant1": 310632,
+            "accLeftEnchant2": 310622,
+            "accLeftEnchant3": 310480,
+            "accRight": 490181,
+            "accRightCard": 300076,
+            "petLoyalty": 4,
+            "costumeUpper": 31674,
+            "costumeLower": 420010,
+            "costumeGarment": 480436,
+            "costumeEnchantUpper": 310191,
+            "costumeEnchantLower": 310189,
+            "costumeEnchantGarment": 310188,
+            "shadowWeapon": 24386,
+            "shadowWeaponRefine": 10,
+            "shadowArmor": 24679,
+            "shadowArmorRefine": 10,
+            "shadowShield": 24767,
+            "shadowShieldRefine": 9,
+            "shadowBoot": 24680,
+            "shadowBootRefine": 10,
+            "shadowEarring": 24661,
+            "shadowEarringRefine": 10,
+            "shadowPendant": 24662,
+            "shadowPendantRefine": 10,
+            "skillBuffMap": {
+              "Cantocandidus": 0,
+              "Clementia": 0,
+              "Angelus": 0,
+              "Impositio Manus": 0,
+              "Expiatio": 0,
+              "Competentia": 0,
+              "Religio": 0,
+              "Benedictum": 0,
+              "Soul of Heaven and Earth": 0,
+              "Talisman of Protection": 0,
+              "Talisman of the Warrior": 0,
+              "Talisman of the Magician": 0,
+              "Talisman of Five Elements": 0,
+              "Argutus Vita": 0,
+              "Argutus Telum": 0,
+              "Presens Acies": 0,
+              "Crazy Uproar": 0,
+              "Laudaagnus": 0,
+              "Lauda Ramus": 0,
+              "Adrenaline Rush": 0,
+              "Power Thrust": 0,
+              "Weapon Perfection": 0,
+              "Fairy Soul": 0,
+              "Shadow Soul": 0,
+              "Falcon Soul": 0,
+              "Golem Soul": 0,
+              "Odin's Power": 0,
+              "Magnum Break": 0,
+              "Bunch of Shrimp": 0,
+              "Moonlight Serenade": 0,
+              "Striking": 0,
+              "_Sage_Field": 0,
+              "_Sorcerer_Insignia": 0,
+              "Shield Spell": 0,
+              "Bragi's Poem": 0,
+              "Swing Dance": 0,
+              "Mystical Amplification": 0,
+              "Spell Enchanting": 0,
+              "March of Prontera": 0,
+              "Serenade of Jawaii": 0,
+              "Whistle": 0,
+              "Assassin Cross of Sunset": 0,
+              "Apple of Idun": 0,
+              "Humming": 0,
+              "Fortune's Kiss": 0,
+              "Service for You": 0,
+              "Drum on the Battlefield": 0,
+              "Ring of Nibelungen": 0,
+              "Invulnerable Siegfried": 0,
+              "Rush To Windmill": 0,
+              "Echo Song": 0,
+              "Symphony of Lover": 0,
+              "Frigg's Song": 0,
+              "Lerad's Dew": 0,
+              "Dance With Wug": 0,
+              "Infinite Humming": 0,
+              "Musical Interlude": 0,
+              "Comet Amp": 0,
+              "Raid": 0,
+              "Dark Claw": 0,
+              "Debuff_Spore Explosion": 0,
+              "Rhapsody of Mineworker": 0,
+              "Geffenia Nocturne": 0,
+              "Oratio": 0,
+              "Evil Soul Curse": 0,
+              "Infection": 0,
+              "Venom Impression": 0,
+              "Intoxication": 0,
+              "Bitter Cold": 0,
+              "Pollen": 0,
+              "Impalement": 0,
+              "_Sorcerer_Insignia_Target_1": 0,
+              "_Sorcerer_Insignia_Target_2": 0,
+              "_Sorcerer_Insignia_Target_3": 0,
+              "_Sorcerer_Insignia_Target_4": 0,
+              "Gravitation": 0,
+              "_Meister_Quake": 0,
+              "Oleum Sanctum": 0
+            },
+            "activeSkillMap": {
+              "Rising Dragon": 10,
+              "Gentle Touch - Opposite": 0,
+              "Gentle Touch - Alive": 0,
+              "Earth Shaker": 0,
+              "Total Spirit": 15,
+              "Current HP": 0,
+              "Current SP": 0,
+              "Vigor condensation": 0,
+              "Vigor Explosion": 0,
+              "Flash Combo": 0,
+              "Sincere Faith": 0,
+              "Firm Faith": 0,
+              "Powerful Faith": 0,
+              "First Faith Power": 0,
+              "Judge": 0,
+              "Third Exor Flame": 0,
+              "Oleum Sanctum": 0,
+              "_Preview_Massive Flame Blaster": 0
+            },
+            "activeSkills": [
+              10,
+              0,
+              0,
+              0,
+              15,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "passiveSkills": [
+              3,
+              10,
+              3,
+              6,
+              10,
+              10,
+              10,
+              5,
+              5,
+              10,
+              5,
+              5,
+              0,
+              5,
+              5,
+              3,
+              5,
+              6
+            ],
+            "passiveSkillMap": {
+              "Heal": 3,
+              "Demon Bane": 10,
+              "Dragon Combo": 3,
+              "Fallen Empire": 6,
+              "Tiger Cannon": 10,
+              "Divine Protection": 10,
+              "Iron Hand": 10,
+              "Dodge": 5,
+              "Vigor Explosion": 5,
+              "Rising Dragon": 10,
+              "Gentle Touch - Alive": 5,
+              "Gentle Touch - Opposite": 5,
+              "Rampage Blast": 0,
+              "Lightning Ride": 5,
+              "Vigor condensation": 5,
+              "Chain Combo": 3,
+              "Raging Trifecta Blow": 5,
+              "Will of Faith": 6
+            }
+          }
+        },
+        "targets": [
+          {
+            "monsterId": 21544
+          },
+          {
+            "monsterId": 21545
+          },
+          {
+            "monsterId": 21542
+          },
+          {
+            "monsterId": 21601
+          },
+          {
+            "monsterId": 21539
+          }
+        ],
+        "goal": {
+          "maxHitsToKill": 2,
+          "margin": 0
+        },
+        "constraints": {
+          "mvpPolicy": "none",
+          "maxGrade": "C",
+          "forbiddenEffects": [
+            "Oleum Sanctum"
+          ],
+          "consumables": {
+            "forbidden": [
+              14536
+            ]
+          }
+        },
+        "objective": "dps",
+        "procMode": "off",
+        "maxGrade": "C",
+        "refine": 12,
+        "maxSolves": 100000,
+        "maxEngineCalls": 990,
+        "instrument": true
+      },
+      "result": {
+        "objective": "dps",
+        "baseline": {
+          "dps": 18216505.6,
+          "max": 17160874.8,
+          "hp": 140519
+        },
+        "final": {
+          "dps": 18216505.6,
+          "max": 17160874.8,
+          "hp": 140519
+        },
+        "deltaPct": {
+          "dps": 0,
+          "max": 0,
+          "hp": 0
+        },
+        "patch": {
+          "gear": {}
+        },
+        "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwJlMIBzedI7iwyDqxikAHZZPXG-mW23jZsi7UzLm6gBVIZDAgmWbcJz1sdYSfTgiV6uUwLmcdTmceVt1HiaJxCEDL1f774kKgWJgd8i8WbaJwXc.7tfIa.3jmMIdP-gnHmd8Vz3AhvzvRhnU2TsSx3FcAFkoDqOpHE2KJtFmfZW1QHxNh0YxO07e00BQDcazrEjcIPNsjlmM8cJQCDfwfaQok0aRsNIr8b0goc2O0HQGO45imGggSF2CMAzCgCQj2HYtjC2cAZLk8ity5PRVJgOoB3k7gi2A6TZJ00TGAfJ8OOU4y5LM-9Zg4.sbNM3jf2gyy2LYGIcLJKRMP4ZTvLQMl1NrDoQCC0kmD0ihpGLXhYLYJREEQLJeCCQSkpSxhQp4LLUrsngnE7N9koK1yxKK9L7SoKg1DNLJuGfKJiJALBavqxgYr2eLO1qdq6qrRgzNYqJ.GkBiOqGwq9jG6q2qmhqzPEqJJJqhMoBiMxGuaxd1vjTbtu6uLi07IoZ0YFREDsWl7Dyg4wEYdBSTAiI2P4TtlKoAEntJK6cwiPhFOCb7HuevAAHEfOqSTuFkOMfvBszXtiqJjFmetQd.vAzP.2dZu0YwgIRsHSTMqHguqASidqaSVzGFZy0OR84acW4LDqBmmZIXLVS0.nRiSbipAMzsjI5sYheo3mon5znRmsbT5N4bgztaun5cVky6l58WBZBbKRcAqSJdGA3Uplk2Be.VsbRIGIjf4JzTZtugShiS25bGfUSDqX9HbPDXvYYP2mE98APhgEF0DNM0ELzChQBbJhECoDk6mQ9ANmCdwRCitElnIYIkntiQs4oYIKlQEYiDRRAgXj3ls7YX4higB1iArthPGrvBHiYduu5ASsYE2zui7YEEGCeKAHmeofrEQTAgUQM0gQACVzcQSCBdOgVdxgzCHjFaXWVAORXtfJmQVK8AedFj9PsBz531egUPvAgRWW3iAiYIT9Hs-C.b8P4N1iLPduZx-5PxfpfIE8AoDiH3nnMkzcQBCxiNSLOQJ8iMELsXZAmCnpgCBBiMuqAh7XzwPoEgJCkhUFkmgq4WAABedggRThvq2IeKgsDoD9rEJuPC.F.yBImDAaCkh1HoCQU.lIxFZyPhPEA0wAakLMMgLOWRgiMybDvfUyAzR3zrlAtg8A3DsMXpgBepsgRWN2MEcxMBvo73sUPCGXgSR2KXg4tgSIM4kAAOQkNUfjYI8cYi8lQKCegWBujKOjrxOBisbTVyHghFKJBR5bUYHYggDAVxhWCOEKA0B7ZDwJNYWIrIEFyQqYvZALJ6DIAJFUIgkTB7KK1nJOxM5PgJIRHEYJQJpgkgXqMd2QIWgchZOkuwj1Z60iBEkauo9qxpxMQvPpMB94VTROU5R8dGlmDgdfUgEJ8FsGsPk2RDQ4EAClESWHiMolYMlHpoWLpwb0RAd5XABCQt.1h0C0L7kPJI04RBwIqHUEFQ917PVQO7IeSBrggrwMMgA0usNB1zkAZBZECM0KAgQAE0l5DxaJo6JwJQEggdIwEQ1Y6nKIOvbOBAA5KASgy6l1MSAKoohMCUgREoKF1hZIxDNDaJ4Q94yKNIfXNYvskX9OCN8W89dF4HOKXYauZhSDsLfldcQf8zE2hiDEYZ2qHbKLUAiOowy2jjGUdMm8n81iHy-ugW1lcSCbkyJ-BFqAkU6rYAhLOiydlVAhDAfhRTu6IFJLklZQw5WWHksEaZyAIBAlzoiSleAlAxzNJUkY9B95-G8ICfl8YLBDDAIgOoRq15IUpKMFAEAwlsAhlWIxJB25Ag5anJ6yANLBCRAiOuQ9vgZB2fYvNtB9BDyqEY..zNgj4BIEmoEVchj0E4A-ZRMbEAGEWZshJmQIR5q8Jmtg0w4AMBXdXWkJJfLKMqSgJpBBWm0M2gOrABIT6EL7gSB8wRP2NPyS0tp-725AdbMqckQ4IMNO-TBv9HTAPAaQwSaCqGv3Qd-e0gDCGQPkm4O4hEGQ8EXogwhPA6wIQEgAIroDiQmkASIRDPTsTM36FcAC.NU0TiHeLAGA8c03kFAAdX5MQpmDOZrLEAvamBQoxEvW8QIAC0QIUQ10De4skGmtMnL00kUe4gZ2ti9YrDjZqQCabwfOtuNosjGDfO4WgMjcnr0mEPbzdAyR2IC8o-IMQSUuIaLQjuG62ARZJa3atR7HEcBOT3ZKC8SjfvgZYQ.KKrDRPMZkJRwRQmGOXiVgryiEGEFydVk5FWh73P4cqY.Mk2yVpJfAbApIh7capNEqpN4BMfqoRkPAowCTx0PUg3rWBSSgnBGE4TC1RN4HE3APEstdB7ZYJ5lg.3jtHdOyd47WZhg-MQZtyOeJeiy16HIWWL3dAXAuLLd7p2vu9AuPwS7QxrticjlJxOIBN60limwNouEd70o0ipqlsRgSZcQFDkATiRA72.NXKwYUigYk2gQPNHJt1nER4gmsIyb6PHXeTyuN8d7r3TmkaHTb2vnAS5tJLVaARHrfHJyZSPIv057SZz.mn0DaYs1ZsKb41OMol2Z3T.npx88eFoNg4jAfKmW96bRbAVCHUYAO9lB0Gia5AIl5AQJosMDAHFgs3cLAlBvagLLewtfgPZRiG0a68HLZmJzkAaw4BwMa4UQTgmgA/",
+        "feasibility": {
+          "baseline": {
+            "status": "infeasible",
+            "violations": [],
+            "targets": [
+              {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 4,
+                    "message": "hitsToKill 4 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 4 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21542,
+                "name": "Hallucigenia",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21601,
+                "name": "Rgan Intermediário Enredado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21539,
+                "name": "Rgan Intermediário Descartado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              }
+            ],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true
+            },
+            "worstTarget": {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "reason": "hitsToKill 4 fora do pedido (máx 2)."
+            }
+          },
+          "final": {
+            "status": "infeasible",
+            "violations": [],
+            "targets": [
+              {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 4,
+                    "message": "hitsToKill 4 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 4 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21542,
+                "name": "Hallucigenia",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21601,
+                "name": "Rgan Intermediário Enredado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21539,
+                "name": "Rgan Intermediário Descartado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              }
+            ],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true
+            },
+            "worstTarget": {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "reason": "hitsToKill 4 fora do pedido (máx 2)."
+            }
+          },
+          "search": {
+            "feasible": false,
+            "startedFeasible": false,
+            "bestGap": {
+              "worst": 0.3348,
+              "total": 1.0668
+            },
+            "stoppedBy": "engine-budget",
+            "stoppedReasons": [
+              "engine-budget"
+            ],
+            "evaluations": {
+              "counted": 204,
+              "unique": 203,
+              "finalChecks": 10
+            }
+          }
+        },
+        "solves": 204,
+        "budgetUsage": {
+          "mode": "legacy",
+          "semantics": "engine-calls-total",
+          "requested": 990,
+          "effectiveLimit": 990,
+          "counted": 204,
+          "cacheHits": 0,
+          "cacheMisses": 203,
+          "completedEvaluations": 203,
+          "incompleteEvaluations": 0,
+          "uncachedEvaluations": 11,
+          "engineCalls": 990,
+          "phases": {
+            "baseline": {
+              "unique": 10,
+              "uncached": 1,
+              "cacheHits": 0,
+              "engineCalls": 15
+            },
+            "discovery": {
+              "unique": 193,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 965
+            },
+            "search": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "socket": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "levelCheck": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "report": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "feasibility": {
+              "unique": 0,
+              "uncached": 10,
+              "cacheHits": 0,
+              "engineCalls": 10
+            }
+          },
+          "feasibilityVerificationCalls": 10,
+          "reservedVerificationCalls": 10,
+          "stoppedBy": "engine-budget",
+          "stoppedReasons": [
+            "engine-budget"
+          ],
+          "hardTotalLimit": true
+        },
+        "mvpPolicy": "none",
+        "steps": [],
+        "stopped": "Busca interrompida: engine-budget.",
+        "coverage": {
+          "complete": false,
+          "slots": {
+            "searched": 0,
+            "total": 9,
+            "notReached": [
+              "weapon",
+              "shield",
+              "headUpper",
+              "headMiddle",
+              "headLower",
+              "garment",
+              "boot",
+              "accLeft",
+              "accRight"
+            ]
+          },
+          "candidates": {
+            "measured": 0,
+            "available": 0
+          }
+        },
+        "budgetReport": {
+          "phases": {
+            "baseline": {
+              "unique": 10,
+              "uncached": 1,
+              "cacheHits": 0,
+              "engineCalls": 15
+            },
+            "discovery": {
+              "unique": 193,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 965
+            },
+            "search": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "socket": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "levelCheck": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            },
+            "report": {
+              "unique": 0,
+              "uncached": 0,
+              "cacheHits": 0,
+              "engineCalls": 0
+            }
+          },
+          "phaseEngineMs": {
+            "baseline": 98.56060000000025,
+            "discovery": 2638.732700000001,
+            "search": 0,
+            "socket": 0,
+            "levelCheck": 0,
+            "report": 0,
+            "feasibility": 24.78530000000137
+          },
+          "stoppedReason": "engine-budget",
+          "wallClockMs": 3312
+        },
+        "candidateIds": {
+          "weapon": [
+            560026,
+            560036,
+            560027,
+            560013,
+            560021,
+            590045,
+            560020,
+            560017,
+            560012,
+            560030,
+            560034,
+            16033,
+            560011,
+            1866,
+            560037,
+            560032,
+            1631,
+            1660
+          ],
+          "shield": [
+            460020,
+            28902,
+            28901,
+            460006,
+            460004,
+            28946,
+            28942,
+            28945,
+            2130,
+            460005,
+            460157,
+            460018,
+            28941,
+            2156
+          ],
+          "headUpper": [
+            18979,
+            400511,
+            400107,
+            400758,
+            400105,
+            400791,
+            400264,
+            400267,
+            400266,
+            400261,
+            5497,
+            400142,
+            400181,
+            400445,
+            19344,
+            401433,
+            400465,
+            19198
+          ],
+          "headMiddle": [
+            436031
+          ],
+          "headLower": [
+            420076,
+            420019
+          ],
+          "armor": [],
+          "garment": [
+            480812,
+            480091,
+            480090,
+            20718,
+            20717
+          ],
+          "boot": [
+            22011,
+            470094,
+            470087,
+            470088,
+            22002,
+            22010
+          ],
+          "accLeft": [
+            490181,
+            32208,
+            32210,
+            491084
+          ],
+          "accRight": [
+            490181
+          ],
+          "shadowWeapon": [],
+          "shadowShield": [],
+          "shadowArmor": [],
+          "shadowBoot": [],
+          "shadowEarring": [],
+          "shadowPendant": []
+        }
+      },
+      "checkpoints": [
+        {
+          "calls": 15,
+          "metrics": {
+            "dps": 18216505.6,
+            "max": 17160874.8,
+            "hp": 140519
+          },
+          "feasibility": {
+            "status": "infeasible",
+            "violations": [],
+            "targets": [
+              {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 4,
+                    "message": "hitsToKill 4 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 4 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21542,
+                "name": "Hallucigenia",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21601,
+                "name": "Rgan Intermediário Enredado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              },
+              {
+                "monsterId": 21539,
+                "name": "Rgan Intermediário Descartado",
+                "status": "infeasible",
+                "violations": [
+                  {
+                    "code": "GOAL_NOT_MET",
+                    "metric": "hitsToKill",
+                    "required": {
+                      "max": 2
+                    },
+                    "actual": 3,
+                    "message": "hitsToKill 3 fora do pedido (máx 2)."
+                  }
+                ],
+                "unknowns": [],
+                "kill": {
+                  "damageFeasible": false,
+                  "constraintsMet": true,
+                  "reasons": [
+                    "hitsToKill 3 fora do pedido (máx 2)."
+                  ]
+                }
+              }
+            ],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true
+            },
+            "worstTarget": {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "reason": "hitsToKill 4 fora do pedido (máx 2)."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

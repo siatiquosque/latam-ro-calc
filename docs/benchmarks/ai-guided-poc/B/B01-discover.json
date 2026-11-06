@@ -1,0 +1,1574 @@
+{
+  "batchName": "B01-discover",
+  "budget": 200,
+  "previousCalls": 0,
+  "calls": 2,
+  "cumulativeCalls": 2,
+  "wallMs": 136.67029999999977,
+  "cpu": {
+    "user": 156000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "hypothesis": "Establish actual skill, stats and selected effects; no automatic search.",
+      "tool": "get_build_context",
+      "args": {
+        "build": {
+          "preset": {
+            "skillFormulaVersion": "current",
+            "class": 4262,
+            "level": 236,
+            "jobLevel": 50,
+            "sex": 1,
+            "hairStyle": 8,
+            "hairColor": 1,
+            "str": 120,
+            "jobStr": 10,
+            "agi": 50,
+            "jobAgi": 10,
+            "vit": 120,
+            "jobVit": 6,
+            "int": 80,
+            "jobInt": 8,
+            "dex": 120,
+            "jobDex": 8,
+            "luk": 63,
+            "jobLuk": 1,
+            "pow": 100,
+            "jobPow": 9,
+            "jobSta": 6,
+            "jobWis": 4,
+            "jobSpl": 3,
+            "con": 43,
+            "jobCon": 5,
+            "jobCrt": 6,
+            "selectedAtkSkill": "Explosion Blaster==5",
+            "rawOptionTxts": [
+              "p_element_neutral:8",
+              "p_race_plant:9",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              "range:10",
+              null,
+              null,
+              null,
+              null,
+              null,
+              "spPercent:2",
+              "mdef:3",
+              "cri:3",
+              "atk:13",
+              "hpPercent:1",
+              "aspd:1",
+              null,
+              null,
+              null,
+              null,
+              "pow:5",
+              null,
+              null,
+              null,
+              "spl:3",
+              "cRate:5",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "weapon": 560026,
+            "weaponRefine": 11,
+            "weaponCard1": 27361,
+            "weaponCard2": 4608,
+            "headUpper": 19481,
+            "headUpperRefine": 12,
+            "headUpperCard": 4582,
+            "headUpperEnchant1": 29085,
+            "headUpperEnchant2": 29689,
+            "headUpperEnchant3": 4702,
+            "headMiddle": 410093,
+            "armor": 450177,
+            "armorRefine": 11,
+            "armorCard": 4392,
+            "armorEnchant1": 310533,
+            "armorEnchant2": 310502,
+            "armorEnchant3": 310480,
+            "shield": 460014,
+            "shieldRefine": 9,
+            "shieldCard": 4609,
+            "shieldEnchant1": 29534,
+            "shieldEnchant2": 29531,
+            "shieldEnchant3": 29531,
+            "garment": 20964,
+            "garmentRefine": 8,
+            "garmentCard": 300270,
+            "boot": 22005,
+            "bootRefine": 4,
+            "bootEnchant2": 4875,
+            "bootEnchant3": 4822,
+            "accLeft": 490107,
+            "accLeftCard": 300278,
+            "accLeftEnchant1": 310632,
+            "accLeftEnchant2": 310622,
+            "accLeftEnchant3": 310480,
+            "accRight": 490181,
+            "accRightCard": 300076,
+            "petLoyalty": 4,
+            "costumeUpper": 31674,
+            "costumeLower": 420010,
+            "costumeGarment": 480436,
+            "costumeEnchantUpper": 310191,
+            "costumeEnchantLower": 310189,
+            "costumeEnchantGarment": 310188,
+            "shadowWeapon": 24386,
+            "shadowWeaponRefine": 10,
+            "shadowArmor": 24679,
+            "shadowArmorRefine": 10,
+            "shadowShield": 24767,
+            "shadowShieldRefine": 9,
+            "shadowBoot": 24680,
+            "shadowBootRefine": 10,
+            "shadowEarring": 24661,
+            "shadowEarringRefine": 10,
+            "shadowPendant": 24662,
+            "shadowPendantRefine": 10,
+            "skillBuffMap": {
+              "Cantocandidus": 0,
+              "Clementia": 0,
+              "Angelus": 0,
+              "Impositio Manus": 0,
+              "Expiatio": 0,
+              "Competentia": 0,
+              "Religio": 0,
+              "Benedictum": 0,
+              "Soul of Heaven and Earth": 0,
+              "Talisman of Protection": 0,
+              "Talisman of the Warrior": 0,
+              "Talisman of the Magician": 0,
+              "Talisman of Five Elements": 0,
+              "Argutus Vita": 0,
+              "Argutus Telum": 0,
+              "Presens Acies": 0,
+              "Crazy Uproar": 0,
+              "Laudaagnus": 0,
+              "Lauda Ramus": 0,
+              "Adrenaline Rush": 0,
+              "Power Thrust": 0,
+              "Weapon Perfection": 0,
+              "Fairy Soul": 0,
+              "Shadow Soul": 0,
+              "Falcon Soul": 0,
+              "Golem Soul": 0,
+              "Odin's Power": 0,
+              "Magnum Break": 0,
+              "Bunch of Shrimp": 0,
+              "Moonlight Serenade": 0,
+              "Striking": 0,
+              "_Sage_Field": 0,
+              "_Sorcerer_Insignia": 0,
+              "Shield Spell": 0,
+              "Bragi's Poem": 0,
+              "Swing Dance": 0,
+              "Mystical Amplification": 0,
+              "Spell Enchanting": 0,
+              "March of Prontera": 0,
+              "Serenade of Jawaii": 0,
+              "Whistle": 0,
+              "Assassin Cross of Sunset": 0,
+              "Apple of Idun": 0,
+              "Humming": 0,
+              "Fortune's Kiss": 0,
+              "Service for You": 0,
+              "Drum on the Battlefield": 0,
+              "Ring of Nibelungen": 0,
+              "Invulnerable Siegfried": 0,
+              "Rush To Windmill": 0,
+              "Echo Song": 0,
+              "Symphony of Lover": 0,
+              "Frigg's Song": 0,
+              "Lerad's Dew": 0,
+              "Dance With Wug": 0,
+              "Infinite Humming": 0,
+              "Musical Interlude": 0,
+              "Comet Amp": 0,
+              "Raid": 0,
+              "Dark Claw": 0,
+              "Debuff_Spore Explosion": 0,
+              "Rhapsody of Mineworker": 0,
+              "Geffenia Nocturne": 0,
+              "Oratio": 0,
+              "Evil Soul Curse": 0,
+              "Infection": 0,
+              "Venom Impression": 0,
+              "Intoxication": 0,
+              "Bitter Cold": 0,
+              "Pollen": 0,
+              "Impalement": 0,
+              "_Sorcerer_Insignia_Target_1": 0,
+              "_Sorcerer_Insignia_Target_2": 0,
+              "_Sorcerer_Insignia_Target_3": 0,
+              "_Sorcerer_Insignia_Target_4": 0,
+              "Gravitation": 0,
+              "_Meister_Quake": 0,
+              "Oleum Sanctum": 0
+            },
+            "activeSkillMap": {
+              "Rising Dragon": 10,
+              "Gentle Touch - Opposite": 0,
+              "Gentle Touch - Alive": 0,
+              "Earth Shaker": 0,
+              "Total Spirit": 15,
+              "Current HP": 0,
+              "Current SP": 0,
+              "Vigor condensation": 0,
+              "Vigor Explosion": 0,
+              "Flash Combo": 0,
+              "Sincere Faith": 0,
+              "Firm Faith": 0,
+              "Powerful Faith": 0,
+              "First Faith Power": 0,
+              "Judge": 0,
+              "Third Exor Flame": 0,
+              "Oleum Sanctum": 0,
+              "_Preview_Massive Flame Blaster": 0
+            },
+            "activeSkills": [
+              10,
+              0,
+              0,
+              0,
+              15,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "passiveSkills": [
+              3,
+              10,
+              3,
+              6,
+              10,
+              10,
+              10,
+              5,
+              5,
+              10,
+              5,
+              5,
+              0,
+              5,
+              5,
+              3,
+              5,
+              6
+            ],
+            "passiveSkillMap": {
+              "Heal": 3,
+              "Demon Bane": 10,
+              "Dragon Combo": 3,
+              "Fallen Empire": 6,
+              "Tiger Cannon": 10,
+              "Divine Protection": 10,
+              "Iron Hand": 10,
+              "Dodge": 5,
+              "Vigor Explosion": 5,
+              "Rising Dragon": 10,
+              "Gentle Touch - Alive": 5,
+              "Gentle Touch - Opposite": 5,
+              "Rampage Blast": 0,
+              "Lightning Ride": 5,
+              "Vigor condensation": 5,
+              "Chain Combo": 3,
+              "Raging Trifecta Blow": 5,
+              "Will of Faith": 6
+            }
+          }
+        },
+        "target": {
+          "monsterId": 21544
+        }
+      },
+      "calls": 1,
+      "wallMs": 92.88599999999997,
+      "cpu": {
+        "user": 110000,
+        "system": 0
+      },
+      "requestBytes": 4276,
+      "responseBytes": 8588,
+      "isError": false,
+      "result": {
+        "engineVersion": "0.1.211-beta",
+        "dataVersion": "0.1.211-beta",
+        "validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": [],
+          "omitted": {
+            "errors": 0,
+            "warnings": 0
+          }
+        },
+        "sources": {
+          "skillTree": {
+            "origin": "rathena",
+            "region": "kRO",
+            "path": "src/data/skill-tree/rathena-skill-tree.json",
+            "regionalConfirmation": "unconfirmed",
+            "enforcement": "warnings-only",
+            "loaded": true
+          },
+          "mvpCards": {
+            "method": "curated-id-list",
+            "path": "src/app/constants/mvp-cards.ts",
+            "derivedFrom": "card-names-and-mvp-reference-plus-manual-review",
+            "regionalConfirmation": "unconfirmed"
+          }
+        },
+        "unknowns": [
+          "A árvore de habilidades é a do kRO (rAthena), não confirmada no LATAM: pré-requisitos, tetos e pontos aparecem só como avisos de referência; o orçamento de pontos soma apenas as habilidades que o calculador modela.",
+          "Classificação MVP usa uma lista explícita de IDs, originalmente derivada de nomes e revisão manual; não há confirmação regional por tabela de drops."
+        ],
+        "status": "ok",
+        "build": {
+          "class": 4262,
+          "className": "Inquisidor",
+          "level": 236,
+          "jobLevel": 50,
+          "stats": {
+            "str": 120,
+            "agi": 50,
+            "vit": 120,
+            "int": 80,
+            "dex": 120,
+            "luk": 63,
+            "pow": 100,
+            "sta": 0,
+            "wis": 0,
+            "spl": 0,
+            "con": 43,
+            "crt": 0
+          },
+          "atkSkill": "Explosion Blaster==5"
+        },
+        "target": {
+          "id": 21544,
+          "name": "Dolocaris de Um Olho",
+          "level": 251,
+          "hp": 41093320,
+          "element": "Sombrio 3",
+          "race": "Peixe",
+          "size": "Médio",
+          "type": "Normal",
+          "def": 432,
+          "mdef": 167,
+          "res": 386,
+          "mres": 181
+        },
+        "damage": {
+          "skill": {
+            "min": 17573740,
+            "max": 17573740,
+            "dps": 19375335,
+            "hits": 1,
+            "hitsToKill": 3,
+            "type": "Range",
+            "element": "Neutral",
+            "accuracy": 100,
+            "critRate": 67,
+            "effectiveCritRate": 67,
+            "baseRatio": 37146
+          },
+          "basic": {
+            "min": 5555,
+            "max": 5951,
+            "critMin": 28389,
+            "critMax": 28389,
+            "dps": 45394,
+            "critRate": 104
+          }
+        },
+        "stats": {
+          "atk": 820,
+          "matk": 268,
+          "hit": 667,
+          "flee": 516,
+          "crit": 104,
+          "aspd": 177,
+          "hitsPerSec": 2.17,
+          "maxHp": 140519,
+          "maxSp": 3944,
+          "def": 359,
+          "softDef": 195,
+          "mdef": 3,
+          "softMdef": 199,
+          "res": 16,
+          "mres": 9,
+          "cast": {
+            "vct": 0,
+            "fct": 0,
+            "acd": 0,
+            "cd": 0.7
+          }
+        },
+        "equipment": [
+          {
+            "field": "weapon",
+            "id": 560026,
+            "name": "Garra Primordial-LT",
+            "refine": 11
+          },
+          {
+            "field": "shield",
+            "id": 460014,
+            "name": "Escudo Ilusión B",
+            "refine": 9
+          },
+          {
+            "field": "headUpper",
+            "id": 19481,
+            "name": "Diadema Temporal Lutador",
+            "refine": 12
+          },
+          {
+            "field": "headMiddle",
+            "id": 410093,
+            "name": "Correntes Sagradas"
+          },
+          {
+            "field": "armor",
+            "id": 450177,
+            "name": "Traje do Lobo Cinzento",
+            "refine": 11
+          },
+          {
+            "field": "garment",
+            "id": 20964,
+            "name": "Manto Temporal AGI",
+            "refine": 8
+          },
+          {
+            "field": "boot",
+            "id": 22005,
+            "name": "Bota Temporal SOR",
+            "refine": 4
+          },
+          {
+            "field": "accRight",
+            "id": 490181,
+            "name": "Cordão do Inquisidor"
+          },
+          {
+            "field": "accLeft",
+            "id": 490107,
+            "name": "Anel do Lobo Cinzento"
+          },
+          {
+            "field": "costumeUpper",
+            "id": 31674,
+            "name": "[Visual] Boina de Jitterbug"
+          },
+          {
+            "field": "costumeLower",
+            "id": 420010,
+            "name": "[Visual] Dobra das Trevas"
+          },
+          {
+            "field": "costumeGarment",
+            "id": 480436,
+            "name": "[Visual] Foice de Bafomé"
+          },
+          {
+            "field": "costumeEnchantUpper",
+            "id": 310191,
+            "name": "Algoz II (Topo)"
+          },
+          {
+            "field": "costumeEnchantLower",
+            "id": 310189,
+            "name": "Algoz II (Baixo)"
+          },
+          {
+            "field": "costumeEnchantGarment",
+            "id": 310188,
+            "name": "Sicário II (Capa)"
+          },
+          {
+            "field": "shadowWeapon",
+            "id": 24386,
+            "name": "Manopla Sombria do Infinito",
+            "refine": 10
+          },
+          {
+            "field": "shadowShield",
+            "id": 24767,
+            "name": "Escudo Sombrio Mega Repente",
+            "refine": 9
+          },
+          {
+            "field": "shadowArmor",
+            "id": 24679,
+            "name": "Malha Sombria do Mastodonte",
+            "refine": 10
+          },
+          {
+            "field": "shadowBoot",
+            "id": 24680,
+            "name": "Greva Sombria do Mastodonte",
+            "refine": 10
+          },
+          {
+            "field": "shadowEarring",
+            "id": 24661,
+            "name": "Brinco Sombrio Penetrante",
+            "refine": 10
+          },
+          {
+            "field": "shadowPendant",
+            "id": 24662,
+            "name": "Colar Sombrio Penetrante",
+            "refine": 10
+          },
+          {
+            "field": "weaponCard1",
+            "id": 27361,
+            "name": "Carta Andarilho Poluto"
+          },
+          {
+            "field": "weaponCard2",
+            "id": 4608,
+            "name": "Carta Cavaleiro Branco"
+          },
+          {
+            "field": "shieldCard",
+            "id": 4609,
+            "name": "Carta Cavaleira Khalitzburg"
+          },
+          {
+            "field": "shieldEnchant1",
+            "id": 29534,
+            "name": "S-ATQ"
+          },
+          {
+            "field": "shieldEnchant2",
+            "id": 29531,
+            "name": "S-HPMax"
+          },
+          {
+            "field": "shieldEnchant3",
+            "id": 29531,
+            "name": "S-HPMax"
+          },
+          {
+            "field": "headUpperCard",
+            "id": 4582,
+            "name": "Carta Bungisngis"
+          },
+          {
+            "field": "headUpperEnchant1",
+            "id": 29085,
+            "name": "Insígnia do Talento 5"
+          },
+          {
+            "field": "headUpperEnchant2",
+            "id": 29689,
+            "name": "Joia Temporal SOR 3"
+          },
+          {
+            "field": "headUpperEnchant3",
+            "id": 4702,
+            "name": "FOR +3"
+          },
+          {
+            "field": "armorCard",
+            "id": 4392,
+            "name": "Carta Observação"
+          },
+          {
+            "field": "armorEnchant1",
+            "id": 310533,
+            "name": "Orbe Lupino - Triplo"
+          },
+          {
+            "field": "armorEnchant2",
+            "id": 310502,
+            "name": "Orbe Lupino - Artilheiro 1"
+          },
+          {
+            "field": "armorEnchant3",
+            "id": 310480,
+            "name": "Orbe Lupino - AGI 1"
+          },
+          {
+            "field": "garmentCard",
+            "id": 300270,
+            "name": "Carta Empatia"
+          },
+          {
+            "field": "bootEnchant2",
+            "id": 4875,
+            "name": "Delírio"
+          },
+          {
+            "field": "bootEnchant3",
+            "id": 4822,
+            "name": "Espírito do Lutador 7"
+          },
+          {
+            "field": "accRightCard",
+            "id": 300076,
+            "name": "Carta Guarda Quebrada"
+          },
+          {
+            "field": "accLeftCard",
+            "id": 300278,
+            "name": "Carta Mímico do Vazio"
+          },
+          {
+            "field": "accLeftEnchant1",
+            "id": 310632,
+            "name": "Orbe Lupino - Fatal 4"
+          },
+          {
+            "field": "accLeftEnchant2",
+            "id": 310622,
+            "name": "Orbe Lupino - Fatal 2"
+          },
+          {
+            "field": "accLeftEnchant3",
+            "id": 310480,
+            "name": "Orbe Lupino - AGI 1"
+          }
+        ],
+        "skill": {
+          "name": "Explosion Blaster",
+          "label": "Técnica da Mão Explosiva",
+          "value": "Explosion Blaster==5",
+          "damageType": "physical",
+          "canCrit": true,
+          "crit": {
+            "canCrit": true,
+            "shareOfCharacterCrit": 1,
+            "flatCrit": 0,
+            "shareOfCritDamage": 0.5
+          },
+          "scaling": {
+            "inputs": [
+              "POD"
+            ],
+            "bonusKeys": [
+              "pow",
+              "allTrait"
+            ]
+          },
+          "dependencies": {
+            "skills": [
+              {
+                "skill": "Oleum Sanctum",
+                "id": 5241,
+                "state": "active",
+                "hooks": [
+                  "formula"
+                ]
+              }
+            ],
+            "coverage": "observed-branches"
+          }
+        },
+        "effects": {
+          "selected": [],
+          "available": [
+            "Delírio"
+          ]
+        },
+        "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwJlMIBzedI7iwyDqxikAHZZPXG-mW23jZsi7UzLm6gBVIZDAgmWbcJz1sdYSfTgiV6uUwLmcdTmceVt1HiaJxCEDL1f774kKgWJgd8i8WbaJwXc.7tfIa.3jmMIdP-gnHmd8Vz3AhvzvRhnU2TsSx3FcAFkoDqOpHE2KJtFmfZW1QHxNh0YxO07e00BQDcazrEjcIPNsjlmM8cJQCDfwfaQok0aRsNIr8b0goc2O0HQGO45imGggSF2CMAzCgCQj2HYtjC2cAZLk8ity5PRVJgOoB3k7gi2A6TZJ00TGAfJ8OOU4y5LM-9Zg4.sbNM3jf2gyy2LYGIcLJKRMP4ZTvLQMl1NrDoQCC0kmD0ihpGLXhYLYJREEQLJeCCQSkpSxhQp4LLUrsngnE7N9koK1yxKK9L7SoKg1DNLJuGfKJiJALBavqxgYr2eLO1qdq6qrRgzNYqJ.GkBiOqGwq9jG6q2qmhqzPEqJJJqhMoBiMxGuaxd1vjTbtu6uLi07IoZ0YFREDsWl7Dyg4wEYdBSTAiI2P4TtlKoAEntJK6cwiPhFOCb7HuevAAHEfOqSTuFkOMfvBszXtiqJjFmetQd.vAzP.2dZu0YwgIRsHSTMqHguqASidqaSVzGFZy0OR84acW4LDqBmmZIXLVS0.nRiSbipAMzsjI5sYheo3mon5znRmsbT5N4bgztaun5cVky6l58WBZBbKRcAqSJdGA3Uplk2Be.VsbRIGIjf4JzTZtugShiS25bGfUSDqX9HbPDXvYYP2mE98APhgEF0DNM0ELzChQBbJhECoDk6mQ9ANmCdwRCitElnIYIkntiQs4oYIKlQEYiDRRAgXj3ls7YX4higB1iArthPGrvBHiYduu5ASsYE2zui7YEEGCeKAHmeofrEQTAgUQM0gQACVzcQSCBdOgVdxgzCHjFaXWVAORXtfJmQVK8AedFj9PsBz531egUPvAgRWW3iAiYIT9Hs-C.b8P4N1iLPduZx-5PxfpfIE8AoDiH3nnMkzcQBCxiNSLOQJ8iMELsXZAmCnpgCBBiMuqAh7XzwPoEgJCkhUFkmgq4WAABedggRThvq2IeKgsDoD9rEJuPC.F.yBImDAaCkh1HoCQU.lIxFZyPhPEA0wAakLMMgLOWRgiMybDvfUyAzR3zrlAtg8A3DsMXpgBepsgRWN2MEcxMBvo73sUPCGXgSR2KXg4tgSIM4kAAOQkNUfjYI8cYi8lQKCegWBujKOjrxOBisbTVyHghFKJBR5bUYHYggDAVxhWCOEKA0B7ZDwJNYWIrIEFyQqYvZALJ6DIAJFUIgkTB7KK1nJOxM5PgJIRHEYJQJpgkgXqMd2QIWgchZOkuwj1Z60iBEkauo9qxpxMQvPpMB94VTROU5R8dGlmDgdfUgEJ8FsGsPk2RDQ4EAClESWHiMolYMlHpoWLpwb0RAd5XABCQt.1h0C0L7kPJI04RBwIqHUEFQ917PVQO7IeSBrggrwMMgA0usNB1zkAZBZECM0KAgQAE0l5DxaJo6JwJQEggdIwEQ1Y6nKIOvbOBAA5KASgy6l1MSAKoohMCUgREoKF1hZIxDNDaJ4Q94yKNIfXNYvskX9OCN8W89dF4HOKXYauZhSDsLfldcQf8zE2hiDEYZ2qHbKLUAiOowy2jjGUdMm8n81iHy-ugW1lcSCbkyJ-BFqAkU6rYAhLOiydlVAhDAfhRTu6IFJLklZQw5WWHksEaZyAIBAlzoiSleAlAxzNJUkY9B95-G8ICfl8YLBDDAIgOoRq15IUpKMFAEAwlsAhlWIxJB25Ag5anJ6yANLBCRAiOuQ9vgZB2fYvNtB9BDyqEY..zNgj4BIEmoEVchj0E4A-ZRMbEAGEWZshJmQIR5q8Jmtg0w4AMBXdXWkJJfLKMqSgJpBBWm0M2gOrABIT6EL7gSB8wRP2NPyS0tp-725AdbMqckQ4IMNO-TBv9HTAPAaQwSaCqGv3Qd-e0gDCGQPkm4O4hEGQ8EXogwhPA6wIQEgAIroDiQmkASIRDPTsTM36FcAC.NU0TiHeLAGA8c03kFAAdX5MQpmDOZrLEAvamBQoxEvW8QIAC0QIUQ10De4skGmtMnL00kUe4gZ2ti9YrDjZqQCabwfOtuNosjGDfO4WgMjcnr0mEPbzdAyR2IC8o-IMQSUuIaLQjuG62ARZJa3atR7HEcBOT3ZKC8SjfvgZYQ.KKrDRPMZkJRwRQmGOXiVgryiEGEFydVk5FWh73P4cqY.Mk2yVpJfAbApIh7capNEqpN4BMfqoRkPAowCTx0PUg3rWBSSgnBGE4TC1RN4HE3APEstdB7ZYJ5lg.3jtHdOyd47WZhg-MQZtyOeJeiy16HIWWL3dAXAuLLd7p2vu9AuPwS7QxrticjlJxOIBN60limwNouEd70o0ipqlsRgSZcQFDkATiRA72.NXKwYUigYk2gQPNHJt1nER4gmsIyb6PHXeTyuN8d7r3TmkaHTb2vnAS5tJLVaARHrfHJyZSPIv057SZz.mn0DaYs1ZsKb41OMol2Z3T.npx88eFoNg4jAfKmW96bRbAVCHUYAO9lB0Gia5AIl5AQJosMDAHFgs3cLAlBvagLLewtfgPZRiG0a68HLZmJzkAaw4BwMa4UQTgmgA/"
+      }
+    },
+    {
+      "hypothesis": "Find formula inputs, crit behavior and active-effect dependency.",
+      "tool": "get_skill",
+      "args": {
+        "classId": 4262,
+        "skill": "Explosion Blaster==5"
+      },
+      "calls": 0,
+      "wallMs": 0.9062000000003536,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 47,
+      "responseBytes": 2335,
+      "isError": false,
+      "result": {
+        "name": "Explosion Blaster",
+        "label": "Técnica da Mão Explosiva",
+        "id": 5244,
+        "value": "Explosion Blaster==5",
+        "levels": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "formulaVersion": "current",
+        "description": "Técnica da Mão Explosiva ^777777(Blaster)^000000\nNível máximo: ^7777775^000000\nPré-requisitos: ^777777Oleum Sanctum 1^000000\nTipo: ^777777Ofensiva^000000\nRegen. de AP: ^0054FF4^000000\nDescrição:\n^777777Causa dano físico a distância no alvo e\nem oponentes ao redor dele.\nSe inimigos estiverem sofrendo o efeito de\n[Óleo Ungido] causa ainda mais dano.\nNível de base e POD influenciam no dano.\nTem chance do ataque ser crítico.\nA chance é igual ao CRIT do usuário.^000000\nNível l ATQ l ATQ (Óleo Ungido) l Área\n[Nv 1]: ^7777772.800%^000000 l ^7777773.200%^000000 l ^7777777x7 células^000000\n[Nv 2]: ^7777775.600%^000000 l ^7777776.400%^000000 l ^7777777x7 células^000000\n[Nv 3]: ^7777778.400%^000000 l ^7777779.600%^000000 l ^7777779x9 células^000000\n[Nv 4]: ^77777711.200%^000000 l ^77777712.800%^000000 l ^7777779x9 células^000000\n[Nv 5]: ^77777714.000%^000000 l ^77777716.000%^000000 l ^77777711x11 células^000000",
+        "damageType": "physical",
+        "melee": false,
+        "canCrit": true,
+        "crit": {
+          "canCrit": true,
+          "shareOfCharacterCrit": 1,
+          "flatCrit": 0,
+          "shareOfCritDamage": 0.5
+        },
+        "structure": {
+          "hits": 1,
+          "totalHit": 1
+        },
+        "dependencies": {
+          "skills": [
+            {
+              "skill": "Oleum Sanctum",
+              "id": 5241,
+              "state": "active",
+              "hooks": [
+                "formula"
+              ]
+            }
+          ],
+          "inputs": [
+            "skillLevel",
+            "skills.isActive",
+            "status.totalPow",
+            "model.level"
+          ],
+          "hooks": [
+            "formula"
+          ],
+          "coverage": "observed-branches",
+          "probes": 8,
+          "note": "Dependências observadas executando callbacks existentes com estados ativos/inativos e entradas de amostragem. Não é prova de todos os ramos; não cobre todo estado privado da classe. As substituições locais de leitura de skills são restauradas; nenhum valor de dano amostrado é recomendado. Confirme estados concretos com calculate/evaluate_variants."
+        },
+        "timing": {
+          "fixedCast": 0,
+          "variableCast": 0,
+          "afterCastDelay": 0,
+          "cooldown": 0.7
+        },
+        "scaling": {
+          "documented": true,
+          "inputs": [
+            "POD"
+          ],
+          "resources": [],
+          "bonusKeys": [
+            "pow",
+            "allTrait"
+          ],
+          "formula": "(nível da habilidade × 650 + POD × 3) × nível base / 100; com Oleum Sanctum ativo: (nível da habilidade × 850 + POD × 5) × nível base / 100.",
+          "note": "Dependências documentadas no motor; valide combinações com calculate/evaluate_variants."
+        }
+      }
+    },
+    {
+      "hypothesis": "Use executed damage stages rather than trusting descriptive formula text.",
+      "tool": "explain_damage",
+      "args": {
+        "build": {
+          "preset": {
+            "skillFormulaVersion": "current",
+            "class": 4262,
+            "level": 236,
+            "jobLevel": 50,
+            "sex": 1,
+            "hairStyle": 8,
+            "hairColor": 1,
+            "str": 120,
+            "jobStr": 10,
+            "agi": 50,
+            "jobAgi": 10,
+            "vit": 120,
+            "jobVit": 6,
+            "int": 80,
+            "jobInt": 8,
+            "dex": 120,
+            "jobDex": 8,
+            "luk": 63,
+            "jobLuk": 1,
+            "pow": 100,
+            "jobPow": 9,
+            "jobSta": 6,
+            "jobWis": 4,
+            "jobSpl": 3,
+            "con": 43,
+            "jobCon": 5,
+            "jobCrt": 6,
+            "selectedAtkSkill": "Explosion Blaster==5",
+            "rawOptionTxts": [
+              "p_element_neutral:8",
+              "p_race_plant:9",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              "range:10",
+              null,
+              null,
+              null,
+              null,
+              null,
+              "spPercent:2",
+              "mdef:3",
+              "cri:3",
+              "atk:13",
+              "hpPercent:1",
+              "aspd:1",
+              null,
+              null,
+              null,
+              null,
+              "pow:5",
+              null,
+              null,
+              null,
+              "spl:3",
+              "cRate:5",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "weapon": 560026,
+            "weaponRefine": 11,
+            "weaponCard1": 27361,
+            "weaponCard2": 4608,
+            "headUpper": 19481,
+            "headUpperRefine": 12,
+            "headUpperCard": 4582,
+            "headUpperEnchant1": 29085,
+            "headUpperEnchant2": 29689,
+            "headUpperEnchant3": 4702,
+            "headMiddle": 410093,
+            "armor": 450177,
+            "armorRefine": 11,
+            "armorCard": 4392,
+            "armorEnchant1": 310533,
+            "armorEnchant2": 310502,
+            "armorEnchant3": 310480,
+            "shield": 460014,
+            "shieldRefine": 9,
+            "shieldCard": 4609,
+            "shieldEnchant1": 29534,
+            "shieldEnchant2": 29531,
+            "shieldEnchant3": 29531,
+            "garment": 20964,
+            "garmentRefine": 8,
+            "garmentCard": 300270,
+            "boot": 22005,
+            "bootRefine": 4,
+            "bootEnchant2": 4875,
+            "bootEnchant3": 4822,
+            "accLeft": 490107,
+            "accLeftCard": 300278,
+            "accLeftEnchant1": 310632,
+            "accLeftEnchant2": 310622,
+            "accLeftEnchant3": 310480,
+            "accRight": 490181,
+            "accRightCard": 300076,
+            "petLoyalty": 4,
+            "costumeUpper": 31674,
+            "costumeLower": 420010,
+            "costumeGarment": 480436,
+            "costumeEnchantUpper": 310191,
+            "costumeEnchantLower": 310189,
+            "costumeEnchantGarment": 310188,
+            "shadowWeapon": 24386,
+            "shadowWeaponRefine": 10,
+            "shadowArmor": 24679,
+            "shadowArmorRefine": 10,
+            "shadowShield": 24767,
+            "shadowShieldRefine": 9,
+            "shadowBoot": 24680,
+            "shadowBootRefine": 10,
+            "shadowEarring": 24661,
+            "shadowEarringRefine": 10,
+            "shadowPendant": 24662,
+            "shadowPendantRefine": 10,
+            "skillBuffMap": {
+              "Cantocandidus": 0,
+              "Clementia": 0,
+              "Angelus": 0,
+              "Impositio Manus": 0,
+              "Expiatio": 0,
+              "Competentia": 0,
+              "Religio": 0,
+              "Benedictum": 0,
+              "Soul of Heaven and Earth": 0,
+              "Talisman of Protection": 0,
+              "Talisman of the Warrior": 0,
+              "Talisman of the Magician": 0,
+              "Talisman of Five Elements": 0,
+              "Argutus Vita": 0,
+              "Argutus Telum": 0,
+              "Presens Acies": 0,
+              "Crazy Uproar": 0,
+              "Laudaagnus": 0,
+              "Lauda Ramus": 0,
+              "Adrenaline Rush": 0,
+              "Power Thrust": 0,
+              "Weapon Perfection": 0,
+              "Fairy Soul": 0,
+              "Shadow Soul": 0,
+              "Falcon Soul": 0,
+              "Golem Soul": 0,
+              "Odin's Power": 0,
+              "Magnum Break": 0,
+              "Bunch of Shrimp": 0,
+              "Moonlight Serenade": 0,
+              "Striking": 0,
+              "_Sage_Field": 0,
+              "_Sorcerer_Insignia": 0,
+              "Shield Spell": 0,
+              "Bragi's Poem": 0,
+              "Swing Dance": 0,
+              "Mystical Amplification": 0,
+              "Spell Enchanting": 0,
+              "March of Prontera": 0,
+              "Serenade of Jawaii": 0,
+              "Whistle": 0,
+              "Assassin Cross of Sunset": 0,
+              "Apple of Idun": 0,
+              "Humming": 0,
+              "Fortune's Kiss": 0,
+              "Service for You": 0,
+              "Drum on the Battlefield": 0,
+              "Ring of Nibelungen": 0,
+              "Invulnerable Siegfried": 0,
+              "Rush To Windmill": 0,
+              "Echo Song": 0,
+              "Symphony of Lover": 0,
+              "Frigg's Song": 0,
+              "Lerad's Dew": 0,
+              "Dance With Wug": 0,
+              "Infinite Humming": 0,
+              "Musical Interlude": 0,
+              "Comet Amp": 0,
+              "Raid": 0,
+              "Dark Claw": 0,
+              "Debuff_Spore Explosion": 0,
+              "Rhapsody of Mineworker": 0,
+              "Geffenia Nocturne": 0,
+              "Oratio": 0,
+              "Evil Soul Curse": 0,
+              "Infection": 0,
+              "Venom Impression": 0,
+              "Intoxication": 0,
+              "Bitter Cold": 0,
+              "Pollen": 0,
+              "Impalement": 0,
+              "_Sorcerer_Insignia_Target_1": 0,
+              "_Sorcerer_Insignia_Target_2": 0,
+              "_Sorcerer_Insignia_Target_3": 0,
+              "_Sorcerer_Insignia_Target_4": 0,
+              "Gravitation": 0,
+              "_Meister_Quake": 0,
+              "Oleum Sanctum": 0
+            },
+            "activeSkillMap": {
+              "Rising Dragon": 10,
+              "Gentle Touch - Opposite": 0,
+              "Gentle Touch - Alive": 0,
+              "Earth Shaker": 0,
+              "Total Spirit": 15,
+              "Current HP": 0,
+              "Current SP": 0,
+              "Vigor condensation": 0,
+              "Vigor Explosion": 0,
+              "Flash Combo": 0,
+              "Sincere Faith": 0,
+              "Firm Faith": 0,
+              "Powerful Faith": 0,
+              "First Faith Power": 0,
+              "Judge": 0,
+              "Third Exor Flame": 0,
+              "Oleum Sanctum": 0,
+              "_Preview_Massive Flame Blaster": 0
+            },
+            "activeSkills": [
+              10,
+              0,
+              0,
+              0,
+              15,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "passiveSkills": [
+              3,
+              10,
+              3,
+              6,
+              10,
+              10,
+              10,
+              5,
+              5,
+              10,
+              5,
+              5,
+              0,
+              5,
+              5,
+              3,
+              5,
+              6
+            ],
+            "passiveSkillMap": {
+              "Heal": 3,
+              "Demon Bane": 10,
+              "Dragon Combo": 3,
+              "Fallen Empire": 6,
+              "Tiger Cannon": 10,
+              "Divine Protection": 10,
+              "Iron Hand": 10,
+              "Dodge": 5,
+              "Vigor Explosion": 5,
+              "Rising Dragon": 10,
+              "Gentle Touch - Alive": 5,
+              "Gentle Touch - Opposite": 5,
+              "Rampage Blast": 0,
+              "Lightning Ride": 5,
+              "Vigor condensation": 5,
+              "Chain Combo": 3,
+              "Raging Trifecta Blow": 5,
+              "Will of Faith": 6
+            }
+          }
+        },
+        "target": {
+          "monsterId": 21544
+        },
+        "parts": [
+          "stages",
+          "crit"
+        ]
+      },
+      "calls": 1,
+      "wallMs": 10.339400000000296,
+      "cpu": {
+        "user": 15000,
+        "system": 0
+      },
+      "requestBytes": 4302,
+      "responseBytes": 1300,
+      "isError": false,
+      "result": {
+        "metric": "dps",
+        "value": 19375335,
+        "stages": [
+          {
+            "label": "ATQ",
+            "value": 4242,
+            "keys": [
+              "atk"
+            ]
+          },
+          {
+            "label": "ATQ +60%",
+            "value": 4843,
+            "keys": [
+              "atkPercent"
+            ]
+          },
+          {
+            "label": "P.ATQ +70%",
+            "value": 8308.1,
+            "keys": [
+              "pAtk"
+            ]
+          },
+          {
+            "label": "Dano crítico (equip) 109%",
+            "value": 17363,
+            "keys": [
+              "criDmg"
+            ]
+          },
+          {
+            "label": "À distância 172%",
+            "value": 47227,
+            "keys": [
+              "range"
+            ]
+          },
+          {
+            "label": "Hab. Base 37.146%",
+            "value": 17542941,
+            "keys": [
+              "flatDmg",
+              "flat_Explosion Blaster"
+            ]
+          },
+          {
+            "label": "Redução TEN",
+            "value": 10650752,
+            "keys": [
+              "pene_res"
+            ]
+          },
+          {
+            "label": "Redução DEF",
+            "value": 10650752,
+            "keys": [
+              "p_pene_race_all",
+              "p_pene_class_all"
+            ]
+          },
+          {
+            "label": "DEF -0",
+            "value": 10650752
+          },
+          {
+            "label": "Bônus Hab. equip 10%",
+            "value": 11715827,
+            "keys": [
+              "5244"
+            ]
+          },
+          {
+            "label": "Crítico base 140% + T.Crít 10%",
+            "value": 17573740,
+            "keys": [
+              "cRate"
+            ]
+          }
+        ],
+        "crit": {
+          "skillChancePct": 67,
+          "lostToTargetPct": 34,
+          "basicAttackChancePct": 104,
+          "steps": [
+            {
+              "label": "CRIT por SOR",
+              "value": 19,
+              "kind": "add",
+              "detail": "piso(SOR 64 × 0,3)"
+            },
+            {
+              "label": "CRIT de equipamentos",
+              "value": 82,
+              "kind": "add"
+            },
+            {
+              "label": "CRIT do personagem",
+              "value": 101,
+              "kind": "subtotal"
+            },
+            {
+              "label": "Escudo de crítico do alvo",
+              "value": -34,
+              "kind": "subtract",
+              "detail": "piso(SOR 172 do alvo ÷ 5)"
+            },
+            {
+              "label": "Tx. Crítico",
+              "value": 67,
+              "kind": "total"
+            }
+          ],
+          "note": "Chance por uso contra este alvo; o dano crítico entra no cálculo do dano médio e do DPS."
+        }
+      }
+    },
+    {
+      "hypothesis": "Confirm the high-HP target, defenses and elemental context.",
+      "tool": "get_monster",
+      "args": {
+        "id": 21545
+      },
+      "calls": 0,
+      "wallMs": 0.4591000000000349,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 12,
+      "responseBytes": 318,
+      "isError": false,
+      "result": {
+        "id": 21545,
+        "name": "Dolocaris de Dois Olhos",
+        "level": 253,
+        "hp": 49197540,
+        "element": "Terra 3",
+        "race": "Peixe",
+        "size": "Médio",
+        "type": "Normal",
+        "mvp": false,
+        "def": 531,
+        "mdef": 232,
+        "res": 476,
+        "mres": 282,
+        "hit": 592,
+        "flee": 597,
+        "stats": {
+          "str": 144,
+          "agi": 139,
+          "vit": 196,
+          "int": 169,
+          "dex": 174,
+          "luk": 161
+        },
+        "spawn": "jor_ab02",
+        "attackRange": 1
+      }
+    },
+    {
+      "hypothesis": "Find weapons with direct skill or documented scaling support before testing.",
+      "tool": "search_items",
+      "args": {
+        "classId": 4262,
+        "slot": "weapon",
+        "skill": "5244",
+        "synergy": true,
+        "withBonuses": true,
+        "limit": 10
+      },
+      "calls": 0,
+      "wallMs": 5.409300000000258,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 92,
+      "responseBytes": 2687,
+      "isError": false,
+      "result": {
+        "total": 9,
+        "shown": 9,
+        "offset": 0,
+        "items": [
+          {
+            "id": 590045,
+            "name": "Clava Celestial",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 215,
+            "atk": 210,
+            "bonuses": [
+              "5245: 11===15",
+              "5251: 5 / 5===10",
+              "Dano físico %: 5",
+              "POD: 2",
+              "Dano corpo a corpo: 7===5 / GRADE[weapon==D]===10",
+              "Crítico: 10===10"
+            ]
+          },
+          {
+            "id": 560026,
+            "name": "Garra Primordial-LT",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 190,
+            "atk": 205,
+            "bonuses": [
+              "2332: 7===20 / 11===25",
+              "2518: 7===20 / 11===25",
+              "Dano físico %: 5 / EQUIP[Hero Boots-LT]===10",
+              "POD: SUM[level==210]===2 / GRADE[weapon==B]===3",
+              "P.ATQ: SUM[level==210]===1 / EQUIP[Hero Boots-LT]===2",
+              "ATQ: 2---15"
+            ]
+          },
+          {
+            "id": 560021,
+            "name": "Garra Vivatus Fides",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 210,
+            "atk": 210,
+            "bonuses": [
+              "2332: 10 / 7===20",
+              "ATQ: 3---12",
+              "Redução de Recarga de Explosão Espiritual: 9===1",
+              "Dano à distância: 12===15",
+              "Dano Físico (Elemento: Todos): GRADE[weapon==D]11===15",
+              "Dano físico %: GRADE[weapon==B]===7"
+            ]
+          },
+          {
+            "id": 560036,
+            "name": "Manopla Infernal",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 215,
+            "atk": 210,
+            "bonuses": [
+              "5241: 11===15",
+              "5244: 5 / 5===10",
+              "Dano físico %: 5",
+              "POD: 2",
+              "Dano à distância: 7===5 / GRADE[weapon==D]===10",
+              "Crítico: 10===10"
+            ]
+          },
+          {
+            "id": 560020,
+            "name": "Manopla Vivatus Fides",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 210,
+            "atk": 210,
+            "bonuses": [
+              "2330: 10 / 7===20",
+              "ATQ: 3---12",
+              "Redução de Recarga de Garra de Tigre: 9===0.5",
+              "Dano corpo a corpo: 12===15",
+              "Dano Físico (Elemento: Todos): GRADE[weapon==D]11===15",
+              "Dano físico %: GRADE[weapon==B]===7"
+            ]
+          },
+          {
+            "id": 560012,
+            "name": "Paenitentia Caestus",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 230,
+            "atk": 230,
+            "bonuses": [
+              "2330: 2---3 / 9===30",
+              "5249: 10 / GRADE[weapon==D]===5",
+              "Dano físico %: 10",
+              "HP máx. %: 7===10",
+              "Redução de Recarga de Garra de Tigre: 11===1",
+              "P.ATQ: GRADE[weapon==C]===1"
+            ]
+          },
+          {
+            "id": 560013,
+            "name": "Paenitentia Ungula",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 230,
+            "atk": 230,
+            "bonuses": [
+              "2332: 2---3 / 9===30",
+              "5244: 10 / GRADE[weapon==D]===5",
+              "Dano físico %: 10",
+              "Redução de Recarga de Explosão Espiritual: 11===1",
+              "P.ATQ: GRADE[weapon==C]===1",
+              "POD: GRADE[weapon==B]===1"
+            ]
+          },
+          {
+            "id": 560030,
+            "name": "Punho Consertado",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 220,
+            "atk": 230,
+            "bonuses": [
+              "5249: 2---7 / GRADE[weapon==C]===10",
+              "5250: 2---7 / GRADE[weapon==C]===10",
+              "5251: 3---8",
+              "5253: 3---8",
+              "Dano corpo a corpo: 4---4",
+              "POD: GRADE[weapon==D]===2"
+            ]
+          },
+          {
+            "id": 560027,
+            "name": "Soqueira Primordial-LT",
+            "slots": 2,
+            "db": true,
+            "slot": "weapon",
+            "lv": 190,
+            "atk": 205,
+            "bonuses": [
+              "2330: 3---4 / 7===25",
+              "2343: 7===30 / 11===15",
+              "Dano físico %: 5 / EQUIP[Hero Boots-LT]===10",
+              "POD: SUM[level==210]===2 / GRADE[weapon==B]===3",
+              "P.ATQ: SUM[level==210]===1 / EQUIP[Hero Boots-LT]===2",
+              "ATQ: 2---15"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Current critical rate below 100 makes the crit-path kill conditional; seek accuracy/crit and ranged modifiers.",
+      "tool": "search_items",
+      "args": {
+        "classId": 4262,
+        "slot": "headMiddle",
+        "bonus": [
+          "crit",
+          "cRate",
+          "range"
+        ],
+        "bonusMode": "any",
+        "withBonuses": true,
+        "limit": 10
+      },
+      "calls": 0,
+      "wallMs": 2.692200000000412,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 117,
+      "responseBytes": 1725,
+      "isError": false,
+      "result": {
+        "total": 6,
+        "shown": 6,
+        "offset": 0,
+        "items": [
+          {
+            "id": 5592,
+            "name": "Asas de Sigrún",
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 1,
+            "def": 2,
+            "bonuses": [
+              "Vel.Atq: USED[Swordman]1 / USED[Thief]1",
+              "ATQM: USED[Mage]5 / USED[Acolyte]5",
+              "Dano à distância: USED[Archer]2 / USED[Gunslinger]2",
+              "HP máx.: USED[SuperNovice]120",
+              "SP máx.: USED[SuperNovice]60",
+              "Efetividade de cura: USED[Mage||Acolyte||Ninja||SoulLinker]2"
+            ]
+          },
+          {
+            "id": 19085,
+            "name": "Asas de Sigrún",
+            "slots": 1,
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 1,
+            "def": 2,
+            "bonuses": [
+              "Vel.Atq: USED[Swordman]1 / USED[Thief]1",
+              "AGI: USED[Swordman]===-2 / USED[Thief]===-2",
+              "ATQM: USED[Mage]5 / USED[Acolyte]5",
+              "Dano à distância: USED[Archer]1 / USED[Gunslinger]1",
+              "HP máx.: USED[SuperNovice]60",
+              "SP máx.: USED[SuperNovice]30"
+            ]
+          },
+          {
+            "id": 410599,
+            "name": "Cesta de Mascotes",
+            "slots": 1,
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 100,
+            "bonuses": [
+              "Dano físico %: 5",
+              "Dano mágico %: 5",
+              "Dano à distância: EQUIP_ID[9121||9137||9193]10",
+              "Dano corpo a corpo: EQUIP_ID[9111||9112||9126]10",
+              "Dano mágico (todas as propriedades): EQUIP_ID[9115||9122||9148||9171]10",
+              "Pós-conjuração: EQUIP_ID[9068||9109||9113||9114||9125]5"
+            ]
+          },
+          {
+            "id": 410093,
+            "name": "Correntes Sagradas",
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 150,
+            "def": 5,
+            "bonuses": [
+              "Crítico: 8",
+              "Dano à distância: 8",
+              "Dano corpo a corpo: 8",
+              "Dano crítico: EQUIP_ID[420076]7"
+            ]
+          },
+          {
+            "id": 410094,
+            "name": "Correntes Sagradas",
+            "slots": 1,
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 150,
+            "def": 5,
+            "bonuses": [
+              "Crítico: 5",
+              "Dano à distância: 5",
+              "Dano corpo a corpo: 5",
+              "Dano crítico: EQUIP_ID[420076]5"
+            ]
+          },
+          {
+            "id": 410213,
+            "name": "Orelhas Sanguinárias",
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 1,
+            "bonuses": [
+              "CON: SUM[dex,luk==15]---1",
+              "Dano à distância: SUM[dex,luk==30]---1 / SUM[dex,luk==250]===15"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

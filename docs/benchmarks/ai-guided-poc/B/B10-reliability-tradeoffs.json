@@ -1,0 +1,2072 @@
+{
+  "batchName": "B10-reliability-tradeoffs",
+  "budget": 200,
+  "previousCalls": 92,
+  "calls": 55,
+  "cumulativeCalls": 147,
+  "wallMs": 335.2977999999998,
+  "cpu": {
+    "user": 594000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "hypothesis": "Trade damage for permanent ranged crit using discovered Drosera and Rgan cards; compare against fewer-piece alternatives. A crit-100 result is useful only if it still meets every damage target.",
+      "tool": "evaluate_variants",
+      "args": {
+        "build": {
+          "preset": {
+            "skillFormulaVersion": "current",
+            "class": 4262,
+            "level": 236,
+            "jobLevel": 50,
+            "sex": 1,
+            "hairStyle": 8,
+            "hairColor": 1,
+            "str": 120,
+            "jobStr": 10,
+            "agi": 50,
+            "jobAgi": 10,
+            "vit": 120,
+            "jobVit": 6,
+            "int": 80,
+            "jobInt": 8,
+            "dex": 120,
+            "jobDex": 8,
+            "luk": 63,
+            "jobLuk": 1,
+            "pow": 100,
+            "jobPow": 9,
+            "jobSta": 6,
+            "jobWis": 4,
+            "jobSpl": 3,
+            "con": 43,
+            "jobCon": 5,
+            "jobCrt": 6,
+            "selectedAtkSkill": "Explosion Blaster==5",
+            "rawOptionTxts": [
+              "p_element_neutral:8",
+              "p_race_plant:9",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              "range:10",
+              null,
+              null,
+              null,
+              null,
+              null,
+              "spPercent:2",
+              "mdef:3",
+              "cri:3",
+              "atk:13",
+              "hpPercent:1",
+              "aspd:1",
+              null,
+              null,
+              null,
+              null,
+              "pow:5",
+              null,
+              null,
+              null,
+              "spl:3",
+              "cRate:5",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "weapon": 560026,
+            "weaponRefine": 11,
+            "weaponCard1": 27361,
+            "weaponCard2": 4608,
+            "headUpper": 19481,
+            "headUpperRefine": 12,
+            "headUpperCard": 4582,
+            "headUpperEnchant1": 29085,
+            "headUpperEnchant2": 29689,
+            "headUpperEnchant3": 4702,
+            "headMiddle": 410093,
+            "armor": 450177,
+            "armorRefine": 11,
+            "armorCard": 4392,
+            "armorEnchant1": 310533,
+            "armorEnchant2": 310502,
+            "armorEnchant3": 310480,
+            "shield": 460014,
+            "shieldRefine": 9,
+            "shieldCard": 4609,
+            "shieldEnchant1": 29534,
+            "shieldEnchant2": 29531,
+            "shieldEnchant3": 29531,
+            "garment": 20964,
+            "garmentRefine": 8,
+            "garmentCard": 300270,
+            "boot": 22005,
+            "bootRefine": 4,
+            "bootEnchant2": 4875,
+            "bootEnchant3": 4822,
+            "accLeft": 490107,
+            "accLeftCard": 300278,
+            "accLeftEnchant1": 310632,
+            "accLeftEnchant2": 310622,
+            "accLeftEnchant3": 310480,
+            "accRight": 490181,
+            "accRightCard": 300076,
+            "petLoyalty": 4,
+            "costumeUpper": 31674,
+            "costumeLower": 420010,
+            "costumeGarment": 480436,
+            "costumeEnchantUpper": 310191,
+            "costumeEnchantLower": 310189,
+            "costumeEnchantGarment": 310188,
+            "shadowWeapon": 24386,
+            "shadowWeaponRefine": 10,
+            "shadowArmor": 24679,
+            "shadowArmorRefine": 10,
+            "shadowShield": 24767,
+            "shadowShieldRefine": 9,
+            "shadowBoot": 24680,
+            "shadowBootRefine": 10,
+            "shadowEarring": 24661,
+            "shadowEarringRefine": 10,
+            "shadowPendant": 24662,
+            "shadowPendantRefine": 10,
+            "skillBuffMap": {
+              "Cantocandidus": 0,
+              "Clementia": 0,
+              "Angelus": 0,
+              "Impositio Manus": 0,
+              "Expiatio": 0,
+              "Competentia": 0,
+              "Religio": 0,
+              "Benedictum": 0,
+              "Soul of Heaven and Earth": 0,
+              "Talisman of Protection": 0,
+              "Talisman of the Warrior": 0,
+              "Talisman of the Magician": 0,
+              "Talisman of Five Elements": 0,
+              "Argutus Vita": 0,
+              "Argutus Telum": 0,
+              "Presens Acies": 0,
+              "Crazy Uproar": 0,
+              "Laudaagnus": 0,
+              "Lauda Ramus": 0,
+              "Adrenaline Rush": 0,
+              "Power Thrust": 0,
+              "Weapon Perfection": 0,
+              "Fairy Soul": 0,
+              "Shadow Soul": 0,
+              "Falcon Soul": 0,
+              "Golem Soul": 0,
+              "Odin's Power": 0,
+              "Magnum Break": 0,
+              "Bunch of Shrimp": 0,
+              "Moonlight Serenade": 0,
+              "Striking": 0,
+              "_Sage_Field": 0,
+              "_Sorcerer_Insignia": 0,
+              "Shield Spell": 0,
+              "Bragi's Poem": 0,
+              "Swing Dance": 0,
+              "Mystical Amplification": 0,
+              "Spell Enchanting": 0,
+              "March of Prontera": 0,
+              "Serenade of Jawaii": 0,
+              "Whistle": 0,
+              "Assassin Cross of Sunset": 0,
+              "Apple of Idun": 0,
+              "Humming": 0,
+              "Fortune's Kiss": 0,
+              "Service for You": 0,
+              "Drum on the Battlefield": 0,
+              "Ring of Nibelungen": 0,
+              "Invulnerable Siegfried": 0,
+              "Rush To Windmill": 0,
+              "Echo Song": 0,
+              "Symphony of Lover": 0,
+              "Frigg's Song": 0,
+              "Lerad's Dew": 0,
+              "Dance With Wug": 0,
+              "Infinite Humming": 0,
+              "Musical Interlude": 0,
+              "Comet Amp": 0,
+              "Raid": 0,
+              "Dark Claw": 0,
+              "Debuff_Spore Explosion": 0,
+              "Rhapsody of Mineworker": 0,
+              "Geffenia Nocturne": 0,
+              "Oratio": 0,
+              "Evil Soul Curse": 0,
+              "Infection": 0,
+              "Venom Impression": 0,
+              "Intoxication": 0,
+              "Bitter Cold": 0,
+              "Pollen": 0,
+              "Impalement": 0,
+              "_Sorcerer_Insignia_Target_1": 0,
+              "_Sorcerer_Insignia_Target_2": 0,
+              "_Sorcerer_Insignia_Target_3": 0,
+              "_Sorcerer_Insignia_Target_4": 0,
+              "Gravitation": 0,
+              "_Meister_Quake": 0,
+              "Oleum Sanctum": 0
+            },
+            "activeSkillMap": {
+              "Rising Dragon": 10,
+              "Gentle Touch - Opposite": 0,
+              "Gentle Touch - Alive": 0,
+              "Earth Shaker": 0,
+              "Total Spirit": 15,
+              "Current HP": 0,
+              "Current SP": 0,
+              "Vigor condensation": 0,
+              "Vigor Explosion": 0,
+              "Flash Combo": 0,
+              "Sincere Faith": 0,
+              "Firm Faith": 0,
+              "Powerful Faith": 0,
+              "First Faith Power": 0,
+              "Judge": 0,
+              "Third Exor Flame": 0,
+              "Oleum Sanctum": 0,
+              "_Preview_Massive Flame Blaster": 0
+            },
+            "activeSkills": [
+              10,
+              0,
+              0,
+              0,
+              15,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "passiveSkills": [
+              3,
+              10,
+              3,
+              6,
+              10,
+              10,
+              10,
+              5,
+              5,
+              10,
+              5,
+              5,
+              0,
+              5,
+              5,
+              3,
+              5,
+              6
+            ],
+            "passiveSkillMap": {
+              "Heal": 3,
+              "Demon Bane": 10,
+              "Dragon Combo": 3,
+              "Fallen Empire": 6,
+              "Tiger Cannon": 10,
+              "Divine Protection": 10,
+              "Iron Hand": 10,
+              "Dodge": 5,
+              "Vigor Explosion": 5,
+              "Rising Dragon": 10,
+              "Gentle Touch - Alive": 5,
+              "Gentle Touch - Opposite": 5,
+              "Rampage Blast": 0,
+              "Lightning Ride": 5,
+              "Vigor condensation": 5,
+              "Chain Combo": 3,
+              "Raging Trifecta Blow": 5,
+              "Will of Faith": 6
+            }
+          }
+        },
+        "targets": [
+          {
+            "monsterId": 21544
+          },
+          {
+            "monsterId": 21545
+          },
+          {
+            "monsterId": 21542
+          },
+          {
+            "monsterId": 21601
+          },
+          {
+            "monsterId": 21539
+          }
+        ],
+        "constraints": {
+          "mvpPolicy": "none",
+          "maxGrade": "C",
+          "forbiddenEffects": [
+            "Oleum Sanctum"
+          ],
+          "consumables": {
+            "forbidden": [
+              14536
+            ]
+          }
+        },
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "winter-ultra-collar-no-boot",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "winter-ultra-hero-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "full-drosera-1",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard1": 4421
+              }
+            }
+          },
+          {
+            "label": "full-drosera-2",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "full-two-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "full-rgan-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "full-rgan-one-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "weaponCard1": 4421
+              }
+            }
+          },
+          {
+            "label": "full-rgan-two-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "no-boot-rgan-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "no-boot-two-drosera-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "headLower": 420076,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          }
+        ],
+        "limit": 12
+      },
+      "calls": 55,
+      "wallMs": 312.8309999999997,
+      "cpu": {
+        "user": 578000,
+        "system": 0
+      },
+      "requestBytes": 8067,
+      "responseBytes": 28644,
+      "isError": false,
+      "result": {
+        "sortedBy": "dps",
+        "sortOrder": "desc",
+        "rankingTarget": 21544,
+        "validationMode": "strict",
+        "engineVersion": "0.1.211-beta",
+        "baselineValid": true,
+        "baseline": {
+          "min": 17573740,
+          "dps": 19375335,
+          "hitsToKill": 3,
+          "critRate": 67
+        },
+        "baselinePerTarget": [
+          {
+            "monsterId": 21544,
+            "metrics": {
+              "min": 17573740,
+              "dps": 19375335,
+              "hitsToKill": 3,
+              "critRate": 67
+            }
+          },
+          {
+            "monsterId": 21545,
+            "metrics": {
+              "min": 16362996,
+              "dps": 18363817,
+              "hitsToKill": 4,
+              "critRate": 69
+            }
+          },
+          {
+            "monsterId": 21542,
+            "metrics": {
+              "min": 20399062,
+              "dps": 19544055,
+              "hitsToKill": 3,
+              "critRate": 58
+            }
+          },
+          {
+            "monsterId": 21601,
+            "metrics": {
+              "min": 16208373,
+              "dps": 18030141,
+              "hitsToKill": 3,
+              "critRate": 68
+            }
+          },
+          {
+            "monsterId": 21539,
+            "metrics": {
+              "min": 15260203,
+              "dps": 15769180,
+              "hitsToKill": 3,
+              "critRate": 60
+            }
+          }
+        ],
+        "tested": 10,
+        "evaluations": {
+          "uniqueEvaluations": 55,
+          "cacheHits": 0
+        },
+        "results": [
+          {
+            "label": "full-rgan-collar",
+            "status": "ok",
+            "metrics": {
+              "min": 28687239,
+              "dps": 37258843,
+              "hitsToKill": 2,
+              "critRate": 87
+            },
+            "deltaPct": {
+              "min": 63.24,
+              "dps": 92.3,
+              "hitsToKill": -33.33,
+              "critRate": 29.85
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 28687239,
+                  "dps": 37258843,
+                  "hitsToKill": 2,
+                  "critRate": 87
+                },
+                "deltaPct": {
+                  "min": 63.24,
+                  "dps": 92.3,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.85
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 26710832,
+                  "dps": 35225192,
+                  "hitsToKill": 2,
+                  "critRate": 89
+                },
+                "deltaPct": {
+                  "min": 63.24,
+                  "dps": 91.82,
+                  "hitsToKill": -50,
+                  "critRate": 28.99
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 33299276,
+                  "dps": 39153871,
+                  "hitsToKill": 2,
+                  "critRate": 78
+                },
+                "deltaPct": {
+                  "min": 63.24,
+                  "dps": 100.34,
+                  "hitsToKill": -33.33,
+                  "critRate": 34.48
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 26458425,
+                  "dps": 34628199,
+                  "hitsToKill": 2,
+                  "critRate": 88
+                },
+                "deltaPct": {
+                  "min": 63.24,
+                  "dps": 92.06,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.41
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 24910643,
+                  "dps": 30613079,
+                  "hitsToKill": 2,
+                  "critRate": 80
+                },
+                "deltaPct": {
+                  "min": 63.24,
+                  "dps": 94.13,
+                  "hitsToKill": -33.33,
+                  "critRate": 33.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ],
+            "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dQo0mL0kHg-MC.XF..JCoFiYA-IvFm2icFyns..7IG.H4cow06-vwTjzEBu4vgQYGfowzqbIOJZPruACyUB1HUjibFE2izPsZ4qGMa6bEE2iDkUvaoD4mw6EE9FoCgh41ieDEoJO16bNIsxCCAPGge.KHftIxjSfwbGMWJ4FMNOUnScW9rsQpKFoSpJFwWAZhQBI-HcEW2jGFs4AGUZnHHlyehWTAdR8TwRZ6Q5dTIRB36-po0gWfphmOZ5SlSLMvmjgFRnBahoXhWwMQMWSUgkfwFkJWgZI2bWHQgOlpJMM5ezFrwGFsEoiCIFk3AYSRFnlZVWUnvVjDNru2UgO29pUFQahmlVf5RI.Indb1jCFbe2iyPRI1Vow0WSVE-DSMJWAzX10XKYtvArWtc3iRB2lRJu0TdfGUAxGY-VmVuXUJudl3jXeMFsKujAUXYtL2DwcYAow6CkohERSfwg4WVQv3-XgFE5hEfDFlEP1gH9pKNol1THdwsiI8jeDRYDN5RMYsyjuDSOQ9F0NUVJ11waTOPRajGXVNTxhOLU.m7mMKzlocP6Y04twWHUXM8yQjWqvZnOjEkGlSCZg5uVLMvyeLCOWVL1juXLdFDRzwujJrgV1OLiv6yCFVZLwJlOMEetjObDVVlxEvq-r3y9jaJAxHLskRULYzu3QJQxKrtv.6M.okHUEE.4Ikv65H0dMKHegfDAILoGaZrYXmFCgD2TCIFQHJ1Hh6AbME7giPlaJLOQwRJF7EjlxQwQVKgIxEGiiBAjnvIV2wvxDFADrEK3bCeB3eCPEwI-jyAlYwOdY-12wIIME8UAPP98-WIgmBAogZpAgAErm4gkECJdAoHjBmPPGK0usqAcofx.TMglV4A86IP0-YAv0vkfIEd88BAhWB7YgERgiPyXgA1.wDQG91iFvEeZwYH-0AW-IE8AoDiBvtXMkA8QAyxiNScuQJ8iMDrg3ZAZC-pgCBBiZuqB54fzwPoEgjCkhUEMsQq4WAABedggTLk-r2eeKgsDoGjrEfukjpHRyBImDAxCkh1HoCQJ.lJlHl3vqvEA0wYZMLMMgcuWRgjcy7ECfUyAzTf27ugtg8A3AiL3pgXe4cgTuN2MEFxMBwaXx8fPRsXgSTeP3r4tgSJS4kAAOSMKMVRYIOcYi8lQKCegWBugGIzuJbBmsbQd3nthCqJAl4XUYN4ggDA2q738FAaAXt54EmsLEVkuCjItL3sgFk9BkAEiqEQNJc8DGGyMt41cnxckIjiAkmxiASS71GMHIELQOQshKXYJGW9aRAiSB3Je1Zi6ON3lMmAN99qz2aQYnOvSzDYI-qQCENC2DWBqVoho2CABSiJLDxAMSsAySNCIN04N6Igl8rgAkYcA6w6AuHT3nkkFcIhsEVDqAi.eJ9-qoGDvPJA1wEV4HmQAaXWMQ95yAMgsiBGaFAQIACa.954tDMRk4ESCQQOkYCIasXSDFnS9tggAclAJQzcm5OJAFUUQmBKQIiUGi6whkYhmhtE8ee8Y9FMJ7msKOeLpnBG.B.Hue8bnBGsHYDuZhSAiOARRcQ0DnE2hiDEeZ5rvYGLUC2eZbRxgGPWe.MBaw77gPQF6tuJAjyZDATi1AeKLVsGwuXXZFyqgQhgDI7KldECkiqQcoYWrLD8WCOs5AEAgRV0RKyvAShM5mlaSMegN8-jeEBNK.MFghhgEQHUe1x9cKUlGCgCAyS2CNirPYkgI8gQiqLn9ZAtlghIgRN3ee3wMgXJ8VW2g.h55VHsT-XmwR8AkDzUCduQx6CcF-gYjNiADC7NObkzIEIq1eFLWwaYcAGAHo7rSEkSUDGtJQH0gggyuHnRnVgAkj86HTwJN.YIoHek1IGUM6DI84O9mVOSacKGengYw1BkZsH4N4YJGhQjYH0OQeGTBnDCHyTcBCQiDI1CX0oewngdYEICQAEV0DZJzdEkQ-1vEbORq3AAvl1NE4h3iwBgDnIt5BQBnUhTENZszeZq0nUwNFGJ94fiBAAWiBCiTusaQlkiMyZh5FmkhL3EBu3sYbNYiedSAYz1Dt3DxtFkYwgF3C0E0VUk.kx56hboGSbxUWDH5BiAywJDQuGjxPWwJLDKh7trvX4jgDzJ7lV3iUcDODLB3wJVYDJLjMj6OCEkuxB86tVYMbgwgVTWsPKa-Pb5MjlQPwMn2VtDL4DYFJPPJE4mMltPfNJkD7CMh4FGASHOt78HjawKSUE4JklyeGgpvASm4B4gRroC7LBgssEu7dm7927u3azMMCFeDjtpzxL0BGvQ5AIz.7oC4FwEaA-uyD3oFx.DPaGK9xTadVN5xAGfWkN42BtEYpfbltk1ZstiMCYriAUcgH8SIS.3wO5WGykUDE50CBVo5Oes42O8E1hsZ-R4x7Gdt0-pfE.Jc0io77YN84WXzo5bbQCO9gFNOrJx8lznE67NgOM.gUzTmXPZUAgZ3lSuHPmcsyuCXjwtBsBUdD5Uu3vQWLYCoe6jAZ3CrOq2YXIBsvICBKlhgYAMsFgnhYEoH7UAlb2CblBwqMQ2iPdQ3bMxndrDgNg7rhQZMyaAA/"
+          },
+          {
+            "label": "full-rgan-one-drosera",
+            "status": "ok",
+            "metrics": {
+              "min": 26282842,
+              "dps": 34137839,
+              "hitsToKill": 2,
+              "critRate": 87
+            },
+            "deltaPct": {
+              "min": 49.56,
+              "dps": 76.19,
+              "hitsToKill": -33.33,
+              "critRate": 29.85
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 26282842,
+                  "dps": 34137839,
+                  "hitsToKill": 2,
+                  "critRate": 87
+                },
+                "deltaPct": {
+                  "min": 49.56,
+                  "dps": 76.19,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.85
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 24472083,
+                  "dps": 32274248,
+                  "hitsToKill": 3,
+                  "critRate": 89
+                },
+                "deltaPct": {
+                  "min": 49.56,
+                  "dps": 75.75,
+                  "hitsToKill": -25,
+                  "critRate": 28.99
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 30508322,
+                  "dps": 35874536,
+                  "hitsToKill": 2,
+                  "critRate": 78
+                },
+                "deltaPct": {
+                  "min": 49.56,
+                  "dps": 83.56,
+                  "hitsToKill": -33.33,
+                  "critRate": 34.48
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 24240833,
+                  "dps": 31727410,
+                  "hitsToKill": 2,
+                  "critRate": 88
+                },
+                "deltaPct": {
+                  "min": 49.56,
+                  "dps": 75.97,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.41
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 22822775,
+                  "dps": 28049691,
+                  "hitsToKill": 2,
+                  "critRate": 80
+                },
+                "deltaPct": {
+                  "min": 49.56,
+                  "dps": 77.88,
+                  "hitsToKill": -33.33,
+                  "critRate": 33.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ],
+            "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjDw.KYQJ38z2.8bNkXamZc3UAKpDIYEEyzbhOYezrALpcESvVyl1kBbnfLjy9uoUaTF6QAdlv5jni7P3xIVAsTAH5F4s20Tgux5PruyCvu.HKMJOP78E48yAduz4EKBH6MM6my3iWj7bgAslAdR1I4mxRNosz7CeKhjCumxBNot5FL2qA.JsOhBHRaAoPuNZHvRKDjpemzSLMQggNxIFvshX7SMYUn8KxDGiWBTCTpJUnFvabHychqHKcRsFgGYUASHx3BFtoxhbOA.mGRxh5cnolkwHUvE8EWun2XUSHgV.P6aNI5l6QZDkeYpUizD5w7.YZQUoSFYVsDE9FklIxH8OZ8VoGS1m1h0IBpaSTBOXsxa8OhbBKIgiBZNw6HEeZZUVZlR51YwzbbllIDtvaVBUGoZqVb.UQPsJXU9YwBXXtosh0cNVaMFFElRPw0hCVg029VFSkLbwy2rbNYngVpUTrtEXXxlAMRmH1pkbp1CZnRdY03tBbDLow5F2LS9g8HGAKMOgpIIREkn8Le5lUD9f14OROYRHwxZRN9YC-aSjYJdUR3cLICNI3gUUA1eUTGLMw5g4jENRVDlGSVdsEk9jUUo.l1RU8YTi1Hp25jCs5aHN.GNOLcFh1Jz3MkA1qp2RzoxJOpUjGbermS9Lcli-DFmS9Ybmy7Rg3s0LowawFdRiwresguVWS8MZTjBLrYxm-VVaceLat698vY2iQMSyzJ4WC2Mbt0CUMQqzbfujPqJB1OB3uCBLesR1HTAh3oHwwCC6BmmaWF5hQoA9kwiBUBydS4egGzBO4Ih5WiSzkMESSexIZcUMEFSoCMRBoogQLZ7y5dsL8QxQA6xAt2wnjt3gjxMMPY8gJWMBnaPddsCCDBPFADx-XP1iIJgQKIGaQIABK5uIJBAsXQIB4wZhzxitLrKgHIH0fkzIBVeAPOi9.P2Az8X0PkCW.eAgQrHdsQCIwQH6L3-i-IBICe6xE3sPM40C-4ANfkCeAUBxDXyrmSfuIBpYxGpGXIE.RGC13rsgUhv0wBAgxE3VAc9354H0CQBhSQqAGSIVcLAAAvOwQJFwf17HPFQWB0BR1iH3CRUio5AkTBgIhSQ6j0BII-SkSiy53xXiAaY0NGFmGQGXLIwQuZdiBPqZAZov5dzQWweAbhhG70wDvMOQI3G7GCM4mAYML7eLno2LwJIvF7x8WwJEJcSAAHIGGGMosEbOMReSoFBPQLA3R9HpzElgjWNp25zywuVEgi9zqMC8QQBgrUd7.CgNAT2c8CTWFiKyHBhlmm72QCyegyACRVCIKk2e.iDaGS8cuT4OSERxHidYxAJId6jCDkCFoHIWTFLsIjTetIgRJHbovasRcHE70mTAa.e0Z5NP0dnHpZgsHv1IBCahbBrDVM0Q0LBAApRElh4j6JWPpRGBF66cG9EQC.VwAQMKAdYdAnCp5zySEuEQWCKh1HhXPY.f1UBBznkga48K8BzIANLrCIW85AGQWRAjNCgIEABNPec8WimPScCRBIIHSMBENWTp.jTqeywQAOSgEoJujdHEgCqKITAlIERKFRdYAyMQzQ2ieHPeMujGHdzWJHXFUzgjfHfN3Xe1zgjWDsO3MwpBhFAPIuIKBTibQxBiHMs1Xt9FqBbHMto4x9FrLfKAtYt8wHoE9a3EgB5MigOxagXF5q2BYTLjs85VQIQwGkVlCuiBSSVP2UMTVlg.LBDWcgCAQJK6IhZXgJQGczQtJGPQa.fxvCAilfGCwQwwCIDqHao.OFKSjBQBAJJbBGxVjsSQYeQJhWF1.sgGywQkQIi7nPb4GRzneMrbQfQc8qh2O-jzYI.ASC5qBG3IY9BOA-30emxABgdknJyZkCElavAlrYNMOADB93t1pCSRK.iWkoF6QQAZnCzrTqwASB.tCp4Ei-MEEDPTqn9MGVB4esHezKnJJOZD3SwPocg8MmDcHcMElQgR0DaGINDOg9h.D5JuDBIRBkKhz7kNYTwOsCEBIACK6AsnZqiSIP6Xj1lIxbgAX06micQ7xYAwGzoW8goBToQpiKsmZPNVYTqYKijEe93xAgALRAhRB3GNwSySGeM-c8zSRF7iHXb2UNGthNOpAEZqhW6h42iyMYAC7haAaMqcfSYc8Qt0DJF4yL.j8gxHpQEhonCR7HrYIl.lg8223t8Rwe5E8yo7xKGB7Blhb74qsOk5xmQ9HBESbY-etXKv6JwYQSpLX7mNbnl86Ryp776T7C2.l8BsCkjnkiMT6TWlvik8BthGQ8CjAJNnG9eCxtYFJKCcESTZNDXk3gRTcA8Tw10OdlgQWWAXZu9du7t2btZmGOC3BR3U54l6PDXoch4a-d0BcC48MAd3eB70C4-AntDBewp1OKnc4gFPrSK8bA2gMQvlymyqtWWxGBEVxAyOQB.JEBfb47crBZSKBiM6BBK0cjPWcLHuCazWI-o8I9DPW4fwvsfYuaQUe9oG.cTLZ1sutoBLegCGmVnY6Sxz8dtnQFGfQCZxzzmsoAX0zyxX9mzMWaXOLx4Wg2DKKh8qHb3pzFsBUHdRg06hWnVbELkAWXkBAhSwwMA6WCzjwsCUd9qBit7GN8goVGIbSHqoTtmYTu1hwCwV1wo0npNAA/"
+          },
+          {
+            "label": "winter-ultra-hero-collar",
+            "status": "ok",
+            "metrics": {
+              "min": 28644285,
+              "dps": 33776287,
+              "hitsToKill": 2,
+              "critRate": 75
+            },
+            "deltaPct": {
+              "min": 62.99,
+              "dps": 74.33,
+              "hitsToKill": -33.33,
+              "critRate": 11.94
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 28644285,
+                  "dps": 33776287,
+                  "hitsToKill": 2,
+                  "critRate": 75
+                },
+                "deltaPct": {
+                  "min": 62.99,
+                  "dps": 74.33,
+                  "hitsToKill": -33.33,
+                  "critRate": 11.94
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 26670835,
+                  "dps": 31981420,
+                  "hitsToKill": 2,
+                  "critRate": 77
+                },
+                "deltaPct": {
+                  "min": 62.99,
+                  "dps": 74.15,
+                  "hitsToKill": -50,
+                  "critRate": 11.59
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 33249414,
+                  "dps": 34516035,
+                  "hitsToKill": 2,
+                  "critRate": 66
+                },
+                "deltaPct": {
+                  "min": 62.99,
+                  "dps": 76.61,
+                  "hitsToKill": -33.33,
+                  "critRate": 13.79
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 26418807,
+                  "dps": 31415646,
+                  "hitsToKill": 2,
+                  "critRate": 76
+                },
+                "deltaPct": {
+                  "min": 62.99,
+                  "dps": 74.24,
+                  "hitsToKill": -33.33,
+                  "critRate": 11.76
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 24873342,
+                  "dps": 27592720,
+                  "hitsToKill": 2,
+                  "critRate": 68
+                },
+                "deltaPct": {
+                  "min": 62.99,
+                  "dps": 74.98,
+                  "hitsToKill": -33.33,
+                  "critRate": 13.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ],
+            "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dQo0mL0kHg-MC.XF..JCoFiYA-IvFm2icFyns..7IG.H4cow06-vwTjzEBu4vgQYGfowzqbIOJZPruACyUB1HUjibFE2izPsZ4qGMa6bEE2iDkUvaoD4mw6EE9FoCgh41ieDEoJO16bNIsxCCAPGge.KHftIxjSfwbGMWJ4FMNOUnScW9rsQpKFoSpJFwWAZhQBI-HcEW2jGFs4AGUZnHHlyehWTAdR8TwRZ6Q5dTIRB36-po0gWfphmOZ5SlSLMvmjgFRnBahoXhWwMQMWSUgkfwFkJWgZI2bWHQgOlpJMM5ezFrwGFsEoiCIFk3AYSRFnlZVWUnvVjDNru2UgO29pUFQahmlVf5RI.Indb1jCFbeJaDrUWAjVWjDRZJUT8NIwkzT1c3RcpS28Kts19dF2lRJu0TdfGUAxGY-VmVuXUJudl3jcWtFFKujAUXYtL2DwcYAow6CkohERSfwg4WVQv3-XgFE5hEfDFlEP1gH9pKNol1THdwsiI8jeDRYDN5RMYsyjuDSOQ9F0NUVJ11waTOPRajGXVNTxhOLU.m7mMKzlocP6Y04twWHUXM8yQjWqvZnOjEkGlSCZg5uVLMvyeLCOWVL1juXLdFDRzwujJrgV1OLiv6yCFVZLwJlOMEetjObDVVlxEvq-r3y9jaJAxHLskRULYzu3QJQxKrtv.6M.okHUEE.4Ikv65H0dMKHegfDAILoGaZrYXmFCgD2TCIFQHJ1Hh6AbME7giPlaJLOQwRJF7EjlxQwQVKgIxEGiiBAjnvIV2wvxDFADrEK3bCeB3eCPEwI-jyAlYwOdY-12wIIME8UAPP98-WIgmBAogZpAgAErm4gkECJdAoHjBmPPGK0usqAcofx.TMglV4A86IP0-YAv0vkfIEd88BAhWB7YgERgiPyXgA1.wDQG91iFvEeZwYH-0AW-IE8AoDiBvtXMkA8QAyxiNScuQJ8iMDrg3ZAZC-pgCBBiZuqB54fzwPoEgjCkhUEMsQq4WAABedggTLk-r2eeKgsDoGjrEfukjpHRyBImDAxCkh1HoCQJ.lJlHl3vqvEA0wYZMLMMgcuWRgjcy7ECfUyAzTf27ugtg8A3AiL3pgXe4cgTuN2MEFxMBwaXx8fPRsXgSTeP3r4tgSJS4kAAOSMKMVRYIOcYi8lQKCegWBugGIzuJbBmsbQd3nthCqJAl4XUYN4ggDA2q738FAaAXt54EmsLEVkuCjItL3sgFk9BkAEiqEQNJc8DGGyMt41cnxckIjiAkmxiASS71GMHIELQOQshKXYJGW9aRAiSB3Je1Zi6ON3lMmAN9xIQWDiU3sH5sEf1IBCGhbBrA1K0Q0bBAApRElh4gGJWAZJGhEG6cG9EQS.VwASMOAdYdAXDp7zySCuEQ2CKh1HhfPE.-1UA3IMUga48K8DzIANLrGIW85AGQWRAjNCgIEABNfe88WhmIycCJBIIHSMBENWLpBizpe2wQAOSgEoZuTcnEgCqKITAlIERKFRdYQyMQzQ2iePPeMeimE9zWFHXF0zgjfA-D3PezSxl2A7mYUgIjgEUXENA5xNoYgxHmWa72Bi1AtnmW0cYBj1nvjAWsO.4D0AerbiQI8mQwHYtQLi81KTy67IuVUCEMAZHZUrogUkVSDlDE1ZYfiwR1nIAgECKuiIWV4CUJnM0rSRj0Bvn8bwgIpXxgsEMMAiA6i2uPrhSkowUAQGSWwRsVZ7EkBHkCYVRc-rIFssEJECJu7z2.BkC5Pjy20H0PPKo9if682CPgEg2agTtyGPQTgv8DGpsQAYXZpzcmZAhOWrwRa2DTDgAwXdHdaQkiSgY1pKA.kEEGVw86k6sAEkfnQ6eBJvzBCA70mpAyhkQZHtB3sypyTTkQz0kDqHwMjKgzB7DBI0J4eAyhsDwzIOYdg.SbgISEQZGoY.xD2E8DrAhASAAiugbJmbokiH.t4jZyNW4AF8uponEO8WAMAc75vIKAM6EKYhrNmbzNWY6mCooxPve5ABaIEKJO7RpCWSfThmzBAhM0kJe4hV29hDZrQTjqQAGeoRu4eNosjGEAu4Wgmiqkn0mPPILdAyTePCwY-IMR6WBIaFw0eh62DxfpUPFt16-EcFs5Pcqu8SggZwZYO.89cFoFK5kfRwQkl2IPi4mrFWrBI2qyG.r88vkyOVA-AyfYm30vgNgUk88kQiYyW098EnAPsIyHgUYBIc5XvwcNrApJQTgmSdJ4asm8DybgHiBGugTssACywU7l2LvXau5drMwxwV4P22nPEvQEa9DkAjL7ugLgXARr967APegXH4PdoYj25NpyU3nEAZ9aQ3jYG0Ril8uW2TVqy2IwICuIARyAfxIhL7fA7lYbKRQMTnQIOWjkJ6zjo7wTWGxn9HgHtp23T.l8T4lzSIj7tvXzjpfOpl5tAJr2ATU6sjHCXWejqs2Agz6BjP7Mc9lQCumeVy5s3Z0zK4RePC0GwFR4PlSbe9BYtgKh7qMEnUKs6rZ.cgAy8gIESWGBgFSwWCeFgSivtQIVvYBuUFCoxDafd1DNszHt2sOA2CmvlfIPwSTkmgA/"
+          },
+          {
+            "label": "no-boot-rgan-collar",
+            "status": "ok",
+            "metrics": {
+              "min": 26832909,
+              "dps": 33503709,
+              "hitsToKill": 2,
+              "critRate": 82
+            },
+            "deltaPct": {
+              "min": 52.69,
+              "dps": 72.92,
+              "hitsToKill": -33.33,
+              "critRate": 22.39
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 26832909,
+                  "dps": 33503709,
+                  "hitsToKill": 2,
+                  "critRate": 82
+                },
+                "deltaPct": {
+                  "min": 52.69,
+                  "dps": 72.92,
+                  "hitsToKill": -33.33,
+                  "critRate": 22.39
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 24984255,
+                  "dps": 31695060,
+                  "hitsToKill": 2,
+                  "critRate": 84
+                },
+                "deltaPct": {
+                  "min": 52.69,
+                  "dps": 72.6,
+                  "hitsToKill": -50,
+                  "critRate": 21.74
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 31146824,
+                  "dps": 35005686,
+                  "hitsToKill": 2,
+                  "critRate": 73
+                },
+                "deltaPct": {
+                  "min": 52.69,
+                  "dps": 79.11,
+                  "hitsToKill": -33.33,
+                  "critRate": 25.86
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 24748165,
+                  "dps": 31148122,
+                  "hitsToKill": 2,
+                  "critRate": 83
+                },
+                "deltaPct": {
+                  "min": 52.69,
+                  "dps": 72.76,
+                  "hitsToKill": -33.33,
+                  "critRate": 22.06
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 23300431,
+                  "dps": 27462318,
+                  "hitsToKill": 2,
+                  "critRate": 75
+                },
+                "deltaPct": {
+                  "min": 52.69,
+                  "dps": 74.15,
+                  "hitsToKill": -33.33,
+                  "critRate": 25
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            }
+          },
+          {
+            "label": "winter-ultra-collar-no-boot",
+            "status": "ok",
+            "metrics": {
+              "min": 26790952,
+              "dps": 30242415,
+              "hitsToKill": 2,
+              "critRate": 70
+            },
+            "deltaPct": {
+              "min": 52.45,
+              "dps": 56.09,
+              "hitsToKill": -33.33,
+              "critRate": 4.48
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 26790952,
+                  "dps": 30242415,
+                  "hitsToKill": 2,
+                  "critRate": 70
+                },
+                "deltaPct": {
+                  "min": 52.45,
+                  "dps": 56.09,
+                  "hitsToKill": -33.33,
+                  "critRate": 4.48
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 24945189,
+                  "dps": 28657337,
+                  "hitsToKill": 2,
+                  "critRate": 72
+                },
+                "deltaPct": {
+                  "min": 52.45,
+                  "dps": 56.05,
+                  "hitsToKill": -50,
+                  "critRate": 4.35
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 31098123,
+                  "dps": 30745575,
+                  "hitsToKill": 2,
+                  "critRate": 61
+                },
+                "deltaPct": {
+                  "min": 52.45,
+                  "dps": 57.31,
+                  "hitsToKill": -33.33,
+                  "critRate": 5.17
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 24709467,
+                  "dps": 28139655,
+                  "hitsToKill": 2,
+                  "critRate": 71
+                },
+                "deltaPct": {
+                  "min": 52.45,
+                  "dps": 56.07,
+                  "hitsToKill": -33.33,
+                  "critRate": 4.41
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 23263995,
+                  "dps": 24634005,
+                  "hitsToKill": 2,
+                  "critRate": 63
+                },
+                "deltaPct": {
+                  "min": 52.45,
+                  "dps": 56.22,
+                  "hitsToKill": -33.33,
+                  "critRate": 5
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21544,
+                "name": "Dolocaris de Um Olho",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            }
+          },
+          {
+            "label": "full-rgan-two-drosera",
+            "status": "ok",
+            "metrics": {
+              "min": 23276763,
+              "dps": 30235570,
+              "hitsToKill": 2,
+              "critRate": 87
+            },
+            "deltaPct": {
+              "min": 32.45,
+              "dps": 56.05,
+              "hitsToKill": -33.33,
+              "critRate": 29.85
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 23276763,
+                  "dps": 30235570,
+                  "hitsToKill": 2,
+                  "critRate": 87
+                },
+                "deltaPct": {
+                  "min": 32.45,
+                  "dps": 56.05,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.85
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 21673108,
+                  "dps": 28584654,
+                  "hitsToKill": 3,
+                  "critRate": 89
+                },
+                "deltaPct": {
+                  "min": 32.45,
+                  "dps": 55.66,
+                  "hitsToKill": -25,
+                  "critRate": 28.99
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 27018957,
+                  "dps": 31774247,
+                  "hitsToKill": 2,
+                  "critRate": 78
+                },
+                "deltaPct": {
+                  "min": 32.45,
+                  "dps": 62.58,
+                  "hitsToKill": -33.33,
+                  "critRate": 34.48
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 21468308,
+                  "dps": 28100502,
+                  "hitsToKill": 2,
+                  "critRate": 88
+                },
+                "deltaPct": {
+                  "min": 32.45,
+                  "dps": 55.85,
+                  "hitsToKill": -33.33,
+                  "critRate": 29.41
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 20212438,
+                  "dps": 24844493,
+                  "hitsToKill": 3,
+                  "critRate": 80
+                },
+                "deltaPct": {
+                  "min": 32.45,
+                  "dps": 57.55,
+                  "hitsToKill": 0,
+                  "critRate": 33.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ]
+          },
+          {
+            "label": "full-drosera-1",
+            "status": "ok",
+            "metrics": {
+              "min": 25506606,
+              "dps": 29405889,
+              "hitsToKill": 2,
+              "critRate": 72
+            },
+            "deltaPct": {
+              "min": 45.14,
+              "dps": 51.77,
+              "hitsToKill": -33.33,
+              "critRate": 7.46
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 25506606,
+                  "dps": 29405889,
+                  "hitsToKill": 2,
+                  "critRate": 72
+                },
+                "deltaPct": {
+                  "min": 45.14,
+                  "dps": 51.77,
+                  "hitsToKill": -33.33,
+                  "critRate": 7.46
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 23749327,
+                  "dps": 27847657,
+                  "hitsToKill": 3,
+                  "critRate": 74
+                },
+                "deltaPct": {
+                  "min": 45.14,
+                  "dps": 51.64,
+                  "hitsToKill": -25,
+                  "critRate": 7.25
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 29607291,
+                  "dps": 29807631,
+                  "hitsToKill": 2,
+                  "critRate": 63
+                },
+                "deltaPct": {
+                  "min": 45.14,
+                  "dps": 52.52,
+                  "hitsToKill": -33.33,
+                  "critRate": 8.62
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 23524906,
+                  "dps": 27352874,
+                  "hitsToKill": 2,
+                  "critRate": 73
+                },
+                "deltaPct": {
+                  "min": 45.14,
+                  "dps": 51.71,
+                  "hitsToKill": -33.33,
+                  "critRate": 7.35
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 22148730,
+                  "dps": 24008095,
+                  "hitsToKill": 2,
+                  "critRate": 65
+                },
+                "deltaPct": {
+                  "min": 45.14,
+                  "dps": 52.25,
+                  "hitsToKill": -33.33,
+                  "critRate": 8.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ]
+          },
+          {
+            "label": "full-drosera-2",
+            "status": "ok",
+            "metrics": {
+              "min": 24888981,
+              "dps": 28694387,
+              "hitsToKill": 2,
+              "critRate": 72
+            },
+            "deltaPct": {
+              "min": 41.63,
+              "dps": 48.1,
+              "hitsToKill": -33.33,
+              "critRate": 7.46
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 24888981,
+                  "dps": 28694387,
+                  "hitsToKill": 2,
+                  "critRate": 72
+                },
+                "deltaPct": {
+                  "min": 41.63,
+                  "dps": 48.1,
+                  "hitsToKill": -33.33,
+                  "critRate": 7.46
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 23174253,
+                  "dps": 27173811,
+                  "hitsToKill": 3,
+                  "critRate": 74
+                },
+                "deltaPct": {
+                  "min": 41.63,
+                  "dps": 47.97,
+                  "hitsToKill": -25,
+                  "critRate": 7.25
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 28890372,
+                  "dps": 29086399,
+                  "hitsToKill": 2,
+                  "critRate": 63
+                },
+                "deltaPct": {
+                  "min": 41.63,
+                  "dps": 48.82,
+                  "hitsToKill": -33.33,
+                  "critRate": 8.62
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 22955268,
+                  "dps": 26691026,
+                  "hitsToKill": 2,
+                  "critRate": 73
+                },
+                "deltaPct": {
+                  "min": 41.63,
+                  "dps": 48.04,
+                  "hitsToKill": -33.33,
+                  "critRate": 7.35
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 21612412,
+                  "dps": 23427341,
+                  "hitsToKill": 3,
+                  "critRate": 65
+                },
+                "deltaPct": {
+                  "min": 41.63,
+                  "dps": 48.56,
+                  "hitsToKill": 0,
+                  "critRate": 8.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ]
+          },
+          {
+            "label": "full-two-drosera",
+            "status": "ok",
+            "metrics": {
+              "min": 22590555,
+              "dps": 26048675,
+              "hitsToKill": 2,
+              "critRate": 72
+            },
+            "deltaPct": {
+              "min": 28.55,
+              "dps": 34.44,
+              "hitsToKill": -33.33,
+              "critRate": 7.46
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 22590555,
+                  "dps": 26048675,
+                  "hitsToKill": 2,
+                  "critRate": 72
+                },
+                "deltaPct": {
+                  "min": 28.55,
+                  "dps": 34.44,
+                  "hitsToKill": -33.33,
+                  "critRate": 7.46
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 21034179,
+                  "dps": 24667964,
+                  "hitsToKill": 3,
+                  "critRate": 74
+                },
+                "deltaPct": {
+                  "min": 28.55,
+                  "dps": 34.33,
+                  "hitsToKill": -25,
+                  "critRate": 7.25
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 26222428,
+                  "dps": 26404473,
+                  "hitsToKill": 2,
+                  "critRate": 63
+                },
+                "deltaPct": {
+                  "min": 28.55,
+                  "dps": 35.1,
+                  "hitsToKill": -33.33,
+                  "critRate": 8.62
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 20835414,
+                  "dps": 24229861,
+                  "hitsToKill": 3,
+                  "critRate": 73
+                },
+                "deltaPct": {
+                  "min": 28.55,
+                  "dps": 34.39,
+                  "hitsToKill": 0,
+                  "critRate": 7.35
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 19616569,
+                  "dps": 21268380,
+                  "hitsToKill": 3,
+                  "critRate": 65
+                },
+                "deltaPct": {
+                  "min": 28.55,
+                  "dps": 34.87,
+                  "hitsToKill": 0,
+                  "critRate": 8.33
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            },
+            "emptySockets": [
+              "boot (Bota Primordial-LT): 1 slot(s) de carta e 3 encantamento(s) vazios"
+            ]
+          },
+          {
+            "label": "no-boot-two-drosera-collar",
+            "status": "ok",
+            "metrics": {
+              "min": 21750384,
+              "dps": 24560691,
+              "hitsToKill": 2,
+              "critRate": 70
+            },
+            "deltaPct": {
+              "min": 23.77,
+              "dps": 26.76,
+              "hitsToKill": -33.33,
+              "critRate": 4.48
+            },
+            "perTarget": [
+              {
+                "monsterId": 21544,
+                "metrics": {
+                  "min": 21750384,
+                  "dps": 24560691,
+                  "hitsToKill": 2,
+                  "critRate": 70
+                },
+                "deltaPct": {
+                  "min": 23.77,
+                  "dps": 26.76,
+                  "hitsToKill": -33.33,
+                  "critRate": 4.48
+                }
+              },
+              {
+                "monsterId": 21545,
+                "metrics": {
+                  "min": 20251890,
+                  "dps": 23272760,
+                  "hitsToKill": 3,
+                  "critRate": 72
+                },
+                "deltaPct": {
+                  "min": 23.77,
+                  "dps": 26.73,
+                  "hitsToKill": -25,
+                  "critRate": 4.35
+                }
+              },
+              {
+                "monsterId": 21542,
+                "metrics": {
+                  "min": 25247185,
+                  "dps": 24969646,
+                  "hitsToKill": 2,
+                  "critRate": 61
+                },
+                "deltaPct": {
+                  "min": 23.77,
+                  "dps": 27.76,
+                  "hitsToKill": -33.33,
+                  "critRate": 5.17
+                }
+              },
+              {
+                "monsterId": 21601,
+                "metrics": {
+                  "min": 20060518,
+                  "dps": 22852661,
+                  "hitsToKill": 3,
+                  "critRate": 71
+                },
+                "deltaPct": {
+                  "min": 23.77,
+                  "dps": 26.75,
+                  "hitsToKill": 0,
+                  "critRate": 4.41
+                }
+              },
+              {
+                "monsterId": 21539,
+                "metrics": {
+                  "min": 18887004,
+                  "dps": 20008055,
+                  "hitsToKill": 3,
+                  "critRate": 63
+                },
+                "deltaPct": {
+                  "min": 23.77,
+                  "dps": 26.88,
+                  "hitsToKill": 0,
+                  "critRate": 5
+                }
+              }
+            ],
+            "feasibility": {
+              "status": "feasible",
+              "violations": [],
+              "targets": [
+                {
+                  "monsterId": 21544,
+                  "name": "Dolocaris de Um Olho",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21545,
+                  "name": "Dolocaris de Dois Olhos",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21542,
+                  "name": "Hallucigenia",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21601,
+                  "name": "Rgan Intermediário Enredado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                },
+                {
+                  "monsterId": 21539,
+                  "name": "Rgan Intermediário Descartado",
+                  "status": "feasible",
+                  "violations": [],
+                  "unknowns": []
+                }
+              ],
+              "worstTarget": {
+                "monsterId": 21545,
+                "name": "Dolocaris de Dois Olhos",
+                "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+              }
+            }
+          }
+        ],
+        "discarded": {
+          "belowRequire": 0,
+          "invalid": 0
+        }
+      }
+    }
+  ]
+}

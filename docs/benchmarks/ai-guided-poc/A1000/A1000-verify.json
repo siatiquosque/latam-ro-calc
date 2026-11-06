@@ -1,0 +1,239 @@
+{
+  "batchName": "A1000-verify",
+  "budget": 1000,
+  "previousCalls": 990,
+  "calls": 5,
+  "cumulativeCalls": 995,
+  "wallMs": 61.869500000000244,
+  "cpu": {
+    "user": 62000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {
+        "gear": {}
+      },
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 67,
+            "canCri": 1,
+            "minNoCri": 5232640,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 17573740,
+            "dps": 19375335,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 4,
+            "critRate": 69,
+            "canCri": 1,
+            "minNoCri": 4872137,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 16362996,
+            "dps": 18363817,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 58,
+            "canCri": 1,
+            "minNoCri": 6073889,
+            "hitChance": 70,
+            "conditionalEffects": 0,
+            "min": 20399062,
+            "dps": 19544055,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 68,
+            "canCri": 1,
+            "minNoCri": 4826098,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 16208373,
+            "dps": 18030141,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 3,
+            "critRate": 60,
+            "canCri": 1,
+            "minNoCri": 4543777,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 15260203,
+            "dps": 15769180,
+            "hit": 667
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "infeasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 4,
+                "message": "hitsToKill 4 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 4 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "infeasible",
+            "violations": [
+              {
+                "code": "GOAL_NOT_MET",
+                "metric": "hitsToKill",
+                "required": {
+                  "max": 2
+                },
+                "actual": 3,
+                "message": "hitsToKill 3 fora do pedido (máx 2)."
+              }
+            ],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": false,
+              "constraintsMet": true,
+              "reasons": [
+                "hitsToKill 3 fora do pedido (máx 2)."
+              ]
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": false,
+          "constraintsMet": true
+        },
+        "worstTarget": {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "reason": "hitsToKill 4 fora do pedido (máx 2)."
+        }
+      },
+      "changes": []
+    }
+  ]
+}

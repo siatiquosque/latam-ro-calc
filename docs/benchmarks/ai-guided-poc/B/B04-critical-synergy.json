@@ -1,0 +1,460 @@
+{
+  "batchName": "B04-critical-synergy",
+  "budget": 200,
+  "previousCalls": 42,
+  "calls": 0,
+  "cumulativeCalls": 42,
+  "wallMs": 247.72569999999996,
+  "cpu": {
+    "user": 438000,
+    "system": 31000
+  },
+  "rows": [
+    {
+      "hypothesis": "Correct the discovery vocabulary: equipment bonus keys are cri/criDmg/cRate, whereas critRate is an output metric.",
+      "tool": "list_bonus_keys",
+      "args": {
+        "query": "Crítico"
+      },
+      "calls": 0,
+      "wallMs": 34.57659999999987,
+      "cpu": {
+        "user": 125000,
+        "system": 0
+      },
+      "requestBytes": 20,
+      "responseBytes": 21,
+      "isError": false,
+      "result": {
+        "total": 0,
+        "keys": []
+      }
+    },
+    {
+      "hypothesis": "Replace a non-damage head card with a permanent critical-rate/damage card, not a proc.",
+      "tool": "search_items",
+      "args": {
+        "slot": "headCard",
+        "classId": 4262,
+        "bonus": [
+          "cri",
+          "criDmg"
+        ],
+        "bonusMode": "all",
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 4.047199999999975,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 130,
+      "responseBytes": 43,
+      "isError": false,
+      "result": {
+        "total": 0,
+        "shown": 0,
+        "offset": 0,
+        "items": []
+      }
+    },
+    {
+      "hypothesis": "Accessory cards may close the worst-target critical deficit with fewer equipment replacements.",
+      "tool": "search_items",
+      "args": {
+        "slot": "accCard",
+        "classId": 4262,
+        "bonus": [
+          "cri",
+          "criDmg"
+        ],
+        "bonusMode": "all",
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 3.1193999999995867,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 129,
+      "responseBytes": 351,
+      "isError": false,
+      "result": {
+        "total": 2,
+        "shown": 2,
+        "offset": 0,
+        "items": [
+          {
+            "id": 27116,
+            "name": "Carta Aquecedor Ominoso",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 3 / EQUIP_ID[27117]2",
+              "Dano crítico: 5 / EQUIP_ID[27117]2"
+            ]
+          },
+          {
+            "id": 300368,
+            "name": "Carta Rgan Intermediário",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 6",
+              "T.CRIT: 1",
+              "Dano crítico: EQUIP_ID[300366]===10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "DEF is already bypassed; seek P.ATQ/T.Crít or RES penetration rather than redundant DEF penetration.",
+      "tool": "search_items",
+      "args": {
+        "slot": "armor",
+        "classId": 4262,
+        "bonus": [
+          "pAtk",
+          "pene_res",
+          "cRate"
+        ],
+        "bonusMode": "any",
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 10
+      },
+      "calls": 0,
+      "wallMs": 2.858099999999922,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 130,
+      "responseBytes": 2688,
+      "isError": false,
+      "result": {
+        "total": 6,
+        "shown": 6,
+        "offset": 0,
+        "items": [
+          {
+            "id": 450596,
+            "name": "Armadura Desconhecida AGI",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 1,
+            "def": 120,
+            "bonuses": [
+              "ATQ: 50 / EQUIP_ID[19240&&480927]REFINE[armor,garment,headLower==14]===80",
+              "Precisão perfeita: 3---2",
+              "Vel.Atq: EQUIP_ID[470076]1",
+              "Conj. Fixa: EQUIP_ID[470076]REFINE[armor,boot==21]===0.5",
+              "Dano físico contra todas as raças %: EQUIP_ID[19240&&480927]7 / EQUIP_ID[19240&&480927]REFINE[armor,garment,headLower==18]===7",
+              "P.ATQ: EQUIP_ID[19240&&480927]REFINE[armor,garment,headLower==18]===5"
+            ]
+          },
+          {
+            "id": 450599,
+            "name": "Armadura Desconhecida DES",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 1,
+            "def": 120,
+            "bonuses": [
+              "ATQ: 50 / EQUIP_ID[420030&&480930]REFINE[armor,garment,headLower==14]===80",
+              "Dano à distância: 3---2 / EQUIP_ID[420030&&480930]REFINE[armor,garment,headLower==22]===10",
+              "Dano físico %: EQUIP_ID[470072]10",
+              "Precisão perfeita: EQUIP_ID[470072]REFINE[armor,boot==21]===30",
+              "Dano Físico (Tamanho: Todos): EQUIP_ID[420030&&480930]7 / EQUIP_ID[420030&&480930]REFINE[armor,garment,headLower==18]===7",
+              "P.ATQ: EQUIP_ID[420030&&480930]REFINE[armor,garment,headLower==18]===5"
+            ]
+          },
+          {
+            "id": 450595,
+            "name": "Armadura Desconhecida FOR",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 1,
+            "def": 120,
+            "bonuses": [
+              "ATQ: 50 / EQUIP_ID[420031&&480926]REFINE[armor,garment,headLower==14]===80",
+              "Dano físico %: 3---2 / EQUIP_ID[470071]10",
+              "Conj. Fixa: EQUIP_ID[470071]REFINE[armor,boot==21]===0.5",
+              "P.ATQ: EQUIP_ID[420031&&480926]REFINE[armor,garment,headLower==18]===5",
+              "Pós-conjuração: EQUIP_ID[420031&&480926]REFINE[armor,garment,headLower==18]===7",
+              "Dano corpo a corpo: EQUIP_ID[420031&&480926]REFINE[armor,garment,headLower==22]===10"
+            ]
+          },
+          {
+            "id": 450600,
+            "name": "Armadura Desconhecida SOR",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 1,
+            "def": 120,
+            "bonuses": [
+              "ATQ: 50 / EQUIP_ID[420076&&480931]REFINE[armor,garment,headLower==14]===80",
+              "Dano crítico: 3---2 / EQUIP_ID[420076&&480931]REFINE[armor,garment,headLower==18]===12",
+              "Dano físico %: EQUIP_ID[470077]10",
+              "Conj. Fixa: EQUIP_ID[470077]REFINE[armor,boot==21]===0.5",
+              "Dano físico contra todas as raças %: EQUIP_ID[420076&&480931]10",
+              "T.CRIT: EQUIP_ID[420076&&480931]REFINE[armor,garment,headLower==18]===5"
+            ]
+          },
+          {
+            "id": 450206,
+            "name": "Armadura Invernal",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 210,
+            "def": 150,
+            "bonuses": [
+              "ATQ: 130 / 2---15",
+              "Vel.Atq %: 7===15",
+              "P.ATQ: 9===2",
+              "Pós-conjuração: EQUIP_ID[480160]===10"
+            ]
+          },
+          {
+            "id": 450217,
+            "name": "Traje de Freeoni",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 200,
+            "def": 10,
+            "bonuses": [
+              "CON: 3 / GRADE[armor==C]===5",
+              "ATQ: 100 / 2---15",
+              "P.ATQ: 4---1 / EQUIP_ID[4649]===10",
+              "Dano à distância: 7===10 / 11===15",
+              "Precisão perfeita: 9===15",
+              "Pós-conjuração: 11===15"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "The current weapon names Hero Boots-LT; discover that companion instead of discarding a strong current weapon.",
+      "tool": "find_synergies",
+      "args": {
+        "itemIds": [
+          560026
+        ],
+        "bonusKeys": [
+          "atkPercent",
+          "pAtk"
+        ],
+        "limit": 8
+      },
+      "calls": 0,
+      "wallMs": 180.4629,
+      "cpu": {
+        "user": 297000,
+        "system": 31000
+      },
+      "requestBytes": 64,
+      "responseBytes": 3649,
+      "isError": false,
+      "result": {
+        "engineVersion": "0.1.211-beta",
+        "indexVersion": 2,
+        "total": 7,
+        "offset": 0,
+        "groups": [
+          {
+            "id": "item:490181:pAtk:0",
+            "sourceItemId": 490181,
+            "bonusKey": "pAtk",
+            "expression": "EQUIP[Iron Nail-LT]GRADE[weapon==C]===5",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Iron Nail-LT",
+                    "itemIds": [
+                      560026
+                    ],
+                    "items": [
+                      {
+                        "id": 560026,
+                        "name": "Garra Primordial-LT",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "GRADE[weapon==C]===5",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "GRADE[weapon==C]===5",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 490181,
+              "path": "script.pAtk",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:atkPercent:1",
+            "sourceItemId": 560026,
+            "bonusKey": "atkPercent",
+            "expression": "EQUIP[Hero Boots-LT]===10",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Hero Boots-LT",
+                    "itemIds": [
+                      470094
+                    ],
+                    "items": [
+                      {
+                        "id": 470094,
+                        "name": "Bota Primordial-LT",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "===10",
+            "conditions": [],
+            "conditionCoverage": "equipment-only",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.atkPercent",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:atkPercent:2",
+            "sourceItemId": 560026,
+            "bonusKey": "atkPercent",
+            "expression": "GRADE[weapon==D]===3",
+            "allOf": [],
+            "remainingExpression": "GRADE[weapon==D]===3",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "GRADE[weapon==D]===3",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.atkPercent",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:pAtk:0",
+            "sourceItemId": 560026,
+            "bonusKey": "pAtk",
+            "expression": "SUM[level==210]===1",
+            "allOf": [],
+            "remainingExpression": "SUM[level==210]===1",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "SUM[level==210]===1",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.pAtk",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:pAtk:1",
+            "sourceItemId": 560026,
+            "bonusKey": "pAtk",
+            "expression": "EQUIP[Hero Boots-LT]===2",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Hero Boots-LT",
+                    "itemIds": [
+                      470094
+                    ],
+                    "items": [
+                      {
+                        "id": 470094,
+                        "name": "Bota Primordial-LT",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "===2",
+            "conditions": [],
+            "conditionCoverage": "equipment-only",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.pAtk",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:pAtk:2",
+            "sourceItemId": 560026,
+            "bonusKey": "pAtk",
+            "expression": "GRADE[weapon==C]===1",
+            "allOf": [],
+            "remainingExpression": "GRADE[weapon==C]===1",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "GRADE[weapon==C]===1",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.pAtk",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:560026:pAtk:3",
+            "sourceItemId": 560026,
+            "bonusKey": "pAtk",
+            "expression": "GRADE[weapon==B]===2",
+            "allOf": [],
+            "remainingExpression": "GRADE[weapon==B]===2",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "GRADE[weapon==B]===2",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 560026,
+              "path": "script.pAtk",
+              "origin": "calculator-catalog"
+            }
+          }
+        ],
+        "coverage": {
+          "conditions": "equipment-and-structured-conditions",
+          "catalog": "authoritative",
+          "customItems": 0,
+          "patches": "not-requested",
+          "note": "Catálogo e motor são a referência; personalizados vêm só desta build. allOf/anyOf preservam requisitos; conditions expõe predicados estruturados, unparsedExpression preserva a sintaxe ainda não decomposta. equipmentRequirementsMet só confere equipamentos. O motor verifica a expressão completa dos patches; mudanças de refino/grau/stats/skills exigem allowChanges explícito. Não promete melhor dano ou patch mínimo; not-found não prova impossibilidade. Itens sem bônus são válidos."
+        }
+      }
+    }
+  ]
+}

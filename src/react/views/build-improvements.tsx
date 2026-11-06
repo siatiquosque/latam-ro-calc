@@ -5,9 +5,12 @@ import { ApplicationServices } from '../services/application';
 import { CalculatorSession } from '../state/calculator-session';
 import { BuildAnalysis } from '../services/build-analysis';
 import { TextKey } from '../../app/i18n';
-import { objectiveFor } from '../../app/build-analysis/engine/metrics';
+import { objectiveFor, rotationCallBound } from '../../app/build-analysis/engine/metrics';
 import { SEARCH_SLOTS as SLOTS } from '../../app/build-analysis/engine/search-slots';
 import type { AnalysisRequest } from '../../app/build-analysis/browser-protocol';
+import { goalSpecSchema, constraintSpecSchema } from '../../app/build-analysis/engine/goal-spec';
+import { minimumEngineCalls } from '../../app/build-analysis/engine/job-budget';
+import { EQUIPMENT_SLOTS } from '../../app/app-config/equipment-slots';
 import type { ProcMode } from '../../app/build-analysis/engine/proc';
 import './build-improvements.css';
 
@@ -41,7 +44,12 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
   const [procHits, setProcHits] = useState(3);
   const [profile, setProfile] = useState<'sustained' | 'burst'>('sustained');
   const [target, setTarget] = useState(vm.selectedMonster);
-  const [secondTarget, setSecondTarget] = useState(0);
+  const [extraTargets, setExtraTargets] = useState<number[]>([0, 0, 0, 0]);
+  const [hits, setHits] = useState('');
+  const [margin, setMargin] = useState('');
+  const [mvpPolicy, setMvpPolicy] = useState<'allow' | 'exclude-new' | 'none'>('allow');
+  const [lockedSlots, setLockedSlots] = useState<string[]>([]);
+  const [lockedFields, setLockedFields] = useState<string[]>([]);
   const [slots, setSlots] = useState<string[]>([...SLOTS]);
   const [slot, setSlot] = useState('weapon');
   const [query, setQuery] = useState('');
@@ -53,6 +61,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
   const [hp, setHp] = useState(0);
   const [seconds, setSeconds] = useState(60);
   const [maxSolves, setMaxSolves] = useState(10000);
+  const [maxEngineCalls, setMaxEngineCalls] = useState('');
   const [busy, setBusy] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [error, setError] = useState('');
@@ -67,7 +76,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
     const timer = setInterval(() => setElapsed(Math.floor((Date.now() - started) / 1000)), 1000);
     return () => clearInterval(timer);
   }, [busy]);
-  const cancel = () => { runId.current++; runner.cancel(); setBusy(false); };
+  const cancel = () => { if (busy && mode === 'build') runner.requestCancel(); else { runId.current++; runner.cancel(); setBusy(false); } };
   const targets = useMemo(() => Object.entries(vm.monsterDataMap).filter(([id]) => !DEFENDED.some(([dummy]) => dummy === Number(id))).map(([id, monster]) => ({ id: Number(id), name: monster.name }))
     .sort((a, b) => a.name.localeCompare(b.name)).concat(DEFENDED.map(([id, key]) => ({ id, name: t(key) }))), [vm.monsterDataMap, t]);
   const slotLabel = (key: string) => t(`itemSlot.${key}` as TextKey);
@@ -75,7 +84,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
 
   const run = async () => {
     const id = ++runId.current;
-    setError(''); setResult(undefined); setBusy(true); setElapsed(0);
+    setError(''); setResult(undefined); setElapsed(0);
     try {
       const snapshot = vm.analysisSnapshot();
       source.current = JSON.stringify(snapshot);
@@ -86,16 +95,22 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
       let request: Omit<AnalysisRequest, 'sources' | 'descriptions' | 'origin'>;
       if (mode === 'build') {
         if (!slots.length) throw new Error(t('improve.noSlots'));
+        const chosenTargets = [target, ...extraTargets.filter(Boolean)].map(monsterId => ({ monsterId }));
+        goalSpecSchema.parse({ targets: chosenTargets, ...(hits ? { maxHitsToKill: Number(hits) } : {}), ...(margin ? { margin: Number(margin) / 100 } : {}) });
+        const constraints = constraintSpecSchema.parse({ mvpPolicy, lockedSlots, lockedFields, ...(equipmentMode === 'replace' ? { maxGrade: grade, maxRefine: refine } : {}) });
+        const minimum = minimumEngineCalls(chosenTargets.length, procMode, rotationCallBound((snapshot.build.preset['rotation'] as string[]) ?? []));
+        if (maxEngineCalls && (!Number.isSafeInteger(Number(maxEngineCalls)) || Number(maxEngineCalls) < minimum)) throw new Error(t('improve.minimumBudget', { count: minimum }));
         const fixed = equipmentMode === 'replace' ? ids(candidates) : [];
         if (fixed.length > 60) throw new Error(t('improve.tooManyCandidates'));
         if (fixed.length && !slots.includes(slot)) throw new Error(t('improve.candidateSlot'));
-        request = { ...extra, mode, args: { ...common, slots, profile, ...(equipmentMode === 'replace' ? { refine, maxGrade: grade } : {}), equipmentMode, procMode, procHitsPerSecond: procHits, complements, require, exclude: ids(exclude),
+        request = { ...extra, mode, args: { ...common, target: undefined, targets: chosenTargets, constraints, ...(hits ? { goal: { kind: 'farm', maxHitsToKill: Number(hits), ...(margin ? { margin: Number(margin) / 100 } : {}) } } : {}), ...(maxEngineCalls ? { maxEngineCalls: Number(maxEngineCalls) } : {}), slots, profile, ...(equipmentMode === 'replace' ? { refine, maxGrade: grade } : {}), equipmentMode, procMode, procHitsPerSecond: procHits, complements, require, exclude: ids(exclude),
           ...(fixed.length ? { candidates: { [slot]: fixed } } : {}),
-          ...(secondTarget ? { targets: [{ monsterId: target }, { monsterId: secondTarget }] } : {}), detail: true } };
+          detail: true } };
       } else if (mode === 'slot') request = { ...extra, mode, args: { ...common, slot, profile, query, refine, maxGrade: grade, procMode, procHitsPerSecond: procHits, topSockets: complements ? 12 : 0, includePatches: true } };
       else if (mode === 'stats') request = { ...extra, mode, args: { ...common, require, objective: objectiveFor(profile, !!(snapshot.build.preset['rotation'] as any[])?.length) } };
       else request = { ...extra, mode, args: { build, effects: snapshot.effects, target: common.target, parts: ['stages', 'contributions', 'upgrades', 'warnings'] } };
-      const output = await runner.run(request, target === vm.selectedMonster ? { id: target, monster: vm.selectedMonsterModel } : undefined);
+      setBusy(true);
+      const output = await runner.run(request, target === vm.selectedMonster ? { id: target, monster: vm.selectedMonsterModel } : undefined, checkpoint => { if (active.current && id === runId.current) setResult(checkpoint); });
       if (active.current && id === runId.current) setResult(output);
     } catch (cause) {
       if (active.current && id === runId.current && (cause as Error).name !== 'AbortError') {
@@ -109,9 +124,11 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
     catch (cause) { setError((cause as Error).message); }
   };
   const format = (value: number) => Number.isFinite(value) ? new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(value) : '—';
-  return <Dialog visible modal header={t('improve.title')} onVisibleChange={() => { cancel(); onClose(); }} className="improve-dialog" style={{ width: '960px', maxWidth: '96vw' }}>
+  return <Dialog visible modal header={t('improve.title')} onVisibleChange={() => { runId.current++; runner.cancel(); setBusy(false); onClose(); }} className="improve-dialog" style={{ width: '960px', maxWidth: '96vw' }}>
     <p>{t('improve.intro')}</p>
     <p className="text-color-secondary">{t('improve.scope')}</p>
+    <p>{t('improve.evaluatedSkill')}: {vm.model.selectedAtkSkill}</p>
+    <p>{t('improve.defaults')}</p>
     <form onChange={() => setResult(undefined)} onSubmit={event => { event.preventDefault(); void run(); }}>
       <fieldset disabled={busy} className="improve-controls">
         <label>{t('improve.mode')}<select value={mode} onChange={e => { setMode(e.target.value as Mode); setResult(undefined); }}>
@@ -123,7 +140,12 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
           {procMode === 'average' && <label>{t('improve.procHits')}<input type="number" min={0.1} max={30} step={0.1} required value={procHits} onChange={e => setProcHits(Number(e.target.value))} /></label>}
         </>}
         {mode !== 'explain' && <label>{t('improve.profile')}<select value={profile} onChange={e => setProfile(e.target.value as typeof profile)}><option value="sustained">{t('improve.sustained')}</option><option value="burst">{t('improve.burst')}</option></select></label>}
-        {mode === 'build' && <label>{t('improve.secondTarget')}<select value={secondTarget} onChange={e => setSecondTarget(Number(e.target.value))}><option value={0}>{t('improve.none')}</option>{targetOptions}</select></label>}
+        {mode === 'build' && <>
+          {extraTargets.map((value, index) => <label key={index}>{t('improve.additionalTarget', { count: index + 2 })}<select value={value} onChange={e => setExtraTargets(current => current.map((v, i) => i === index ? Number(e.target.value) : v))}><option value={0}>{t('improve.none')}</option>{targetOptions}</select></label>)}
+          <label>{t('improve.hitsGoal')}<input type="number" min={1} step={1} value={hits} onChange={e => setHits(e.target.value)} /></label>
+          <label>{t('improve.margin')}<input type="number" min={0} max={1000} step="any" value={margin} onChange={e => setMargin(e.target.value)} /></label>
+          <label>{t('improve.mvpPolicy')}<select value={mvpPolicy} onChange={e => setMvpPolicy(e.target.value as typeof mvpPolicy)}>{(['allow', 'exclude-new', 'none'] as const).map(value => <option key={value} value={value}>{t(`improve.mvp.${value}` as TextKey)}</option>)}</select></label>
+        </>}
         {(mode === 'build' || mode === 'slot') && <>
           {(mode === 'slot' || equipmentMode === 'replace') && <>
           <label>{t('improve.refine')}<input type="number" min={0} max={20} required value={refine} onChange={e => setRefine(Number(e.target.value))} /></label>
@@ -140,22 +162,33 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
         {(mode === 'build' || mode === 'stats') && <label>{t('improve.hp')}<input type="number" min={0} step={1} value={hp} onChange={e => setHp(Number(e.target.value))} /></label>}
         {mode !== 'explain' && <>
           <label>{t('improve.seconds')}<input type="number" min={5} max={300} required value={seconds} onChange={e => setSeconds(Number(e.target.value))} /></label>
-          <label>{t('improve.solves')}<input type="number" min={10} max={100000} step={1} required value={maxSolves} onChange={e => setMaxSolves(Number(e.target.value))} /></label>
+          <label>{t(mode === 'build' ? 'improve.searchBudget' : 'improve.solves')}<input type="number" min={10} max={100000} step={1} required value={maxSolves} onChange={e => setMaxSolves(Number(e.target.value))} /></label>
+          {mode === 'build' && <label>{t('improve.engineBudget')}<input type="number" min={1} step={1} value={maxEngineCalls} onChange={e => setMaxEngineCalls(e.target.value)} /></label>}
         </>}
       </fieldset>
       {mode === 'build' && <fieldset disabled={busy} className="improve-slots"><legend>{t('improve.slots')}</legend>{SLOTS.map(key =>
         <label key={key}><input type="checkbox" checked={slots.includes(key)} onChange={e => setSlots(current => e.target.checked ? [...current, key] : current.filter(value => value !== key))} />{slotLabel(key)}</label>)}</fieldset>}
+      {mode === 'build' && <details><summary>{t('improve.locks')}</summary><fieldset disabled={busy}><p>{t('improve.locksHint')}</p>{EQUIPMENT_SLOTS.filter(entry => (SLOTS as readonly string[]).includes(entry.key)).map(entry => <fieldset key={entry.key}><legend>{slotLabel(entry.key)}</legend><label><input type="checkbox" checked={lockedSlots.includes(entry.key)} onChange={e => setLockedSlots(current => e.target.checked ? [...current, entry.key] : current.filter(key => key !== entry.key))} />{t('improve.lockSlot')}</label>{[entry.key, ...entry.cardFields, ...entry.enchantFields.filter(Boolean)].map(field => <label key={field}><input type="checkbox" checked={lockedFields.includes(field)} onChange={e => setLockedFields(current => e.target.checked ? [...current, field] : current.filter(key => key !== field))} />{field === entry.key ? t('improve.lockItem') : field}</label>)}</fieldset>)}</fieldset></details>}
       {(mode === 'build' || mode === 'slot') && <p>{t(mode === 'build' && equipmentMode === 'current' ? 'improve.currentHint' : 'improve.levelHint')}</p>}
       <div className="improve-actions"><button type="submit" className="ui-button" disabled={busy}>{t('improve.run')}</button>{busy && <button type="button" className="ui-button ui-button-outlined" onClick={cancel}>{t('improve.cancel')}</button>}</div>
     </form>
-    {busy && <p role="status">{t('improve.running', { seconds: elapsed })}</p>}
+    {busy && <p role="status">{t('improve.running', { seconds: elapsed })} {result && t('improve.checkpointProgress')}</p>}
     {error && <p role="alert" className="improve-alert">{error}</p>}
     {result && <section aria-label={t('improve.results')} className="improve-results">
       <h3>{t('improve.results')}</h3>
       <p>{t('improve.target')}: {result['analysisTarget']?.name}</p>
       <p>{t('improve.heuristic')}</p>
       {result['stopped'] && result['stopped'] !== 'convergiu' && <p role="status" className="improve-alert">{t('improve.incomplete')}</p>}
-      {result['solves'] != null && <p>{t('improve.usedSolves', { count: result['solves'] })}</p>}
+      {result['solves'] != null && <p>{t(mode === 'build' ? 'improve.usedSearchBudget' : 'improve.usedSolves', { count: result['solves'] })}</p>}
+      {mode === 'build' && result['budgetUsage'] && <><p>{t(result['checkpointFallback'] ? 'improve.checkpointCalls' : 'improve.engineCalls', { count: result['budgetUsage'].engineCalls })}</p><p className="text-color-secondary">{t(result['budgetUsage'].hardTotalLimit ? 'improve.hardBudgetNote' : 'improve.budgetNote')}</p>
+        {result['budgetUsage'].stoppedReasons?.some((reason: string) => reason.includes('budget')) && <p role="status">{t('improve.stopBudget')}</p>}
+        {result['budgetUsage'].stoppedReasons?.some((reason: string) => reason.startsWith('time')) && <p role="status">{t('improve.stopTime')}</p>}
+        {!busy && result['budgetUsage'].stoppedBy === 'cancelled' && <p role="status">{t('improve.stopCancelled')}</p>}</>}
+      {mode === 'build' && result['budgetUsage']?.stoppedBy === 'completed' && <p role="status">{t('improve.stopCompleted')}</p>}
+      {mode === 'build' && result['budgetUsage']?.hardTotalLimit && <p>{t('improve.optionalReportsOmitted')}</p>}
+      {result['budgetUsage']?.accountingIncomplete && <p role="status">{t('improve.accountingIncomplete')}</p>}
+      {result['feasibility']?.final && <details open><summary>{t('improve.feasibility')}</summary><p>{t('improve.notImpossible')}</p><p>{t('improve.guaranteeScope')}</p><p>{t('improve.feasibilityStatus')}: {result['feasibility'].final.status}</p>{result['feasibility'].final.targets?.map((aim: any) => <article key={aim.monsterId}><strong>{aim.name || aim.monsterId}: {aim.status}</strong>{aim.kill?.reliability && <p>{t('improve.reliability')}: {aim.kill.reliability}</p>}{(aim.violations?.length > 0 || aim.unknowns?.length > 0) && <Values value={[...aim.violations, ...aim.unknowns]} />}</article>)}<details><summary>{t('improve.details')}</summary><Values value={result['feasibility'].final} /></details></details>}
+      {result['patch'] && <details><summary>{t('improve.patch')}</summary><Values value={result['patch']} /></details>}
       {result['objective'] && <p>{t('improve.objective')}: {result['objective']}</p>}
       {result['procContext'] && <aside className="improve-alert"><strong>{t(`improve.proc.${result['procContext'].mode}` as TextKey)}</strong><p>{t('improve.procAssumption')}</p>
         <p>{t('improve.procOffResult')}: {format(result['procContext'].baselineOff)} → {format(result['procContext'].finalOff)}</p>

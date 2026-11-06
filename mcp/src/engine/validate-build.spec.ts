@@ -24,6 +24,14 @@ describe('validate_build', () => {
     expect(validateBuild(build, dataset).errors.map((error) => error.code)).not.toContain('MVP_CARD_EXCLUDED');
   });
 
+  it('rejects a head gear sharing a slot with a Middle+Lower mask', () => {
+    // 2278 (Máscara Feliz) fills Middle and Lower; 2203 (Óculos) is Middle-only.
+    const codes = (gear: Record<string, number>) => validateBuild({ ...fixtures['b1'], gear }, dataset).errors.map((error) => error.code);
+    expect(codes({ headMiddle: 2278, headLower: 2203 })).toContain('SLOT_OCCUPIED');
+    expect(codes({ headMiddle: 2278 })).not.toContain('SLOT_OCCUPIED');
+    expect(codes({ headMiddle: 2203 })).not.toContain('SLOT_OCCUPIED');
+  });
+
   it('does not treat an ordinary monster card as MVP', () => {
     expect(MVP_CARD_IDS.has(300220)).toBe(false);
     expect(MVP_CARD_IDS.has(4129)).toBe(false);

@@ -1,0 +1,521 @@
+{
+ "name": "b2",
+ "target": 20994,
+ "rows": [
+  {
+   "seed": 1,
+   "fields": 6,
+   "all": {
+    "finalDps": 583581,
+    "baselineDps": 156378,
+    "unique": 3377,
+    "socket": 3172,
+    "secondPassEvaluations": 1586,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 17759,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 583581,
+    "baselineDps": 156378,
+    "unique": 3229,
+    "socket": 3024,
+    "secondPassEvaluations": 1438,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15015,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 583581,
+    "baselineDps": 156378,
+    "unique": 3244,
+    "socket": 3039,
+    "secondPassEvaluations": 1453,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 14817,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 133,
+   "nearSavedMs": 2942,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 148,
+   "savedMs": 2744
+  },
+  {
+   "seed": 2,
+   "fields": 6,
+   "all": {
+    "finalDps": 583581,
+    "baselineDps": 153101,
+    "unique": 3377,
+    "socket": 3172,
+    "secondPassEvaluations": 1586,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 16251,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 583581,
+    "baselineDps": 153101,
+    "unique": 3229,
+    "socket": 3024,
+    "secondPassEvaluations": 1438,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 14892,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 583581,
+    "baselineDps": 153101,
+    "unique": 3244,
+    "socket": 3039,
+    "secondPassEvaluations": 1453,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 14795,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 133,
+   "nearSavedMs": 1456,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 148,
+   "savedMs": 1359
+  },
+  {
+   "seed": 3,
+   "fields": 6,
+   "all": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3377,
+    "socket": 3172,
+    "secondPassEvaluations": 1586,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15707,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3229,
+    "socket": 3024,
+    "secondPassEvaluations": 1438,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15130,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3244,
+    "socket": 3039,
+    "secondPassEvaluations": 1453,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15604,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 133,
+   "nearSavedMs": 103,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 148,
+   "savedMs": 577
+  },
+  {
+   "seed": 4,
+   "fields": 6,
+   "all": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3377,
+    "socket": 3172,
+    "secondPassEvaluations": 1586,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 16070,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3229,
+    "socket": 3024,
+    "secondPassEvaluations": 1438,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15271,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 583581,
+    "baselineDps": 160174,
+    "unique": 3244,
+    "socket": 3039,
+    "secondPassEvaluations": 1453,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15376,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 133,
+   "nearSavedMs": 694,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 148,
+   "savedMs": 799
+  },
+  {
+   "seed": 5,
+   "fields": 6,
+   "all": {
+    "finalDps": 583581,
+    "baselineDps": 161929,
+    "unique": 3377,
+    "socket": 3172,
+    "secondPassEvaluations": 1586,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15901,
+    "stopped": "completed"
+   },
+   "touched": {
+    "finalDps": 583581,
+    "baselineDps": 161929,
+    "unique": 3229,
+    "socket": 3024,
+    "secondPassEvaluations": 1438,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15465,
+    "stopped": "completed"
+   },
+   "near": {
+    "finalDps": 583581,
+    "baselineDps": 161929,
+    "unique": 3244,
+    "socket": 3039,
+    "secondPassEvaluations": 1453,
+    "secondPassGains": 4,
+    "firstPassChanged": [
+     "weapon.weaponCard1",
+     "weapon.weaponCard2",
+     "shield.shieldCard",
+     "shield.shieldEnchant1",
+     "shield.shieldEnchant2",
+     "headUpper.headUpperEnchant1",
+     "headUpper.headUpperEnchant3",
+     "armor.armorCard",
+     "armor.armorEnchant2",
+     "armor.armorEnchant3",
+     "accLeft.accLeftEnchant1",
+     "accLeft.accLeftEnchant2",
+     "accRight.accRightEnchant1"
+    ],
+    "secondPassChanged": [
+     "shield.shieldEnchant2 +0.37% (rank 4/24)",
+     "shield.shieldEnchant3 +1.24% (rank 3/24)",
+     "headUpper.headUpperCard +1.95% (rank 19/140)",
+     "headUpper.headUpperEnchant3 +0.35% (rank 18/29)"
+    ],
+    "wallMs": 15211,
+    "stopped": "completed"
+   },
+   "nearDiffPct": 0,
+   "nearSaved": 133,
+   "nearSavedMs": 690,
+   "dpsDiffPct": 0,
+   "savedEvaluations": 148,
+   "savedMs": 436
+  }
+ ]
+}

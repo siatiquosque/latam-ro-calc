@@ -6,6 +6,7 @@ import { Metric, Metrics, readMetrics } from './metrics';
 import { ProcPolicy, procUptime } from './proc';
 import { solveWithInput } from './solve';
 import { applyPatch, BuildPatch } from './variants';
+import { countedEngineCall, JobBudget } from './job-budget';
 
 export function evaluate(
   base: BuildInput,
@@ -17,11 +18,21 @@ export function evaluate(
   more: { monster: any; weight: number }[] = [],
   weight = 1,
   autoProcs: ProcPolicy = false,
+  jobBudget?: JobBudget,
+  forbiddenEffects: readonly string[] = [],
 ) {
-  return evaluateResolved(resolveBuild(patch ? applyPatch(base, patch) : base, dataset), base, patch, dataset, monster, effects, wanted, more, weight, autoProcs);
+  return evaluateResolved(resolveBuild(patch ? applyPatch(base, patch) : base, dataset), base, patch, dataset, monster, effects, wanted, more, weight, autoProcs, jobBudget, forbiddenEffects);
 }
 
 type Evaluation = ReturnType<typeof evaluate>;
+
+/**
+ * Calls made to the calculation engine (`solveWithInput`) since the process started. One evaluation is one build against one
+ * target; it costs one call, or more with extra targets or an averaged proc policy. Read it as a difference around the work
+ * being measured (the engine is synchronous, so nothing else interleaves inside a single evaluation).
+ */
+export { engineCallCount } from './job-budget';
+const solveCounted = (budget: JobBudget | undefined, ...args: Parameters<typeof solveWithInput>) => countedEngineCall(budget, () => solveWithInput(...args));
 
 /**
  * `evaluate` for a build the caller already resolved. The search asks about the same build many times (a card tried in the
@@ -42,20 +53,23 @@ export function evaluationCache(limit = 4000) {
     hits: 0,
     /** Calculations the cache did not have (what the budget pays for). */
     misses: 0,
-    evaluate(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset, monster: any, effects: string[], wanted: readonly Metric[], more: { monster: any; weight: number }[] = [], weight = 1, autoProcs: ProcPolicy = false): Evaluation {
+    /** Completed cache misses; a budget interruption never becomes a cached result. */
+    completed: 0,
+    evaluate(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset, monster: any, effects: string[], wanted: readonly Metric[], more: { monster: any; weight: number }[] = [], weight = 1, autoProcs: ProcPolicy = false, jobBudget?: JobBudget, forbiddenEffects: readonly string[] = []): Evaluation {
       const rb = resolveBuild(patch ? applyPatch(base, patch) : base, dataset);
       if (!datasetIds.has(dataset)) datasetIds.set(dataset, nextDatasetId++);
       const policy = typeof autoProcs === 'object'
         ? { mode: autoProcs.mode, hitsPerSecond: autoProcs.hitsPerSecond, metadata: [...autoProcs.metadata].sort(([a], [b]) => a - b) }
         : autoProcs;
-      const key = canonical([APP_VERSION, datasetIds.get(dataset), monster, effects, wanted, more, weight, policy, rb.model, rb.customItems ?? []]);
+      const key = canonical([APP_VERSION, datasetIds.get(dataset), monster, effects, wanted, more, weight, policy, forbiddenEffects, rb.model, rb.customItems ?? []]);
       const known = store.get(key);
       if (known) {
         cache.hits++;
         return { rb, solved: undefined as unknown as Evaluation['solved'], metrics: { ...known.metrics }, procEvaluation: copyProcs(known.procEvaluation) };
       }
       cache.misses++;
-      const result = evaluateResolved(rb, base, patch, dataset, monster, effects, wanted, more, weight, autoProcs);
+      const result = evaluateResolved(rb, base, patch, dataset, monster, effects, wanted, more, weight, autoProcs, jobBudget, forbiddenEffects);
+      cache.completed++;
       if (store.size >= limit) store.delete(store.keys().next().value as string);
       store.set(key, { metrics: { ...result.metrics }, procEvaluation: copyProcs(result.procEvaluation) });
 
@@ -77,19 +91,21 @@ function evaluateResolved(
   more: { monster: any; weight: number }[],
   weight: number,
   autoProcs: ProcPolicy,
+  jobBudget?: JobBudget,
+  forbiddenEffects: readonly string[] = [],
 ) {
-  let first = solveWithInput(rb, dataset, monster, effects);
+  let first = solveCounted(jobBudget, rb, dataset, monster, effects);
   if (autoProcs === true) {
     // Procs only exist on the calculator after a solve, and a swapped-in piece brings its own: count whatever this build offers.
-    const offered = ((first.calc.chanceList ?? []) as any[]).map(chance => chance?.name).filter((name): name is string => !!name && !effects.includes(name));
-    if (offered.length) { effects = [...effects, ...offered]; first = solveWithInput(rb, dataset, monster, effects); }
+    const offered = ((first.calc.chanceList ?? []) as any[]).map(chance => chance?.name).filter((name): name is string => !!name && !effects.includes(name) && !forbiddenEffects.includes(name));
+    if (offered.length) { effects = [...effects, ...offered]; first = solveCounted(jobBudget, rb, dataset, monster, effects); }
   }
   const solved = { ...first, rb, effects };
-  const metrics = readMetrics(solved, wanted);
+  const metrics = readMetrics(solved, wanted, jobBudget);
   const procEvaluation: { counted: string[]; uncounted: string[] } = { counted: [], uncounted: [] };
   if (autoProcs === true) procEvaluation.counted = effects.filter(effect => (first.calc.chanceList ?? []).some(chance => chance.name === effect));
   if (typeof autoProcs === 'object') {
-    const offered = (first.calc.chanceList ?? []).filter(chance => chance?.name && !effects.includes(chance.name));
+    const offered = (first.calc.chanceList ?? []).filter(chance => chance?.name && !effects.includes(chance.name) && !forbiddenEffects.includes(chance.name));
     const known = offered.map(chance => ({ chance, data: chance.ratePct && chance.durationSeconds ? chance : autoProcs.metadata.get(chance.itemId) }))
       .filter(entry => entry.data?.ratePct && entry.data?.durationSeconds);
     // Enumerate independent on/off states exactly for up to three known procs. Never assume an unknown proc is permanent.
@@ -106,7 +122,7 @@ function evaluateResolved(
         probability *= mask & 2 ** index ? uptime : 1 - uptime;
         if (mask & 2 ** index) active.push(chance.name);
       });
-      const state = mask === 0 ? readMetrics(solved, damageMetrics) : readMetrics({ ...solveWithInput(rb, dataset, monster, active), rb, effects: active }, damageMetrics);
+      const state = mask === 0 ? readMetrics(solved, damageMetrics, jobBudget) : readMetrics({ ...solveCounted(jobBudget, rb, dataset, monster, active), rb, effects: active }, damageMetrics, jobBudget);
       for (const metric of damageMetrics) if (state[metric] !== undefined) metrics[metric] += probability * state[metric];
     }
   }
@@ -118,7 +134,7 @@ function evaluateResolved(
     const sums: Record<string, number> = Object.fromEntries(fields.map(key => [key, (metrics[key] ?? 0) * weight]));
     let total = weight;
     for (const aim of more) {
-      const next = evaluate(base, patch, dataset, aim.monster, effects, wanted, [], 1, autoProcs);
+      const next = evaluate(base, patch, dataset, aim.monster, effects, wanted, [], 1, autoProcs, jobBudget, forbiddenEffects);
       for (const key of fields) sums[key] += (next.metrics[key] ?? 0) * aim.weight;
       total += aim.weight;
     }

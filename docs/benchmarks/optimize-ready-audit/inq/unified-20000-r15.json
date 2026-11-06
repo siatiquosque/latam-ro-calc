@@ -1,0 +1,1029 @@
+{
+  "versions": {
+    "app": "0.1.211-beta",
+    "node": "v22.9.0",
+    "dataManifest": "992b60564258631831ac6d4ec7c937adceeb3fa456a1fe121eb9920b27faa78c",
+    "optimize": "13ede1bffe2604c2ff8853668fe7eafa34f1daa1517fc639db79a88d1ef690b0",
+    "evaluator": "a4e651e933c1452fc979d2fc30acdfa313a00a4948bb79f9ea338ee245dab678",
+    "constraints": "ccf1b72204364a5d6b67612edab0284fcd75adb972eca981aa4585dcf0867059"
+  },
+  "fixture": "inq",
+  "spec": {
+    "id": "unified-20000-r15",
+    "cap": 20000,
+    "mode": "unified",
+    "reserve": 0.15
+  },
+  "args": {
+    "build": {
+      "preset": {
+        "skillFormulaVersion": "current",
+        "class": 4262,
+        "level": 236,
+        "jobLevel": 50,
+        "sex": 1,
+        "hairStyle": 8,
+        "hairColor": 1,
+        "str": 120,
+        "jobStr": 10,
+        "agi": 50,
+        "jobAgi": 10,
+        "vit": 120,
+        "jobVit": 6,
+        "int": 80,
+        "jobInt": 8,
+        "dex": 120,
+        "jobDex": 8,
+        "luk": 63,
+        "jobLuk": 1,
+        "pow": 100,
+        "jobPow": 9,
+        "jobSta": 6,
+        "jobWis": 4,
+        "jobSpl": 3,
+        "con": 43,
+        "jobCon": 5,
+        "jobCrt": 6,
+        "selectedAtkSkill": "Third Flame Bomb==5",
+        "rawOptionTxts": [
+          "p_element_dark:24",
+          "p_race_demon:12",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "hpPercent:3",
+          "melee:2",
+          null,
+          null,
+          "atkPercent:4",
+          null,
+          null,
+          null,
+          null,
+          null,
+          "spPercent:2",
+          "mdef:3",
+          "atk:4",
+          "atk:13",
+          "hpPercent:1",
+          "aspd:1",
+          null,
+          null,
+          null,
+          null,
+          "pow:5",
+          null,
+          "mres:14",
+          null,
+          "spl:3",
+          "cRate:5",
+          null,
+          null,
+          "hpPercent:10",
+          null,
+          null,
+          null
+        ],
+        "weapon": 560027,
+        "weaponRefine": 11,
+        "weaponGrade": "C",
+        "weaponCard1": 27361,
+        "weaponCard2": 4608,
+        "headUpper": 18979,
+        "headUpperRefine": 12,
+        "headUpperCard": 4582,
+        "headUpperEnchant1": 29105,
+        "headUpperEnchant2": 4721,
+        "headUpperEnchant3": 4732,
+        "headMiddle": 410233,
+        "armor": 450127,
+        "armorRefine": 11,
+        "armorCard": 4393,
+        "armorEnchant1": 310106,
+        "armorEnchant2": 310099,
+        "armorEnchant3": 310099,
+        "shield": 460014,
+        "shieldRefine": 9,
+        "shieldCard": 4609,
+        "shieldEnchant1": 29534,
+        "shieldEnchant2": 29531,
+        "shieldEnchant3": 29531,
+        "garment": 20963,
+        "garmentRefine": 11,
+        "garmentCard": 300271,
+        "boot": 470073,
+        "bootRefine": 11,
+        "bootCard": 4381,
+        "bootGrade": "C",
+        "accLeft": 490025,
+        "accLeftCard": 300116,
+        "accLeftEnchant1": 310120,
+        "accLeftEnchant2": 310084,
+        "accLeftEnchant3": 310084,
+        "accRight": 490181,
+        "accRightCard": 300076,
+        "petLoyalty": 4,
+        "costumeUpper": 31674,
+        "costumeLower": 420010,
+        "costumeGarment": 480436,
+        "costumeEnchantUpper": 310191,
+        "costumeEnchantLower": 310189,
+        "costumeEnchantGarment": 310188,
+        "shadowWeapon": 24386,
+        "shadowWeaponRefine": 10,
+        "shadowArmor": 24679,
+        "shadowArmorRefine": 10,
+        "shadowShield": 24735,
+        "shadowShieldRefine": 10,
+        "shadowBoot": 24680,
+        "shadowBootRefine": 10,
+        "shadowEarring": 24661,
+        "shadowEarringRefine": 10,
+        "shadowPendant": 24662,
+        "shadowPendantRefine": 10,
+        "skillBuffMap": {
+          "Cantocandidus": 0,
+          "Clementia": 0,
+          "Angelus": 0,
+          "Impositio Manus": 0,
+          "Expiatio": 0,
+          "Competentia": 0,
+          "Religio": 0,
+          "Benedictum": 0,
+          "Soul of Heaven and Earth": 0,
+          "Talisman of Protection": 0,
+          "Talisman of the Warrior": 0,
+          "Talisman of the Magician": 0,
+          "Talisman of Five Elements": 0,
+          "Argutus Vita": 0,
+          "Argutus Telum": 0,
+          "Presens Acies": 0,
+          "Crazy Uproar": 0,
+          "Laudaagnus": 0,
+          "Lauda Ramus": 0,
+          "Adrenaline Rush": 0,
+          "Power Thrust": 0,
+          "Weapon Perfection": 0,
+          "Fairy Soul": 0,
+          "Shadow Soul": 0,
+          "Falcon Soul": 0,
+          "Golem Soul": 0,
+          "Odin's Power": 0,
+          "Magnum Break": 0,
+          "Bunch of Shrimp": 0,
+          "Moonlight Serenade": 0,
+          "Striking": 0,
+          "_Sage_Field": 0,
+          "_Sorcerer_Insignia": 0,
+          "Shield Spell": 0,
+          "Bragi's Poem": 0,
+          "Swing Dance": 0,
+          "Mystical Amplification": 0,
+          "Spell Enchanting": 0,
+          "March of Prontera": 0,
+          "Serenade of Jawaii": 0,
+          "Whistle": 0,
+          "Assassin Cross of Sunset": 0,
+          "Apple of Idun": 0,
+          "Humming": 0,
+          "Fortune's Kiss": 0,
+          "Service for You": 0,
+          "Drum on the Battlefield": 0,
+          "Ring of Nibelungen": 0,
+          "Invulnerable Siegfried": 0,
+          "Rush To Windmill": 0,
+          "Echo Song": 0,
+          "Symphony of Lover": 0,
+          "Frigg's Song": 0,
+          "Lerad's Dew": 0,
+          "Dance With Wug": 0,
+          "Infinite Humming": 0,
+          "Musical Interlude": 0,
+          "Comet Amp": 0,
+          "Raid": 0,
+          "Dark Claw": 0,
+          "Debuff_Spore Explosion": 0,
+          "Rhapsody of Mineworker": 0,
+          "Geffenia Nocturne": 0,
+          "Oratio": 0,
+          "Evil Soul Curse": 0,
+          "Infection": 0,
+          "Venom Impression": 0,
+          "Intoxication": 0,
+          "Bitter Cold": 0,
+          "Pollen": 0,
+          "Impalement": 0,
+          "_Sorcerer_Insignia_Target_1": 0,
+          "_Sorcerer_Insignia_Target_2": 0,
+          "_Sorcerer_Insignia_Target_3": 0,
+          "_Sorcerer_Insignia_Target_4": 0,
+          "Gravitation": 0,
+          "_Meister_Quake": 0,
+          "Oleum Sanctum": 0
+        },
+        "activeSkillMap": {
+          "Rising Dragon": 0,
+          "Gentle Touch - Opposite": 0,
+          "Gentle Touch - Alive": 0,
+          "Earth Shaker": 0,
+          "Total Spirit": 0,
+          "Current HP": 0,
+          "Current SP": 0,
+          "Vigor condensation": 0,
+          "Vigor Explosion": 0,
+          "Flash Combo": 0,
+          "Sincere Faith": 0,
+          "Firm Faith": 0,
+          "Powerful Faith": 0,
+          "First Faith Power": 0,
+          "Judge": 0,
+          "Third Exor Flame": 0,
+          "Oleum Sanctum": 0,
+          "_Preview_Massive Flame Blaster": 0
+        },
+        "passiveSkills": [
+          3,
+          10,
+          3,
+          6,
+          10,
+          10,
+          10,
+          5,
+          5,
+          10,
+          5,
+          5,
+          0,
+          5,
+          5,
+          3,
+          5,
+          6
+        ],
+        "passiveSkillMap": {
+          "Heal": 3,
+          "Demon Bane": 10,
+          "Dragon Combo": 3,
+          "Fallen Empire": 6,
+          "Tiger Cannon": 10,
+          "Divine Protection": 10,
+          "Iron Hand": 10,
+          "Dodge": 5,
+          "Vigor Explosion": 5,
+          "Rising Dragon": 10,
+          "Gentle Touch - Alive": 5,
+          "Gentle Touch - Opposite": 5,
+          "Rampage Blast": 0,
+          "Lightning Ride": 5,
+          "Vigor condensation": 5,
+          "Chain Combo": 3,
+          "Raging Trifecta Blow": 5,
+          "Will of Faith": 6
+        }
+      },
+      "customItems": []
+    },
+    "target": {
+      "monsterId": 20994
+    },
+    "objective": "dps",
+    "procMode": "off",
+    "refine": 12,
+    "maxGrade": "A",
+    "levelChecks": false,
+    "instrument": true,
+    "maxSolves": 20000,
+    "maxEngineCalls": 20000,
+    "budgetMode": "unified",
+    "budgetAccounting": "engine",
+    "socketReserve": 0.15
+  },
+  "wallMs": 65527.111399999994,
+  "calls": 17241,
+  "checkpoints": [
+    {
+      "calls": 2,
+      "dps": 158818
+    },
+    {
+      "calls": 1977,
+      "dps": 182587
+    },
+    {
+      "calls": 2167,
+      "dps": 198223
+    },
+    {
+      "calls": 2481,
+      "dps": 239437
+    },
+    {
+      "calls": 2649,
+      "dps": 254258
+    },
+    {
+      "calls": 2807,
+      "dps": 287039
+    },
+    {
+      "calls": 2881,
+      "dps": 331243
+    },
+    {
+      "calls": 2974,
+      "dps": 357690
+    },
+    {
+      "calls": 3062,
+      "dps": 379094
+    },
+    {
+      "calls": 3632,
+      "dps": 409282
+    },
+    {
+      "calls": 4708,
+      "dps": 506495
+    },
+    {
+      "calls": 5207,
+      "dps": 550226
+    },
+    {
+      "calls": 5542,
+      "dps": 557429
+    },
+    {
+      "calls": 6174,
+      "dps": 583457
+    },
+    {
+      "calls": 7464,
+      "dps": 642504
+    },
+    {
+      "calls": 7968,
+      "dps": 716417
+    },
+    {
+      "calls": 8557,
+      "dps": 731664
+    },
+    {
+      "calls": 9377,
+      "dps": 739030
+    },
+    {
+      "calls": 12708,
+      "dps": 759050
+    },
+    {
+      "calls": 13949,
+      "dps": 791562
+    },
+    {
+      "calls": 14499,
+      "dps": 861306
+    },
+    {
+      "calls": 15453,
+      "dps": 876132
+    },
+    {
+      "calls": 15666,
+      "dps": 879255
+    },
+    {
+      "calls": 15684,
+      "dps": 880744
+    },
+    {
+      "calls": 15706,
+      "dps": 925309
+    },
+    {
+      "calls": 16091,
+      "dps": 977490
+    },
+    {
+      "calls": 16394,
+      "dps": 1045109
+    },
+    {
+      "calls": 16409,
+      "dps": 1059053
+    },
+    {
+      "calls": 16429,
+      "dps": 1080146
+    }
+  ],
+  "result": {
+    "baseline": {
+      "dps": 158818,
+      "max": 167172,
+      "hp": 201168
+    },
+    "final": {
+      "dps": 1080146,
+      "max": 1117897,
+      "hp": 310583
+    },
+    "deltaPct": {
+      "dps": 580.12,
+      "max": 568.71,
+      "hp": 54.39
+    },
+    "patch": {
+      "gear": {
+        "weapon": 560020,
+        "weaponRefine": 12,
+        "weaponGrade": "A",
+        "weaponCard1": 300240,
+        "weaponCard2": 300240,
+        "shield": 460014,
+        "shieldRefine": 12,
+        "shieldGrade": "",
+        "shieldCard": 4636,
+        "shieldEnchant2": 29534,
+        "shieldEnchant3": 29534,
+        "headUpper": 400180,
+        "headUpperRefine": 12,
+        "headUpperGrade": "A",
+        "headUpperCard": 4529,
+        "headUpperEnchant1": null,
+        "headUpperEnchant2": 4820,
+        "headUpperEnchant3": 29103,
+        "headMiddle": 410233,
+        "headMiddleGrade": "",
+        "headMiddleCard": 300174,
+        "armor": 450206,
+        "armorRefine": 12,
+        "armorGrade": "A",
+        "armorCard": 4302,
+        "garment": 480324,
+        "garmentRefine": 12,
+        "garmentGrade": "A",
+        "garmentCard": 4672,
+        "boot": 470108,
+        "bootRefine": 12,
+        "bootGrade": "A",
+        "bootCard": 300217,
+        "accRight": 490046,
+        "accRightRefine": 0,
+        "accRightGrade": "",
+        "accRightEnchant1": null,
+        "accRightEnchant2": 310216,
+        "accRightEnchant3": 310241,
+        "headLower": 420210,
+        "headLowerGrade": "",
+        "armorEnchant1": 311164,
+        "armorEnchant2": 311101,
+        "armorEnchant3": null,
+        "bootEnchant2": 310922,
+        "bootEnchant3": 4744,
+        "accLeft": 491116,
+        "accLeftRefine": 0,
+        "accLeftGrade": "",
+        "accLeftEnchant1": null,
+        "accLeftEnchant2": null,
+        "accLeftEnchant3": null,
+        "shadowShield": 24793,
+        "shadowShieldRefine": 10,
+        "shadowShieldEnchant2": 312189,
+        "shadowShieldEnchant3": 4744
+      },
+      "options": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "8": null,
+        "9": null,
+        "10": "melee:5",
+        "11": "melee:5",
+        "12": null,
+        "13": null,
+        "14": null,
+        "15": null,
+        "16": null,
+        "17": null,
+        "18": null,
+        "19": null,
+        "22": null,
+        "28": null,
+        "29": null,
+        "32": null,
+        "36": "vit:5",
+        "37": "melee:7",
+        "38": null,
+        "39": null,
+        "41": null
+      },
+      "stats": {},
+      "customAttachments": {},
+      "skills": {
+        "active": {},
+        "passive": {},
+        "buffs": {}
+      },
+      "customItems": []
+    },
+    "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG0SJgYCwiXBScSKeSySSaVTaZS6XSQKCRHhzojWXh2Qj6XymYzBdShSTwENJgQqAxGOReJyGgAzPasZlYV6RaSIsziyXSyKIrBgIZ1fX8kV84ZjDlm4XksUwZVsKgAJTVPMRGRlvJZEm55AA7CrzQK4ABdNijPBYEZnTT8bTaHIgSPR0jOvAKkp4QIRqMxgDiyIaXySiJTMfcWGQdWMFGkCd43GC5dIlercr2Dab5ijdQAqkMhgQeAnjE5gmZewOh8h05mSNnsj2sP3BwRCyvFyBS8vVzO23UeJpePMQJOV9OCABREhUCxMDvcJxJ8976.3..MTWy2ZRfavgBZKA6jqRxNiiGR-17ICQJEA861Hf0tjPXsVDGYdNiCXgojYKtUB8TYdCCIo8JQOcsxzEBSOQDdi0oHcqLQFB4M2eshEY-DkBvO8sCYWs9mMQT.GQ6juM-DtpEEqJTHAP4JEPTZ420YxkLAOSYDqciF0otSoHkljuH4WQ9HUuoxN4xh.JPTRpFU0zzIfKRZhsuy9I0hyvycly2BiPDpR4cdpEbHy-KYLTF2MdjfLQaUDP4f0otCxhaK3BilEQRAsm4f1lO0Wp0sy8LKIKxgWPrRNjH9NgSpSktERKjyJKiWZeHYhqPws79su4ESqCoNQFSy38hNwvqBtKqsFPKkaqL650oBiMwhoTQzRpdBalrKhNtH9Ei5o2xhGrrCDjD29bFsOjqmG-STE24GSh0YNC7CwGB7B4J1EDARh0FBS8Ikk.LkKoL6ftBNDIwiPhR2CEHvt.vB8ySgLtG4YyDnh0EPP.47lN-T7MbwDyIYw26x1POGwaJq7kuRgTlKcWo1JXMYVjzQ5ZTRpxbgsOpWfZkgisiYJmb50YkiYiJG3i09RbGCXOKFnDZJZ0ZrFMqRstmfY5bV0ylZF3mxnVtyzJpprsKcWWjb102PK6pC7NVyFMs1-hxxM52MsYA3PbFq8q2QEoYjd-gZN1gO6GD32VbFiUSDqCzQ-Y3X48TsKMwo4W9A.GBwXQBUFQA6MKFASsmEQKheLqYD0A2YJ3BEUEmCgJZyGCJISBiCQ64oYIKlQEYiExRAAWLol67YK8DCGVuR77thPEHvBHhbtvgnTGAFuIBeQHBBgnigB5ft36xEEwAFEAVAEAAko3EEgAWrgFI8YMxd..V71lQXjL.vyZkCZTwA8LEH8v5gB-o-K.AI35ghWIHYgERgify3hA3.0DYFj1iEfVuZxkHgMgX-IEUBxAvybtKSe25kAxHQD9MAAJ8iMHXmwCWNC6EAm.D3VAu8AF4H0CQehSQqB6UoVcLAAAvOwAIByAKrLvFQWB0CJ1iBPeRijE4AldBgShSQ6j0BIF-Bcmi67v3bmwaYkMOFmGQHXLIwQ2apkfhKZACpgEjzwWweAbgpFn0wKfG2AJfG7GCF4mAINH5BN3vmLweBUCBPPsEtgqIa4kAAOT0IsRhYIxcYhEjieCegWBuhmL3ugD8RD1ZB0HrvACGUSBbwuoEggDBNyn38FAaAXdd4AH1rCxDwN0.Apseln2QFKegyBulVCILk1u-jTaBKHJ8EpBTsHpIBNMWJp9RjBwBC0XiUoal2G.kfV6AIkiDy3pmKu7jT5LJgC-GmwcalVjvEQgBpBHjIlPs0gxDQiEACkUSWHiCUlYfxvpgQ7pwQ0RBH5XC.vQ6B1gyn6DsSwwcIgiEVDqGU3eN9fqoGeSUpA1wyl4HWQAaXWJQ6wBAMhSgBAqFAAIACa59d4tBsXE0gMDJwQjVIwEQmZ5K73ml3IhAA5KASge5dwYLvKoohMALmREoLF1g9IxAVEHJ4YqTEcNHmsBORLlnBCvHeUeZ8uklOsHYQeZhSBSOgWhcQSDPFBxiDEdZ1qQ4lLUEWdZbRxglP2beOBmQzAAhWOgP1-cSDzkyGCAlqAiU2uyXXU5DyqhfJgEoxcDcoQr3OdUkprpgKcqrBAAEjcUScrwEoAuCpekjHoC-Ge3giAcw3hYIYYBEB1GddfICC5RgoAgFktg.YMyuJIK3AEkrK4-WQNpEpqJkTzxKVeDIDygk1toPoRVCa3GgJKfgEgUIAQDyGPQTgp742MEQAYU5tyVmZC.TWrwClgjTDgAqkp17XqxP8iU3pKBxkECmQIhac6sDdM-tQle3T.LBDA2M5pkzpkwdbvBqs3dGDdI7Kh0ZEHMPQdmXBhD.HunfmI.BjDUGZmwdw4hgj3AonIk9Gqe9bBukATwOsL53SACK6AikFqSSIX6gSDlgz7gAX1GpicQ7xYAwGLkMUuIB5pwpiHs5EMRu1TulFi74583kAFoAToiHkmqJJmwRmfQJZ85W9xC71flG9W4n3U-Eymc6ws8g7opAO4Wg.jGC30mLvMLdBpSBOi2ehaLLwkNAEdxozIB8iGeQO2nYX0eMgGBIaKNS90qnxKBBoElg367yGWgarkaeHoRcRfLxTWSVWG.o1t.GyWu7wBUo7uH8-jVnbSy4roJd6oik3Evpt45Ogd4RkPAow.OwpIWCSbYJwQcC.QptgQwNsqdzgSXoOFehyBwtd3QFwLg4TuywW7LALi9AuPwcMwxjt4FU3ADTWm76vTrGwNo.FH7gl4hFYIXLYi8rK4gYHRXXoiEfleQeVhFxFG.AtAgNbeIXrOMrFoJCswbMAY8EBHNlYVEAY-G.1c0gg4HcN84bBsssunvlrtsY2A6d2TDwzhPgjTqYKZ8zUarNJDc4uC4IARdCsc.LgEVmbMFceFoXnWBB79IhHt.RB050SvmnRWX7PcupYYGADLPPQsWBKJ.6ECO9ia7iBK74QdXEPCwLrmYrOQBrDgEQ9rtXyD8Hk-JoAA/",
+    "feasibility": {
+      "baseline": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 20994,
+            "name": "Betelgeuse",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": []
+          }
+        ],
+        "worstTarget": {
+          "monsterId": 20994,
+          "name": "Betelgeuse",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      },
+      "final": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 20994,
+            "name": "Betelgeuse",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": []
+          }
+        ],
+        "worstTarget": {
+          "monsterId": 20994,
+          "name": "Betelgeuse",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      }
+    },
+    "budgetUsage": {
+      "mode": "unified",
+      "semantics": "engine-calls-total",
+      "requested": 20000,
+      "effectiveLimit": 20000,
+      "counted": 17239,
+      "cacheHits": 2509,
+      "cacheMisses": 17238,
+      "completedEvaluations": 17238,
+      "incompleteEvaluations": 0,
+      "uncachedEvaluations": 3,
+      "engineCalls": 17241,
+      "phases": {
+        "baseline": {
+          "unique": 1,
+          "uncached": 1,
+          "cacheHits": 0,
+          "engineCalls": 2
+        },
+        "discovery": {
+          "unique": 2869,
+          "uncached": 0,
+          "cacheHits": 92,
+          "engineCalls": 2869
+        },
+        "search": {
+          "unique": 11882,
+          "uncached": 0,
+          "cacheHits": 2335,
+          "engineCalls": 11882
+        },
+        "socket": {
+          "unique": 2486,
+          "uncached": 0,
+          "cacheHits": 82,
+          "engineCalls": 2486
+        },
+        "levelCheck": {
+          "unique": 0,
+          "uncached": 0,
+          "cacheHits": 0,
+          "engineCalls": 0
+        },
+        "report": {
+          "unique": 0,
+          "uncached": 0,
+          "cacheHits": 0,
+          "engineCalls": 0
+        },
+        "feasibility": {
+          "unique": 0,
+          "uncached": 2,
+          "cacheHits": 0,
+          "engineCalls": 2
+        }
+      },
+      "feasibilityVerificationCalls": 2,
+      "reservedVerificationCalls": 2,
+      "stoppedBy": "completed",
+      "stoppedReasons": [],
+      "hardTotalLimit": true
+    },
+    "coverage": {
+      "complete": false,
+      "slots": {
+        "searched": 16,
+        "total": 16
+      },
+      "candidates": {
+        "measured": 669,
+        "available": 680
+      }
+    },
+    "budgetReport": {
+      "phases": {
+        "baseline": {
+          "unique": 1,
+          "uncached": 1,
+          "cacheHits": 0,
+          "engineCalls": 2
+        },
+        "discovery": {
+          "unique": 2869,
+          "uncached": 0,
+          "cacheHits": 92,
+          "engineCalls": 2869
+        },
+        "search": {
+          "unique": 11882,
+          "uncached": 0,
+          "cacheHits": 2335,
+          "engineCalls": 11882
+        },
+        "socket": {
+          "unique": 2486,
+          "uncached": 0,
+          "cacheHits": 82,
+          "engineCalls": 2486
+        },
+        "levelCheck": {
+          "unique": 0,
+          "uncached": 0,
+          "cacheHits": 0,
+          "engineCalls": 0
+        },
+        "report": {
+          "unique": 0,
+          "uncached": 0,
+          "cacheHits": 0,
+          "engineCalls": 0
+        }
+      },
+      "phaseEngineMs": {
+        "baseline": 4.614199999981793,
+        "discovery": 8563.207400000829,
+        "search": 38498.28270000144,
+        "socket": 8417.16880000048,
+        "levelCheck": 0,
+        "report": 0,
+        "feasibility": 6.359599999996135
+      },
+      "stoppedReason": "completed",
+      "wallClockMs": 65519
+    },
+    "steps": [
+      {
+        "slot": "weapon",
+        "from": "Soqueira Primordial-LT (560027) C",
+        "to": "Soqueira Primordial-LT (560027) A",
+        "kind": "ajuste",
+        "gainPct": 14.97,
+        "totalPct": 14.97,
+        "atual": true
+      },
+      {
+        "slot": "shield",
+        "from": "Escudo Ilusión B (460014)",
+        "to": "Escudo Ilusión B (460014)",
+        "kind": "ajuste",
+        "gainPct": 8.56,
+        "totalPct": 24.81,
+        "atual": true
+      },
+      {
+        "slot": "headUpper",
+        "from": "Memorável Disciplina do Espírito (18979)",
+        "to": "Memorável Disciplina do Espírito (18979)",
+        "kind": "ajuste",
+        "gainPct": 20.79,
+        "totalPct": 50.76,
+        "atual": true
+      },
+      {
+        "slot": "headMiddle",
+        "from": "Selo de Loki (410233)",
+        "to": "Selo de Loki (410233)",
+        "kind": "ajuste",
+        "gainPct": 6.19,
+        "totalPct": 60.09,
+        "atual": true
+      },
+      {
+        "slot": "armor",
+        "from": "Colete Automatron A (450127)",
+        "to": "Colete Automatron A (450127)",
+        "kind": "ajuste",
+        "gainPct": 12.89,
+        "totalPct": 80.73,
+        "atual": true
+      },
+      {
+        "slot": "garment",
+        "from": "Manto Temporal FOR (20963)",
+        "to": "Manto Temporal FOR (20963)",
+        "kind": "ajuste",
+        "gainPct": 15.4,
+        "totalPct": 108.57,
+        "atual": true
+      },
+      {
+        "slot": "boot",
+        "from": "Bota Desconhecida VIT (470073) C",
+        "to": "Bota Desconhecida VIT (470073) A",
+        "kind": "ajuste",
+        "gainPct": 7.98,
+        "totalPct": 125.22,
+        "atual": true
+      },
+      {
+        "slot": "accRight",
+        "from": "Cordão do Inquisidor (490181)",
+        "to": "Cordão do Inquisidor (490181) A",
+        "kind": "ajuste",
+        "gainPct": 5.98,
+        "totalPct": 138.7,
+        "atual": true
+      },
+      {
+        "combo": [
+          {
+            "slot": "weapon",
+            "from": "Soqueira Primordial-LT (560027) A",
+            "to": "Soqueira Primordial-LT (560027) A"
+          },
+          {
+            "slot": "boot",
+            "from": "Bota Desconhecida VIT (470073) A",
+            "to": "Bota Primordial-LT (470094) A"
+          }
+        ],
+        "kind": "troca",
+        "gainPct": 7.96,
+        "totalPct": 157.71
+      },
+      {
+        "combo": [
+          {
+            "slot": "headUpper",
+            "from": "Memorável Disciplina do Espírito (18979)",
+            "to": "Marionete de Thanatos-LT (400465) A",
+            "dropped": [
+              "Insígnia da Resiliência 10",
+              "DES +4",
+              "VIT +5"
+            ]
+          },
+          {
+            "slot": "garment",
+            "from": "Manto Temporal FOR (20963)",
+            "to": "Espada Mágica de Thanatos-FA (480324) A"
+          }
+        ],
+        "kind": "troca",
+        "gainPct": 23.75,
+        "totalPct": 218.92
+      },
+      {
+        "combo": [
+          {
+            "slot": "headMiddle",
+            "from": "Selo de Loki (410233)",
+            "to": "Selo de Loki (410233)"
+          },
+          {
+            "slot": "headLower",
+            "from": null,
+            "to": "Selo de Copas (420210)"
+          }
+        ],
+        "kind": "troca",
+        "gainPct": 8.63,
+        "totalPct": 246.45
+      },
+      {
+        "slot": "headLower",
+        "from": "Selo de Copas (420210)",
+        "to": "Selo de Copas (420210)",
+        "kind": "ajuste",
+        "gainPct": 1.31,
+        "totalPct": 250.99
+      },
+      {
+        "slot": "armor",
+        "from": "Colete Automatron A (450127)",
+        "to": "Armadura Invernal (450206) A",
+        "dropped": [
+          "P-Bárbaro",
+          "M-ATQ",
+          "M-ATQ"
+        ],
+        "kind": "troca",
+        "gainPct": 4.67,
+        "totalPct": 267.37
+      },
+      {
+        "slot": "boot",
+        "from": "Bota Primordial-LT (470094) A",
+        "to": "Greva de Runas Vicejantes (470108) A",
+        "kind": "troca",
+        "gainPct": 10.12,
+        "totalPct": 304.55
+      },
+      {
+        "slot": "accLeft",
+        "from": "Turbina Automatron B (490025)",
+        "to": "Anel Profano Rubi (490044)",
+        "dropped": [
+          "P-Geral",
+          "B-VIT",
+          "B-VIT"
+        ],
+        "kind": "troca",
+        "gainPct": 11.5,
+        "totalPct": 351.09
+      },
+      {
+        "slot": "shadowShield",
+        "from": "Escudo Sombrio Durável (24735)",
+        "to": "Escudo Sombrio Magistral (24793)",
+        "kind": "troca",
+        "gainPct": 2.13,
+        "totalPct": 360.69
+      },
+      {
+        "combo": [
+          {
+            "slot": "weapon",
+            "from": "Soqueira Primordial-LT (560027) A",
+            "to": "Manopla Vivatus Fides (560020) A"
+          },
+          {
+            "slot": "headUpper",
+            "from": "Marionete de Thanatos-LT (400465) A",
+            "to": "Elmo da Fé Guerreira (400180) A"
+          }
+        ],
+        "kind": "troca",
+        "gainPct": 1.01,
+        "totalPct": 365.33
+      },
+      {
+        "combo": [
+          {
+            "slot": "garment",
+            "from": "Espada Mágica de Thanatos-FA (480324) A",
+            "to": "Espada Mágica de Thanatos-FA (480324) A"
+          },
+          {
+            "slot": "accRight",
+            "from": "Cordão do Inquisidor (490181) A",
+            "to": "Pingente da Força Física-LT (490382) A",
+            "dropped": [
+              "VIT Primordial",
+              "Espírito do Lutador 7",
+              "VIT +5"
+            ]
+          }
+        ],
+        "kind": "troca",
+        "gainPct": 2.71,
+        "totalPct": 377.94
+      },
+      {
+        "slot": "accLeft",
+        "from": "Anel Profano Rubi (490044)",
+        "to": "Colar Consagrado: Luz (491116)",
+        "dropped": [
+          "Ira 5",
+          "Maldade 5"
+        ],
+        "kind": "troca",
+        "gainPct": 4.28,
+        "totalPct": 398.41
+      },
+      {
+        "slot": "accRight",
+        "from": "Pingente da Força Física-LT (490382) A",
+        "to": "Anel Profano Esmeralda (490046)",
+        "kind": "troca",
+        "gainPct": 8.81,
+        "totalPct": 442.32
+      },
+      {
+        "slot": "shield",
+        "from": "Escudo Ilusión B (460014)",
+        "to": "Escudo Ilusión B (460014)",
+        "kind": "ajuste",
+        "gainPct": 1.72,
+        "totalPct": 451.66,
+        "polish": "shieldCard: Carta Bijou"
+      },
+      {
+        "slot": "headUpper",
+        "from": "Elmo da Fé Guerreira (400180) A",
+        "to": "Elmo da Fé Guerreira (400180) A",
+        "kind": "ajuste",
+        "gainPct": 0.36,
+        "totalPct": 453.62,
+        "polish": "headUpperCard: Carta Celacanto Violento"
+      },
+      {
+        "slot": "headUpper",
+        "from": "Elmo da Fé Guerreira (400180) A",
+        "to": "Elmo da Fé Guerreira (400180) A",
+        "kind": "ajuste",
+        "gainPct": 0.17,
+        "totalPct": 454.56,
+        "polish": "headUpperEnchant2: Espírito do Lutador 5"
+      },
+      {
+        "slot": "headUpper",
+        "from": "Elmo da Fé Guerreira (400180) A",
+        "to": "Elmo da Fé Guerreira (400180) A",
+        "kind": "ajuste",
+        "gainPct": 5.06,
+        "totalPct": 482.62,
+        "polish": "headUpperEnchant3: Insígnia da Resiliência 3"
+      },
+      {
+        "slot": "armor",
+        "from": "Armadura Invernal (450206) A",
+        "to": "Armadura Invernal (450206) A",
+        "kind": "ajuste",
+        "gainPct": 5.64,
+        "totalPct": 515.48,
+        "polish": "armorEnchant2: Flor Invernal (Guerreiro)"
+      },
+      {
+        "slot": "boot",
+        "from": "Greva de Runas Vicejantes (470108) A",
+        "to": "Greva de Runas Vicejantes (470108) A",
+        "kind": "ajuste",
+        "gainPct": 6.92,
+        "totalPct": 558.05,
+        "polish": "bootEnchant2: Poder de Varmunt 3"
+      },
+      {
+        "slot": "boot",
+        "from": "Greva de Runas Vicejantes (470108) A",
+        "to": "Greva de Runas Vicejantes (470108) A",
+        "kind": "ajuste",
+        "gainPct": 1.33,
+        "totalPct": 566.83,
+        "polish": "bootEnchant3: VIT +5"
+      },
+      {
+        "slot": "accRight",
+        "from": "Anel Profano Esmeralda (490046)",
+        "to": "Anel Profano Esmeralda (490046)",
+        "kind": "ajuste",
+        "gainPct": 1.99,
+        "totalPct": 580.12,
+        "polish": "accRightEnchant2: Lamento 5"
+      }
+    ]
+  },
+  "selected": "first",
+  "perTarget": [
+    {
+      "monsterId": 20994,
+      "metrics": {
+        "dps": 1080146,
+        "min": 1042395,
+        "hitsToKill": 1919,
+        "critRate": 0,
+        "canCri": 0,
+        "minNoCri": 1042395,
+        "hitChance": 100,
+        "conditionalEffects": 0
+      }
+    }
+  ],
+  "externalReplayCalls": 1
+}

@@ -1,0 +1,10 @@
+{
+  "experiment": "A200",
+  "budget": 200,
+  "final": true,
+  "verify": {
+    "patch": {
+      "gear": {}
+    }
+  }
+}

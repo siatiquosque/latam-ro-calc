@@ -1,3 +1,4 @@
+import { compactSlotConstraintSchema, ConstraintSpec } from 'src/app/build-analysis/engine/goal-spec';
 /** MCP schemas and JSON envelopes only; calculations and searches live in build-analysis. */
 
 import { z } from 'zod';
@@ -90,15 +91,13 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     target?: TargetArg;
     limit?: number;
     complements?: boolean;
+    constraints?: ConstraintSpec;
     refine?: number;
     maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
+    excludeMvpCards?: boolean;
   }>(server, 'optimize_slot', {
     title: 'Otimizar um slot',
-    description:
-      `USE quando já há poucos candidatos conhecidos para um slot (até ${config.limits.maxOptimizeCandidates}). NÃO use para descobrir candidatos (\`scan_slot\`) nem para a build inteira (\`optimize_build\`). Testa candidatos para um slot e ordena pelo ganho de DPS. No máximo ${config.limits.maxOptimizeCandidates} candidatos por chamada. ` +
-      'Cada candidato entra com os melhores cartas e encantamentos que ele aceita (`complements`, padrão), porque duas peças com o mesmo ATQ diferem em soquetes e encantamentos; ' +
-      'os cartas e encantamentos da peça antiga que a nova não comporta são retirados. `withoutSockets` mostra o DPS da peça nua. Só itens do LATAM entram; os demais vão em `skippedNotInLatam`. ' +
-      'O link devolvido já vem com a comparação armada (peça atual → peça sugerida), então o jogador abre o simulador e vê a diferença.',
+    description: `Compara até ${config.limits.maxOptimizeCandidates} candidatos de um slot por DPS. Para descobrir itens use scan_slot. Ajusta cartas e encantos legais; withoutSockets mostra o dano sem eles. complete indica se todos foram testados. O link abre a comparação no simulador.`,
     inputSchema: {
       build: compactBuildSchema,
       slot: z.string().describe('Campo do equipamento a variar, ex.: "weapon", "armor", "boot", "accLeft".'),
@@ -107,9 +106,11 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       query: z.string().optional().describe('Filtra os candidatos automáticos por nome.'),
       target: targetSchema,
       limit: z.number().int().min(1).max(20).optional().default(10),
+      constraints: compactSlotConstraintSchema.optional(),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas e encantamentos de cada candidato. false compara só as peças nuas.'),
       refine: z.number().int().min(0).max(20).optional().describe('Refino de cada candidato (e da peça atual, para medir o que subir o refino vale). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau de cada candidato que aceita grau (e da peça atual). Padrão: A, o ideal; informe só para limitar.'),
+      excludeMvpCards: z.boolean().optional().describe('Não sugerir cartas de MVP, nem como candidato nem como complemento.'),
     },
   }, (args) => operations.optimizeSlot(args).then(json));
 }

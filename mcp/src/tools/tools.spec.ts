@@ -274,6 +274,35 @@ describe('optimize_slot', () => {
     expect(parsed.data.compare.slots).toEqual(['weapon']);
     expect(parsed.data.compare.items.weapon.id).toBe(data.ranking[0].id);
   });
+
+  it('never suggests MVP cards when excludeMvpCards is set and reports coverage', async () => {
+    // 4529 (Carta Celacanto Violento) is an MVP card; 4628 is the card already worn.
+    const build = { class: 4257, level: 200, jobLevel: 50, stats: { agi: 100, dex: 130, pow: 60, con: 40 }, gear: { weapon: 700016, weaponRefine: 11, weaponCard1: 4628, ammo: 1773 }, atkSkill: 'Focused Arrow Strike==5' };
+    const open = await call('optimize_slot', { build, slot: 'weaponCard1', candidates: [4529, 4628], complements: false });
+    expect(open.data.eligibleCandidates).toBe(2);
+    expect(open.data.testedCandidates).toBe(2);
+    expect(open.data.complete).toBe(true);
+
+    const strict = await call('optimize_slot', { build, slot: 'weaponCard1', candidates: [4529, 4628], complements: false, excludeMvpCards: true });
+    expect(strict.data.ranking.map((row: any) => row.id)).not.toContain(4529);
+    expect(strict.data.eligibleCandidates).toBe(1);
+    expect(strict.data.complete).toBe(true);
+  });
+
+  it('does not rank a candidate that collides with a multi-slot head gear', async () => {
+    // 2278 (Máscara Feliz) fills Middle+Lower; the worn Óculos (2203) sits in Middle, so the mask cannot be added.
+    const build = { class: 4257, level: 200, jobLevel: 50, stats: { agi: 100, dex: 130, pow: 60, con: 40 }, gear: { weapon: 700016, headMiddle: 2203, ammo: 1773 }, atkSkill: 'Focused Arrow Strike==5' };
+    const { data } = await call('optimize_slot', { build, slot: 'headLower', candidates: [2278], complements: false });
+    expect(data.ranking).toEqual([]);
+    expect(data.testedCandidates).toBe(0);
+    expect(data.complete).toBe(false);
+  });
+
+  it('flags a truncated automatic candidate list as incomplete', async () => {
+    const { data } = await call('optimize_slot', { build: { class: 4257, level: 200, jobLevel: 50, stats: { agi: 100, dex: 130, pow: 60, con: 40 }, gear: { weapon: 700016, ammo: 1773 }, atkSkill: 'Focused Arrow Strike==5' }, slot: 'weapon', slotTag: 'weapon', complements: false });
+    expect(data.eligibleCandidates).toBeGreaterThan(data.testedCandidates);
+    expect(data.complete).toBe(false);
+  });
 });
 
 describe('regressions', () => {

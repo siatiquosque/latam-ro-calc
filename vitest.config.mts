@@ -46,6 +46,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    // The optimizer and consultant specs are CPU-bound and take 2-4 s alone; the suite runs one fork per core, and under that load the same tests
+    // took 5-6 s and tripped the 5 s default (measured: three flaky timeouts, all passing alone). The long ones already carry their own limit.
+    testTimeout: 20_000,
     // Keeps src/assets/data/ current for the specs that read it. See the file for why it
     // is not just a step in the `test` script.
     globalSetup: ['./vitest.global-setup.ts'],

@@ -1,0 +1,21 @@
+{
+  "experiment": "B",
+  "budget": 200,
+  "final": true,
+  "verify": {
+    "patch": {
+      "gear": {
+        "weaponRefine": 12,
+        "weaponGrade": "C",
+        "armor": 450206,
+        "armorRefine": 12,
+        "armorGrade": "",
+        "armorEnchant1": 311166,
+        "armorEnchant2": 311100,
+        "armorEnchant3": 311099,
+        "headUpperCard": 300377,
+        "headLower": 420076
+      }
+    }
+  }
+}

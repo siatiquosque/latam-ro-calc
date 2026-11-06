@@ -1,0 +1,4331 @@
+{
+ "accounting": "counted includes the reads of the other targets (skippedForBudget: reads the stage had no budget for)",
+ "goals": {
+  "hits2": {
+   "maxHitsToKill": 2
+  },
+  "hits2-margin10": {
+   "maxHitsToKill": 2,
+   "margin": 0.1
+  }
+ },
+ "variants": {
+  "math": {
+   "maxGrade": "C",
+   "maxRefine": 12
+  },
+  "scenario": {
+   "mvpPolicy": "none",
+   "maxGrade": "C",
+   "unavailableIds": [
+    14536,
+    480174
+   ],
+   "forbiddenEffects": [
+    "Oleum Sanctum"
+   ],
+   "lockedSlots": [
+    "headUpper",
+    "accRight"
+   ]
+  }
+ },
+ "references": {
+  "original": {
+   "status": "infeasible",
+   "kill": {
+    "damageFeasible": false,
+    "constraintsMet": true
+   },
+   "violations": [],
+   "audit": []
+  },
+  "grauC": {
+   "status": "infeasible",
+   "kill": {
+    "damageFeasible": false,
+    "constraintsMet": true
+   },
+   "violations": [],
+   "audit": []
+  },
+  "invernal": {
+   "status": "feasible",
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "violations": [],
+   "audit": []
+  },
+  "semGrau": {
+   "status": "infeasible",
+   "kill": {
+    "damageFeasible": false,
+    "constraintsMet": true
+   },
+   "violations": [],
+   "audit": []
+  }
+ },
+ "rows": [
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 255,
+    "unique": 254,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 79,
+    "skippedForBudget": 13,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8612956 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 84%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8019566 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 86%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (9997658 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 75%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7943785 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 85%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7479084 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 77%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    23304627.4,
+    36204989.4
+   ],
+   "wallMs": 5923,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGKQAdlkphA3aLfYH5q2pdqZgLdQAqkMhgQTLNuE5x4usCu1wRq7W6Q2QHuD.uPP26jxNE4hOel6urwCSFQLEwh.ReLNtE4bgvF8CDfD9eUYWdf34Jx5iffdgOQUDP0Yd0tmHbRHwvABZKA6jqRwtiibRZjOftUB8LYdGMYdh2dNAUGPOszzIlBp1vLZpFmR8WMQ99kO-aQok0aRSPo3iwKYWdBO0HRuLEpDwNQ6Tt2CMAzCgCR2O4UttGMbZwHUzTGNPfk9EMmA6jYnhS1gtSNIshSvykWZhP0uzNMciDnOE8d3IcvjFO8wS2BiMjqSkYj.H00K0GpYz60iR8YqpJgrIOMt0LYJREEQLJuHQ4j9Oy3L4rPYrGFbfcEpATtnSoKg1CtPK-yiWiQCwerGsYNLpAy2oOoamtGE8gSon4aRuM6obPKksbeEmwams8pSohUuqqCTKAYjMZrdJ3dbNu27qbwoXqcmHIp10YFREDsJl7B4I5QUYdAqQQ07jH4Yd9OOMAXqpG78wiPgciiJ6-tevBmzC6oVO4WRwf.vBPPeg4omMWZx1.pHPMBjc0b22Dschzzodi6ppOMJxajU-cxlWSsTh-eGnCeCw6npxmSFK7IzLp0YkjEqRtOHWz2bGQXyOQHmwYM-nrHM9jeHyr6.Y50YFfsuoZdU8XRkhHKsmV6Ddf5g2SprJjebl9WAX7B0SBiYX.H4Xy9btugShiHW1bGY0SDqcDncEX3Rn9wOmB98BfhgSF0CtK0sMLChQD7JhECoXk6lw9BNmCdwRBS7FlnIYIkkdiRc4oYIKlQEYiGxRBwSToU87YIEhigF1iGrthPDrvA3iYLve5AasYC2nvS7YSEGHeKBXle0frEQTBwUQK1wQACQLcQSHBLPwQ9xgzFH3EmQ2VBeXXzfJmQXK8FeHEz4vsAr-3jfwRPvBwVWe3iAiMEc.E837X0-t-ZusQF5dyuEA1.78b7gngFAcQR9C7UjbiAQWMQGS53BPkJYo9sG4LAOCXEldUCjzvngfQJBSFJCoBpTB9wsAAC87DglXPffso8VBYHQIHWIrdeH8MDuCFMGBMFJDqPQEgF86TiNzqfaeIBphAzIWYZAucsjBAZj2cExpkBWkfo3WBbB4BuA4SvTAy89bgmsfsYIFiYDHH3g40ezYvCUnsavRxbB0TZxIAAclIWo-GwQk4xCFKgKE9AsBdBUXHPiiCFYOjrqPLCOUSATyOvYggDAqrL38FAaAjtR6kmsLELkyDNLlJXsgTk9BkCkiqEQKJI8VGa00vY9cfxEmojiCEgxiBKTL1GF7cEzReScgyXYP6C8mTgiSHXCetZM6mOXr0mAR8ArDzKSopODSzCILvqQWEJdgjWHyXIhoiCABSaJLDxBUasdSf0CJl04P6Ig.97iglIZ-aw6A6GDyIWuEQiCKh1GBaPLer1UBe1HkgB4wK8BDIANIbEwVc5AGROTgitCgcEABNVeo9mhaJiRCCBkIXSMBELWWpKjNqO0QQAOSgEoSuFczEgCqKITAdJURKAhdYDSMQrQOneKPJMSiyFN3WAHBFfTggAg-E3Fe.zLl2DrmYUgHDP43XEIA8xDoYgxCGZqp2Ki1BtiGa0cYKipnvh-usE.v90DWpriQE8mQf5wtQAirVbAsK5wWdsqosIYACISvnRAVJGBLPScyyw7FghTOQBAcEBc0TkrwEoeOVoKkjHoEfYE3gwS8qTBYIYYBEB1ANZvHCdJRgoAgOEtgzYazGJIF3cEbKM4vWQCZYI6JUSN1HgCDI2yHHZtoPoUeVRjFPyZsEfAJB43glrkMegnBn4qMjYgAwCyNmJMyLCbNXg01sGmHABgi665MkpOFFRFSUCNIIC0uhW1e1YFJOfZAGoaTfmCG.hp.TmmtJ-V3f9-YgOklnKB.pH7IPfvaX.gD8HUJIffRBr9bTf2wcA4PUk3APGogyEsU9oGsJ4A2LCUkABFdA8TY3.JEK9ex0z-rVwAL51WxOIH4sAYBJyGCnMeGwJkUtiEzWWXamAQtxKvD84IAC04JMT1z9R46kSmVPHI00kCe4hJ39ndQrVjJqQDKaWDOzuDosjGBuO4WgsjE1b0mKPVzdBqT2K8yo-IMQiWuIaHQ7uq62BBaJR3Ct.6nEcGOf3bKy8SgfqQZYE.SKrAxIsZkZRwQwlGLXnlrL1xzFWD.hl-LwygajzuQIjUZ91IDjLUS.A2AqSj3RBxmJlT3w8dfdQjIeBRikiTnu1BHWsBUihDCcJ-H2pPyEzHYkYNdAbZYM5lgm3ds7f2z0PbG3czDG.SgvAwm4DEkOGDQ4cgwYPd0D0HoYNnsHZYD0Q4PR.AnaGGdlbImxMSZ3kyU6bBWjkX3rSkyssZPBd.fGlLBxzFMhEPvAEdcrAJSKLiLaBBs28g3VcWHKC6wGPvm8FdxOa7333lvLOaRwf1qa.VkA0XkBlpBJWrQbBNo-JiJMgZcnggKfpT-ZT6BVNGZMwlG4ov9OS8M5ptcoIdOs4kX9jUc3-Q6LYCoLaO1e2ss2u2Vn7PwShYYGACLxY.4WBKJe1ASOzgpjiKy3EDpl1LDmzMVn6w4CINK8o-gi3XFgFelgEVNCKBEj0hdH7vGgA/"
+  },
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 321,
+    "unique": 320,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 184,
+    "skippedForBudget": 44,
+    "afterSearch": 17,
+    "unique": 816,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (10658946 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 96%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7973782 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 98%."
+     ]
+    }
+   ],
+   "audit": [
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4865).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "steps": 4,
+   "dps": [
+    23304627.4,
+    46164049.6
+   ],
+   "wallMs": 13989,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Coelho Macabro-LT",
+     "refine": "9 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: vazio",
+      "Enchant2: vazio",
+      "Enchant3: Variação Física 1"
+     ]
+    },
+    {
+     "slot": "headUpper",
+     "from": "Diadema Temporal Lutador",
+     "to": "Diadema Temporal Lutador",
+     "sockets": [
+      "Card: Carta Alga Brilhante"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant3: Orbe Lupino - Bárbaro 1"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "accRight",
+     "from": "Cordão do Inquisidor",
+     "to": "Cordão do Inquisidor",
+     "refine": "0 → 0",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: Fatal 3",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant3: Orbe Lupino - FOR 2"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460020,
+     "shieldRefine": 12,
+     "shieldGrade": "C",
+     "shieldEnchant1": null,
+     "shieldEnchant2": null,
+     "shieldEnchant3": 310857,
+     "headUpper": 19481,
+     "headUpperRefine": 12,
+     "headUpperGrade": "",
+     "headUpperCard": 300360,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant3": 310503,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": null,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant3": 310484,
+     "accRight": 490181,
+     "accRightRefine": 0,
+     "accRightGrade": "C",
+     "accRightEnchant2": 4865,
+     "accRightEnchant3": 4704,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "headMiddle": 410093,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": ""
+    },
+    "options": {
+     "6": null,
+     "7": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "40": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGKQAdlkphA3aLfYH5q2pdqZgLdQAqkMhgQTLNuE5x4usCu1wRq7W6Q2QHuD.uPP26hRpDlZMEL6urwCSFQLEwh.ReLNtE4bmfQ9kDfD9eUYWdf34Jx5nPJcXwIUDP0Yd0tmHbQhDg-cAFkoDqOpHC2KJtFmM4LxUMYNy2IJtGHIp.1QHwth0Yxh2HZ00BQY86zPBiUGnW8tmkWZML4kD32Q79pCiTRpDOMSkPA2dpO0HRRM48SwKYVCVJ0M4wDMKAJEE7hSww4IDKMmA6m409IkwyzjIEnhS1gxzrNbfd60oTs9EM4zFO0u8ogA9iQBiBjqSkEj.G2cLIqYWzvOMTCIrQalnIOMt0LYJREEQLJuHQki4rygqkrPMrGE89sfL9KgqDUK1Cr-KIwqwBqmsYTL7ww4dag6xqa0YQLGCkqJ.GkUTOuG0blIm3hpqG5rRp0qJtziwakygGIzBa7RjB3Z0Gu23bupvO8clo.iTp2vaau8kBfJALa7pGiSlJ4Jx.BuV6ztWnh0Li9dGAouwmXsHgjlBRh0CpBCImk-hhzi44wFhqkKPzCI.ByKJofRuG8GbBLCqcbRuFkAmMbwUaEeCg7ZnHNGadGrGqJUw7YJZonRpJ9Lqk5pxagM-cxlWSsTh-Snvr8sXRglnsKuyOW6jGJINKkUzhzciw1dGDXGOQZX8fAPWxmsfzrK1uiwtF-XLasmyax4lWzflyF8qyXhTPJ1Wxk98qXbs037bGAF.wdEgYi1-h.HHMPRgjugShiE2LPN0ZjRIOpwNjwR-azhhc8S4Pkos34YEhdArStbDCwoUA.yYRAqF5Oo8PQTZgncEQqSYKBlnIYIkmjiQu4oYIKlQEYiGxRBwXroVu7YIEhkH.fJ7YTwZ7wN4B6H4JqxgHbiC3kBIQYd4oFeOHz.sRBMHBRArXBAAJAtxBIcF2-BZPGDMOfXETINioF5M-V.kxkAFTwK8HEQCQFgDAd-F.4IAF4HBKsSOxAIjBGASfJB4DUHoMXrEG.g8rh4MQcgiB4J4BQHEH-Pu1IV4gA1jEBkXdwT5CWOfdhnCwDglxOPVA58oF4H0CQQRSQqBGVYfcLAAAvOw4JVzQP7OfFQWB0C51iMvTR2jc7ghTBgVhSQ6j0BICAukxiu6AOHmwaY2MhFmGQF3LIwRFZFnBMaZAVpYHz0oWweAbgVEP0wPfTO4Jwn7GCCEmAxxv4xPPs2LwlJomP1iWwdEHcSAAHJBFOKosEeuMQhSoChPQLAXQHEX3QBJWhlsHQz3PthfKJAT5nWiQQBgXl77.CgNAaO59STWFiFyehxkRkP2QJyegyBSRVCIGUwekSnbRPXH8WpkJURxAKT4xAlJ76jFTuCZovJOStLsOjG.TJwRJBnifWsbdAn302TAP.H0B7DNqfXWZZhaFQNILCQ.bBrA9KsQ0WhAApNElh4i1NWIZdGhER6cH9EQb.9xQSCNQdYep.gPFsCSGuEQtCKh1HqefN.cNUCp3PkgB49S8D7IANIbFYeC5AGROTgitCgcEABNR.59mhuIqRCEhkIXSMBELWKZtTtrR1oQAOSgEoceY8gkgCqKITAdJURKDJdYIyMQrQOneOfJMdihEL3WDnOlWzggAg-AvB.PzgjWDsDPMwpAVGoIouIXBwSHQxBiPs91MdalqDbPs1o4xannPfBg9YADMHoCjVPEgJ5MgYJpagOlHq2DYS7rcj5VRYQwB0d5HuiAqSMHuS0xVlhBLBHOcgCA4Je5olFXgJQNcrSjJGPQP.wJvBgm1UmCwQwwCIDqP61.uE6SjBQBAYpbBmw1n8SQQe4IVWt1hsgOywR0Sok3rUgEGQPkxK7bQfQ58qj.LgVLYI.ASB1vBNPIY9BODwNqRWxABhbmvO2ZkWEXavCtscV4EQ2qv1MkpFFWpoyUBzIIIsqRO0d1YFJMA5AGoaTfmCCh2ZPSFlLKw4PXD-YCOklnMRmZaHyOYZWThvDtHUIMdQ2RjDyzsPUfw3vUk3AUmogyEsEDxHsJ4A2LCUkABFdA1Sa3ZJEHDaJFyMaTwAL7HWxOIH4sAYD1yGI3EA21MUxDObsqWptN1MDJbiR.H5wQAFpwSYlnrmlJ1JHPOYBe5pIJ9xDn3-gCy2yng0gCc0sa968HRZGMDcdwtBLENrfpMc.KW6DUmiZl2p.QYgCsSQ0KRLo-2vp2gKte46KvBI4ACneeV74lDQ3QywACGVWAqSEzI9jghFL8U-XrnXrjBKsOjdrfWDnY3PtCnRGogGGQHKOgV8BsBUnPuiNTFSxnvi08h8RGQ8CjFJPXX9jD1tYCpFCGExTdMvTgQZyuxJ8a6HeywJLLAPs-e.39nov33u5mGBihheBDNwGJIcfGhw5D43h7oHoPR8ZI-.ywHohwej8GB0MUHz2jMmbMx-Jkd42CtEYt-aVIc202axXW5rBxglMlg3-GeVhvJFFxDtAgXbeTvquKbZoDC6w.OgW8Z9Aup7QO-m-duaQydzsW2NkAhXqtjtBH.m4FnTlitiLZ4I9nZUYKc.gFzgXgveRuIbvzpuAsebXBrt4Wg2AmNxxqW7-oiUgBUG9Hdyrtq1RuKr5A4ISsMDAOVqWyWLAlAg6gBnZwUxxGVbiB0T6li3ZmMr9YcBaEjfsfwB7iSwBwywEaiRFAiTGCKnHbM2mgA/"
+  },
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 635,
+    "unique": 634,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 458,
+    "skippedForBudget": 30,
+    "afterSearch": 17,
+    "unique": 2016,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [
+    "ITEM_UNAVAILABLE: Casaco Pirata está na lista de itens indisponíveis (garment).",
+    "FIELD_LOCK: headUpperEnchant1 mudou (29085 → 29088).",
+    "FIELD_LOCK: accRightEnchant1 mudou (null → 310916).",
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4865).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "steps": 5,
+   "dps": [
+    23304627.4,
+    62562782.4
+   ],
+   "wallMs": 33076,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Escudo Ilusión B",
+     "refine": "9 → 12",
+     "sockets": [
+      "Card: Essência de SOR 3",
+      "Enchant1: S-CRIT",
+      "Enchant2: S-CRIT",
+      "Enchant3: S-ATQ"
+     ]
+    },
+    {
+     "slot": "headUpper",
+     "from": "Diadema Temporal Lutador",
+     "to": "Diadema Temporal Lutador",
+     "sockets": [
+      "Card: Carta Limacina",
+      "Enchant1: Insígnia do Talento 8",
+      "Enchant3: FOR +4"
+     ]
+    },
+    {
+     "slot": "headMiddle",
+     "from": "Correntes Sagradas",
+     "to": "Orelhas Espirituais"
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Cachecol Dínamo A"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Bárbaro 3",
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Casaco Pirata",
+     "refine": "8 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: Fatal 1",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accRight",
+     "from": "Cordão do Inquisidor",
+     "to": "Cordão do Inquisidor",
+     "refine": "0 → 0",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: DES Primordial",
+      "Enchant2: Fatal 3",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Fatal 4",
+      "Enchant3: Orbe Lupino - FOR 3"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460014,
+     "shieldRefine": 12,
+     "shieldGrade": "",
+     "shieldCard": 4925,
+     "shieldEnchant1": 29539,
+     "shieldEnchant2": 29539,
+     "shieldEnchant3": 29534,
+     "headUpper": 19481,
+     "headUpperRefine": 12,
+     "headUpperGrade": "",
+     "headUpperCard": 300363,
+     "headUpperEnchant1": 29088,
+     "headUpperEnchant3": 4703,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant2": 310509,
+     "armorEnchant3": 310506,
+     "garment": 480174,
+     "garmentRefine": 12,
+     "garmentGrade": "C",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": 4704,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant2": 310632,
+     "accLeftEnchant3": 310490,
+     "accRight": 490181,
+     "accRightRefine": 0,
+     "accRightGrade": "C",
+     "accRightEnchant1": 310916,
+     "accRightEnchant2": 4865,
+     "accRightEnchant3": 4704,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": 4863,
+     "headMiddle": 410215,
+     "headMiddleGrade": "",
+     "headLower": 420153,
+     "headLowerGrade": ""
+    },
+    "options": {
+     "10": null,
+     "11": null,
+     "14": null,
+     "15": null,
+     "29": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "41": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYqVdLVQq1ZqReAhpMCJy.bxkagGgAzA7IqjIKAWthYL6RaTIsy6-XUyLIrBgIZ1D3y-3K8XDMbXQXq-065lOo4AJXteFDAfDgY1MAAumxRngsCMrpp.DkBJns7mY3hTSU8IFiznSABxVENf7uZFZ2skdxYZB1YxSADsslMIDbuc73aNWwLtTM2bqAFUhkMCCZZtwnEOZ1h54uCGWK3TqyBN9ulx4u3UKNIcrIzseF6eASQqBYmL3yLxZtonNPZ-eCI-n15RgJw-fgnHmI9fx3ZAAJfRgnS2PttFvWcAFkoDqOpHC2KJeGMG5jxUMZly2IJ8LOLtUB8LYdGMPs.ztNAUD3StD0olAxwvLZpFmIQQHYmCnzgt9pCiTRpAopjBMApgJ1E7QdAggTYKAhD5J0J4zCgCQuO4AttGMbZwC0nSWIPSI.LAEyYDqTieF4m4rO0myVNfKRZnEiCnJ01zgPczy9GsupfIQj9xKMmJKOpHgnAMvsIqipgzKrCy2EitBqTsg5CyQtLEsYBstxSkAWzYJREEQLJuCQ7RVzKirGGSw9ysqwqm0oUqQBaxhfInNd.DObqQp4JCjKwKgqDUU0qs-KIGP4iapsYLKr20Xg.1qcbJvLHqhKAkSogGvitqW3rL0O6RjsWnbhoOKJuE-O0JpjKAYjMGaDPXJ6qBet7lvPS8cm0Psii2373ra4rOrB173t8g7auMUHnth3aZL8rYnH4G4Yb.27qu0Iyl0YIi7CZeweCOUFGHQKk-wiUT.HiqmwBpqkiKzCI.ByKIWbZvA63ymLCdkPnabwXz6fOgzZiHY5WfF3yOZI.TjHAsWqV8wWMuqVXv0CrcxlWEsTnfbhpCxg26iNk2SCa7IrbGJIpKkPS.y8ixrdGZ2qOQe3eeMw3RmsILXZB.arKDkPnLqf3gkjr3IQa12wPjz2xiTyq48d0YAS7a0SBiFP.CHBOxjzugShibPA69vUSDqIDi8s9PRnrxukvLViHfAX4YEhdBTVNVCcwoUBOyYRAqF5OoMPQTZgncEQqSYKBlnIYIkkLiR54oYIKlQEYiGxRBwRHoUF7YIEhjXk.97YTxD7wN5V-X4IyxgV7iHvkBIQYd4oCvFpj-awiBMDgkQKacEAAJbM4gSDghnuCCujAzA-1xEyDYqBeQQKgZMZAlU8CvBxOgzBYBsEIMgeCVBeBwSrHzsQCIwQMGf3ITgqhNCz6xEAWvK4zCyEUNweCeAUBxDIOXtSS.IBnYxAZPPcE.Qlg-xkXIsA4JcQ71QD-fBeB9AkDUUkKg2kpH3CwAALzsOCBcBCuw-xUFgdAjdYgXzsQ4xu4I4wYCkUkOo9ASCYLpB4.eaCN5sGmJzdRZhkDzyyMEY27ZwR6mQKaIhJ8.FsHgG4SxoDMAgNbuCHJ.xgiZJgMcBBhSf51i8JSApYCilsHRLPEgAByNR4SSLBBHjEIUqAoT0CwF0UJv90BCSESHa0h8f6oQqiQT.f0CkEAYEVEB-goDQELj-Uk1hYhchETpTZoDkCcnoMgUkVQiDdLXnkmOBSlx-CGZCVEcRWmJMQJSEBowq7gmaLyTkUy7Cs0AUycESRD6fwrNPNJIC7kwGQXtVeGyhkjyOWYIR.DSCwjfmwawiz-ENCEQAKTRJYeIQzVhaVZthTenAvREAQfcUEaiqHWBGfoWJbAkiLhEEIiodQRk-2gbTVAVcf5IAeCMvALyADSGwpE4uQBkTk4JTQoHBAATTAT-Zo0TekQk4ZCe0jARAVn2UMl6hchEADkoBKB3tvdJIAqiiEwHSVEShuXWG0jEU01p3g-xjME9Rp91gN2Ffc4IAJnyn1AYi4I1g7CHzMKQSxVCiLiCYRk60MQYgvJjUXIZahGwvNaOMIZPyny0PWKguh6B837xIPuTItDBWoGFbGtgqF55AthVUWEMBHEpUXogKkjAQWTLNZYLiwQfnIAgOCJeaItV4CUIPU0WyRj0GQcCbwYIHUxgsEMMAiA6gpqgehOkowUAQA6WwOs5YUkkDXuCS1U8abIHMsEdEqI75DIBBkWFhT520H0D-KoKTiGm2CPgEgw7wQHyGPQTgJChm9sQAYIFUKHmZFhPOrwU6wleBEA6.DTJKTRSGVslAxyCBnP0a9R9WBSQYOQDEZ.pI3zBEo0cxZpzzn0bXkxrsrGaQTk44c6jvG6OXMY8x4TpIEJiaozx2jFyGOCZY2x7glTUQZCWJhzjqE8AbFhKSAAiugAZg6GkiFpgU35bM94AF8nrYnED8WAMAR5DDHiAF6dKYjfKeabAOd6mDctxGA584IAC04JMRHybZU6k4XIuoti0kT.4gf4oNRSHSzGaQARaWABm.1osj4QfrQPxo7oGTB-u4Kr1ICl1aGfkGIqqykNH0faZDUHXqquvju3rGSOCosfuVEBJRqPCMsKg0VVhemZMyCE4I7TkngKW3N64GSrCsxm8t15nMf4Escax9BWluxbtVfAbAVIf7ohs707ZT4HMUZ0RkPAoxSQjyQ2Im7WAqRQhhB05zC1XN4Hc3AYkvNdCw5YBVuHiOWBw56Ej2HGZhi0tERDvuxJDi80OHIXmxPdA9B6LzMnyOWCU8OD0fgGOhhY7c33LzPnYFMkvGwVoVEEEGvMgHbVsQITjcQJzkAJSiPIMPlYFKRRcSvQIPO3kMGrgC9EZWRJBC3gQdV-vAhCDoEzzSFz49Z3tsgDawN7doJkM3D818wX7Xde3uS7QiL6AovpcyylG4oWjVu9SzFuLi4bdvC0GwTxjPWNA69OykAKhUaPotS9dqNxLfIHBJ1hgYAeumxuO4CwJRcOoAmwcCP3CLW4mtOBpYQOZjm-WHAIRm2Qn8FB2UsAtMsDut0RQIkhkQb08c0AA/"
+  },
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 300,
+   "feasible": false,
+   "startedFeasible": false,
+   "firstFeasible": null,
+   "bestGap": {
+    "worst": 0.0828,
+    "total": 0.1366
+   },
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 79,
+    "skippedForBudget": 13,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:infeasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:infeasible"
+   ],
+   "kill": {
+    "damageFeasible": false,
+    "constraintsMet": true
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7592997 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 72%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": false,
+     "reliability": null,
+     "reasons": [
+      "2 golpe(s) de dano mínimo somam 49233146; o HP com margem de 10% é 54117294."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (8813720 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 63%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7003070 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 73%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": false,
+     "reliability": null,
+     "reasons": [
+      "2 golpe(s) de dano mínimo somam 45915058; o HP com margem de 10% é 48682183."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    18216505.6,
+    28558673.2
+   ],
+   "wallMs": 5790,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4micQlPC.XF..JCoFiYA-IvFm2icFwfu5PgQL5vhyjDTt.-BOPMAHnsBr7vowzqbIOJbmAuACyUB1HUjibFE2izPsvaoD4mw6MYg6DvaaAoIeNYniRKCTtemzSLM95McgIGIZ.0hRJo0jEbR3EIWB078doOicSJPFgchkmbsEYBmFAEisdwRbaMYWzgKp6n0ceXJ6PpMB1CxPBFjBKlqWZckflIsyCbpNnqfZ4GOYJo6uXZYlMMh35eWwMQkWSUiEfwukhWgZKGbW2TBaFTAWXsxa8KhbBKIgiBZNwqGEbpWU5XFJ5FYwza7vFIDtvaVBUGoZq5T.UTUSAWB1Q1jApdIaWDrU7X1VWjDuXxUT8NInEdUN7kSWNvCTYNjXuQpURKbVCZQDEZhNdpW7rfGm3bd1xbaIORSrowKiIHYtL2DwcYAow6CkkBET8fwg66VQj3PXgV05hEfDFlED1gE9pKNkluVONo3CyKD4N4O5r0UJJxizKO31g797n-WuexRMY0EIzjfnlVDqOE04tQqbuYwrOWhxfnDTi3BYdT04zJAlaqJl06MSQiVImmDtZ7NjILpHIDzIN6fz1imaxvB5R9fMc6MCu2XUMvKeLowgtlWTK1Buv8wbxVVgxvNy.r3y9jaJAxML-D8N5et23QJQxDratjPqJB1GBzuCL7oz.4HTA..AHwwCC6BmmaGF5hQoA9kwiBUBydTYegGzBO4IikkwUBLOQwRJI7Ei5xQwQVKgIxEGiiBAknvJ52wvxDCXTc12wnj13gjzF6XwSVjAm3EL3IAggwTxQA8z1T9YiCYECiBmkCAASubiCQQJZ0CHuMGYU8YrS6yoBya8b5MyA5XgDzoqf59gJfe-r0Cx94ECKz28QETBDPuPV.V8P5fxbrEeeJcziAJfm-a.QJ4BQHEIfQuZJ24gEFjEakucgT5EYCPNgWCcFgCBBiKuqAp63zwPoEgpCkhUDUhgq4WAABedggTLjvr2KeKgsDoEDrENuvD.GByBImDAGCkh1HoCQc.lJxG5xPmXNg0wAZkLMMgXOWRggMy7ECfUyAzQPybjAtg8A3AcOXpgJeesgTWN2MECxMBvp7wcVPRsXgST2JXo4tgSJs4kAAOSkLUfjYIScYi8lQKCegWBugqOnugBCCCFY2nrlPDC2USDjy2owexBAGCVSXv4KA0BHZTwJNYWIrIkHqUqcvZALJ6DIAJFUIgUSS62K1vY1cnxEkggRHEEJBjEAkiXqML2QIWgchZJkuwYN560iBEkeu49qyZ1MUvPpMBD5ky9pk3sb4EG31IBCQhIBrCFLkQ0BBAApRElh4iJJWKpMGeFy6cG9EQPeVwASkI-tYZJ.gdFEJXCIBBFQ6jJKnpvZ6qADmJKQNcZJeARkAGl1gYKucgDILIgRmhQECAAmivKeLQtExOBOAkEDpGAiGrPUxJB1HYIIAHJQCUFXSuZiQBVFEJgSkCIlAQusGpGIZobRPCnvGJRZDm5rADgi-pwRvhvmbsvCpiTrB2HrmYUgHCP5XXEAA8xNoYgxBGZqp2iS1AthGW0cYiSZmvm-msY.P90A2triQI8mRv5wtQAirVETc5LN2VUCEMABHxXzogUk.TVlDBlZYViwQZnIAgECAuiJyV4CUPHM0VSRj0EPn8bwgJeXxgsEMMAiA6iGo3lhSkowUAQHCWwRsVZjEkBLkCNlGcnrICMsEJECIe6JO.BkXZDjs20H0FPKoxjH5M2CPgEg8agR1yGPQTgT9EmRsQAYJZWyBmZAhNmrwabVFeBELy7dtISRhUSVUlAzSCBtLoZtXtWACRn2QMqckn5givqaYU1p7Tv0lz-b2QDBJpwgcae.iDX7Om-v-XB5CiG33gc-R0n9MGAODwJNwDxCIMgENPSBjCeB1gQgJAARXQPE2N-iRDPXsbM8GNcAC.tU0TiHeLAGASdk3kFAAdH5MRplDKZrLLtTAIUYhXscgAtECFEDd-UeLJEplTZggTqaSOPcQU8j4GYVix01IBlMEJnV3G0WRjD-ncLQWR.TN6TCnq5ugZJ7FecSfkGIRLXENDoQ6fda7NpEs7hWyL5iOAGf7llJeJR32IMsMfKeSC0AZcyMo4IYSjGrwsfl7LVgwZ5Y9UVqedyBHKlPqpPsZaiXwGwKSKeSJ2MxOqa.bjL7qEZDwKMAkSc90oLa1gUkoJwThL421R.gmY54hBroNbLBnMsHW9trbu2dvbazMMb5yC8BCbgHiXoINehyBBrd3QFwLggwe7t57vQLj8EO0MY7S3hOiZTiAbetJUZsDaKRPetKjKywpbEYEyXEDA5AM4u9h965WHikUDEm0CDZo5Bus4UPkE1gMXfR4K78e1zvnvTeWc0gg-rQ184bAgsxfLQCfd-5JNTOh8F8nnbdPf2U.gNTKyTPxX-Ap.lAv9OGY0yuNnjwtBsAkV95UM3vSgpACoQ6jBe2soOq2RnIBmfICBKFhgYAItMxcxYEol7UApb2EryBrKMQ2mXQQmbMxDdrDgAg0rWXyD8B4zxoAA/"
+  },
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 680,
+    "unique": 679,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 184,
+    "skippedForBudget": 44,
+    "afterSearch": 17,
+    "unique": 816,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8100547 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 93%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7542459 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 95%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (9402867 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 84%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7471186 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 94%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7034131 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 86%."
+     ]
+    }
+   ],
+   "audit": [
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4865).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "steps": 4,
+   "dps": [
+    18216505.6,
+    38176497.4
+   ],
+   "wallMs": 14835,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Coelho Macabro-LT",
+     "refine": "9 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: vazio",
+      "Enchant2: vazio",
+      "Enchant3: Variação Física 1"
+     ]
+    },
+    {
+     "slot": "headUpper",
+     "from": "Diadema Temporal Lutador",
+     "to": "Diadema Temporal Lutador",
+     "sockets": [
+      "Card: Carta Alga Brilhante"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant3: Orbe Lupino - Bárbaro 1"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "accRight",
+     "from": "Cordão do Inquisidor",
+     "to": "Cordão do Inquisidor",
+     "refine": "0 → 0",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: Fatal 3",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant3: Orbe Lupino - FOR 2"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460020,
+     "shieldRefine": 12,
+     "shieldGrade": "C",
+     "shieldEnchant1": null,
+     "shieldEnchant2": null,
+     "shieldEnchant3": 310857,
+     "headUpper": 19481,
+     "headUpperRefine": 12,
+     "headUpperGrade": "",
+     "headUpperCard": 300360,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant3": 310503,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": null,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant3": 310484,
+     "accRight": 490181,
+     "accRightRefine": 0,
+     "accRightGrade": "C",
+     "accRightEnchant2": 4865,
+     "accRightEnchant3": 4704,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "headMiddle": 410093,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": ""
+    },
+    "options": {
+     "6": null,
+     "7": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "40": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dQo0mLsmCZ.XF..JCoFiYA-IvFm2icF1PC5PgQL5vhyjDTt.-BOPMAG7kByAge.jDOpsg4luYC4ALJQHUdSOJsUTaLM.xnioYxrpsQTaIORS9qgPibDoxiDoO9poCgh41iedEoJO16bNIsxCCAPEIa.SGftIUSaNI.yiYhYHTlJ2g6MJ8niWBKHKTo.xgGYUASPx3BFiWwR6QZMB1Jxx7ZHo.mGXxPBFjB5mGc2u61pQ7Z2RZdQKUwWlRH.rEgDEdFklIRH8FsoXhUw1mecYwlhWgZKOXsxa8GhbBKIgiBZNwaFETFuX5QlJ6lYw7mtl5XpUFQahmgVP5RCFWD1Y1jDpbeJaDrU7UNVWjD.YwklRPw0hqR1Q0jUp428FNg1NSNgXaJuMUDfGUAxGYzXaMYW72vVW07V1V43sW1G0cd227dVnkgN5Ik3ads08E4-D-ptt3DRpAU8GhMWrowZF2LS9g8HGAKMOgpLwTexj8IOMVUNDsN4GROYRHwxZRFDYAw6SjZxQVThrbI.OE3gI3w3sUTGLMo6owT6MjZjFHKQdMHM1TI3E6l1Sc04tR6buYwrOWhxftw0gfXZYujBLXblaq8t1GMSTsREvDGYOLkWOroya-RyAq3j4AG2M1j2ZZUiFUjatWzbVlVlxqsWwrIJ5VkOtQWZlujF7ZWuzZ5ui4b3y9jaJAxHb-D8KO4djJHdAlDEZv.wr.okHUYFx4IjujNnufxSHiVmR8MAgugZpmpheYUKAPZMIgVAcnUOHoBswTuCIpJMFASzkMESQxxIXcUMEFSoCMRBoogQL17y3dsL8QyD-Pk9sJ4M94I8A9D8ElYwNtxBbyAIIME8UAPLD5-WIgmBAogZpAgAErm4gkEC7dAinjBmHPhiWk6xUAcmfq-SYyB8p4AeOiIBICwBgO-i-IEAC8BAhWFHYgERgjAJPkg8BqD0GL1iDfQeZw8GIOQRAoE8AoDiD-n3MkK8QCaxiNSLuQJ8iMEPmwdhnCwBAgxOPVA58oF4H0CQIRSQqAGVYVcLAAAvOwQJlzQN7OfFQWB0C51iMvLROjc5AkTBgVhSQ6j0BICAykJiu6AOHmwaYWNhFmGQF3LIwQlb5iBPqZAZpYHz0oWweAbhVEP0wPfAOQIIm7GCKEmAqNv6xPPo2LwJIYmPziWwJEHcSAAHIhHOIosEeuMReSoFBPQLA3RHEX3QOJWh1sbQz3PphPKJAT6nRiQQBgHl77.CgNAGO58CTWFiKyehhlRkP2QCyegyACRVCIOUweUTfIxNXJ8OpIIERxEKb4xAJJ76jDTkCFoHIWRtLsATG.tIgRJBnifasbcgn3y2TAP.f00QjLqfXOZZhaFQNIBCPhIBrC9OsQ0WhAApRElh4h1JWPpAm.ER6cG9EQb.VwARCNQdYBp.hPH8JXCIWhFQ6gNPPm-WGqA07nyQNcBpeADkAGl1isIhcgDILIgRmhQECAAmo-c.LR3GVOBCQkEDpGAiGrNMupW0Y60IAHJQCUOPMewSQBVFEJgSkCIlBkusAZGIZobRPHPvGexwiF5rBznS7ZwRvhvgXg-X5wRrB2BnmYUgqjUFkXELgkJNoYgxAOe62OdS1AtgOW0cYdSLmvgwWsABmD0BRqniQI8mQME0tQHSj1bBMJdzuZ8qoEIYC6M8j3RApJGAPNaYqyw-FggXOQBAIEvdESirwEoGuZoxkjHoH-P43hATavjBYIYYBEB1H9a-bClJRgoAgCUtgjYqwBJIIPIEKrW4w2QDZYISIESbzqd8DInzYldtoPoc.VQAlwKlsEfAJA61AmnkMegnB4F1IrYgAwdy3k7MyBCLtXhW1OK8CIbVX7aQkginUsZKB5kECWdI7aO6sAEmAcgZU5JPzBBQ3M3pizllYcHrh3sBGCTTmI7MtD5HMOrJw3h2jKEGOobIxhlZ2HqP4b3gSbgqSEQZF4SB4jmE8DrAhASAAiugGpNackiFhjEy5hNJ4AF8jponEO8WAMB65DEbiALaWKYjnL2VLc2m6mBkoxI-N8QIAC0QIUSz1zakskjnnOAvc0kE.4hz7-0BdbZTwaQBOd4de9eNosjGH-O4WgViG1v0mOfFLdAyQxMy3U-IMQBVJIaNIh0f7X3bQFWvcdFWQkcEBTvXK98ShoboZYABDKrCVNCZkBxwRin.Kfr1zrdT6GEAbSNwFg3z4wt0cqIB.k.yjoFfAbApJz5IjU5U8Zr4tPIYkRkPAowCT11-YwtbWBSSgnBCU3Tz19N4EM3APEeNdDvZYEllgH2fvfb.79n7WZhiYoYU9yueJeh416HIPGsPdAXAuHjBHf3ke9AuPwIHQwQcGcriZszH9aQ3jYG0ei39pWhzbTZ7Fdbmt7BCbSWDf8Z5WE8kUDE20CBdo5O.s45sWgMJrL46Bjxn286ntA7.b925pGJ3Ohb5w2CFeq2OgEf7-wWbOWK2Itngj2dlRgpz6AXOBeC55f8eu-NG4Cx5lcqvHhaDYKYrHyobvemJSAFQP0d3Kq2jVf8SvkBAhKwwMA5WpbJYsCUCDqBaf7ETHEZVGIbRPt4TdmYCuQBrDgLQqbhRtPaaAA/"
+  },
+  {
+   "variant": "math",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 714,
+    "unique": 713,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 464,
+    "skippedForBudget": 52,
+    "afterSearch": 17,
+    "unique": 2016,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 66% (menos de 100%): um golpe pode errar."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [
+    "ITEM_UNAVAILABLE: Casaco Pirata está na lista de itens indisponíveis (garment).",
+    "FIELD_LOCK: headUpperEnchant1 mudou (29085 → 29088).",
+    "FIELD_LOCK: accRightEnchant1 mudou (null → 310916).",
+    "FIELD_LOCK: accRightEnchant2 mudou (null → 4816).",
+    "FIELD_LOCK: accRightEnchant3 mudou (null → 4704)."
+   ],
+   "steps": 5,
+   "dps": [
+    18216505.6,
+    54689881.6
+   ],
+   "wallMs": 32925,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Escudo Ilusión B",
+     "refine": "9 → 12",
+     "sockets": [
+      "Enchant2: Fatal 4",
+      "Enchant3: Fatal 4"
+     ]
+    },
+    {
+     "slot": "headUpper",
+     "from": "Diadema Temporal Lutador",
+     "to": "Diadema Temporal Lutador",
+     "sockets": [
+      "Card: Essência de SOR 3",
+      "Enchant1: Insígnia do Talento 8",
+      "Enchant3: FOR +4"
+     ]
+    },
+    {
+     "slot": "headMiddle",
+     "from": "Correntes Sagradas",
+     "to": "Correntes Sagradas",
+     "sockets": [
+      "Card: Carta Limacina"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Bárbaro 3",
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Casaco Pirata",
+     "refine": "8 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: Fatal 1",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accRight",
+     "from": "Cordão do Inquisidor",
+     "to": "Cordão do Inquisidor",
+     "refine": "0 → 0",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: DES Primordial",
+      "Enchant2: Pedra de Crítico 3",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Fatal 4",
+      "Enchant3: Orbe Lupino - FOR 2"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "headUpper": 19481,
+     "headUpperRefine": 12,
+     "headUpperGrade": "",
+     "headUpperCard": 4925,
+     "headUpperEnchant1": 29088,
+     "headUpperEnchant3": 4703,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant2": 310509,
+     "armorEnchant3": 310506,
+     "garment": 480174,
+     "garmentRefine": 12,
+     "garmentGrade": "C",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": 4704,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant2": 310632,
+     "accLeftEnchant3": 310484,
+     "accRight": 490181,
+     "accRightRefine": 0,
+     "accRightGrade": "C",
+     "accRightEnchant1": 310916,
+     "accRightEnchant2": 4816,
+     "accRightEnchant3": 4704,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": 4863,
+     "shield": 460014,
+     "shieldRefine": 12,
+     "shieldGrade": "",
+     "shieldEnchant2": 4866,
+     "shieldEnchant3": 4866,
+     "headMiddle": 410094,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": "",
+     "headMiddleCard": 300363
+    },
+    "options": {
+     "10": null,
+     "11": null,
+     "14": null,
+     "15": null,
+     "29": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "41": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMvlYoV0sVKv54CGkwILM5vDhqAaADM9nCqMgoMa2FhXpFpHCzBqtWTInCsGAhnVnVKvXKhcMxuceUqveq6ba2FQAEpWvAB71Bn3KmAAXTYozwWBGZ00-G02gEqfTmYjeANJTwgQLGdIAHEEQ0vu44WmqyR3FhkHVjFIAOyyUwgZuZtsd3WbHO1MzpuoAVSGQwIJlm3Cc-cnWBnc4IxdLlIrIDXG-nHnbdR4s14F33U9nR..JCoFiYXfIvFm2icE.vm.Qd4fHMYo6vvwTjzFe643gQv6PowtqbN22j7AeACyUB1HUjibFE2hLuYU4oWhIjDqeey5rIiFTioYwLpsQTaN2RTtqgPibDoxjdt2lpoCg25lnujEoERRznpxTE-ve0HPtIUSaNI.z8WJf5MKOUnaDooHyVB-6wSpOi3GYUASMR3A5toxhbOA.mGTxu7ZHolkwHUgljthdkGQ5mlPlIswyeZYD2XUHkATwTj8HpbkBeJWnBaFbAxIxZLBaZ3bmXFaBktZ5a2SAqWkkwTnSLmvDwbF8VMLW66ZSAjZsEoiCIFk3Dwdh5m1fVGV7q1jDlfWlDVSAnWBaOy78PsA2RUwsGNdo5lYFQVBqAaDVvlEHEgLN80low.WFd2tTrQtjCBZJUQjUIa1zQdg0UCpp2Whdm2BdpUTLjNc0RlAMRmEtpkrndkYfV9225vRf3vZ9XV1pVfXrWDX1HddUSzMYDFvQDh3jUFmwrij-3g49PDweZ86MJRdi0vYPDhgCjDoKSEERFJ-DJVTYA06SlFphEfC5lELNs3g1alQ1TjTbIfO03ggX0wjplI.LpKBRz1EqcYIHy5LGOC2l1Qqx.dnrmMKyFocL7cNIIX63UhvGyQ7WRMEfkG6MSRcREvDGd2oGO1bzuu3bvMWU71j.VIjVM5bYzB.F-sOxYPsgnVWTu8BsdOwnbUlrx9sR6M3ztmaJAxKHoX9t7Yx53QJQxDHOeaiQdT-sXgi1wwDdMDX4AfDAILoAaBpIRmFCgG2TCIFQHJ1Kh6AbME7giLlaJLOQwRJIXEjTxQwQVKgIxEGiiBAgPvIz2wvxDFAVrEJvbCeDveCPEwF-XyAxYwB9V-L2wIIME8UAPLTz9rCIEwECRABogQAAl0ziBIECCeQIK6MDMM-DEtJ1ioA5KA8BkxkD1TwA8dEKC0FgAwbAsBQIkF4CBCsfOxAIjBFQW-EhmDyGUMPrEP.F8zgMOIaQrBQJ4BQHEAg.eZIT4gBdjEak08gT5EYEvFeyApE0zAECDE69UDPxwXgfQJBVFJCoAZcRVwsAAC87BAlnLg9sz8VBYHQA3WIx9bH2IbkCKMGBxFJDqPQEgaDKTuOnsgz.IBpiczUWYZA08sjBCNi2IEmpkAGnwfvbhbB4BuAsUAzAgC45jCBNk3YwQMkwCoMCQpz9qxeBJAU4BRS2BIkniQAA5KosJ1FggDxiLyVAoJ6BYG6CEnu4l.HBzNDvZ.SE6okDfuDApBAGAVUAf4KA0BC7PwJNYWIrJBGGQ2UA5ALJ6DIAJFUIg3Sn4hKjoZAp85PhDIRHEVpCTEAkkAaMKuQIWgchZJMuwrM-60iBEkHeb9Szj1SYAu5MAEEYyrpM9sD5.E4NIBCBRbBrALL8Q0fhAApRElh4ghJWPpVmGEV6cFdEQWBVwASqPIdYdAej77PySHOEQ-CKh1CZc-CBtNUDwpCUga4TK8DPIANLrHEZi5AGQWRAgNCgIEABNYBz8WhRN6cCNhIIrSMBEKWPZIT3qF34QAOSgEodea80kgCqKITAlIERKA5dYAyMQDRmieM-CMQS1EHzWPXAV9zgjfAfAfIB6yrl2B3mYUgFjyGUXEPQ9JZoYgxGeZGouIS1B1meW0cYITvn3ioWsJB1D0DZq3iQHcmQqF8tQAKqNnTp6AphVUCEMAHGZVnogUkjBgUTONZYYiwRvnIAgECOeiJ1V4CUL3A0myRj0AQX8bwgJbURgsEMMAiA6gJvAShSkowUAQA6WwasJZkkkAvkCM1Y8abIBssEJECJ97P2.BkGFhSp20H0M-KoySCEm2CPgEgfagTbyGPQTghCQkdsQAYQFkKhmZAhFOrwo62DTDgAwADO9aQkgSiEzZKAjkEFOXoj6N6sAElQUo..BJnzBFI4chZJyznUYvnR9sMRGOjhYwc8jHGqMXNo-Rvj5JYKCbI.xyj5yaM8YY.SbglSEQZHkShljSE8DrAhASAAiugAZPaGkiFpgUn5bNN4AF87ponEO8WAMAB5DCHi-dYnyNWxBNgHS9TAOUYmAUigAtECFEu862VLJIF4LZggRhaSG-cQH72zluDiZlNIAgvyO-efM0WRjCXncLQXxA6IGTGfiVugZICmVZCfkGISqyn1wYGAS.IG2CNaVWfddcHikcHi7fWqgCSjkYEZYJBz9BFoAm5kYJwR2lJJARk.b02rCszm.Wpbz9cUOL4yg-SHZV1KvgNgUkz8kTmd6Vs.81mSPaIyHgUYBIB6weEWdrApJQTgg6XZ86Dm8BObgHiXmuhwcsCKywCHMPodw9hzDlMwwqVCKB13PEvRea9DkLzXHugLgXF5gTuHxPegXH4EjoYKPHNd1c.5qBtJrpsDaExWBuqbIB2801mlfaRt7HSbSEQsDvg7ysJlIoGIPoECnRycDZxOdCLLAk3BjxgPy63rg2BECJ5pGZ3ug75wusfR62ugEcHLzvWpTEL5jzfPBH8-qqhQX0CheBclzKl4HexZd-FsLEWzePC0GwDxVO.M-ddDEtgKg0Y3tNe9Hql5uvICBC1hoeiOtZhvhYEoGHUB8-2FGOIpqMRmiA-In7MxDcgDWHAfhq2pvkH4DZmzQA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 127,
+    "unique": 126,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 80,
+    "skippedForBudget": 36,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8612956 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 84%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8019566 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 86%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (9997658 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 75%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7943785 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 85%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7479084 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 77%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    23304627.4,
+    36204989.4
+   ],
+   "wallMs": 5738,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGKQAdlkphA3aLfYH5q2pdqZgLdQAqkMhgQTLNuE5x4usCu1wRq7W6Q2QHuD.uPP26jxNE4hOel6urwCSFQLEwh.ReLNtE4bgvF8CDfD9eUYWdf34Jx5iffdgOQUDP0Yd0tmHbRHwvABZKA6jqRwtiibRZjOftUB8LYdGMYdh2dNAUGPOszzIlBp1vLZpFmR8WMQ99kO-aQok0aRSPo3iwKYWdBO0HRuLEpDwNQ6Tt2CMAzCgCR2O4UttGMbZwHUzTGNPfk9EMmA6jYnhS1gtSNIshSvykWZhP0uzNMciDnOE8d3IcvjFO8wS2BiMjqSkYj.H00K0GpYz60iR8YqpJgrIOMt0LYJREEQLJuHQ4j9Oy3L4rPYrGFbfcEpATtnSoKg1CtPK-yiWiQCwerGsYNLpAy2oOoamtGE8gSon4aRuM6obPKksbeEmwams8pSohUuqqCTKAYjMZrdJ3dbNu27qbwoXqcmHIp10YFREDsJl7B4I5QUYdAqQQ07jH4Yd9OOMAXqpG78wiPgciiJ6-tevBmzC6oVO4WRwf.vBPPeg4omMWZx1.pHPMBjc0b22Dschzzodi6ppOMJxajU-cxlWSsTh-eGnCeCw6npxmSFK7IzLp0YkjEqRtOHWz2bGQXyOQHmwYM-nrHM9jeHyr6.Y50YFfsuoZdU8XRkhHKsmV6Ddf5g2SprJjebl9WAX7B0SBiYX.H4Xy9btugShiHW1bGY0SDqcDncEX3Rn9wOmB98BfhgSF0CtK0sMLChQD7JhECoXk6lw9BNmCdwRBS7FlnIYIkkdiRc4oYIKlQEYiGxRBwSToU87YIEhigF1iGrthPDrvA3iYLve5AasYC2nvS7YSEGHeKBXle0frEQTBwUQK1wQACQLcQSHBLPwQ9xgzFH3EmQ2VBeXXzfJmQXK8FeHEz4vsAr-3jfwRPvBwVWe3iAiMEc.E837X0-t-ZusQF5dyuEA1.78b7gngFAcQR9C7UjbiAQWMQGS53BPkJYo9sG4LAOCXEldUCjzvngfQJBSFJCoBpTB9wsAAC87DglXPffso8VBYHQIHWIrdeH8MDuCFMGBMFJDqPQEgF86TiNzqfaeIBphAzIWYZAucsjBAZj2cExpkBWkfo3WBbB4BuA4SvTAy89bgmsfsYIFiYDHH3g40ezYvCUnsavRxbB0TZxIAAclIWo-GwQk4xCFKgKE9AsBdBUXHPiiCFYOjrqPLCOUSATyOvYggDAqrL38FAaAjtR6kmsLELkyDNLlJXsgTk9BkCkiqEQKJI8VGa00vY9cfxEmojiCEgxiBKTL1GF7cEzReScgyXYP6C8mTgiSHXCetZM6mOXr0mAR8ArDzKSopODSzCILvqQWEJdgjWHyXIhoiCABSaJLDxBUasdSf0CJl04P6Ig.97iglIZ-aw6A6GDyIWuEQiCKh1GBaPLer1UBe1HkgB4wK8BDIANIbEwVc5AGROTgitCgcEABNVeo9mhaJiRCCBkIXSMBELWWpKjNqO0QQAOSgEoSuFczEgCqKITAdJURKAhdYDSMQrQOneKPJMSiyFN3WAHBFfTggAg-E3Fe.zLl2DrmYUgHDP43XEIA8xDoYgxCGZqp2Ki1BtiGa0cYKipnvh-usE.v90DWpriQE8mQf5wtQAirVbAsK5wWdsqosIYACISvnRAVJGBLPScyyw7FghTOQBAcEBc0TkrwEoeOVoKkjHoEfYE3gwS8qTBYIYYBEB1ANZvHCdJRgoAgOEtgzYazGJIF3cEbKM4vWQCZYI6JUSN1HgCDI2yHHZtoPoUeVRjFPyZsEfAJB43glrkMegnBn4qMjYgAwCyNmJMyLCbNXg01sGmHABgi665MkpOFFRFSUCNIIC0uhW1e1YFJOfZAGoaTfmCG.hp.TmmtJ-V3f9-YgOklnKB.pH7IPfvaX.gD8HUJIffRBr9bTf2wcA4PUk3APGogyEsU9oGsJ4A2LCUkABFdA8TY3.JEK9ex0z-rVwAL51WxOIH4sAYBJyGCnMeGwJkUtiEzWWXamAQtxKvD84IAC04JMT1z9R46kSmVPHI00kCe4hJ39ndQrVjJqQDKaWDOzuDosjGBuO4WgsjE1b0mKPVzdBqT2K8yo-IMQiWuIaHQ7uq62BBaJR3Ct.6nEcGOf3bKy8SgfqQZYE.SKrAxIsZkZRwQwlGLXnlrL1xzFWD.hl-LwygajzuQIjUZ91IDjLUS.A2AqSj3RBxmJlT3w8dfdQjIeBRikiTnu1BHWsBUihDCcJ-H2pPyEzHYkYNdAbZYM5lgm3ds7f2z0PbG3czDG.SgvAwm4DEkOGDQ4cgwYPd0D0HoYNnsHZYD0Q4PR.AnaGGdlbImxMSZ3kyU6bBWjkX3rSkyssZPBd.fGlLBxzFMhEPvAEdcrAJSKLiLaBBs28g3VcWHKC6wGPvm8FdxOa7333lvLOaRwf1qa.VkA0XkBlpBJWrQbBNo-JiJMgZcnggKfpT-ZT6BVNGZMwlG4ov9OS8M5ptcoIdOs4kX9jUc3-Q6LYCoLaO1e2ss2u2Vn7PwShYYGACLxY.4WBKJe1ASOzgpjiKy3EDpl1LDmzMVn6w4CINK8o-gi3XFgFelgEVNCKBEj0hdH7vGgA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    24421061,
+    46772970
+   ],
+   "wallMs": 1913
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 105,
+    "unique": 104,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    23106318,
+    43858255
+   ],
+   "wallMs": 1866
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": true,
+   "firstFeasible": {
+    "evaluations": 1,
+    "unique": 89,
+    "phase": "baseline"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (10614673 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 93%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    26284189,
+    51591318
+   ],
+   "wallMs": 1907
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    22705838,
+    43443815
+   ],
+   "wallMs": 1946
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7940662 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 95%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    20005731,
+    39171993
+   ],
+   "wallMs": 1886
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 247,
+    "unique": 246,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 80,
+    "skippedForBudget": 36,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7592997 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 72%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7069878 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 74%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (8813720 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 63%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7003070 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 73%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (6593400 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 65%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    18216505.6,
+    28558673.2
+   ],
+   "wallMs": 5483,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4micQlPC.XF..JCoFiYA-IvFm2icFwfu5PgQL5vhyjDTt.-BOPMAHnsBr7vowzqbIOJbmAuACyUB1HUjibFE2izPsvaoD4mw6MYg6DvaaAoIeNYniRKCTtemzSLM95McgIGIZ.0hRJo0jEbR3EIWB078doOicSJPFgchkmbsEYBmFAEisdwRbaMYWzgKp6n0ceXJ6PpMB1CxPBFjBKlqWZckflIsyCbpNnqfZ4GOYJo6uXZYlMMh35eWwMQkWSUiEfwukhWgZKGbW2TBaFTAWXsxa8KhbBKIgiBZNwqGEbpWU5XFJ5FYwza7vFIDtvaVBUGoZq5T.UTUSAWB1Q1jApdIaWDrU7X1VWjDuXxUT8NInEdUN7kSWNvCTYNjXuQpURKbVCZQDEZhNdpW7rfGm3bd1xbaIORSrowKiIHYtL2DwcYAow6CkkBET8fwg66VQj3PXgV05hEfDFlED1gE9pKNkluVONo3CyKD4N4O5r0UJJxizKO31g797n-WuexRMY0EIzjfnlVDqOE04tQqbuYwrOWhxfnDTi3BYdT04zJAlaqJl06MSQiVImmDtZ7NjILpHIDzIN6fz1imaxvB5R9fMc6MCu2XUMvKeLowgtlWTK1Buv8wbxVVgxvNy.r3y9jaJAxML-D8N5et23QJQxDratjPqJB1GBzuCL7oz.4HTA..AHwwCC6BmmaGF5hQoA9kwiBUBydTYegGzBO4IikkwUBLOQwRJI7Ei5xQwQVKgIxEGiiBAknvJ52wvxDCXTc12wnj13gjzF6XwSVjAm3EL3IAggwTxQA8z1T9YiCYECiBmkCAASubiCQQJZ0CHuMGYU8YrS6yoBya8b5MyA5XgDzoqf59gJfe-r0Cx94ECKz28QETBDPuPV.V8P5fxbrEeeJcziAJfm-a.QJ4BQHEIfQuZJ24gEFjEakucgT5EYCPNgWCcFgCBBiKuqAp63zwPoEgpCkhUDUhgq4WAABedggTLjvr2KeKgsDoEDrENuvD.GByBImDAGCkh1HoCQc.lJxG5xPmXNg0wAZkLMMgXOWRggMy7ECfUyAzQPybjAtg8A3AcOXpgJeesgTWN2MECxMBvp7wcVPRsXgST2JXo4tgSJs4kAAOSkLUfjYIScYi8lQKCegWBugqOnugBCCCFY2nrlPDC2USDjy2owexBAGCVSXv4KA0BHZTwJNYWIrIkHqUqcvZALJ6DIAJFUIgUSS62K1vY1cnxEkggRHEEJBjEAkiXqML2QIWgchZJkuwYN560iBEkeu49qyZ1MUvPpMBD5ky9pk3sb4EG31IBCQhIBrCFLkQ0BBAApRElh4iJJWKpMGeFy6cG9EQPeVwASkI-tYZJ.gdFEJXCIBBFQ6jJKnpvZ6qADmJKQNcZJeARkAGl1gYKucgDILIgRmhQECAAmivKeLQtExOBOAkEDpGAiGrPUxJB1HYIIAHJQCUFXSuZiQBVFEJgSkCIlAQusGpGIZobRPCnvGJRZDm5rADgi-pwRvhvmbsvCpiTrB2HrmYUgHCP5XXEAA8xNoYgxBGZqp2iS1AthGW0cYiSZmvm-msY.P90A2triQI8mRv5wtQAirVETc5LN2VUCEMABHxXzogUk.TVlDBlZYViwQZnIAgECAuiJyV4CUPHM0VSRj0EPn8bwgJeXxgsEMMAiA6iGo3lhSkowUAQHCWwRsVZjEkBLkCNlGcnrICMsEJECIe6JO.BkXZDjs20H0FPKoxjH5M2CPgEg8agR1yGPQTgT9EmRsQAYJZWyBmZAhNmrwabVFeBELy7dtISRhUSVUlAzSCBtLoZtXtWACRn2QMqckn5givqaYU1p7Tv0lz-b2QDBJpwgcae.iDX7Om-v-XB5CiG33gc-R0n9MGAODwJNwDxCIMgENPSBjCeB1gQgJAARXQPE2N-iRDPXsbM8GNcAC.tU0TiHeLAGASdk3kFAAdH5MRplDKZrLLtTAIUYhXscgAtECFEDd-UeLJEplTZggTqaSOPcQU8j4GYVix01IBlMEJnV3G0WRjD-ncLQWR.TN6TCnq5ugZJ7FecSfkGIRLXENDoQ6fda7NpEs7hWyL5iOAGf7llJeJR32IMsMfKeSC0AZcyMo4IYSjGrwsfl7LVgwZ5Y9UVqedyBHKlPqpPsZaiXwGwKSKeSJ2MxOqa.bjL7qEZDwKMAkSc90oLa1gUkoJwThL421R.gmY54hBroNbLBnMsHW9trbu2dvbazMMb5yC8BCbgHiXoINehyBBrd3QFwLggwe7t57vQLj8EO0MY7S3hOiZTiAbetJUZsDaKRPetKjKywpbEYEyXEDA5AM4u9h965WHikUDEm0CDZo5Bus4UPkE1gMXfR4K78e1zvnvTeWc0gg-rQ184bAgsxfLQCfd-5JNTOh8F8nnbdPf2U.gNTKyTPxX-Ap.lAv9OGY0yuNnjwtBsAkV95UM3vSgpACoQ6jBe2soOq2RnIBmfICBKFhgYAItMxcxYEol7UApb2EryBrKMQ2mXQQmbMxDdrDgAg0rWXyD8B4zxoAA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8055050 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 90%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    19375335,
+    38383292
+   ],
+   "wallMs": 1591
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 171,
+    "unique": 170,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7500097 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 92%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18363817,
+    36286141
+   ],
+   "wallMs": 1588
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (9350056 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 81%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    19544055,
+    40562803
+   ],
+   "wallMs": 1610
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 101,
+    "unique": 100,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7429225 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 91%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18030141,
+    35672206
+   ],
+   "wallMs": 1696
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2",
+   "start": "original",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 171,
+    "unique": 170,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (6994624 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 83%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    15769180,
+    31543884
+   ],
+   "wallMs": 1580
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 247,
+    "unique": 246,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 80,
+    "skippedForBudget": 36,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8612956 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 84%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8019566 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 86%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (9997658 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 75%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7943785 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 85%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7479084 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 77%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    23304627.4,
+    36204989.4
+   ],
+   "wallMs": 5162,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGKQAdlkphA3aLfYH5q2pdqZgLdQAqkMhgQTLNuE5x4usCu1wRq7W6Q2QHuD.uPP26jxNE4hOel6urwCSFQLEwh.ReLNtE4bgvF8CDfD9eUYWdf34Jx5iffdgOQUDP0Yd0tmHbRHwvABZKA6jqRwtiibRZjOftUB8LYdGMYdh2dNAUGPOszzIlBp1vLZpFmR8WMQ99kO-aQok0aRSPo3iwKYWdBO0HRuLEpDwNQ6Tt2CMAzCgCR2O4UttGMbZwHUzTGNPfk9EMmA6jYnhS1gtSNIshSvykWZhP0uzNMciDnOE8d3IcvjFO8wS2BiMjqSkYj.H00K0GpYz60iR8YqpJgrIOMt0LYJREEQLJuHQ4j9Oy3L4rPYrGFbfcEpATtnSoKg1CtPK-yiWiQCwerGsYNLpAy2oOoamtGE8gSon4aRuM6obPKksbeEmwams8pSohUuqqCTKAYjMZrdJ3dbNu27qbwoXqcmHIp10YFREDsJl7B4I5QUYdAqQQ07jH4Yd9OOMAXqpG78wiPgciiJ6-tevBmzC6oVO4WRwf.vBPPeg4omMWZx1.pHPMBjc0b22Dschzzodi6ppOMJxajU-cxlWSsTh-eGnCeCw6npxmSFK7IzLp0YkjEqRtOHWz2bGQXyOQHmwYM-nrHM9jeHyr6.Y50YFfsuoZdU8XRkhHKsmV6Ddf5g2SprJjebl9WAX7B0SBiYX.H4Xy9btugShiHW1bGY0SDqcDncEX3Rn9wOmB98BfhgSF0CtK0sMLChQD7JhECoXk6lw9BNmCdwRBS7FlnIYIkkdiRc4oYIKlQEYiGxRBwSToU87YIEhigF1iGrthPDrvA3iYLve5AasYC2nvS7YSEGHeKBXle0frEQTBwUQK1wQACQLcQSHBLPwQ9xgzFH3EmQ2VBeXXzfJmQXK8FeHEz4vsAr-3jfwRPvBwVWe3iAiMEc.E837X0-t-ZusQF5dyuEA1.78b7gngFAcQR9C7UjbiAQWMQGS53BPkJYo9sG4LAOCXEldUCjzvngfQJBSFJCoBpTB9wsAAC87DglXPffso8VBYHQIHWIrdeH8MDuCFMGBMFJDqPQEgF86TiNzqfaeIBphAzIWYZAucsjBAZj2cExpkBWkfo3WBbB4BuA4SvTAy89bgmsfsYIFiYDHH3g40ezYvCUnsavRxbB0TZxIAAclIWo-GwQk4xCFKgKE9AsBdBUXHPiiCFYOjrqPLCOUSATyOvYggDAqrL38FAaAjtR6kmsLELkyDNLlJXsgTk9BkCkiqEQKJI8VGa00vY9cfxEmojiCEgxiBKTL1GF7cEzReScgyXYP6C8mTgiSHXCetZM6mOXr0mAR8ArDzKSopODSzCILvqQWEJdgjWHyXIhoiCABSaJLDxBUasdSf0CJl04P6Ig.97iglIZ-aw6A6GDyIWuEQiCKh1GBaPLer1UBe1HkgB4wK8BDIANIbEwVc5AGROTgitCgcEABNVeo9mhaJiRCCBkIXSMBELWWpKjNqO0QQAOSgEoSuFczEgCqKITAdJURKAhdYDSMQrQOneKPJMSiyFN3WAHBFfTggAg-E3Fe.zLl2DrmYUgHDP43XEIA8xDoYgxCGZqp2Ki1BtiGa0cYKipnvh-usE.v90DWpriQE8mQf5wtQAirVbAsK5wWdsqosIYACISvnRAVJGBLPScyyw7FghTOQBAcEBc0TkrwEoeOVoKkjHoEfYE3gwS8qTBYIYYBEB1ANZvHCdJRgoAgOEtgzYazGJIF3cEbKM4vWQCZYI6JUSN1HgCDI2yHHZtoPoUeVRjFPyZsEfAJB43glrkMegnBn4qMjYgAwCyNmJMyLCbNXg01sGmHABgi665MkpOFFRFSUCNIIC0uhW1e1YFJOfZAGoaTfmCG.hp.TmmtJ-V3f9-YgOklnKB.pH7IPfvaX.gD8HUJIffRBr9bTf2wcA4PUk3APGogyEsU9oGsJ4A2LCUkABFdA8TY3.JEK9ex0z-rVwAL51WxOIH4sAYBJyGCnMeGwJkUtiEzWWXamAQtxKvD84IAC04JMT1z9R46kSmVPHI00kCe4hJ39ndQrVjJqQDKaWDOzuDosjGBuO4WgsjE1b0mKPVzdBqT2K8yo-IMQiWuIaHQ7uq62BBaJR3Ct.6nEcGOf3bKy8SgfqQZYE.SKrAxIsZkZRwQwlGLXnlrL1xzFWD.hl-LwygajzuQIjUZ91IDjLUS.A2AqSj3RBxmJlT3w8dfdQjIeBRikiTnu1BHWsBUihDCcJ-H2pPyEzHYkYNdAbZYM5lgm3ds7f2z0PbG3czDG.SgvAwm4DEkOGDQ4cgwYPd0D0HoYNnsHZYD0Q4PR.AnaGGdlbImxMSZ3kyU6bBWjkX3rSkyssZPBd.fGlLBxzFMhEPvAEdcrAJSKLiLaBBs28g3VcWHKC6wGPvm8FdxOa7333lvLOaRwf1qa.VkA0XkBlpBJWrQbBNo-JiJMgZcnggKfpT-ZT6BVNGZMwlG4ov9OS8M5ptcoIdOs4kX9jUc3-Q6LYCoLaO1e2ss2u2Vn7PwShYYGACLxY.4WBKJe1ASOzgpjiKy3EDpl1LDmzMVn6w4CINK8o-gi3XFgFelgEVNCKBEj0hdH7vGgA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 299,
+    "unique": 298,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 208,
+    "skippedForBudget": 52,
+    "afterSearch": 17,
+    "unique": 816,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (10676971 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 94%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7987267 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 96%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    23304627.4,
+    45137310
+   ],
+   "wallMs": 13517,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Coelho Macabro-LT",
+     "refine": "9 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: vazio",
+      "Enchant2: vazio",
+      "Enchant3: Variação Física 1"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant3: Orbe Lupino - SOR 2"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460020,
+     "shieldRefine": 12,
+     "shieldGrade": "C",
+     "shieldEnchant1": null,
+     "shieldEnchant2": null,
+     "shieldEnchant3": 310857,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant3": 310506,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": null,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant3": 310489,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "headMiddle": 410093,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": ""
+    },
+    "options": {
+     "6": null,
+     "7": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "40": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGKQAdlkphA3aLfYH5q2pdqZgLdQAqkMhgQTLNuE5x4usCu1wRq7W6Q2QHuD.uPP26jxNE4hOel6urwCSFQLEwh.ReLNtE4bgvF8CDfD9eUYWdf34Jx5iffdgOQUDP0Yd0tmHbRHwvABZKA6jqRwtiibRZjOC8VDGDctiCbRhyKftUB8LYdGMYdh2dNAUGPOsz3olBp1vLZpFmR9eMQ99kO-aQok0aQzlEpDwNnKTtB0ESOLEsCmFQ5SdCeMwoAkATuFLDDgjAfTDK409IkfcyDJgOp.J4UtYLswzW33etKE7PQLIchStIoZSALYkAYno6kpGI-htjCiKmCsrzjEfcK0GpJyDjLdC2CURBECybh0OI2LcvyxKz1KxgPPbby-SoKg1CtAq-yiUKsHqxrGAy6QstqdqGprRgAsYSSon4aQRI6wbhqUsbeEmgamuG7Som3WD.qTKAYjMZrtGMHdnXqzbtq6m8gpyGiinXRhyLsJl7B4I5QUYdAqQQoLjH4YdYuOMAXqpcj8wiPgciiJ6-tevBm3igqnG0bhZHB-68GG96DiiYxZnHX7keGwHKOU-bYJxyHhuhtLqkJpxanM-cxlWSsTh-BGnD0unRgZntyuyXz2aSdSpGM4dXIsOoxn5hjkG5sHwFFsZrD8gTeEKr7ebF0YFfsuppbMuXRkhPKsmV6DdfZg2yprbiedl9mAX7B0SBiQX.H4cdafVu26BKGIdbVsZjRIOpwOdwQ-dGAOg4Sy3rJlyBYBgSF0CtK0sMLChQD7JhECoXk6lw9BNmCdwRCpJgoGWchgiSR2JALihggqVARiIbFEHBVOhULtggSGcvW-rthPCbvA3jLivgmrGAtuIAeQEhBh3igV5Xtn6xEEwcFECtcEAAkC3EEhwVz8FPcYMxZ9xJkNlQXlN.3yZkHyvBXhxC.r7AG-D638Ez7wcFVntsQCIwRL5Tw-rfb.v926xCXuXK4ID36fzvuCeAUBxAnxLtSLuIB.YxAZAXcE.Qliz1wfgsA4JcS11QLPB.eB9AkHIUkKgBlsH3CwAALzsOCVcj9.yzxUFgdAQdYid34YIoO4IUwYGwUkOo9ASBXzpJIgu59K5sGmEDChZhkAFyyMETmRZwTGmQFaZ.rd4FsHgG4Lha9MCrz1uCWx.xghWJgMcQ.TjZ7Ni8JSRx69nFsHRHnEgABychGjKLBFTjEIUqAoT0CwF0NRc90DiWQQrB0TdZ5YTyiQKeJ1HEEAYJ5Ve-goDQEdrPUk1hYhclQYZKpa9kCcnoMgUkVQiAxPLvYrWjj1x-GSZCVEcQwlGMQJSVeoxvbgmaLyTk2S7B-SXkycESQm5T1rDncxq9.kwBPuJcC3tsn9g-Mgh.pBYTjzYNYIpCiGjIIAFJoksPEZJqx9J-QIlXTg-oiCH3uKCch39rCpP0HotgSQ1wiGQRUOoqTZ471eqgI5ySkAPFSXgUZABpDY2CbnIAyJycEVoUDggAJrr1ns0HRcSIRQMhC6RgIhawNOSZtR2yCAByUAlC1xrhYkAVRRCYDpKiJQ0LrAGRiFaB07xZ5JhURQtu6xA7IoGcEAEH425r0qck6wdgm5mFIFw7.5FxDAMsQ6GIMRRk6qdsktQbZRmtHGMk2Z74-7rDPv-dA9qG4kBPJkP.iLUDIt1VEguyy9lVFhDAIRXki6ICpIwVZWS2WWAEsEWZyAIDgmLmiKleAlBJytNUkY9AT7Am8GCAVSYLBDDAIgOoJrt44TpKMFAEBIlsGbDWUxJBy7gk5dnF6yBrLBHRKifuySAQZD2U4vNtB9CzyqKYl.TNgj4BIEm8Ejchj0E4K-ZJMbEAGGWdswZmRYR5q8Jm9RXgRACr3UySkkVknVJQC0gg7SGFbQHVgUkl9kAahpN.YIH7mlFLaR0v95dAP9hA6SWc4Gmlfug7.rpAGgOIdQihz9UGf2dP-fB4DI9STcC8aiDISwL3gawngDYsJSQAEV0CJITYEkQr1HFzP.vXAAvodbE4gfjx1TkMdOIBNp-JiDM4ZTMZa9qYNC3E69TkAFpwSYmbkGrx1IVNqbMOCTTSQp7iFnqfIzCt2MWpAKppY87e4OiyMYG47haDyJTTvSYs93N0GpI4nzyT8gxFJe4hoDCXRHs3VtUlPdq3RcsRwIzQ9cqrxKF.lBlgz6z1QWgLLmRVHBAiSYjeVjCtaEsVYP6BXvUldng8oRGoL76QHJW0l8BsBUlnuiLjcSanvj4..2hGQ8CjFJKnQ96DOtYCpFCGEkTBMgHasJvAom4DEjBrobbLBXMsB2wd-bR2eiHe27mYYvy0Frd.DAYkhwwaHDkGDZ7ugeg9DBm947LAeiHB6Pwc7QxLsiZu.JyTe8mRBTYK0Bih8GUxyzfJ-5Sa0sHEsUyR9J8m5WC8kUXEW0CB5t5Nuq4MtmhoLrEYx.bx10k4bo-Q.O9c5pCh025r1w2Ahbi1W0ER6bjSemdS2ICnghKaZX-VT6ANOrLM15G4ouDOS6M5p7TPO3iVak7NwHGp5v.nBSAFQW0doDo5ZtGqNxOfIHBOFhgYAotMzcxYEoN7UAo7OCmOIHLcQOjXUsebMx2cgHWHAZB5WcvkH4Et9xYBXpYHFXQigRJjAq3.-xoAA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 657,
+    "unique": 656,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 536,
+    "skippedForBudget": 20,
+    "afterSearch": 17,
+    "unique": 2016,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    23304627.4,
+    50236152.8
+   ],
+   "wallMs": 29861,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Card1: Carta Assassino Brutal"
+     ]
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Escudo Ilusión B",
+     "refine": "9 → 12",
+     "sockets": [
+      "Card: Essência de SOR 3",
+      "Enchant1: S-CRIT",
+      "Enchant2: S-CRIT",
+      "Enchant3: S-ATQ"
+     ]
+    },
+    {
+     "slot": "headMiddle",
+     "from": "Correntes Sagradas",
+     "to": "Correntes Sagradas",
+     "sockets": [
+      "Card: Carta Limacina"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Bárbaro 3",
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: Fatal 1",
+      "Enchant3: FOR +5"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Fatal 4",
+      "Enchant3: Orbe Lupino - FOR 3"
+     ]
+    },
+    {
+     "slot": "shadowWeapon",
+     "from": "Manopla Sombria do Infinito",
+     "to": "Manopla Sombria POD"
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460014,
+     "shieldRefine": 12,
+     "shieldGrade": "",
+     "shieldCard": 4925,
+     "shieldEnchant1": 29539,
+     "shieldEnchant2": 29539,
+     "shieldEnchant3": 29534,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant2": 310509,
+     "armorEnchant3": 310506,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": 4704,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant2": 310632,
+     "accLeftEnchant3": 310490,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": 4863,
+     "headMiddle": 410094,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": "",
+     "headMiddleCard": 300363,
+     "shadowWeapon": 24751,
+     "shadowWeaponRefine": 10,
+     "weaponCard1": 300241
+    },
+    "options": {
+     "10": null,
+     "11": null,
+     "20": null,
+     "29": null,
+     "30": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFbrxSBUA0AGYHZFUZBQc1sLBfSLSZFmIaTAicvnGZFYMBDOqRbUG-VB.Uh5WGn3Mx1HABKds1SNDesTgYAumxRngsCMrpp.DkBOnM9no3gTSU8IFC1nSABxVENf7uZEZ6skdxYZB1T0HfPcUwgFvZ9ud3g8PO1MyZuoAVSGQwIJlm3Cc-cnWBnc4IJbLdMrIDXG-nHg7dR4micQn3U9nR4BJCoFiY3d4s20ThuB5vBDvD95jFH5AvvwTjzFe65fsgP6PowjpbAA7Nol4HgAslAdR1I4WxRNoS7mFOqHoSIw6nj22iyGcB4qGMC5bEE2hwUUHaoD4Ww6MYcFwbaaAoNu5Z7kxKDEacsyXgJkH3tB3bSFEmjSGcYlQX.AHSdoOigQpEl-rBKk6E8ZhQBIJHcHm2jGNs4D6YZvG7pEl5gJZMB1EJWwiTc9kGY5ilPlIsyyaB7mGV5-4.X5egOXUQWwS.snmTETHUlIOH8LF8VMNZFa2WwcVoNSznSPmCFsEoiCIFk3AITh5nFaV6V7tVjB1uuGUgE2RUlYwQUAcu-BnPVkU8Ah5lYFQVBqCaZWvlEnEgMNo2loweUFbUs1jR1mneQcUQ9aJI2rZ1FAqdttq7fN-Wbdo3CvsdVDRlAMRmBNpkrtdt33QtJ4HTk9FFPOjBUXYTL2DwRygow6BUhBB3GPwcHmccYBg1SVEZhEfA5FEIMI.DeA1qlZVOBdsiY4jeBBZD53GLM-bwyTQXIzRKnGCBxPY0FuM5dUjNOLU9nrmMqxFicgHlZo-a83U-OCyQtXZGFfOjEk3ERLwxlwf5FgSwrSsyxjFny9Y4VSOVMNy5rBseXUOvBOLYyQu1RvAdbGu2.1Vum2MAIdlaJAxA7-Bi87oye3QJQxG7eua66JB1H.ft2YHUcx2lpZ8bL4C-DAkLoCaJrIVmFCgO2TCIFQvJ1Gh6CbME7giFSTBQMs5DBEkPsSJXFDBBUqAjEQ2KIOCedClXbBAkMDd9x3bCeN3eBvPXjfBCWMB3cQk8gJCDDvFArzg2v1iIJg4KICa4IABKZuIJDgmX4LB4wZhr7iTIbKgvJHyfkzIKVeCvDij-P2AV.V9j7gnvngcEqwvbEAiMEJ.y9AFvxAWAgesRt4NyuLAgBQD37gngFAcQt9a7UmHiARWMQGSV3BPkJYa8yEULAOCXEbdUBr0-ngfQJAGFJCoAZEh9wsAAC87DglnF-Dsa8VBYHQDHWIQ8JFSJjuCWMGASFJDqPQEgz86RKMrg-JubBpgo0YWYZAlcsjBAFq2cErpkAmh-n3DBbB4BuGEfvTAe9A7gjcfsYIziYDHCvt4teNYvCUi8QfHxbB0TlxIAAcgYYYmiwQ84xCFKgKE9AsBdH0evdAEkcEGytN3NeyESokGXm9LxBAGBNT3v4KA0AfZr1JNYWIXI8GGWafvZAnJ6DIFJFUIgqSG4eItl4.cfwcmQlRHEeJ1jECUj3qMUO4Jmi8k5CUuwCNt5MnBEkbuy8yylwcXvCZMBb7rWxE0nJecelmBwZ-UgsIF5sGsNUzRDQcEACk0SWHiDk1Y.kEaYWbpwb0RAr73FBAwkB1g8n6HMWwJIc4RA4IqHUPJa9T7g1QKHNeSAHh5LwHMgA0hsEhbzkAZE5OCE0KBwQAE0D5r2aKY9JEJkGQjtIwEQZZOk5Nuj7HBAA5KASg26t0cSAKoohMB0lREoVF1gDIxBNFad4a9oy6MYf3dY0dcWTOCACB8-d97XOCNYOw3czCkGESAqi4gYFOKtDEGIcyzW.xyWoesczWjjByWs.84D1j3wgegT1ncSA7kyOA7FqBcXmrYMhSuOzzlVFhDAaRGVq6ICpIwPZxSBWWBIsENZyAIDghrmiFleAlDZxNC0kY9Bb7Am8GCKV0YLBDDAIgOodqT6oTpKMFAEAklsBrKWOxJAG7gmFSXMGyAbLBHRKiCeOSAQZHOd4yttB9BryqHY3.Qtgj4BILm8EXchj0E4H-HJ6bEAGB2ScqZmRYSVq8CWgxXgRBSsvUySkCUcktJQL0ggAzOF3WnVgUkT9kAahpN2YIwGenVP6YMyDDcYMdng6SACSHumgbQxB4Z0HYM4dgvhkDqHwNDKg1huDs9STcGCaiDISxn1IeQngDYsJSQAEV0BZOzVEkQ4MvHrMRh3AAvsdbE4gfiwBgHnIYBcQC3QhTEVZMyha6wnUwVFuID4PnBAAWnBJiHuMbgnUgM0Z.5ZmkjL3EGvO.9yDZCadSAQzSwt1jytFkYwNx3C0A0fm0.kw17BboNSLxEWcn5BiPSgJDROF2lvSeu69LR5tvS04jg9zp7FT3iUUDuDLD33xVYdJzjMh6OCIk2xh8asVeuE4qwCMyu1fmSjNeXzpEakfvpTsLb6XwGwFSNe6JRPpNafeSTQG2EZDwKMUkecb0ELG1gKkUIYRJJkzNX.8mM7EgxroM7LBAssHO9dq7t2eg3bO2mYY4L8F4AU3AYkhwMaHDkBjP7ugeg9AxoDu7LAeiHB6PwJ7QwXtHcU8p1T58mQHTYK0ZiV8uU2V1qy2IEJCuIBRyAPxP7b7dysBlIouI7oEErbyM9Vxsf4PLNYr.bwj0M87l-K.p8y5pFR72gbrWQAJay620Et6bjqZWTjxLHPx02fAYZ9AxmHNOYyjcPTPLFd2dM.Zuc4u3haDYMomHGodvekRSAFQd0HrTqFbdBsQuRfIHBMlhgYA0tCyCxYEo77UBFYOMb1BQrcRWkPUsHbMwhfrDgDg5rej.D7YCWAcGWBFXsIoESMyDEodSaAA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    24421061,
+    46772970
+   ],
+   "wallMs": 1411
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21544",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 244,
+    "unique": 243,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    24421061,
+    50828070
+   ],
+   "wallMs": 3647
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 171,
+    "unique": 170,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    23106318,
+    43858255
+   ],
+   "wallMs": 1341
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21545",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 276,
+    "unique": 275,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    23106318,
+    47326268
+   ],
+   "wallMs": 3504
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (10614673 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 93%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    26284189,
+    51591318
+   ],
+   "wallMs": 1448
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21542",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 244,
+    "unique": 243,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    26284189,
+    55487026
+   ],
+   "wallMs": 3677
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    22705838,
+    43443815
+   ],
+   "wallMs": 1394
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21601",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 245,
+    "unique": 244,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    22705838,
+    46879054
+   ],
+   "wallMs": 3556
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 112,
+    "unique": 111,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7940662 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 95%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    20005731,
+    39171993
+   ],
+   "wallMs": 1488
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "gear-only",
+   "scope": "21539",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 277,
+    "unique": 276,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8295988 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 98%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    20005731,
+    42105067
+   ],
+   "wallMs": 3650
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 300,
+   "feasible": false,
+   "startedFeasible": false,
+   "firstFeasible": null,
+   "bestGap": {
+    "worst": 0.0828,
+    "total": 0.1366
+   },
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 80,
+    "skippedForBudget": 36,
+    "afterSearch": 17,
+    "unique": 316,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:infeasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:infeasible"
+   ],
+   "kill": {
+    "damageFeasible": false,
+    "constraintsMet": true
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7592997 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 72%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": false,
+     "reliability": null,
+     "reasons": [
+      "2 golpe(s) de dano mínimo somam 49233146; o HP com margem de 10% é 54117294."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (8813720 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 63%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7003070 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 73%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": false,
+     "reliability": null,
+     "reasons": [
+      "2 golpe(s) de dano mínimo somam 45915058; o HP com margem de 10% é 48682183."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 2,
+   "dps": [
+    18216505.6,
+    28558673.2
+   ],
+   "wallMs": 4718,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12"
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "bootEnchant3": null
+    },
+    "options": {
+     "38": null,
+     "39": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4micQlPC.XF..JCoFiYA-IvFm2icFwfu5PgQL5vhyjDTt.-BOPMAHnsBr7vowzqbIOJbmAuACyUB1HUjibFE2izPsvaoD4mw6MYg6DvaaAoIeNYniRKCTtemzSLM95McgIGIZ.0hRJo0jEbR3EIWB078doOicSJPFgchkmbsEYBmFAEisdwRbaMYWzgKp6n0ceXJ6PpMB1CxPBFjBKlqWZckflIsyCbpNnqfZ4GOYJo6uXZYlMMh35eWwMQkWSUiEfwukhWgZKGbW2TBaFTAWXsxa8KhbBKIgiBZNwqGEbpWU5XFJ5FYwza7vFIDtvaVBUGoZq5T.UTUSAWB1Q1jApdIaWDrU7X1VWjDuXxUT8NInEdUN7kSWNvCTYNjXuQpURKbVCZQDEZhNdpW7rfGm3bd1xbaIORSrowKiIHYtL2DwcYAow6CkkBET8fwg66VQj3PXgV05hEfDFlED1gE9pKNkluVONo3CyKD4N4O5r0UJJxizKO31g797n-WuexRMY0EIzjfnlVDqOE04tQqbuYwrOWhxfnDTi3BYdT04zJAlaqJl06MSQiVImmDtZ7NjILpHIDzIN6fz1imaxvB5R9fMc6MCu2XUMvKeLowgtlWTK1Buv8wbxVVgxvNy.r3y9jaJAxML-D8N5et23QJQxDratjPqJB1GBzuCL7oz.4HTA..AHwwCC6BmmaGF5hQoA9kwiBUBydTYegGzBO4IikkwUBLOQwRJI7Ei5xQwQVKgIxEGiiBAknvJ52wvxDCXTc12wnj13gjzF6XwSVjAm3EL3IAggwTxQA8z1T9YiCYECiBmkCAASubiCQQJZ0CHuMGYU8YrS6yoBya8b5MyA5XgDzoqf59gJfe-r0Cx94ECKz28QETBDPuPV.V8P5fxbrEeeJcziAJfm-a.QJ4BQHEIfQuZJ24gEFjEakucgT5EYCPNgWCcFgCBBiKuqAp63zwPoEgpCkhUDUhgq4WAABedggTLjvr2KeKgsDoEDrENuvD.GByBImDAGCkh1HoCQc.lJxG5xPmXNg0wAZkLMMgXOWRggMy7ECfUyAzQPybjAtg8A3AcOXpgJeesgTWN2MECxMBvp7wcVPRsXgST2JXo4tgSJs4kAAOSkLUfjYIScYi8lQKCegWBugqOnugBCCCFY2nrlPDC2USDjy2owexBAGCVSXv4KA0BHZTwJNYWIrIkHqUqcvZALJ6DIAJFUIgUSS62K1vY1cnxEkggRHEEJBjEAkiXqML2QIWgchZJkuwYN560iBEkeu49qyZ1MUvPpMBD5ky9pk3sb4EG31IBCQhIBrCFLkQ0BBAApRElh4iJJWKpMGeFy6cG9EQPeVwASkI-tYZJ.gdFEJXCIBBFQ6jJKnpvZ6qADmJKQNcZJeARkAGl1gYKucgDILIgRmhQECAAmivKeLQtExOBOAkEDpGAiGrPUxJB1HYIIAHJQCUFXSuZiQBVFEJgSkCIlAQusGpGIZobRPCnvGJRZDm5rADgi-pwRvhvmbsvCpiTrB2HrmYUgHCP5XXEAA8xNoYgxBGZqp2iS1AthGW0cYiSZmvm-msY.P90A2triQI8mRv5wtQAirVETc5LN2VUCEMABHxXzogUk.TVlDBlZYViwQZnIAgECAuiJyV4CUPHM0VSRj0EPn8bwgJeXxgsEMMAiA6iGo3lhSkowUAQHCWwRsVZjEkBLkCNlGcnrICMsEJECIe6JO.BkXZDjs20H0FPKoxjH5M2CPgEg8agR1yGPQTgT9EmRsQAYJZWyBmZAhNmrwabVFeBELy7dtISRhUSVUlAzSCBtLoZtXtWACRn2QMqckn5givqaYU1p7Tv0lz-b2QDBJpwgcae.iDX7Om-v-XB5CiG33gc-R0n9MGAODwJNwDxCIMgENPSBjCeB1gQgJAARXQPE2N-iRDPXsbM8GNcAC.tU0TiHeLAGASdk3kFAAdH5MRplDKZrLLtTAIUYhXscgAtECFEDd-UeLJEplTZggTqaSOPcQU8j4GYVix01IBlMEJnV3G0WRjD-ncLQWR.TN6TCnq5ugZJ7FecSfkGIRLXENDoQ6fda7NpEs7hWyL5iOAGf7llJeJR32IMsMfKeSC0AZcyMo4IYSjGrwsfl7LVgwZ5Y9UVqedyBHKlPqpPsZaiXwGwKSKeSJ2MxOqa.bjL7qEZDwKMAkSc90oLa1gUkoJwThL421R.gmY54hBroNbLBnMsHW9trbu2dvbazMMb5yC8BCbgHiXoINehyBBrd3QFwLggwe7t57vQLj8EO0MY7S3hOiZTiAbetJUZsDaKRPetKjKywpbEYEyXEDA5AM4u9h965WHikUDEm0CDZo5Bus4UPkE1gMXfR4K78e1zvnvTeWc0gg-rQ184bAgsxfLQCfd-5JNTOh8F8nnbdPf2U.gNTKyTPxX-Ap.lAv9OGY0yuNnjwtBsAkV95UM3vSgpACoQ6jBe2soOq2RnIBmfICBKFhgYAItMxcxYEol7UApb2EryBrKMQ2mXQQmbMxDdrDgAg0rWXyD8B4zxoAA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 608,
+    "unique": 607,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 208,
+    "skippedForBudget": 52,
+    "afterSearch": 17,
+    "unique": 816,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 1,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8128062 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 90%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7568079 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 92%."
+     ]
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (9434808 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 81%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7496564 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 91%."
+     ]
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7058025 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 83%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18216505.6,
+    36731021.2
+   ],
+   "wallMs": 12409,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C"
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Coelho Macabro-LT",
+     "refine": "9 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: vazio",
+      "Enchant2: vazio",
+      "Enchant3: Variação Física 1"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant2: vazio",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant3: Orbe Lupino - FOR 2"
+     ]
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "shield": 460020,
+     "shieldRefine": 12,
+     "shieldGrade": "C",
+     "shieldEnchant1": null,
+     "shieldEnchant2": null,
+     "shieldEnchant3": 310857,
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant3": 310506,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": null,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant3": 310484,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": null,
+     "headMiddle": 410093,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": ""
+    },
+    "options": {
+     "6": null,
+     "7": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "40": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4micQlPC.XF..JCoFiYA-IvFm2icFwfu5PgQL5vhyjDTt.-BOPMAHnsBr7vowzqbIOJbmAuACyUB1HUjibFE2izPsZ4qGMa6bEE2iDkUvaoD4mw6MYg6DvaaAoIeNYnrRKCTtemzSLM97ccgIGIZ.0hRJo0j7MJolgdOEnaDoQlsSJCFgchik6LcZhQBIfHcEWJbBGAun6Rxx7ZHoZkwHUvE8EWMGmXptnNrutaUO21kuXUclMJpUR-ixIAxLRZJSIR-BbCFYVMBZHnGPeoVoGS9l7MWvCoWwSiIIgWTcKhhHRTleXxSeJWMG5raeV6VBUGoZr5T.UTBVgdUNYwaXSBlg61G19VVowfmMOJUT8NIQntYNw0KWNvCTQNjXDQF2ibtF-XxlAMRmE12jGFu9p1Zt22dVeFDdcW1FsKujCkXYtL2DwcYAow6CkkBEQSfwg7RVQL1vXgpE5hEfDFlEz1gK9pKNrF.VOKtsgQ1DeDDR951RMYsyjn9kMA8NQPkYp.0wTjyPDTDKXVETTi1KZu5jCs5aHF.3DSE4On06MjNdmVqrWZzSSqVIhmDk5Fh1GMgt0cgvPg.A4tjNYNl8bwBXffzEujErPmyyZCujCCuVZKrUF65zhulVWnF8-LnPfL2NokDEwv8Pwo505r9t0CUMS6xrYz6iQdRgS7gj.6MgfB3FVuWXLkCwDAILoGaZoYXmFCgD2TCIFQHJ1Nh6AbME7giKSTBQEs5DBEkTsSIXFDBBUqAjEQaKIECae8kXbC-EMFdtw3bCeM3eCPOXlfBJWMBbcQg8gCCDBPFADxvXP1iIJgQKIGaQIABK5uIJBAnnQJe4wZhzxitLrKgHJbzvkzIHleAPOil-X2At9H9vQLn3gQIrAdsQCIwQr7T0-nfH.f8O6xGXhXM4oCP5f3vkCeAUBxCn1LmSbuIBBYxGpIXIE.RGATzYHgghYAgQYjrqgOej88D6BIJQpIVA9I4KuFgAAXnYIEy4n69jnioLA6Bg6xC7oI4RwcgSJgwDgpIdR6AkGvpSaRhcL5VzYNMYGVCzDIELlkYI3N8xAn1MgM0L824ILYPANwPD16YDXvrIE9jdjBBsTAP6R8XFz0bF4EkziN6uLYEifOJAADklCtHkWCGnGIvJUCgnoFgboGj57oAQigpWNpm5zwwrlEg08TrOIIAwdya9-BQGgE7OeBJrCxFZGg-SNT17IBZPQZABIqhEDiRXRxPlnGrk.KkkECI4gRJMYgEka9Rg.yBC0DkLJcl2EhsvWkQIkjN2ntWXOli16DJgKfdS5dqmpLTq0swKDH6kAhKQkA1gSlKIaCggAUoiSw8RUkrF0pDPC1dODeiIEfK4AJKE-2sOk-QBiyErhECgiodR0lz13m9VAPs55IGuOkvA4yADS6wcH3OQBkFkQIzQoCBAATQ3nPFoeiEnAmgSCB0jARDViaakzaTsUEADkoBKDrrXKxIAqiiEwJSBEShYXWD0jEM0Nonhz3jGoqh7c1hB1RUM4I3w3zt3Xic4I1g7DNzMKQHhP9SLiBAdYm0MQYjjL1c7VJagWzjLaOMVJ8zXz-zWOfAB6BHWNxIEeTI-9kWoFRfqtgGFC6rIOVUCEMAREeWLogUkjB1k5I5ZYPiwR5nIAgECEuiIaV4CUMnM0tSRj0FPn8bwgIhXxgsEMMAiA6hmp3lhSkowUAQGiWwRsVZzEkArkCblOdXrIEssEJECIB6pO.BkA5LjC20H0HPKo5jX7M2CPgEgqagRNyGPQTgb9UnxsQAYVZuzhmZAhIWrwObNFeBEEKw9tISThVSbUlAbSCCdKYVtYdWACRX2QMqckn5gjftaSUjpXTAMVxA72cDBJpxQZab.uDAGenAdAyh5C6Gf2wf-d0oDSGwOjwJNwHxCIMgkOvVBjCeB1gQgJAARXQMk5NwSRBvWcQsqGDcAC.h00TiHeAnNOQwM4gE2oCmIczRnMzlgOpgsKMQbzfECAAtECFELcQ0.LJOpzTFzdNJGnuIOeZ8LlKy41akAGmSFLr7jaLIxh-zuFoIo9Nu9Jhzy83QMkzj-OpPyDEclniGhMIdKendW1yW9zrXF6xHALnDxymvEov7UGWHPuiqwCSbGZHUcEKJZjN7Ffy6ktBhB01VYueVuezyRHKkvrpPsNbyXwGwKSOeSJeMJLqa.QTX76EZDwKMAkacT0YJ61gUkoJwTRJEyANqYm8ASbgHicGug9ssA8ywfbx2junZO8drMwwAXoM2x8GAeJejg16HIcGr3dAXAuODD7p3vu9AuPwS7Qxrvibu1JmT.9aTnTYG0OiR8mWx1zUpoFqbMt7GsbSF9p9m5WA8kUDEW0CCFo5Hus4csWjoJrCYp.jwt2k8bk-I.u885pGh62tr5w2DhcS7WgEp7-xydmbS2IyngiqZZf-DT6AtPmcsx5f8YuTNS7M3plcvPHhaDYDIoHyolveihSAFQW0drDq5Ztaq-4ufICBFFhgYBYvM08xYEo97UCo-2ImOIXKMQ2k3SQpbMwOcgDWHAFBDXChCaE0AA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "all",
+   "budget": 2000,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 996,
+    "unique": 995,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 2000,
+    "otherTargets": 512,
+    "skippedForBudget": 20,
+    "afterSearch": 17,
+    "unique": 2016,
+    "finalChecks": 10
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible",
+    "21545:feasible",
+    "21542:feasible",
+    "21601:feasible",
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": false,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8958974 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 99%."
+     ]
+    },
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (10399304 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 90%."
+     ]
+    },
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    },
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7779549 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 92%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    18216505.6,
+    43940467.6
+   ],
+   "wallMs": 33247,
+   "changes": [
+    {
+     "slot": "weapon",
+     "from": "Garra Primordial-LT",
+     "to": "Garra Primordial-LT",
+     "refine": "11 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Card1: Carta Assassino Brutal"
+     ]
+    },
+    {
+     "slot": "shield",
+     "from": "Escudo Ilusión B",
+     "to": "Coelho Macabro-LT",
+     "refine": "9 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Enchant1: vazio",
+      "Enchant2: vazio",
+      "Enchant3: Variação Física 1"
+     ]
+    },
+    {
+     "slot": "headLower",
+     "from": null,
+     "to": "Coleira de Espinhos"
+    },
+    {
+     "slot": "armor",
+     "from": "Traje do Lobo Cinzento",
+     "to": "Traje do Lobo Cinzento",
+     "refine": "11 → 12",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Bárbaro 3",
+      "Enchant3: Orbe Lupino - Bárbaro 2"
+     ]
+    },
+    {
+     "slot": "garment",
+     "from": "Manto Temporal AGI",
+     "to": "Manto Temporal AGI",
+     "refine": "8 → 12"
+    },
+    {
+     "slot": "boot",
+     "from": "Bota Temporal SOR",
+     "to": "Bota Primordial-LT",
+     "refine": "4 → 12",
+     "grade": "- → C",
+     "sockets": [
+      "Card: Essência de SOR 1",
+      "Enchant2: Fatal 1",
+      "Enchant3: vazio"
+     ]
+    },
+    {
+     "slot": "accLeft",
+     "from": "Anel do Lobo Cinzento",
+     "to": "Anel do Lobo Cinzento",
+     "refine": "0 → 0",
+     "sockets": [
+      "Enchant2: Orbe Lupino - Fatal 4",
+      "Enchant3: Orbe Lupino - SOR 3"
+     ]
+    },
+    {
+     "slot": "shadowWeapon",
+     "from": "Manopla Sombria do Infinito",
+     "to": "Manopla Sombria POD"
+    },
+    {
+     "slot": "shadowShield",
+     "from": "Escudo Sombrio Mega Repente",
+     "to": "Escudo Sombrio Mega Repente",
+     "refine": "9 → 10"
+    },
+    {
+     "slot": "shadowArmor",
+     "from": "Malha Sombria do Mastodonte",
+     "to": "Malha Sombria POD",
+     "sockets": [
+      "Enchant2: S. Attack Power 3Lv",
+      "Enchant3: FOR +3"
+     ]
+    }
+   ],
+   "patch": {
+    "gear": {
+     "weapon": 560026,
+     "weaponRefine": 12,
+     "weaponGrade": "C",
+     "armor": 450177,
+     "armorRefine": 12,
+     "armorGrade": "",
+     "armorEnchant2": 310509,
+     "armorEnchant3": 310506,
+     "garment": 20964,
+     "garmentRefine": 12,
+     "garmentGrade": "",
+     "boot": 470094,
+     "bootRefine": 12,
+     "bootGrade": "C",
+     "bootEnchant3": null,
+     "accLeft": 490107,
+     "accLeftRefine": 0,
+     "accLeftGrade": "",
+     "accLeftEnchant2": 310632,
+     "accLeftEnchant3": 310495,
+     "shadowShield": 24767,
+     "shadowShieldRefine": 10,
+     "bootEnchant2": 4863,
+     "shield": 460020,
+     "shieldRefine": 12,
+     "shieldGrade": "C",
+     "shieldEnchant1": null,
+     "shieldEnchant2": null,
+     "shieldEnchant3": 310857,
+     "headMiddle": 410093,
+     "headMiddleGrade": "",
+     "headLower": 420076,
+     "headLowerGrade": "",
+     "bootCard": 4923,
+     "shadowWeapon": 24751,
+     "shadowWeaponRefine": 10,
+     "shadowArmor": 24872,
+     "shadowArmorRefine": 10,
+     "shadowArmorEnchant2": 312657,
+     "shadowArmorEnchant3": 4702,
+     "weaponCard1": 300241
+    },
+    "options": {
+     "6": null,
+     "7": null,
+     "20": null,
+     "21": null,
+     "30": null,
+     "31": null,
+     "36": null,
+     "37": null,
+     "38": null,
+     "39": null,
+     "40": null
+    },
+    "stats": {},
+    "customAttachments": {},
+    "skills": {
+     "active": {},
+     "passive": {},
+     "buffs": {}
+    },
+    "customItems": []
+   },
+   "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10s1Ov51GQUD2cKwr0i0jhZiGkwILM5xmNYCGdUi6t1UvdcrdkvAOyNbCoACUTSrYR6tWHdQBdNijPBYEZnTT8bTaAQxuMJgN4ABmJTwgXT8dIAHEEQ0vu44bGiyR3FhkHV7XsU7xuKYQNWE3WG7weMnamY43UAKpDIYEEyzbhOduDrAjscELO5ykFkBzhfjjz1uo8TROITroejrffEhUCxMJu8WbaJwXI-zk8EM8XjmMXvkG-8JzzR.bl9z0vRhzU2AB2VNzCHABZKA6jqRxNiibRZn2DcVDGCdNiCbQwKKetUB8TYdGMMCwLYAiUGXPM10o7cGyOWZDzo19gKbaQok0aR9hYoD30-DjtB0P9eLfJhQMEnRbjMKAJF3TZk1TYIwBkuTqNXbI9FUmA6m7eTuGTP8VNknTS3nfNKErLSTLqVj3wkqJ73IkAYgIskpBQ-gthctymHUizjEPVy0DJPSKGkFsILYJREEQLJuAglDvJiuL-LXFLGDCzYmP2DKzPLSy4QyuymE-ad.B4qgqDUbN4tvKJnKwKqasyndwsi2omuqnNGBKxh2KiCrmOanq.oEwbpGG7rar6hztG4WYHy6gMoBiMw6u0YwZwoqqVrW1qGObFM8LYcdGAwuxaXsHh-QBRh0FJZ8Ig4-gwO8qg7oevAMNjCI.BTKJbrAe7SWLXz4qcebZCBkG8D6p7wqiYxZnbD7ga.vqfqwwStr-NHYb6sGQuqHGnFqFT5zGFYM0OL8Es0dsKbqKmaZINLVS0ynRiSNAiNbJwwMPJmxh5wjkHZwHwAsZnud55AxsRgRNGc4XZbF2aeAgoXpbGaxtPk1s8JVnXRj1myJeUk2QVirJWx-S2uet1Kcxojmpa5756wNEgYikAz.EZk3PboEoYgtzmZetEg6nfP3.EECOxijmO-JdjTJcgWAYBBdBs2zaD4woUA6yYRAqA5Oo4PQDZgncERSSYKAlnIYIkh9iRq4oYIKlQEYiDRRAgQL3ka7YX4hibgeu7YTxe7wR5G.b4IsxgVbiGnkAQQYJ4oAeB6N.sRBMCBRBsyBAAJONxBIIEK6BYPGDMDeMVpdZUA5E.z8mZA4rwB50Wfq-MA78b6nyBI-PAQIVhe2IBEYIL9V7AI-mAiBQ9Yi7ybmceBQCQGfyBPAKA4h771zJKPEAPMYjUmrkCfIjAl5sAoVQsAQIMQd1QBvb.eB9AkGYUkKgskyFXCwAALzsECUcP96wbxUFgdAMdYgj2kbImOQIgwYDIUkOo9ASCv0pKo6uT8W5sGmL9FhZhkDVyyMEamNYgTWmQNmP.A8sFsHgG4MRh9MAHxNkCTxuxghuJgB9G.fiN7Fi8CSXxR9-FsCRJXEgAByZhJisLBALjEXkqBQT0CwN0Ixm90BATwXrA0vcN7QViiQVe.1fEEAYOZA.-goDQB9hvAk1hYisgIXJNph9kAsnoMgAkVQiAZKbt4myvjxyfHySCBEcQkl2MQCSA.oxQ5AhaByFk5S7DA13rSIESRe6r1zOXZxB9pkwHvnxRurT8kF36WYPB39SAQnoSAawdSdENDwQAKURJYeI.SVgyWBohVunAsCcBKECK4AJmFgOsIU-QViGFjhEHgiodRCkb3Pg9VAocN5IGuIUvAiyADS6wyGfOQBkFkQJswoCBAATSPhvFoFisnAlQSCE0jARC5h6fklaPs8EADkoBKA7u3FxIAqiiEwJSBESgMXWFkjEbMBongbwDAYlhg81jRwJTM4I3wLyD0Pnc4I1g7C9zMKQMRYCMLiDga4g0MQYiLMtb7fJagyyLLaOMfJmzzyQLWI-KB6AfXdxICuTIkC8WoAJVatg0Fq77KuVUCEMA5EWVrogUkjBDllOFZYeSwRNnIAgLC7AQaK14CULnbM7SRj0Hvn8bwgJZUBgsEMMAiA6iOrPrBSkowUAQFSWwYsOZHEkCbkCMVZd7rIA0sEJECIp75O.BkK5fjYW0H0BvKojj-602CPgEgBagQ9yGPQaFZ62BZsQAYfZ5zZmZAhLCrw5bjFeBELKm9tISTuXye0lAAyCDDJ4atOdWACQv2QMqckTZghgf6XUoZIyYNN3g-WJDBJPyob6RBzD0GxlwYQ-h0CRHwMYag6M2DuHEPzwJNwMJCIMh0Lfah6CeB1gQgJAARXQLkvNsSRAPV8VskGXcAC.O00TiHeFnAuQwi4gBWkQUVHLYi00ltOpgGKMRHwvECAAtECFEfd41hLJEZkzTyLNJFXuIDeD8nl61E66kAxm6G7ongaLIxgHzuFoNoot59Jgb1C3QMkviov5PyDEJlwSGg8JNAAxLq0mXj07ZlgJHAnmzxigfEoEH8GWEfkSqwWS3GZEMcEFJDjj51aq-kghhAi2taeU1jevy5HKmfjJBs7amXwGwKSDeSIJNZI6eeGToHOEZDwKMAkBdoVEPG1gUkoJwSpPkyAJqim8DKbgHiQGuhLssGCywK7d3bsPfu3d6MwwoVECUx8GAeJeiA16HIQGAPdAXAuIDYHD2we9AuPwF7Qw3uEJO591T6nL60nCmwNohEb68vThW.ZwJiuIDRyAQJ-7769ysBZIoGJVoEFhRyS9ZxJYtEIXmOxP9HinsZ93H.N9z4VzSOjgdg3zhsCSzljtAJMsPk0.snTyWudTrs5A4z6BTNOZcxZB8Bn.XK4c.ZyzY5JePC0GwNRsPlS7ahaikAKhVrrTnaKlaBUHxi.QECVLDAwAZdpiFiwMKCdE6DHEUVGIDQnrobtmYIuQBrDgHg7rhRZOyaAA/"
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21544",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (8055050 × 2) não cobre o HP (45202652): o abate depende de críticos, com chance efetiva de 90%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    19375335,
+    38383292
+   ],
+   "wallMs": 1593
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21544",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 244,
+    "unique": 243,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21544:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21544,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    19375335,
+    42281397
+   ],
+   "wallMs": 4167
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21545",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 300,
+    "unique": 299,
+    "phase": "socket"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7598265 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 89%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18363817,
+    35746772
+   ],
+   "wallMs": 1539
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21545",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 439,
+    "unique": 438,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21545:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21545,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7845589 × 2) não cobre o HP (54117294): o abate depende de críticos, com chance efetiva de 94%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18363817,
+    38784291
+   ],
+   "wallMs": 4080
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21542",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 93,
+    "unique": 92,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar.",
+      "Sem crítico o dano mínimo (9350056 × 2) não cobre o HP (46663771): o abate depende de críticos, com chance efetiva de 81%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    19544055,
+    40562803
+   ],
+   "wallMs": 1618
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21542",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 244,
+    "unique": 243,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21542:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21542,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    19544055,
+    45328537
+   ],
+   "wallMs": 4072
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21601",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 171,
+    "unique": 170,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7429225 × 2) não cobre o HP (46836900): o abate depende de críticos, com chance efetiva de 91%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    18030141,
+    35672206
+   ],
+   "wallMs": 1589
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21601",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 277,
+    "unique": 276,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21601:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "guaranteed"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21601,
+     "damageFeasible": true,
+     "reliability": "guaranteed",
+     "reasons": []
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    18030141,
+    38996404
+   ],
+   "wallMs": 3816
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21539",
+   "budget": 300,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 255,
+    "unique": 254,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 300,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 308,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7086176 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 80%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 4,
+   "dps": [
+    15769180,
+    31027662
+   ],
+   "wallMs": 1463
+  },
+  {
+   "variant": "scenario",
+   "goal": "hits2-margin10",
+   "start": "original",
+   "scope": "21539",
+   "budget": 800,
+   "feasible": true,
+   "startedFeasible": false,
+   "firstFeasible": {
+    "evaluations": 356,
+    "unique": 355,
+    "phase": "search"
+   },
+   "bestGap": null,
+   "stoppedBy": "search-budget",
+   "evaluations": {
+    "counted": 800,
+    "otherTargets": 0,
+    "skippedForBudget": 0,
+    "afterSearch": 9,
+    "unique": 808,
+    "finalChecks": 2
+   },
+   "socketFieldsRefusedByGoal": 0,
+   "statuses": [
+    "21539:feasible"
+   ],
+   "kill": {
+    "damageFeasible": true,
+    "constraintsMet": true,
+    "reliability": "conditional"
+   },
+   "killByTarget": [
+    {
+     "monsterId": 21539,
+     "damageFeasible": true,
+     "reliability": "conditional",
+     "reasons": [
+      "Sem crítico o dano mínimo (7023958 × 2) não cobre o HP (48682183): o abate depende de críticos, com chance efetiva de 93%."
+     ]
+    }
+   ],
+   "audit": [],
+   "steps": 5,
+   "dps": [
+    15769180,
+    34872089
+   ],
+   "wallMs": 3787
+  }
+ ]
+}

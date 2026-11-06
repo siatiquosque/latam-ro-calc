@@ -1,0 +1,383 @@
+{
+  "batchName": "B09-reliability-discovery",
+  "budget": 200,
+  "previousCalls": 92,
+  "calls": 0,
+  "cumulativeCalls": 92,
+  "wallMs": 168.14180000000033,
+  "cpu": {
+    "user": 266000,
+    "system": 46000
+  },
+  "rows": [
+    {
+      "hypothesis": "Domain-knowledge hypothesis: Drosera may add ranged critical chance. Confirm the actual script and discover its ID instead of assuming it applies.",
+      "tool": "search_items",
+      "args": {
+        "slot": "weaponCard",
+        "query": "Drosera",
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 5
+      },
+      "calls": 0,
+      "wallMs": 32.81820000000016,
+      "cpu": {
+        "user": 141000,
+        "system": 15000
+      },
+      "requestBytes": 91,
+      "responseBytes": 144,
+      "isError": false,
+      "result": {
+        "total": 1,
+        "shown": 1,
+        "offset": 0,
+        "items": [
+          {
+            "id": 4421,
+            "name": "Carta Drosera",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "CRIT à distância: 15"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Find a larger permanent crit source that can close the worst target's deficit; query the corrected cri key.",
+      "tool": "search_items",
+      "args": {
+        "slot": "headMiddle",
+        "classId": 4262,
+        "bonus": [
+          "cri"
+        ],
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 2.8484000000003107,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 97,
+      "responseBytes": 623,
+      "isError": false,
+      "result": {
+        "total": 3,
+        "shown": 3,
+        "offset": 0,
+        "items": [
+          {
+            "id": 410093,
+            "name": "Correntes Sagradas",
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 150,
+            "def": 5,
+            "bonuses": [
+              "Crítico: 8",
+              "Dano à distância: 8",
+              "Dano corpo a corpo: 8",
+              "Dano crítico: EQUIP_ID[420076]7"
+            ]
+          },
+          {
+            "id": 410094,
+            "name": "Correntes Sagradas",
+            "slots": 1,
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 150,
+            "def": 5,
+            "bonuses": [
+              "Crítico: 5",
+              "Dano à distância: 5",
+              "Dano corpo a corpo: 5",
+              "Dano crítico: EQUIP_ID[420076]5"
+            ]
+          },
+          {
+            "id": 18559,
+            "name": "Orelhas de Fafnir",
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 50,
+            "def": 3,
+            "bonuses": [
+              "Crítico: 3",
+              "Dano crítico: EQUIP_ID[18560]5",
+              "Regen. natural de HP: -100"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "The lower head slot may improve damage or crit with one added piece while preserving the current headgear.",
+      "tool": "search_items",
+      "args": {
+        "slot": "headLower",
+        "classId": 4262,
+        "bonus": [
+          "cri",
+          "pAtk",
+          "range"
+        ],
+        "bonusMode": "any",
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 12
+      },
+      "calls": 0,
+      "wallMs": 3.2163000000000466,
+      "cpu": {
+        "user": 15000,
+        "system": 16000
+      },
+      "requestBytes": 129,
+      "responseBytes": 3618,
+      "isError": false,
+      "result": {
+        "total": 13,
+        "shown": 12,
+        "offset": 0,
+        "items": [
+          {
+            "id": 19439,
+            "name": "Aura Fantasma",
+            "db": true,
+            "slot": "headLower",
+            "lv": 170,
+            "def": 5,
+            "bonuses": [
+              "ATQ: EQUIP[Fallen Warrior Manteau]str:30---5",
+              "Vel.Atq %: EQUIP[Fallen Warrior Manteau]agi:30---3",
+              "Pós-conjuração: EQUIP[Fallen Warrior Manteau]vit:30---4",
+              "ATQM: EQUIP[Fallen Warrior Manteau]int:30---5",
+              "Conj. Variável: EQUIP[Fallen Warrior Manteau]int:30---8",
+              "Dano à distância: EQUIP[Fallen Warrior Manteau]dex:30---1"
+            ]
+          },
+          {
+            "id": 420018,
+            "name": "Broto Temporal DES",
+            "db": true,
+            "slot": "headLower",
+            "lv": 100,
+            "bonuses": [
+              "Dano Físico (Tamanho: Todos): EQUIP[Temporal Dex Manteau&&Excellent Dexterous Armor]===7 / EQUIP[Temporal Dex Manteau&&Excellent Dexterous Armor]REFINE[armor,garment==18]===7",
+              "ATQ: EQUIP[Temporal Dex Manteau&&Excellent Dexterous Armor]REFINE[armor,garment==14]===80",
+              "Dano físico %: EQUIP[Temporal Dex Manteau&&Excellent Dexterous Armor]REFINE[armor,garment==18]===5",
+              "Dano à distância: EQUIP[Temporal Dex Manteau&&Excellent Dexterous Armor]REFINE[armor,garment==22]===10"
+            ]
+          },
+          {
+            "id": 420020,
+            "name": "Broto Temporal SOR",
+            "db": true,
+            "slot": "headLower",
+            "lv": 100,
+            "bonuses": [
+              "Dano físico contra todas as raças %: EQUIP_ID[20968&&15346]===10",
+              "ATQ: EQUIP_ID[20968&&15346]REFINE[armor,garment==14]===80",
+              "Dano Físico (Tamanho: Todos): EQUIP_ID[20968&&15346]REFINE[armor,garment==18]===10",
+              "Dano crítico: EQUIP_ID[20968&&15346]REFINE[armor,garment==18]===12",
+              "Dano à distância: EQUIP_ID[20968&&15346]REFINE[armor,garment==22]===10",
+              "Dano corpo a corpo: EQUIP_ID[20968&&15346]REFINE[armor,garment==22]===10"
+            ]
+          },
+          {
+            "id": 420153,
+            "name": "Cachecol Dínamo A",
+            "db": true,
+            "slot": "headLower",
+            "lv": 130,
+            "bonuses": [
+              "Conj. Variável: 3",
+              "Dano corpo a corpo: 5",
+              "Dano à distância: 5"
+            ]
+          },
+          {
+            "id": 420155,
+            "name": "Cachecol Dínamo C",
+            "db": true,
+            "slot": "headLower",
+            "lv": 1,
+            "bonuses": [
+              "Crítico: 3",
+              "Dano crítico: 5"
+            ]
+          },
+          {
+            "id": 420076,
+            "name": "Coleira de Espinhos",
+            "db": true,
+            "slot": "headLower",
+            "lv": 150,
+            "bonuses": [
+              "Crítico: 3",
+              "Dano crítico: 5"
+            ]
+          },
+          {
+            "id": 420821,
+            "name": "Competidor Bebê Selvagem",
+            "db": true,
+            "slot": "headLower",
+            "lv": 100,
+            "bonuses": [
+              "Custo de SP das habilidades: EQUIP_ID[19199]===-5",
+              "Pós-conjuração: 3",
+              "Dano à distância: 5",
+              "Precisão perfeita: EQUIP_ID[19198]10",
+              "Redução de Recarga de Rugido do Leão: EQUIP_ID[19198]7.5",
+              "Redução de Recarga de Turbilhão de Pétalas: EQUIP_ID[19203]0.5"
+            ]
+          },
+          {
+            "id": 420822,
+            "name": "Competidor Lunático",
+            "db": true,
+            "slot": "headLower",
+            "lv": 100,
+            "bonuses": [
+              "Pós-conjuração: 3",
+              "Dano corpo a corpo: 5",
+              "Redução de Recarga de Espiral Lunar: EQUIP_ID[19196]2",
+              "Precisão perfeita: EQUIP_ID[19396]10",
+              "Crítico: EQUIP_ID[19204]5",
+              "Redução de Conj. Variável de Canhão de Prótons: EQUIP_ID[19190]100"
+            ]
+          },
+          {
+            "id": 19268,
+            "name": "Hálito de Verme com Rosto",
+            "db": true,
+            "slot": "headLower",
+            "lv": 1,
+            "def": 2,
+            "bonuses": [
+              "Dano Mágico por Propriedade (Fogo): 1",
+              "ATQ: EQUIP[Giant God Snake Skin]SUM[str==20]---5",
+              "Pós-conjuração: EQUIP[Giant God Snake Skin]SUM[agi==20]---3",
+              "Conj. Variável: EQUIP[Giant God Snake Skin]SUM[int==20]---4",
+              "Dano à distância: EQUIP[Giant God Snake Skin]SUM[dex==20]---1",
+              "Dano crítico: EQUIP[Giant God Snake Skin]SUM[luk==20]---3"
+            ]
+          },
+          {
+            "id": 18560,
+            "name": "Máscara de Fafnir",
+            "db": true,
+            "slot": "headLower",
+            "lv": 50,
+            "def": 2,
+            "bonuses": [
+              "Crítico: 2"
+            ]
+          },
+          {
+            "id": 436031,
+            "name": "Máscara de Pesar",
+            "slots": 1,
+            "db": true,
+            "slot": "headMiddle",
+            "lv": 201,
+            "def": 10,
+            "bonuses": [
+              "P.ATQ: 5",
+              "S.ATQM: 5",
+              "Pós-conjuração: 4",
+              "SP máx. %: EQUIP_ID[300270||300271||300272||300273]25"
+            ]
+          },
+          {
+            "id": 420030,
+            "name": "Pena de Águia",
+            "db": true,
+            "slot": "headLower",
+            "lv": 1,
+            "bonuses": [
+              "Dano à distância: 5"
+            ]
+          }
+        ],
+        "hint": "Mais 1 resultados: use offset=12."
+      }
+    },
+    {
+      "hypothesis": "The existing Sacred Chains script named this lower-head partner; verify the exact synergy and occupancy.",
+      "tool": "get_item",
+      "args": {
+        "id": 420076
+      },
+      "calls": 0,
+      "wallMs": 105.44999999999982,
+      "cpu": {
+        "user": 94000,
+        "system": 15000
+      },
+      "requestBytes": 13,
+      "responseBytes": 813,
+      "isError": false,
+      "result": {
+        "id": 420076,
+        "name": "Coleira de Espinhos",
+        "aegisName": "Vassalage_Necklace",
+        "inCalcDb": true,
+        "partners": [
+          {
+            "id": 410093,
+            "name": "Correntes Sagradas",
+            "slot": "headMiddle"
+          },
+          {
+            "id": 410094,
+            "name": "Correntes Sagradas",
+            "slot": "headMiddle"
+          },
+          {
+            "id": 450600,
+            "name": "Armadura Desconhecida SOR",
+            "slot": "armor"
+          }
+        ],
+        "presentInLatam": true,
+        "slots": 0,
+        "slotTags": [
+          "headLower"
+        ],
+        "requiredLevel": 150,
+        "defense": 0,
+        "usableClass": [
+          "all"
+        ],
+        "description": "Coleira com espinhos de aço. Ideal para atividades duvidosas...\n--------------------------\nCRÍT +3.\nDano crítico +5%.\n--------------------------\nTipo: Equip. para Cabeça\nEquipa em: Baixo\nDEF: 0 DEFM: 0\nPeso: 1\nNível necessário: 150\nClasses: Todas",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "cri",
+            "label": "Crítico",
+            "values": [
+              "3"
+            ]
+          },
+          {
+            "key": "criDmg",
+            "label": "Dano crítico",
+            "values": [
+              "5"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+ "job": "adv:wh",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "wh, cartas sorteadas, equipamento mantido, esforço 300",
+   "sameState": true,
+   "all": {
+    "finalDps": 530589,
+    "unique": 3094,
+    "wallMs": 14292,
+    "secondPass": {
+     "startedWith": 530589,
+     "evaluations": 1254,
+     "ms": 5820,
+     "uniqueBefore": 1839
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 530589,
+    "unique": 2827,
+    "wallMs": 13199,
+    "secondPass": {
+     "startedWith": 530589,
+     "evaluations": 987,
+     "ms": 4546,
+     "uniqueBefore": 1839
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "wh, cartas sorteadas, equipamento mantido, esforço 1500",
+   "sameState": true,
+   "all": {
+    "finalDps": 532500,
+    "unique": 3534,
+    "wallMs": 16534,
+    "secondPass": {
+     "startedWith": 532500,
+     "evaluations": 885,
+     "ms": 4465,
+     "uniqueBefore": 2648
+    },
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 532500,
+    "unique": 3269,
+    "wallMs": 14995,
+    "secondPass": {
+     "startedWith": 532500,
+     "evaluations": 620,
+     "ms": 3013,
+     "uniqueBefore": 2648
+    },
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "wh, cartas sorteadas, equipamento mantido, esforço 4000",
+   "sameState": true,
+   "all": {
+    "finalDps": 532500,
+    "unique": 3368,
+    "wallMs": 14781,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 532500,
+    "unique": 3368,
+    "wallMs": 14919,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

@@ -16,8 +16,13 @@ import { complementChoices, damageContext, REACHABLE_REFINE, relevantKeys, searc
 import { pacing } from '../engine/pacing';
 import { CHECK_DUMMIES, isUndefended } from '../engine/dummies';
 import { SKILL_ID_BY_NAME } from 'src/app/skills';
+import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
 import { AnalysisRuntime } from '../runtime';
 import { compact } from './compact';
+import { constraintSpecSchema, ConstraintSpec, slotOfField } from '../engine/goal-spec';
+import { equipmentLocks } from '../engine/equipment-locks';
+import { constraintViolations } from '../engine/feasibility';
+import { introducesHeadConflict } from '../engine/validate';
 import { createBuildContext } from './context';
 
 export const targetSchema = z
@@ -40,6 +45,7 @@ export type DamageTableArgs = { build: BuildInput; monsterIds: number[] };
 export type CompareBuildsArgs = { builds: BuildInput[]; target?: TargetArg; labels?: string[] };
 
 export type OptimizeSlotArgs = {
+    constraints?: ConstraintSpec;
     build: BuildInput;
     slot: string;
     candidates?: number[];
@@ -50,6 +56,7 @@ export type OptimizeSlotArgs = {
     complements?: boolean;
     refine?: number;
     maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
+    excludeMvpCards?: boolean;
   };
 
 export type ParseShareLinkArgs = { share: string; raw?: boolean };
@@ -67,19 +74,25 @@ const shareOf = (rb: ResolvedBuild, compare?: CompareState | null) => buildShare
 function resolveCandidates(
   dataset: Dataset,
   classId: number,
-  opts: { candidates?: number[]; slotTag?: (typeof SLOT_TAGS)[number]; query?: string },
-): number[] {
+  opts: { candidates?: number[]; slotTag?: (typeof SLOT_TAGS)[number]; query?: string; excludeMvpCards?: boolean },
+): { ids: number[]; eligible: number } {
   const max = config.limits.maxOptimizeCandidates;
-  const ids = opts.candidates?.length
-    ? opts.candidates
-    : (() => {
-        if (!opts.slotTag) throw new Error('Informe `candidates` ou `slotTag` para escolher o que testar.');
-        const char = dataset.classes.newInstance(classId);
-        return dataset.itemIndex.search({ slot: opts.slotTag, query: opts.query, limit: max }, char).rows.map((r) => r.id);
-      })();
+  let eligible: number;
+  let ids: number[];
+  if (opts.candidates?.length) {
+    // Explicit ids: only the MVP exclusion applies; the caller chose the rest.
+    ids = opts.excludeMvpCards ? opts.candidates.filter((id) => !MVP_CARD_IDS.has(id)) : opts.candidates;
+    eligible = ids.length;
+  } else {
+    if (!opts.slotTag) throw new Error('Informe `candidates` ou `slotTag` para escolher o que testar.');
+    const char = dataset.classes.newInstance(classId);
+    const found = dataset.itemIndex.search({ slot: opts.slotTag, query: opts.query, limit: max, excludeMvpCards: opts.excludeMvpCards }, char);
+    ids = found.rows.map((r) => r.id);
+    eligible = found.total;
+  }
 
   if (!ids.length) throw new Error('Nenhum candidato encontrado para esse slot.');
-  return ids.slice(0, max);
+  return { ids: ids.slice(0, max), eligible };
 }
 
 async function calculate({ build, target, effects, include }: CalculateArgs) {
@@ -160,7 +173,8 @@ async function compareBuilds({ builds, target, labels }: CompareBuildsArgs) {
     };
   }
 
-async function optimizeSlot({ build, slot, candidates, slotTag, query, target, limit = 10, complements = true, refine, maxGrade }: OptimizeSlotArgs) {
+async function optimizeSlot({ build, slot, candidates, slotTag, query, target, limit = 10, complements = true, refine, maxGrade, excludeMvpCards = false, constraints }: OptimizeSlotArgs) {
+    if (constraints) constraints = constraintSpecSchema.parse(constraints);
     const input = await normalizeShare(build, shortener);
     if (!ITEM_ID_KEYS.includes(slot)) {
       // Without this the override is silently skipped and every candidate solves to
@@ -169,13 +183,16 @@ async function optimizeSlot({ build, slot, candidates, slotTag, query, target, l
     }
 
     const baseRb = resolveBuild(input, dataset);
+    const locks = equipmentLocks(baseRb.model, constraints);
+    const inherited = new Set(constraintViolations(constraints ?? {}, dataset, baseRb.model, baseRb.model).map(v => `${v.code}:${v.message}`));
     const classId = baseRb.model.class;
     const { monster } = resolveTarget(dataset, target?.monsterId);
 
-    const requested = resolveCandidates(dataset, classId, { candidates, slotTag, query });
+    const { ids: requested, eligible } = resolveCandidates(dataset, classId, { candidates, slotTag, query, excludeMvpCards });
+    const bannedComplements = excludeMvpCards ? new Set<number>(MVP_CARD_IDS) : new Set<number>();
     const skippedNotInLatam = requested.filter((id) => !dataset.itemIndex.get(id)?.latam);
-    const ids = requested.filter((id) => dataset.itemIndex.get(id)?.latam);
-    if (!ids.length) throw new Error(`Nenhum candidato disponível no LATAM (fora do LATAM: ${skippedNotInLatam.join(', ')}).`);
+    const ids = requested.filter((id) => dataset.itemIndex.get(id)?.latam && locks.permitsItem(slot, id));
+    if (!ids.length && !constraints) throw new Error(`Nenhum candidato disponível no LATAM (fora do LATAM: ${skippedNotInLatam.join(', ')}).`);
 
     const baseSolved = solve(baseRb, dataset, monster);
     const baseDps = dpsAndMax(baseSolved).dps;
@@ -190,7 +207,10 @@ async function optimizeSlot({ build, slot, candidates, slotTag, query, target, l
     const socketBudget = complements ? Math.min(48, Math.floor(400 / ids.length)) : 0;
     const measure = (patch: BuildPatch) => {
       // Gear changes invalidate the bonus pass, so each candidate needs a full solve.
+      if (introducesHeadConflict(perCandidate, patch, dataset)) throw new Error('head slot conflict');
+      if (!locks.permits(patch)) throw new Error('locked field changed');
       const rb = resolveBuild(applyPatch(perCandidate, patch), dataset);
+      if (constraintViolations(constraints ?? {}, dataset, baseRb.model, rb.model).some(v => !inherited.has(`${v.code}:${v.message}`))) throw new Error('constraint violated');
       const { dps, max } = dpsAndMax(solve(rb, dataset, monster));
       return { rb, dps, max, metrics: { dps, max } as Record<string, number | undefined> };
     };
@@ -203,12 +223,13 @@ async function optimizeSlot({ build, slot, candidates, slotTag, query, target, l
       // The new piece keeps only the sockets it has; the old piece's rolls do not carry over.
       const worn = baseRb.model[slot] === id;
       // Ideal refine and grade unless the caller capped them; the worn piece gets them too, so its own upgrade shows.
-      let patch: BuildPatch = swapPatch(dataset, baseRb, slot, id, { refine, maxGrade });
+      let patch: BuildPatch = locks.preserve(swapPatch(dataset, baseRb, slot, id, { refine, maxGrade }));
       let tried;
       try { tried = measure(patch); } catch { continue; }
       const bare = tried.dps;
-      if (socketBudget > 0 && !worn) {
-        const refined = searchComplements({ patch, result: tried }, complementChoices(dataset, slot, id, keys, new Set()), 'dps', (candidate) => {
+      // When a field pins the worn piece, the remaining fields are still open.
+      if (socketBudget > 0 && (!worn || constraints?.lockedFields?.some(field => slotOfField(field) === slot))) {
+        const refined = searchComplements({ patch, result: tried }, locks.choices(complementChoices(dataset, slot, id, keys, bannedComplements)), 'dps', (candidate) => {
           try { return measure(candidate); } catch { return null; }
         }, socketBudget);
         patch = refined.patch;
@@ -268,6 +289,10 @@ async function optimizeSlot({ build, slot, candidates, slotTag, query, target, l
       slot,
       current: { id: currentId || null, name: currentId ? dataset.itemIndex.get(currentId)?.name : null, dps: round(baseDps, 2) },
       tested: scored.length,
+      testedCandidates: scored.length,
+      eligibleCandidates: eligible,
+      // A best-of-slot claim is only valid when every eligible candidate was measured.
+      complete: !stoppedEarly && scored.length === eligible,
       ranking: top.map(({ patch, ...row }) => row),
       share: shareOf(baseRb, compare),
       complements,

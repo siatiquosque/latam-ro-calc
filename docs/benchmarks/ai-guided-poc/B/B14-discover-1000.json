@@ -1,0 +1,233 @@
+{
+  "batchName": "B14-discover-1000",
+  "budget": 1000,
+  "previousCalls": 162,
+  "calls": 0,
+  "cumulativeCalls": 162,
+  "wallMs": 55.14589999999998,
+  "cpu": {
+    "user": 203000,
+    "system": 46000
+  },
+  "rows": [
+    {
+      "hypothesis": "At the 1000-call tier, seek a coordinated permanent-crit garment that can close the remaining 22-point worst-target deficit without consumables.",
+      "tool": "search_items",
+      "args": {
+        "slot": "garment",
+        "classId": 4262,
+        "bonus": [
+          "cri"
+        ],
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 31.046800000000076,
+      "cpu": {
+        "user": 188000,
+        "system": 46000
+      },
+      "requestBytes": 94,
+      "responseBytes": 1469,
+      "isError": false,
+      "result": {
+        "total": 6,
+        "shown": 6,
+        "offset": 0,
+        "items": [
+          {
+            "id": 480174,
+            "name": "Casaco Pirata",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 200,
+            "def": 15,
+            "bonuses": [
+              "Crítico: 3 / EQUIP[Drake Card]===15",
+              "T.CRIT: 5 / EQUIP[Drake Card]===10",
+              "ATQ: 2---15",
+              "Dano crítico: 2---3 / GRADE[me==C]===15",
+              "Dano Físico (Tamanho: Todos): 3---5",
+              "Dano físico %: 7===5"
+            ]
+          },
+          {
+            "id": 480197,
+            "name": "Jetpack Crítico",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 150,
+            "def": 38,
+            "bonuses": [
+              "ATQ: 2---5",
+              "Crítico: 2---2",
+              "Dano Físico (Tamanho: Todos): 3---3",
+              "Vel.Atq %: 7===7",
+              "Dano à distância: 11===10 / EQUIP[Battle Processor]===5",
+              "Dano corpo a corpo: 11===10 / EQUIP[Battle Processor]===5"
+            ]
+          },
+          {
+            "id": 480000,
+            "name": "Manto de Apoio",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 100,
+            "def": 30,
+            "bonuses": [
+              "Vel.Atq %: 5",
+              "Crítico: 3---2",
+              "Dano crítico: 7===5",
+              "Pós-conjuração: 9===10"
+            ]
+          },
+          {
+            "id": 20968,
+            "name": "Manto Temporal SOR",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 100,
+            "def": 38,
+            "bonuses": [
+              "Crítico: 2---3",
+              "Dano crítico: 2---3",
+              "Vel.Atq %: 4---5",
+              "Dano físico %: 7===7",
+              "Vel.Atq: EQUIP_ID[22011||22118]1",
+              "Penetração Física (Raça: Bruto): 9===20 / 11===10"
+            ]
+          },
+          {
+            "id": 20787,
+            "name": "Sobrepeliz Esmeralda II",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 1,
+            "def": 20,
+            "bonuses": [
+              "Crítico: 2---2"
+            ]
+          },
+          {
+            "id": 20936,
+            "name": "Sobrepeliz Magmática",
+            "slots": 1,
+            "db": true,
+            "slot": "garment",
+            "lv": 175,
+            "def": 35,
+            "bonuses": [
+              "Crítico: 5 / 7===5",
+              "Dano crítico: 9===5 / EQUIP[Lava Leather Shoes]5",
+              "Dano físico %: 11===3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "A crit-focused armor may trade the Winter skill flower for enough reliable critical chance; test it together with a garment rather than in isolation only.",
+      "tool": "search_items",
+      "args": {
+        "slot": "armor",
+        "classId": 4262,
+        "bonus": [
+          "cri"
+        ],
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 12
+      },
+      "calls": 0,
+      "wallMs": 2.478900000000067,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 92,
+      "responseBytes": 1610,
+      "isError": false,
+      "result": {
+        "total": 4,
+        "shown": 4,
+        "offset": 0,
+        "items": [
+          {
+            "id": 15402,
+            "name": "Batina Angelical SOR",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 170,
+            "def": 100,
+            "bonuses": [
+              "HP máx. %: 10",
+              "SP máx. %: 10",
+              "Vel.Atq %: 10",
+              "Crítico: 2---3",
+              "Dano crítico: 2---4",
+              "SOR: 3---5 / EQUIP[Clergy's Boots&&Clergy's Manteau]8"
+            ]
+          },
+          {
+            "id": 15396,
+            "name": "Cota Dracônica Prata",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 170,
+            "def": 110,
+            "bonuses": [
+              "SOR: 12",
+              "HP máx. %: 15",
+              "SP máx. %: 15",
+              "Crítico: 2---2 / EQUIP[Dragon Scale Boots&&Dragon Scale Hood]luk:15---2",
+              "Dano crítico: 2---4 / EQUIP[Dragon Scale Boots&&Dragon Scale Hood]luk:15---3",
+              "Dano Físico (Raça: Dragão): 3---7"
+            ]
+          },
+          {
+            "id": 450407,
+            "name": "Exoesqueleto Crítico",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 150,
+            "def": 130,
+            "bonuses": [
+              "ATQ: 100 / 2---7",
+              "Crítico: 2---2",
+              "Vel.Atq %: 7===15",
+              "Dano crítico: 9===10 / EQUIP_ID[480197]REFINE[armor,garment==23]REFINE[armor,garment==1]---1",
+              "Pós-conjuração: 11===10 / EQUIP_ID[480197]5",
+              "Dano Físico (Elemento: Todos): EQUIP_ID[480197]REFINE[armor,garment==18]===10"
+            ]
+          },
+          {
+            "id": 15147,
+            "name": "Vestimenta Exuberante",
+            "slots": 1,
+            "db": true,
+            "slot": "armor",
+            "lv": 100,
+            "bonuses": [
+              "Penetração Física (Raça: Humanoide): 1---4 / EQUIP[Morrigane's Manteau]===15",
+              "Penetração Física (Raça: Humano): 1---4 / EQUIP[Morrigane's Manteau]===15",
+              "Penetração Física (Raça: Demônio): 1---4 / EQUIP[Morrigane's Manteau]===15",
+              "Penetração Física (Raça: Maldito): 1---4 / EQUIP[Morrigane's Manteau]===15",
+              "SOR: EQUIP[Morrigane's Manteau]3 / EQUIP[Morrigane's Manteau]1---1",
+              "Crítico: EQUIP[Morrigane's Manteau]10 / EQUIP[Morrigane's Manteau]1---1"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

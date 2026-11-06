@@ -1,0 +1,253 @@
+{
+  "experiment": "B",
+  "budget": 1000,
+  "requests": [
+    {
+      "tool": "evaluate_variants",
+      "hypothesis": "Use the legal Temporal LUK garment roll cri:10 to close the modeled crit deficit; test fewer-card/fewer-boot alternatives and the explicitly indexed exoskeleton pair. This is a catalogued roll, not an invented bonus.",
+      "args": {
+        "build": "$build",
+        "targets": "$targets",
+        "constraints": "$constraints",
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "full-luk-clear-roll",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null
+              },
+              "options": {
+                "14": null
+              }
+            }
+          },
+          {
+            "label": "full-luk-crit10",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null
+              },
+              "options": {
+                "14": "cri:10"
+              }
+            }
+          },
+          {
+            "label": "no-hero-luk-crit10",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null
+              },
+              "options": {
+                "14": "cri:10"
+              }
+            }
+          },
+          {
+            "label": "one-rgan-right-luk",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null,
+                "accRightCard": 300368
+              },
+              "options": {
+                "14": "cri:10"
+              }
+            }
+          },
+          {
+            "label": "one-rgan-left-luk",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null,
+                "accLeftCard": 300366
+              },
+              "options": {
+                "14": "cri:10"
+              }
+            }
+          },
+          {
+            "label": "essence-no-rgan-luk",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 4925,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "headLower": 420076,
+                "garment": 20968,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null
+              },
+              "options": {
+                "14": "cri:10"
+              }
+            }
+          },
+          {
+            "label": "exoskeleton-jetpack-pair",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450407,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": null,
+                "armorEnchant2": null,
+                "armorEnchant3": null,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "garment": 480197,
+                "garmentRefine": 12,
+                "garmentGrade": "",
+                "garmentEnchant1": null,
+                "garmentEnchant2": null,
+                "garmentEnchant3": null
+              },
+              "options": {
+                "14": null
+              }
+            }
+          }
+        ],
+        "limit": 10
+      }
+    }
+  ]
+}

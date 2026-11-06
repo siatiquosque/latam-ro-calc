@@ -1,0 +1,218 @@
+{
+ "name": "b1",
+ "runId": "wide-20000-r15",
+ "group": "wide",
+ "note": "candidatesPerSlot 40, rounds 4",
+ "versions": {
+  "app": "0.1.210-beta",
+  "gitHead": "1d7348ed",
+  "gitDirty": true,
+  "dataManifestSha": "992b605642586318",
+  "node": "v22.9.0"
+ },
+ "target": 20994,
+ "args": {
+  "target": {
+   "monsterId": 20994
+  },
+  "objective": "dps",
+  "refine": 12,
+  "maxGrade": "A",
+  "procMode": "off",
+  "instrument": true,
+  "budgetMode": "unified",
+  "maxSolves": 20000,
+  "candidatesPerSlot": 40,
+  "rounds": 4
+ },
+ "wallMs": 99443,
+ "result": {
+  "baselineDps": 576306,
+  "finalDps": 2906532,
+  "deltaPct": 404.34,
+  "solves": 20000,
+  "reused": 3415,
+  "stopped": "orçamento de cálculos ou de tempo esgotado (20000 de 17000): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+  "coverage": {
+   "slots": {
+    "searched": 16,
+    "total": 16
+   },
+   "candidates": {
+    "measured": 1431,
+    "available": 1689,
+    "notMeasured": {
+     "armor": 45,
+     "garment": 79,
+     "boot": 27,
+     "accLeft": 2,
+     "accRight": 29,
+     "shadowWeapon": 4,
+     "shadowShield": 10,
+     "shadowArmor": 3,
+     "shadowBoot": 20,
+     "shadowEarring": 20,
+     "shadowPendant": 19
+    }
+   },
+   "worn": {
+    "tuned": 15,
+    "total": 16
+   },
+   "sockets": {
+    "checked": 26,
+    "total": 26
+   },
+   "calculations": {
+    "discovery": 5633,
+    "evaluation": 14367,
+    "reused": 3414
+   },
+   "complete": false
+  },
+  "screening": {
+   "weapon": {
+    "eligible": 93,
+    "tested": 93
+   },
+   "shield": {
+    "eligible": 28,
+    "tested": 28
+   },
+   "headUpper": {
+    "eligible": 202,
+    "tested": 190
+   },
+   "headMiddle": {
+    "eligible": 67,
+    "tested": 55
+   },
+   "headLower": {
+    "eligible": 56,
+    "tested": 48
+   },
+   "armor": {
+    "eligible": 121,
+    "tested": 121
+   },
+   "garment": {
+    "eligible": 127,
+    "tested": 127
+   },
+   "boot": {
+    "eligible": 97,
+    "tested": 97
+   },
+   "accLeft": {
+    "eligible": 211,
+    "tested": 211
+   },
+   "accRight": {
+    "eligible": 207,
+    "tested": 207
+   },
+   "shadowWeapon": {
+    "eligible": 98,
+    "tested": 98
+   },
+   "shadowShield": {
+    "eligible": 77,
+    "tested": 77
+   },
+   "shadowArmor": {
+    "eligible": 101,
+    "tested": 101
+   },
+   "shadowBoot": {
+    "eligible": 79,
+    "tested": 79
+   },
+   "shadowEarring": {
+    "eligible": 63,
+    "tested": 63
+   },
+   "shadowPendant": {
+    "eligible": 63,
+    "tested": 63
+   }
+  },
+  "steps": 9,
+  "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgUEiPDnRGyvDyhGStUSjXCzWi6VgIaTAisph0xUNABme250qwr0i0kRZn1hoYjEiiKwerqbvVWt9guGYwVPp1-r1MEtbCoACUbSrERlXaqZaT5QB2K0hqWZgC6bFGeCwIzOmn42m0vFTeYLRajeDNJTwgSrhdIAHFkQ0vklEfmWyR3NS6sYKNIy-Tgr2iwPkHVeCOx9xgmYC3UAKpDIYEHhl1OzUwgZdYNcbgi1.skRvZcwr9eb5Dto.XkDd69H28Ead1efaaSpysHlcAFkoDqOpHE2KIZH2Q86mA0CRE-b9jFTLYAKPFQxi3TYgl4KI2GpVAfE2HQgiKAiUDPBsmxAcj7w7J8XxotAUEQzZRyEJjCOQABREgqAsJhhz2YwRP4VDaN4-isCYOdhJE7R9zAP4JC-TZSwU1ClKgFTKIvaitJU1juH4WQ9GUmA6kkgTGCE3hZk0aRNPMyy.Os2S7IcpztIsqzpMYe06Xsxy2BiAiXR4Jwf3pEKwqYXTL2MDjQrQF0jP4VMktixgH07ShGKURBECybhUwU4wLhAAqivi6iqsYVjR3LZC2DqnKGMROrfJkkcRJE.ZKsKxguv8nrev2LAqCoNQzWK2Yy24cTJumobXL82TpEg4wyKWusVqkpgAo28tuH3CboygGIzFmhSnFOyaowuq6GrLbRU2287Luy.iu3de7Hr26yhKOvdajOh7PuG2TuCcXgOLB-7hoCkqFrYTdGAwuwsBgeweEjRAwEYdBQXfCINvS1CqHxwnQQw-MIj4Ms8IOAmibwVssoi7RuFM5nqbwYaSZ6hS9zxlnQWG2msKO4wnH6ymxf51amHZlLqmlpxaiUo8xhWatDjpbmnFuCw6h1vWSBqyJgi103RiSZiInpdL.ptsZ7a4y2mdd0ZrGcqQStmfZvd97y6k962TbGEOVMhnrcNlsztZ95zEZ4FCnKTyEiv9-hIsT22s8YcP87GbjqWQEoYhz-hFMj0Yy7oSvi-AOuDRIKlqidwQS9GNuO6LusqKtvQPhgcF0DNM0CTwmfdDnlh58Xhfl6X1eV-XtfN437et93nf973w.D433NwFH8fJ8AwsKFAAcmEQKhpLqED0A2Jn3BEclMSWYfnxIGIJCvzSGwCoqARhEExIgAEV8eQbGCNxAwQwoA2mIBQYIngwF4EeEwZBaC2C1hgBdVB5BgjggYE8KADwiZ4JANYRAmAASIDNACAAEgWcQJAARPwBA3RgZgaHfCxusVA0lGHMMmMgIqeAHhYgEUIsAIjOFMIBHwsEKxy7EAiMEQRhCFGiOUao6BsRKHILONo.RiixFAigOIHhn8XRwLYPbGI6BCZgABPkRgP9gjONca-AE3xAGoBoRIvA.gSDuKSFQbSjiQBXCwAALzsACdckjqQ0JUFgdAVJYiwIyVkqkAIYwYFiUkOo9ASBCIvEU1.-CSFsGmHTAJZhkCvyyMEXWfYAQGmQGaaRkCzFsHgG4ZJdDMA0N9knAEYzdjBGGTASmnCZk0NbF4Mk0z6GzLYKiZ.JAADk7jGlYWCFfGIPJUAQnoFgbo9SQDj1clY32FcwE0MAoVEghDPrTIIAwR8Ez-BQGgP-GhRJrCxDZPAUOIK6HIFZPQZARIqhEDObg250cLLTM3J8W54JkRxAOd0xAZIJmjErgCFo0lWSvLsATShWMARJDAYQ.sj8BkTKxTAHhStMTAtuVfWFZgrESNII8ZEEyfmVIaFYgAUiiSw8RbkrD.ATcCPjOAeiIJwq4.N3HKOsOgCJWCaFJA3CIKxFQ6gGpoSwomqBK40KQNcA1eACUAGl1ixOsAQDIrIARmhQACAAmvQmhLRWkXNICo5cEIbSMBEPWFSNCHr-ysQAOSgEoQB-8GA0KqKITAF5kRKDNdYbSMQzQVyeEm2pASoFrHbna7F8D.JQLoby4I1g7BgLMKQZJyiMLiC0UMiuMQYgErbVXW5agOwEraOMW5FK.JqMyIKlY6BJ3BCqOeTIYIbWoDte2tggFX50s5VUUVMBsmXnQVCLBDKXm3JjCBUN1IIAAg-iiUNeAlATzNKCkY9AeGIO8EQfWwQowWCGGARAdQ.3MOAheUYKAIDHLYK2OsfSSDIIBKmh.hNkB6VuaiZEkCaHcQyJymZ77aD6FzSQPpMiwNsHwCQKEAJQFDHoJwWRtzz2IAMHStlOLMiivfV4VSwRphwBzbxsBWMyThVuaClAcKCCIoiRdLDWAiSCOQAAxgRIhLBGU7Cn5CKkWaeQTp6k.miSyWMzC1T5mNMou07p2zAUHMqbM.p5FWnrN6awUSBktyHwJhQUxkARJAJ4HWKKokABFdA1zr3bJEETaZlLqZoIAL74RkeId4sAYBXyGDfEAD1NUxHJXi-WTN0NMDNd8eh-EAQAFoATonATulZLomstcFR1pIhDxBaDYLwwVkyUNDp.EVel1gkEVyyOVNg7haAVMYKwyYNC1t0BdNM7btz8gxADYshoESIuDJAMdgNCCdj4x43MjggqMEFQmSUVTQJLB8IdVYC5wyV0hMwr0hhAOfvnCGVYAmX2V2ErpjQ6V2SAECL.DOIDAbgRYFBDQ1E6WLlgr4tlpToSMh4FGNFjVNiwSY9BBCDgorcv5cxIV0e0954XF0Cto.HOd6nyGJTlnxWCS9Dwr0OQs8WB4QuBcKXLAefS5YL0C4-A.cC7wEVuApXytsKxiONgbRCKcPBNJBKwQw2xEja9xAeuQDzJEJw7iYCrCXiKN8C6BB33SVY2cJmLQbENm6ZIx4jGfebskZwlhT9gEgBaDB5HEPrsXVu8Bh7.sKqVbJebk7oe0N9bBM19ArWhsjcvBVBrcb88Dfa51jcD3HhjYq1j-nAC6cenaWwFQ-0sMpoerlCqN3kAAjOwwMAl2G-uAsCUMT0Jrd7HwcYlN3wK4Ma8XTmYCe1hwCsWDup-Acs5aAA/",
+  "budgetReport": {
+   "unit": "solves: evaluations the cache did not have (one build against the first target); engine calls are counted apart",
+   "mode": "unified",
+   "requested": 20000,
+   "searchBudget": 17000,
+   "socketReserve": 0.15,
+   "wallClockMs": 99443,
+   "stoppedReason": "total-budget",
+   "totalEngineCalls": 20014,
+   "uniqueEvaluations": 20008,
+   "uncachedEvaluations": 6,
+   "cacheHits": 3415,
+   "discoveryEvaluations": 5345,
+   "searchEvaluations": 11233,
+   "socketEvaluations": 3217,
+   "finalVerificationEvaluations": 218,
+   "phases": {
+    "baseline": {
+     "unique": 0,
+     "uncached": 1,
+     "cacheHits": 0,
+     "engineCalls": 1
+    },
+    "discovery": {
+     "unique": 5345,
+     "uncached": 0,
+     "cacheHits": 241,
+     "engineCalls": 5345
+    },
+    "search": {
+     "unique": 11233,
+     "uncached": 0,
+     "cacheHits": 2985,
+     "engineCalls": 11233
+    },
+    "socket": {
+     "unique": 3217,
+     "uncached": 0,
+     "cacheHits": 143,
+     "engineCalls": 3217
+    },
+    "levelCheck": {
+     "unique": 204,
+     "uncached": 0,
+     "cacheHits": 45,
+     "engineCalls": 204
+    },
+    "report": {
+     "unique": 9,
+     "uncached": 5,
+     "cacheHits": 1,
+     "engineCalls": 14
+    }
+   },
+   "budgeted": {
+    "inCap": 20000,
+    "socketOutsideCap": 0,
+    "effective": 20000,
+    "unused": 0
+   },
+   "socket": {
+    "availableAtStart": 3421,
+    "used": 3217,
+    "fields": 52,
+    "totalFields": 26,
+    "fieldTimeCuts": 0
+   },
+   "bestScoreByPhase": {
+    "baseline": 576306,
+    "discovery": 576306,
+    "tuning": 1330230,
+    "search": 2646636,
+    "socket": 2906532,
+    "final": 2906532
+   }
+  }
+ }
+}

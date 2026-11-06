@@ -16,4 +16,5 @@ export type AnalysisRequest = {
   | { mode: 'explain'; args: ExplainDamageArgs }
 );
 
-export type AnalysisResponse = { result?: Record<string, any>; error?: string };
+export type AnalysisCancel = { type: 'cancel' };
+export type AnalysisResponse = { result?: Record<string, any>; checkpoint?: Record<string, any>; error?: string };

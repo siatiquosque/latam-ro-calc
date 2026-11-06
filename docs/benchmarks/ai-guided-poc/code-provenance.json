@@ -1,0 +1,61 @@
+{
+  "engineVersion": "0.1.211-beta",
+  "gitHead": "5440182e664b83e26f785807991338d61fd5937a",
+  "dirty": true,
+  "hashes": {
+    "src/assets/data/items-core.json": "ec12131962d03b5237c4268c098851c5378193b9d4e7caaa83026bc12a47a7e0",
+    "src/assets/data/items-desc.json": "1d7ec3f7137811116ec30492b676321f89f960390c4ce2640570a81b45216147",
+    "src/assets/data/items-name-es.json": "f5a5f2bddc5f3b2c034b0f6341f84a9e38d3dbd38279ff87af3531b8c6f7ea47",
+    "src/assets/data/items-name-en.json": "9358c07b6ce660ecd9155590af3c464d08c5952651b2f8d8dc070b23e278404d",
+    "src/assets/data/items-desc-es.json": "39d1ab5f244aa9af6f9bf6266556f10169e237946b8325dddf6fc9d7ebce883c",
+    "src/assets/data/items-desc-en.json": "0519c30d3f95bc7befd0cc24baab5219c2e0a84345ad84d9db2700453f47b8a9",
+    "src/assets/data/skill-descriptions.json": "7f7d34258e2fbfd807df318af67405e163e6069618330880ca79ef54f262072f",
+    "src/assets/data/release-history.json": "045cdbc62ef502b6d6a26b5dff02be5926447f7f1a33f2ce56731f67370b5632",
+    "src/assets/data/monsters.json": "e1e8f08523521381534da23dbe11de50be0517c74f6b270de6aa54a290b8fbf8",
+    "src/assets/data/hpsp.json": "8e79370b3612041d749b6b61cf89f95a2dd73a221f832c1eb80afae1a1439d8c",
+    "src/assets/data/classes.json": "d8cb44eb36a069bf34bc84ddc711fd7596fb4b743aca0152b76c5f69e69e389d",
+    "src/assets/data/item-views.json": "2bb8b41af1282157127ed0804cdb563567028a8865912a25ef3490f73553895b",
+    "src/assets/data/latam-extra.json": "57a034b5bed8c17f4f37e0fb2c1549b24b2ae4ecceae2116859505e1a675e1e2",
+    "src/assets/data/latam-monsters.json": "b1316cbb6bac2636c1e1f97424e77d6ae960493deb00c132e0cca0c24facfd0d",
+    "src/assets/data/items-desc-mcp.json": "85817539d67b499fae926e2a8d8356a56ab5c83b520f5e457d46988cdc48efd4",
+    "src/app/jobs/Inquisitor.ts": "6bee2cd17c28e705fbdba4d8e9208f6f5a50a485b0d5a985cff033867474e99c",
+    "src/app/jobs/_character-base.abstract.ts": "a3328d335be15e863b5f982c30ac3c0c090bccf50171c1777463eb21decab4c5",
+    "src/app/core/damage-calculator.ts": "39d477e9a567d5e28c4b7a2d81104ea64fbba9e3524ff9a336cdb0bf546fc498",
+    "src/app/core/calculator.ts": "8a2e8a8a154d8bab0cab9da77028fc7b7d501d144f9703bbf805d841b8a6a042",
+    "src/app/utils/calc-dmg-dps.ts": "9dde70601c4c959c9d23afa18b1f79e2431c9f9b8638b8eb2e2a5b2917d6d7f5",
+    "src/app/build-analysis/engine/skill-info.ts": "4b96fc0dc2f36360a691adfff5779f13c3e822934cfc0bcf9c57f56ec707d9ab",
+    "src/app/build-analysis/engine/skill-dependencies.ts": "f9f95a5c7cec3a2e4037de1a094e990ac2a4f478217b5fed8c3a24b8f18df983",
+    "src/app/build-analysis/engine/feasibility.ts": "ccc962396b5c510ec09d6e4c3715e7ab9ee6604e2fd67456920e25f0b90ce395",
+    "src/app/build-analysis/engine/metrics.ts": "f9dc4708651e999dda5068a3bdf478fa087855060c375a1a6adab560a003d919",
+    "src/app/build-analysis/engine/evaluate.ts": "a4e651e933c1452fc979d2fc30acdfa313a00a4948bb79f9ea338ee245dab678",
+    "src/app/build-analysis/operations/optimize.ts": "13ede1bffe2604c2ff8853668fe7eafa34f1daa1517fc639db79a88d1ef690b0",
+    "src/app/build-analysis/engine/job-budget.ts": "791dc17b5fc27e171fe83f54e2e53bfa4eab27fc2dcda0640af903f50c236e6f",
+    "mcp/src/mcp-server.ts": "a307d93c57ca9a47dd3fbe065d6025cb1aa57f5582c7eed7f5443b47e434bceb",
+    "mcp/src/config.ts": "15ef5adbe156618eb2cf5b43ad24430c7495a298dab62e2536134f51177aec1c"
+  },
+  "recognition": {
+    "publicEngine": "0.1.221-beta",
+    "usedForComparison": false,
+    "shortLinks": [
+      {
+        "input": "https://laro-calc.siatiquosque.com.br/s/5hTy6pd",
+        "result": "invalid-or-corrupt-token"
+      },
+      {
+        "input": "https://short.latam-tools.com.br/5hTy6pd",
+        "result": "does-not-point-to-a-simulation"
+      }
+    ]
+  },
+  "judgementCorrectedDuringPOC": "Certain critical hits bypass ordinary accuracy in calcDmgDpsDetailed. Raw readings unchanged; B19/B20 and public GoalSpec verdicts verify corrected classification.",
+  "agent": "Current live Codex session, manually authoring hypotheses and inspecting MCP responses. No paid API integration; token/price/model-only latency unavailable.",
+  "finalHashes": {
+    "src/app/skills/rebalance-2026.ts": "77d1c30b782e1684cf2c59a41c402b58bfbc50700264eb1e1257098b416aef81",
+    "src/app/skills/skill-formula-version.ts": "9bd9a6e956178dc5370e8a806de5751d45c68e45efe7265b3ec6836e3e7699f6",
+    "src/app/build-analysis/engine/skill-info.ts": "312b053f08ae9d8b91286972e0d5f538fda80521747000aa878e481d0dfe3739",
+    "src/app/build-analysis/engine/feasibility.ts": "ccc962396b5c510ec09d6e4c3715e7ab9ee6604e2fd67456920e25f0b90ce395",
+    "mcp/src/engine/ai-guided-poc.bench.spec.ts": "a659413c4afd7bb745f15c91e6832f13313d177b644a14bedcc8861b35e94e76",
+    "tools/ai-guided-poc-report.mjs": "9b94af1b3bc5a5975d3f6ecf5caee9ac71702a04711e74e610504a8eb01d9db3"
+  },
+  "metadataCorrectionAfterDiscovery": "skillInfo scaling text retains compatibility; additive formulaTextSource/formulaTextStatus now warn about version overrides. Discovery transcripts preserve the previous response."
+}

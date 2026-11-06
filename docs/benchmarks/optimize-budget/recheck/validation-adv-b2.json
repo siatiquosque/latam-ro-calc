@@ -1,0 +1,171 @@
+{
+ "job": "adv:b2",
+ "target": 20994,
+ "rows": [
+  {
+   "label": "b2, cartas sorteadas, equipamento mantido, esforço 300",
+   "sameState": true,
+   "all": {
+    "finalDps": 583581,
+    "unique": 3377,
+    "wallMs": 12852,
+    "secondPass": {
+     "startedWith": 561375,
+     "evaluations": 1586,
+     "ms": 5744,
+     "uniqueBefore": 1790
+    },
+    "secondPassChanges": [
+     {
+      "field": "shield.shieldEnchant2",
+      "gainPct": 0.37,
+      "firstPassRank": 2,
+      "candidates": 24,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "shield.shieldEnchant3",
+      "gainPct": 1.24,
+      "firstPassRank": 3,
+      "candidates": 24,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headUpper.headUpperCard",
+      "gainPct": 1.95,
+      "firstPassRank": 1,
+      "candidates": 140,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headUpper.headUpperEnchant3",
+      "gainPct": 0.35,
+      "firstPassRank": 5,
+      "candidates": 29,
+      "slotTouchedByFirstPass": true
+     }
+    ]
+   },
+   "near": {
+    "finalDps": 583581,
+    "unique": 3244,
+    "wallMs": 10530,
+    "secondPass": {
+     "startedWith": 561375,
+     "evaluations": 1453,
+     "ms": 4728,
+     "uniqueBefore": 1790
+    },
+    "secondPassChanges": [
+     {
+      "field": "shield.shieldEnchant2",
+      "gainPct": 0.37,
+      "firstPassRank": 2,
+      "candidates": 24,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "shield.shieldEnchant3",
+      "gainPct": 1.24,
+      "firstPassRank": 3,
+      "candidates": 24,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headUpper.headUpperCard",
+      "gainPct": 1.95,
+      "firstPassRank": 1,
+      "candidates": 140,
+      "slotTouchedByFirstPass": true
+     },
+     {
+      "field": "headUpper.headUpperEnchant3",
+      "gainPct": 0.35,
+      "firstPassRank": 5,
+      "candidates": 29,
+      "slotTouchedByFirstPass": true
+     }
+    ]
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "b2, cartas sorteadas, equipamento mantido, esforço 1500",
+   "sameState": true,
+   "all": {
+    "finalDps": 584485,
+    "unique": 4165,
+    "wallMs": 17880,
+    "secondPass": {
+     "startedWith": 580214,
+     "evaluations": 1586,
+     "ms": 6600,
+     "uniqueBefore": 2578
+    },
+    "secondPassChanges": [
+     {
+      "field": "shield.shieldEnchant1",
+      "gainPct": 0.47,
+      "firstPassRank": 1,
+      "candidates": 24,
+      "slotTouchedByFirstPass": false
+     },
+     {
+      "field": "shield.shieldEnchant3",
+      "gainPct": 0.26,
+      "firstPassRank": 1,
+      "candidates": 24,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "near": {
+    "finalDps": 584485,
+    "unique": 3596,
+    "wallMs": 11174,
+    "secondPass": {
+     "startedWith": 580214,
+     "evaluations": 1017,
+     "ms": 3110,
+     "uniqueBefore": 2578
+    },
+    "secondPassChanges": [
+     {
+      "field": "shield.shieldEnchant1",
+      "gainPct": 0.47,
+      "firstPassRank": 1,
+      "candidates": 5,
+      "slotTouchedByFirstPass": false
+     },
+     {
+      "field": "shield.shieldEnchant3",
+      "gainPct": 0.26,
+      "firstPassRank": 1,
+      "candidates": 24,
+      "slotTouchedByFirstPass": false
+     }
+    ]
+   },
+   "dpsDiffPct": 0
+  },
+  {
+   "label": "b2, cartas sorteadas, equipamento mantido, esforço 4000",
+   "sameState": true,
+   "all": {
+    "finalDps": 581095,
+    "unique": 2840,
+    "wallMs": 9079,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "near": {
+    "finalDps": 581095,
+    "unique": 2840,
+    "wallMs": 9546,
+    "secondPass": null,
+    "secondPassChanges": []
+   },
+   "dpsDiffPct": 0
+  }
+ ]
+}

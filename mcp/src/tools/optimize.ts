@@ -12,6 +12,7 @@ import { BuildPatch, compactPatchSchema } from '../engine/variants';
 import { targetSchema } from './calculate';
 import { json, registerJsonTool } from './helpers';
 import { createOptimizationOperations, requireSchema } from 'src/app/build-analysis/operations/optimize';
+import { compactConstraintSchema, compactSlotConstraintSchema, compactGoalSchema, ConstraintSpec, GoalSpec } from 'src/app/build-analysis/engine/goal-spec';
 import { createSynergyOperations, FindSynergiesArgs } from 'src/app/build-analysis/operations/synergies';
 
 const metricEnum = z.enum(METRICS);
@@ -33,6 +34,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       bonusKeys: z.array(z.string()).min(1).max(30).optional().describe('Filtrar pelas chaves mecânicas informadas.'),
       limit: z.number().int().min(1).max(30).optional(),
       offset: z.number().int().min(0).optional(),
+      constraints: compactConstraintSchema.optional(),
       includePatches: z.boolean().optional().describe('Requer build. Busca limitada, sem upgrades implícitos.'),
       target: targetSchema,
       lock: z.array(z.string()).optional().describe('Slots preservados nos patches.'),
@@ -55,6 +57,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     excludeMvpCards?: boolean;
     metrics?: Metric[];
     require?: z.infer<typeof requireSchema>[];
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
     sortBy?: Metric;
     limit?: number;
   }>(server, 'evaluate_variants', {
@@ -76,6 +80,8 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       excludeMvpCards: z.boolean().optional().describe('strict recusa qualquer MVP; hypothetical tolera apenas as herdadas. Retorna MVP_CARD_EXCLUDED para variantes recusadas.'),
       metrics: z.array(metricEnum).optional().describe(`O que devolver. Padrão: ${DEFAULT_METRICS.join(', ')}.`),
       require: z.array(requireSchema).optional(),
+      goal: compactGoalSchema.optional(),
+      constraints: compactConstraintSchema.optional(),
       sortBy: metricEnum.optional().describe('Métrica de ordenação (maior primeiro, exceto hitsToKill: menor primeiro). Padrão: dps.'),
       limit: z.number().int().min(1).max(50).optional().default(10),
     },
@@ -84,6 +90,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
 
   registerJsonTool<{
     includePatches?: boolean;
+    constraints?: ConstraintSpec;
     excludeMvpCards?: boolean;
     procMode?: ProcMode;
     procHitsPerSecond?: number;
@@ -102,10 +109,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     maxSolves?: number;
   }>(server, 'scan_slot', {
     title: 'Varrer um slot inteiro',
-    description:
-      'Explora itens LATAM de um slot, legais para classe/nível, sem filtro prévio por bônus. Para poucos IDs use optimize_slot; para a build inteira, optimize_build. ' +
-      'Mede peças nuas e ajusta soquetes/rolagens nos topSockets melhores. base:tuned compara com a peça atual ajustada; current preserva como veio. Refino/grau usam +12/A ou os limites pedidos. ' +
-      'partners indica conjuntos para testar juntos em evaluate_variants. includePatches devolve as configurações medidas. Busca limitada por tempo e avaliações: confira stopped.',
+    description: 'Varre itens LATAM legais para o slot e classe, mede peças e ajusta os melhores soquetes. base:tuned ajusta a peça atual; current a preserva. includePatches devolve as configurações medidas. partners indica conjuntos a testar juntos. Busca limitada: confira stopped.',
     inputSchema: {
       procHitsPerSecond: z.number().min(0.1).max(30).optional(),
       procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
@@ -123,6 +127,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       refine: z.number().int().min(0).max(20).optional().describe('Refino testado. Padrão +12.'),
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau testado. Padrão A.'),
       maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
+      constraints: compactSlotConstraintSchema.optional(),
       includePatches: z.boolean().optional().describe('Inclui o patch exato de cada linha para testar a sugestão sem reconstruir os soquetes. Padrão false.'),
       excludeMvpCards: z.boolean().optional().describe('Não sugere carta que cai de MVP nos soquetes.'),
     },
@@ -180,12 +185,15 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     candidatesPerSlot?: number;
     rounds?: number;
     maxSolves?: number;
+    maxEngineCalls?: number;
     require?: z.infer<typeof requireSchema>[];
+    goal?: GoalSpec;
+    constraints?: ConstraintSpec;
   }>(server, 'optimize_build', {
     title: 'Procurar uma build melhor',
     description:
       'Busca automática de equipamentos pelo mesmo core da UI: subida de encosta, complementos legais e pares de peças. Não redistribui atributos (optimize_stats). ' +
-      'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require impõem restrições. Retorna caminho, ganhos e patch para evaluate_variants. ' +
+      'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require/constraints impõem restrições; goal: guide meta-e-restricoes. Retorna caminho, ganhos e patch para evaluate_variants. ' +
       'procs mostra efeitos ainda não contados; effects ativa os indicados. Heurística limitada, sem garantia global; confira coverage e stopped. Pools desconhecidos não são inventados. Para hipóteses pontuais use evaluate_variants; para um slot use optimize_slot ou scan_slot.',
     inputSchema: {
       equipmentMode: z.enum(['current', 'replace']).optional().describe('current mantém peças, refino e grau e ajusta só complementos. replace (padrão) procura substituições e upgrades.'),
@@ -216,8 +224,11 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau, padrão A. Se informado, testa sem grau e até o teto; a build inicial também deve respeitá-lo.'),
       candidatesPerSlot: z.number().int().min(1).max(60).optional().default(12),
       rounds: z.number().int().min(1).max(4).optional().default(2),
-      maxSolves: z.number().int().min(10).optional().describe('Teto de cálculos desta chamada; o servidor impõe o dele.'),
+      maxSolves: z.number().int().min(10).optional().describe('Limite legado de cache misses na busca; não limita todas as chamadas ao motor, procs, polish legado ou verificações. Veja budgetUsage.'),
+      maxEngineCalls: z.number().int().min(1).optional().describe('Teto rígido por job, inclusive alvos, procs e verificações.'),
       require: z.array(requireSchema).optional(),
+      goal: compactGoalSchema.optional(),
+      constraints: compactConstraintSchema.optional(),
     },
   }, (args) => operations.optimizeBuild(args).then(json));
 

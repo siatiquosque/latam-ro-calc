@@ -1,0 +1,436 @@
+{
+  "batchName": "CM1000-verify",
+  "budget": 1000,
+  "previousCalls": 990,
+  "calls": 10,
+  "cumulativeCalls": 1000,
+  "wallMs": 96.55999999999995,
+  "cpu": {
+    "user": 93000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {
+        "gear": {
+          "weapon": 560026,
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "armor": 450177,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorEnchant2": 310509,
+          "armorEnchant3": 310506,
+          "boot": 22005,
+          "bootRefine": 12,
+          "bootGrade": "",
+          "bootEnchant3": 4835,
+          "garment": 20964,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "headUpper": 19481,
+          "headUpperRefine": 12,
+          "headUpperGrade": "",
+          "headUpperCard": 4925,
+          "headUpperEnchant1": 29090,
+          "headUpperEnchant3": 4704
+        },
+        "options": {},
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 87,
+            "canCri": 1,
+            "minNoCri": 7746086,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 32105866,
+            "dps": 41386696,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 89,
+            "canCri": 1,
+            "minNoCri": 7212420,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 29893933,
+            "dps": 39176936,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 78,
+            "canCri": 1,
+            "minNoCri": 8991422,
+            "hitChance": 62,
+            "conditionalEffects": 0,
+            "min": 37267515,
+            "dps": 43333672,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 88,
+            "canCri": 1,
+            "minNoCri": 7144266,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 29611449,
+            "dps": 38488975,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 80,
+            "canCri": 1,
+            "minNoCri": 6726336,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 27879216,
+            "dps": 33844072,
+            "hit": 659
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7746086 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 87%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7212420 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 89%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "A habilidade acerta o alvo com chance de 62% (menos de 100%): um golpe pode errar.",
+                "Sem crítico o dano mínimo (8991422 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 78%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7144266 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 88%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (6726336 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 80%."
+              ]
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": true,
+          "constraintsMet": true,
+          "reliability": "conditional"
+        },
+        "worstTarget": {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      },
+      "changes": [
+        "weaponRefine",
+        "weaponGrade",
+        "headUpperGrade",
+        "headUpperCard",
+        "headUpperEnchant1",
+        "headUpperEnchant3",
+        "armorRefine",
+        "armorGrade",
+        "armorEnchant2",
+        "armorEnchant3",
+        "garmentRefine",
+        "garmentGrade",
+        "bootRefine",
+        "bootGrade",
+        "bootEnchant3"
+      ]
+    },
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {},
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4s14F1PC.XF..JCoFiYA-IvFm2h-5kf.7IC.b4cow07fvwTjzA.u5PgQwHvowzqbIO2hbDBdQALJQHUdSOJsUS-vsvaoD4mw6MYg6DvaaAoIeNYniRKCTtemzSLeNGkUBr6IZ.0hRJo0jEbR3EgUw078doOjQUxomIchkk6LcZhQBIrHcEW2jGOhYAqWp9HHlyeh6TAdQsTwRbQbpqmmQhoGft.gk6SZdR2eJUizIJo7WWpblIR5XlsDEJFklIv78OhwVoGSBm1tkQUhUw5l7MWvCoWwSiIIgWS8EEUkZVljCxSemXZX506boO96lYwfnIZu0j3lgVBUGoZpZNwP5RNRIDNa1VaMMl0ipYOtR9W1tU8fZFCSfw0hCL1LUTeVM1RIIC3jQNdWrWhTjRC18ZQDEZgdV1W72gdR0nUNxbaIORSrowKiIHYtL2DwcYAow6CknBET8fwg7oVQX0-Xgz05hEfDFlEn1gN9pKNolHV7dwshwwjeB.X9O3GLMo4g-DYN.RDa57FExhQRjxNTUwSPRdUkmU7Uum7mMKzlocX5o04yls6MHNdsVqrGfzSQiVIGmDlZFh1GM4tccLsPgLLYzWC5kv3T1rNy6M6s2XUwsy-zIKFZLkHBDrYym9lSuW6rozfL2NokDE5v8N5DtO3QJQxHbou6-qJB1KB7sLVboxByHTD..AHwwCC6BmmamF5hQoA9kwiBUBydQ4egGzBO4IikkwUBLOQwRJK7EgFxQwQVKgIxEGiiBAqnvKF2wvxDOXrf12wnhN3gjxlxXwSVjAR3EAPIAggwTxQA8P2z9YiCYECiBmkCAASubiCQQK50C3uMGYs8YrS6yoBym-b5MyDZXgDzohfV9gDfh9b0CZ94ECKzO2IBEYIl8p4f1vt-X.7dYhL3LmcEB79P53yBPAKA4gT4lzJF3EA4sYjUgLkCfIjBx5sFwfgsAQIMS11QLPB.eB9AkAoUkKgqlsFXCwAALzsECZcj9eyzxUFgdAIdYidwEUIkOQJEwYGwUkOo9ASBX0pFIgu59K5sGmJDShZhkAFyyMEQW.YgT6mQGaZ.rd4FsHgG4bha9MCrwdkCOxuxgjWJgCDQ.zjZ6Ni8CSJx68XFsCRHnEgAByChmiybBFTjEXkqBQT0CwN0dRc90A8WQerG0TdZ6YSyiQKex1GBOIIAwXccVgjhCgNAV2s8CTWFiKyVBalalr2QCyegyACRVCILE8uDiDZONXJ8FJIIERxHCcYxAJJV6jF9kCFoHIWQ5LsPDJetIgRJCblPasOcLGryGTAE.tM0Q1JSanNpZhkEP1IBCEhIBrAlMUQ0ZBAApRElh4gpJWCpeG.Eq6cG9EQQ.VwAQUO-tYNJ.h9GkJXCIZBFQ6hpNnjvH6qBfazyQNcNJeAJkAGl1jYIecgDILIgRmhQECAAmuvWeLRdHxOBFAkEDpGAiGrM0lJh1XbIIAHJQCULXGuliQBVFEJgSkCIlBwusKpGIZobRPFnvGVRlC25rGDmi4ZwRvhvjbmvU5FS7BNzMKQbh39nriGAVYm0MQYgTP1W7FJagWwTLaOMFJCzXx-zWGff.6BHUNxIEeTIf8UWoDRQatgmEC5rMOVUCEMBhHlMHogUkRTNlDCVZYViwQFnIAgECYuiJaV4CUEnM0dSRj0BPn8bwgJhXxgsEMMAiA6hmu3thSkowUAQCiWwRsVYzEkHLkCHl2dvrIEMsEJECJ.4pO.BkQ5zjC20H0LPKoZiX5c2CPgEgqagSNyGPQTgr8UnxsQAYNZeyRmZAhIWrwOaNFeBEMKw9tISShRSXUlA7SCBdMYUdYdWACSX2QMqckn5gjfraSUzp3TAPlxA72cDBJpxQdab.uDAHenAdAyh5C6Gf2wf-T0oDSGwMjwJNwbxCIMjEOvVBzCeB1gQgJAARXQEk5NIAkQiB.k4xZCN64AF8LponEO8WAMBU6ZvIKAQ6QKYjzLGVzZWA6mBwoxOvN8QIAC0QIUTNxDd4skmntOXP00kKe4hZ6n0uerLjVqQBaeIUu3uNosjGHvO4WgCiik70mLPHzdAyROMCyk-IMQKUeIaIwh0p6d1HQpT3OtCWrEcEuUPTKq8Si-pQZYM.GKrDxOsZkNRwRImmI3qVwrKTUGECKTVy5lXZ4vOEcqC.Kk.w1opfAbApJZ68apPE.pr4hNfroRkPAowCSpxPegvrWBSSgnBFE0Ti1xN4Ek3APEsNdD7ZYF5lgB2TvHbO6dk7WZhiArQVt.OeJeiw16HIWGr3dAXAuLDD7Z3vu9AuPwK7QwbsSfjjJ9OIA960hmmwNopFD7MsMsrOlsRgRZcQNDkAbiX0nyblYOKRQMRHQIIWjke6zhI7QTWYxj9HhbvJw3R.h8d65zSDD1tHXzhsEi8l2tAJT33gU3M5HUX6f9tM3-LT6AdOWes3Fe86nWUS-M3pgzK4.ePC0GwaRQPlQre9NCkAKgrqMGHdyw6rZOcgG58gIEMWGBgHi1zbzFgSj3tQNlvYWuYHcoxDaTdxCVszEt2sOAyCmuFGE8JoAA/",
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 87,
+            "canCri": 1,
+            "minNoCri": 7746086,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 32105866,
+            "dps": 41386696,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 89,
+            "canCri": 1,
+            "minNoCri": 7212420,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 29893933,
+            "dps": 39176936,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 78,
+            "canCri": 1,
+            "minNoCri": 8991422,
+            "hitChance": 62,
+            "conditionalEffects": 0,
+            "min": 37267515,
+            "dps": 43333672,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 88,
+            "canCri": 1,
+            "minNoCri": 7144266,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 29611449,
+            "dps": 38488975,
+            "hit": 659
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 80,
+            "canCri": 1,
+            "minNoCri": 6726336,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 27879216,
+            "dps": 33844072,
+            "hit": 659
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7746086 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 87%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7212420 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 89%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "A habilidade acerta o alvo com chance de 62% (menos de 100%): um golpe pode errar.",
+                "Sem crítico o dano mínimo (8991422 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 78%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7144266 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 88%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (6726336 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 80%."
+              ]
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": true,
+          "constraintsMet": true,
+          "reliability": "conditional"
+        },
+        "worstTarget": {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      },
+      "changes": [
+        "weaponRefine",
+        "weaponGrade",
+        "headUpperCard",
+        "headUpperEnchant1",
+        "headUpperEnchant3",
+        "armorRefine",
+        "armorEnchant2",
+        "armorEnchant3",
+        "garmentRefine",
+        "bootRefine",
+        "bootEnchant3"
+      ]
+    }
+  ]
+}

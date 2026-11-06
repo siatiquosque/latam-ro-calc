@@ -1,0 +1,72 @@
+{
+  "evaluate_variants": {
+    "calls": 6,
+    "engineCalls": 205,
+    "wallMs": 1409.7139999999995,
+    "responseBytes": 115075,
+    "maxResponseBytes": 28644
+  },
+  "get_build_context": {
+    "calls": 1,
+    "engineCalls": 1,
+    "wallMs": 92.88599999999997,
+    "responseBytes": 8588,
+    "maxResponseBytes": 8588
+  },
+  "get_skill": {
+    "calls": 1,
+    "engineCalls": 0,
+    "wallMs": 0.9062000000003536,
+    "responseBytes": 2335,
+    "maxResponseBytes": 2335
+  },
+  "explain_damage": {
+    "calls": 1,
+    "engineCalls": 1,
+    "wallMs": 10.339400000000296,
+    "responseBytes": 1300,
+    "maxResponseBytes": 1300
+  },
+  "get_monster": {
+    "calls": 1,
+    "engineCalls": 0,
+    "wallMs": 0.4591000000000349,
+    "responseBytes": 318,
+    "maxResponseBytes": 318
+  },
+  "search_items": {
+    "calls": 16,
+    "engineCalls": 0,
+    "wallMs": 141.76170000000093,
+    "responseBytes": 21780,
+    "maxResponseBytes": 3618
+  },
+  "get_item": {
+    "calls": 8,
+    "engineCalls": 0,
+    "wallMs": 706.6862999999994,
+    "responseBytes": 15180,
+    "maxResponseBytes": 3358
+  },
+  "find_synergies": {
+    "calls": 3,
+    "engineCalls": 0,
+    "wallMs": 564.9602,
+    "responseBytes": 11250,
+    "maxResponseBytes": 3996
+  },
+  "list_bonus_keys": {
+    "calls": 2,
+    "engineCalls": 0,
+    "wallMs": 70.52639999999974,
+    "responseBytes": 116,
+    "maxResponseBytes": 95
+  },
+  "slot_options": {
+    "calls": 6,
+    "engineCalls": 0,
+    "wallMs": 55.83640000000014,
+    "responseBytes": 5267,
+    "maxResponseBytes": 1480
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "rows": [
+    {
+      "name": "magus-replay",
+      "mode": "goal",
+      "runtime": "mcp",
+      "maxSearchMs": 45000,
+      "maxSolves": 800,
+      "wallMs": 16904,
+      "engineCalls": 3557,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 800,
+        "effectiveLimit": 800,
+        "counted": 800,
+        "cacheHits": 146,
+        "cacheMisses": 3550,
+        "engineCalls": 3557,
+        "mandatoryVerificationCalls": 2,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 4150230,
+      "dps": 32889650,
+      "reproduced": 32889650,
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgAOyeAtLQEZbYkDGeIANCG9mGAoAWAEwBWMTxh4AbnhgURQySABWiRgBlZ8imIAMPMHgAeFAIw8AFlijIAygBcAntMWWQNuwGFEMFBQA7Dx8iI5WeGC.-sgUAMxGjrHkHuqMTskeWADmUBbmhmoaAIK5QTwyUI4WIoVpOFUUABw8UCTVKXF1GgCS7RYqACamet2MACIj5C0gMOgQFvpjmvPCiVjxAJw8aU4b5MEgAO5QguRx20WMAOqnFABsRlQKKUs7GvbP.e.MvmTTP28yA6HmM0jYjjwg2Kjgg9mgcAoIAAKigSFhBogAAROFCoAC8.LE3BAyCwRwA8lRHMQSMiTI4zgBtECoAD6qGcbPkeFQeHabOyVkQYEcKXMJPZfCwAjZjBFYFe3BImBgXBVcHVqq1mo1ar1Ov12oNJuNZt15qNFutas8VHOgXuyu1doACgQOO0Us7NSAZVRBt6eP7AxLDeHTb6wM9yEIfbawABZLCwoORq224YmcjEozJ1OBeMRy0AXR4RzwWCopAeQiWIkOFarpAASngAGZtTgpETlyvVkgAcTJwyRxRJTYH3iwyEGEvIDbiTSEfebJGns5E8Xr9xUEQxAFUqFQCMIluYL9ZK4MjyfkG3OyRu.Ze55r7eCMOMd2QOOr4fjwIDdBkUQI4gKf9BkTKBBkGNxYwKe5zBXN8MWg2DpGA4Q4kCFD90GTREArZJRH0ERzASP00ACWMDDETYZhnVAUAfLsamDajkCw84ln0JpCjAKwoHkEDY3uc8UME4SYEGVin3Y8AhJE7ihHuOJHkU6TBgAUXYGx2nnERNjEOIVCkkTdLYfTHC3BdjNMowlJkyzrLiRR7JUbImP5DohH4roNK8tAfLk59XyCvl2hUsRHR4eUwmEQIyP0FD4scUKFLS7iujIvy4sQMIv1HSg-z9Ng2G0dtfM2fRzDEV8sHKyrHGiwJDkaiqO0cIqf1KjrmpcrADPiApNnMdqmq6wb2lsvyX2DSaqumxw3NjQJkIWtgWygIVqpSpoGvK7bdtaw4Tw6MbzEuc7COcFgXDWXgRUcdA.Q-EiljiIRDjYZ7XrwdC4O7IQCn0TZLl.0V-sI4jFBS-QVEhl6.UHbz.gXBGapCP6.WW96Rr45dsah3G9KGxxAfg8DCcRnG8GWmHT3OAomiaDSkf.5bUeC9GjNMmZBIxIjrn7GsF2.kzHKFo4RbXDLXilzEjmKTjFD8ppKMFpWVeY.8OzYhXFOlnWUGW1bvvmo2lfsJzRKUQIxEkmxrdt.WIKtoiACECo6JRWad6XvbCN2BOdr2fbNxLLa1ojtJnZA2myNX7l3RXY-jxOQ7To53RIQZyeT.4BbDnP.Xz9os-ABEYE99B23bZkIMMZuuBbtvW479uu87nvu773uB-7ofB5H4ex9Hweyyr2Aa7r9tkyoChQGndpEDYIbBhg9Aznd7xpEiml9kKYoSGyeRt4oQoelQasiBpbFkxVM5Cm0kwqCgFNiEvnhfBvvBIXaB-b.IA2wwB2l-cghRPb8ihFACEr1gH2EQJgLEiB2xYgABKVjkCQLEG8sRx2BFYYByIWCnFQENVB6DXTIDCHgCEtISFkLABQ3BaCsThDwFia4GcaKFFIWAlhlD2GcKxMmXIbAP7-H4cw1hVCsTwCgHIAh.8fLPx4CrbI6AXpgCxA0RwR8NHIC0TorEyJz6oGATQyI-JdHFEkZEYBQIsAAC9nBYiPLQmcwDNBYHQPnHIT8fF.PzliFsWAMDqN-IMWg6IwFPjCdvYhkCeCuiIgQMxVhkDbw6IUWWA4sTumQO2eh99pE8HgLYZA7ikGYEQSXHEyCXiFEqTAX6uDanNJ4IOPwvJGl1JSSACkm8SAAHJdFpNhoM8RKpUBYk9rQLACxBm1z0vIm2Ccb7AMTAVEgYDdo4gIPyb8iCkhQGgKfYBbJ7A5DwGyRRIkrlIOQBwWgyA2R9CINkEgQDBk2y0jiE8iIVlklyOMwpiBeSIJOKfLE4whocG2c4UUcCWBYmKDfMBnZ15lMQUCmABCyaAMudMmcVl5E0NIJCMkiCjnomGPIgAUuSWweRBnXCEqKeCx8BAyiILgoECp1noBIMYXJGjjzSHkT0QYIrgEYNeqgROwCkDAhFXgcFABpU4UT7AEEqBwLE7YUBYgAJrIOAeMbJczSAcIiPMlMjhpCdkeYM7asL2EADkoCMHPqffkwC.gyEwE.MkjApX2GEtkdsCcoTAJbEksx2Jbh5yVcCl.VlsRIJJYUewzgb7ChIO49hhE5DJBaQnbI2RwXZqToM7QI5wWTCOJahFXDbjhG4egOtV8SCPiqFwhVqAlU5p4ImbeqKCV9GpXMYqhRf7-3RVst1thRKFHhcgCAWI97kktXgRgc9rnVloAQt.-giBi0KC2GwVAwCIEGMW9B0EnxHBQBAJmhRBwdhKT8rAWJPVrxesgeSgyKRknvsA7SlQCWdO3egQg3Ze0lIYZeng.ASCIDmdfGgkQL3lJANOxAJhUW4pWVUal26-BrtSX4aQ.HsMsF5D5J5KBXkEA.aKnav62SkOMf-Nk85CjXNY0c95nyuMfx4zOM.jg2S2SE88tjYnOPfMk7xmTbJVoKZE28jjXzuPqf43GQZX5KgGNI0JxMeBTjUrZAARXQEsxDPAKTSFejiBFyNL4AF8Fo0jkPCGeC8l4gETMimk68CUYueFAbFn9UMgPoYgVTLioSAvkF0kAC7HBLsXoM6dtjYskcYW6nkMo42DL3lAChZhBkAC08BUCsM4ctPBdIEGyO4v4Za8M.Z4FQPlSi8CBbgMF8gy8qPzL8OKkA8BaGijhUN1rIAbklJcNwlgmXYNWtsPh0zVR4txIUVpJFKLIu5axcVhLc28B4BcYndL6aeDhM3hfUrv0Utpc.BlxBTTT0Dc4wl7LTivC4M0DtKwjgfmjpAIRWc8j8BoFgCVwoVnIQmtxGgEhr6sT6UGDiAx9cxEympc4Hz3mgA/",
+      "patch": {
+        "gear": {
+          "weapon": 640027,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "headUpper": 400111,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headUpperCard": 27310,
+          "headMiddle": 410614,
+          "headMiddleGrade": "",
+          "headMiddleCard": 4374,
+          "headLower": 420213,
+          "headLowerGrade": "",
+          "armor": 450598,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorCard": 300080,
+          "boot": 470204,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "shadowArmor": 24883,
+          "shadowArmorRefine": 10,
+          "shadowArmorEnchant3": 4712,
+          "shadowBoot": 24884,
+          "shadowBootRefine": 10,
+          "shadowBootEnchant3": 4712,
+          "shield": 460014,
+          "shieldRefine": 12,
+          "shieldGrade": "",
+          "shieldEnchant1": 29535,
+          "shieldEnchant2": 29535,
+          "shieldEnchant3": 29535,
+          "headUpperEnchant2": null,
+          "headUpperEnchant3": null,
+          "accLeft": 490152,
+          "accLeftRefine": 0,
+          "accLeftGrade": "A",
+          "accLeftEnchant2": 4812,
+          "shieldCard": 4636,
+          "garmentCard": 4576,
+          "bootCard": 300248,
+          "accLeftEnchant1": 310917,
+          "accLeftEnchant3": 4714,
+          "weaponCard1": 27384
+        },
+        "options": {
+          "6": null,
+          "7": null,
+          "8": null,
+          "9": null,
+          "10": null,
+          "11": null,
+          "12": null,
+          "13": null,
+          "18": null,
+          "19": null,
+          "28": null,
+          "29": null,
+          "36": "dex:5",
+          "37": "sMatk:7",
+          "38": null,
+          "39": null,
+          "40": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (800 de 800): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 974,
+                  "message": "hitsToKill 974 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 6166197,
+                  "required": {
+                    "min": 2200000000
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 6166197; o HP com margem de 10% é 2200000000."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 974 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 6166197; o HP com margem de 10% é 2200000000."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "hitsToKill 974 fora do pedido (máx 3)."
+          }
+        },
+        "final": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 131,
+                  "message": "hitsToKill 131 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 46115976,
+                  "required": {
+                    "min": 2200000000
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 46115976; o HP com margem de 10% é 2200000000."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 131 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 46115976; o HP com margem de 10% é 2200000000."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "hitsToKill 131 fora do pedido (máx 3)."
+          }
+        },
+        "search": {
+          "feasible": false,
+          "startedFeasible": false,
+          "bestGap": {
+            "worst": 0.9769,
+            "total": 1.4716
+          },
+          "stoppedBy": "search-budget",
+          "evaluations": {
+            "counted": 800,
+            "otherTargets": 0,
+            "skippedForBudget": 0,
+            "afterSearch": 13,
+            "unique": 3550,
+            "finalChecks": 2
+          },
+          "socketFieldsRefusedByGoal": 0,
+          "note": "A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível."
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 1
+          },
+          "discovery": {
+            "unique": 375,
+            "uncached": 0,
+            "cacheHits": 29,
+            "engineCalls": 375
+          },
+          "search": {
+            "unique": 424,
+            "uncached": 0,
+            "cacheHits": 80,
+            "engineCalls": 424
+          },
+          "socket": {
+            "unique": 2738,
+            "uncached": 0,
+            "cacheHits": 36,
+            "engineCalls": 2738
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 13,
+            "uncached": 4,
+            "cacheHits": 1,
+            "engineCalls": 17
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 44.973399999999856,
+          "discovery": 1611.568500000004,
+          "search": 1756.3083999999917,
+          "socket": 10800.269800000004,
+          "levelCheck": 0,
+          "report": 66.16099999999642,
+          "feasibility": 7.822000000000116
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 16887
+      },
+      "replay": {
+        "equippedCount": 19,
+        "skippedItems": [],
+        "traits": {
+          "pow": 0,
+          "sta": 39,
+          "wis": 39,
+          "spl": 100,
+          "con": 0,
+          "crt": 0
+        }
+      }
+    }
+  ]
+}

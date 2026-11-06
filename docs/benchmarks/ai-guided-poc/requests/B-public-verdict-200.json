@@ -1,0 +1,52 @@
+{
+  "experiment": "B",
+  "budget": 1000,
+  "final": true,
+  "requests": [
+    {
+      "tool": "evaluate_variants",
+      "hypothesis": "Public MCP final judgement: ask GoalSpec only for the selected, already measured complete candidate. This includes all five targets and hard constraints.",
+      "args": {
+        "build": "$build",
+        "targets": "$targets",
+        "goal": "$goal",
+        "constraints": "$constraints",
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "selected-200",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076
+              }
+            }
+          }
+        ],
+        "limit": 1
+      }
+    }
+  ]
+}
