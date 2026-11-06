@@ -567,7 +567,7 @@ Fora desta etapa, como pedido: Beam, VNS, novas heurísticas de orçamento, fór
 ### Jor_ab02 e `feasible@budget` (04/11/2026)
 
 Fixture local dos quatro links (`mcp/src/engine/__tests__/fixtures/jor-ab02.json`), início `gear-only` derivado e benchmark em
-`docs/optimize-goal-search.md`. Resultado: a meta (2 golpes com 10% de folga nos 5 monstros) é cumprida a partir do `gear-only` com 300–2000
+`docs/optimize/optimize-goal-search.md`. Resultado: a meta (2 golpes com 10% de folga nos 5 monstros) é cumprida a partir do `gear-only` com 300–2000
 avaliações e a partir do original com 800; os dois casos inviáveis (300) são orçamento insuficiente (distância 0,031). Alvos extras custam
 ~1,5× fora de `solves` (medido, não refatorado). Refino de soquetes por DPS: cego confirmado em 4/26 campos, sem perda fim a fim; ajuste testado
 e revertido por custo.

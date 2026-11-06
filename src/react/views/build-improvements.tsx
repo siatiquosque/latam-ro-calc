@@ -9,6 +9,7 @@ import { objectiveFor } from '../../app/build-analysis/engine/metrics';
 import { SEARCH_SLOTS as SLOTS } from '../../app/build-analysis/engine/search-slots';
 import type { AnalysisRequest } from '../../app/build-analysis/browser-protocol';
 import type { ProcMode } from '../../app/build-analysis/engine/proc';
+import AcquisitionPanel from './acquisition-panel';
 import './build-improvements.css';
 
 const DEFENDED = [[9000001, 'improve.dummyNormal'], [9000002, 'improve.dummyBoss'], [9000003, 'improve.dummyNormalHigh'], [9000004, 'improve.dummyBossHigh']] as const;
@@ -19,6 +20,8 @@ const ids = (text: string) => {
   if (values.some(id => !Number.isSafeInteger(id) || id <= 0)) throw new Error('improve.invalidIds');
   return [...new Set(values)];
 };
+
+const names = (text: string) => [...new Set(text.split(/[,;\n]/).map(value => value.trim()).filter(Boolean))];
 
 /** Secondary diagnostics remain inspectable without dumping a transport payload into the UI. */
 function Values({ value }: { value: any }) {
@@ -32,6 +35,20 @@ function Values({ value }: { value: any }) {
     <div key={key}><dt>{t(`improve.field.${key}` as TextKey) === `improve.field.${key}` ? key : t(`improve.field.${key}` as TextKey)}</dt><dd>{key === 'slot' && typeof entry === 'string' ? t(`itemSlot.${entry}` as TextKey) : /id$/i.test(key) && typeof entry === 'number' ? String(entry) : <Values value={entry} />}</dd></div>)}</dl>;
 }
 
+/** The core's verdict on the goal and constraints, for the starting build and the suggestion; the reasons come from the same report the MCP returns. */
+function Feasibility({ report }: { report: Record<string, any> }) {
+  const t = useText();
+  const final = report['final'];
+  return <aside className={`improve-feasibility improve-${final.status}`} aria-label={t('improve.feasibility')}>
+    <strong>{t(`improve.feasibility.${final.status}` as TextKey)}</strong>
+    <p>{t('improve.feasibility.baseline', { status: t(`improve.feasibility.${report['baseline'].status}` as TextKey) })}</p>
+    {final.worstTarget && <p>{t('improve.worstTarget')}: {final.worstTarget.name ?? final.worstTarget.monsterId}. {final.worstTarget.reason}</p>}
+    {!!final.violations?.length && <ul>{final.violations.map((violation: any, i: number) => <li key={i}>{violation.message}</li>)}</ul>}
+    <details><summary>{t('improve.perTargetVerdict')}</summary><Values value={final.targets} /></details>
+    {report['search'] && <details><summary>{t('improve.goalSearch')}</summary><Values value={report['search']} /></details>}
+  </aside>;
+}
+
 export default function BuildImprovements({ vm, services, onClose }: { vm: CalculatorSession; services: ApplicationServices; onClose: () => void }) {
   const t = useText();
   const runner = useMemo(() => new BuildAnalysis(services.data), [services.data]);
@@ -41,7 +58,20 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
   const [procHits, setProcHits] = useState(3);
   const [profile, setProfile] = useState<'sustained' | 'burst'>('sustained');
   const [target, setTarget] = useState(vm.selectedMonster);
-  const [secondTarget, setSecondTarget] = useState(0);
+  const [extraTargets, setExtraTargets] = useState<{ id: number; weight: number }[]>([]);
+  const [weight, setWeight] = useState(1);
+  const [hitsToKill, setHitsToKill] = useState(0);
+  const [margin, setMargin] = useState(0);
+  const [critRate, setCritRate] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
+  const [mvpPolicy, setMvpPolicy] = useState<'allow' | 'exclude-new' | 'none'>('allow');
+  const [maxRefine, setMaxRefine] = useState(0);
+  const [forbiddenEffects, setForbiddenEffects] = useState('');
+  const [consumablesMax, setConsumablesMax] = useState('');
+  const [consumablesForbidden, setConsumablesForbidden] = useState('');
+  const [consumablesAllowed, setConsumablesAllowed] = useState('');
+  const [externalBuffs, setExternalBuffs] = useState(true);
+  const [statReset, setStatReset] = useState(true);
   const [slots, setSlots] = useState<string[]>([...SLOTS]);
   const [slot, setSlot] = useState('weapon');
   const [query, setQuery] = useState('');
@@ -58,6 +88,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
   const [error, setError] = useState('');
   const [result, setResult] = useState<Record<string, any>>();
   const source = useRef('');
+  const original = useRef<unknown>(undefined);
   const active = useRef(true);
   const runId = useRef(0);
   useEffect(() => { active.current = true; return () => { active.current = false; runner.cancel(); }; }, [runner]);
@@ -79,6 +110,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
     try {
       const snapshot = vm.analysisSnapshot();
       source.current = JSON.stringify(snapshot);
+      original.current = snapshot.build;
       const build = snapshot.build;
       const common = { build, effects: snapshot.effects, target: { monsterId: target }, maxSolves };
       const require = hp > 0 ? [{ metric: 'hp' as const, min: hp }] : [];
@@ -89,9 +121,27 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
         const fixed = equipmentMode === 'replace' ? ids(candidates) : [];
         if (fixed.length > 60) throw new Error(t('improve.tooManyCandidates'));
         if (fixed.length && !slots.includes(slot)) throw new Error(t('improve.candidateSlot'));
-        request = { ...extra, mode, args: { ...common, slots, profile, ...(equipmentMode === 'replace' ? { refine, maxGrade: grade } : {}), equipmentMode, procMode, procHitsPerSecond: procHits, complements, require, exclude: ids(exclude),
+        // The same contracts as the MCP: the worker validates them with the shared schemas and the core judges them.
+        const goal = {
+          ...(hitsToKill > 0 ? { maxHitsToKill: hitsToKill, ...(margin > 0 ? { margin: margin / 100 } : {}) } : {}),
+          ...(critRate > 0 ? { minCritRate: critRate } : {}), ...(accuracy > 0 ? { minAccuracy: accuracy } : {}),
+        };
+        const consumables = {
+          ...(consumablesMax.trim() ? { max: Number(consumablesMax) } : {}),
+          ...(consumablesAllowed.trim() ? { allowed: ids(consumablesAllowed) } : {}), ...(consumablesForbidden.trim() ? { forbidden: ids(consumablesForbidden) } : {}),
+        };
+        const constraints = {
+          ...(mvpPolicy !== 'allow' ? { mvpPolicy } : {}), ...(maxRefine > 0 ? { maxRefine } : {}),
+          ...(names(forbiddenEffects).length ? { forbiddenEffects: names(forbiddenEffects) } : {}),
+          ...(Object.keys(consumables).length ? { consumables } : {}),
+          ...(externalBuffs ? {} : { allowExternalBuffs: false }), ...(statReset ? {} : { allowStatReset: false }),
+        };
+        const aims = [{ monsterId: target, weight }, ...extraTargets.map(aim => ({ monsterId: aim.id, weight: aim.weight }))];
+        if (new Set(aims.map(aim => aim.monsterId)).size !== aims.length) throw new Error(t('improve.duplicateTarget'));
+        request = { ...extra, mode, args: { ...common, slots, lock: SLOTS.filter(key => !slots.includes(key)), profile, ...(equipmentMode === 'replace' ? { refine, maxGrade: grade } : {}), equipmentMode, procMode, procHitsPerSecond: procHits, complements, require, exclude: ids(exclude),
           ...(fixed.length ? { candidates: { [slot]: fixed } } : {}),
-          ...(secondTarget ? { targets: [{ monsterId: target }, { monsterId: secondTarget }] } : {}), detail: true } };
+          ...(aims.length > 1 || weight !== 1 ? { targets: aims } : {}),
+          ...(Object.keys(goal).length ? { goal } : {}), ...(Object.keys(constraints).length ? { constraints } : {}), detail: true } };
       } else if (mode === 'slot') request = { ...extra, mode, args: { ...common, slot, profile, query, refine, maxGrade: grade, procMode, procHitsPerSecond: procHits, topSockets: complements ? 12 : 0, includePatches: true } };
       else if (mode === 'stats') request = { ...extra, mode, args: { ...common, require, objective: objectiveFor(profile, !!(snapshot.build.preset['rotation'] as any[])?.length) } };
       else request = { ...extra, mode, args: { build, effects: snapshot.effects, target: common.target, parts: ['stages', 'contributions', 'upgrades', 'warnings'] } };
@@ -123,7 +173,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
           {procMode === 'average' && <label>{t('improve.procHits')}<input type="number" min={0.1} max={30} step={0.1} required value={procHits} onChange={e => setProcHits(Number(e.target.value))} /></label>}
         </>}
         {mode !== 'explain' && <label>{t('improve.profile')}<select value={profile} onChange={e => setProfile(e.target.value as typeof profile)}><option value="sustained">{t('improve.sustained')}</option><option value="burst">{t('improve.burst')}</option></select></label>}
-        {mode === 'build' && <label>{t('improve.secondTarget')}<select value={secondTarget} onChange={e => setSecondTarget(Number(e.target.value))}><option value={0}>{t('improve.none')}</option>{targetOptions}</select></label>}
+        {mode === 'build' && <label>{t('improve.weight')}<input type="number" min={0.1} step={0.1} required value={weight} onChange={e => setWeight(Number(e.target.value))} /></label>}
         {(mode === 'build' || mode === 'slot') && <>
           {(mode === 'slot' || equipmentMode === 'replace') && <>
           <label>{t('improve.refine')}<input type="number" min={0} max={20} required value={refine} onChange={e => setRefine(Number(e.target.value))} /></label>
@@ -143,6 +193,34 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
           <label>{t('improve.solves')}<input type="number" min={10} max={100000} step={1} required value={maxSolves} onChange={e => setMaxSolves(Number(e.target.value))} /></label>
         </>}
       </fieldset>
+      {mode === 'build' && <details className="improve-advanced"><summary>{t('improve.advanced')}</summary>
+        <fieldset disabled={busy} className="improve-controls">
+          <legend>{t('improve.targets')}</legend>
+          {extraTargets.map((aim, index) => <div key={index} className="improve-extra">
+            <label>{t('improve.extraTarget')}<select value={aim.id} onChange={e => setExtraTargets(list => list.map((entry, i) => i === index ? { ...entry, id: Number(e.target.value) } : entry))}>{targetOptions}</select></label>
+            <label>{t('improve.weight')}<input type="number" min={0.1} step={0.1} required value={aim.weight} onChange={e => setExtraTargets(list => list.map((entry, i) => i === index ? { ...entry, weight: Number(e.target.value) } : entry))} /></label>
+            <button type="button" className="ui-button ui-button-outlined" onClick={() => setExtraTargets(list => list.filter((_, i) => i !== index))}>{t('improve.removeTarget')}</button></div>)}
+          {extraTargets.length < 4 && <button type="button" className="ui-button ui-button-outlined" onClick={() => setExtraTargets(list => [...list, { id: targets.find(aim => aim.id !== target && !list.some(entry => entry.id === aim.id))?.id ?? target, weight: 1 }])}>{t('improve.addTarget')}</button>}
+        </fieldset>
+        <fieldset disabled={busy} className="improve-controls">
+          <legend>{t('improve.goal')}</legend>
+          <label>{t('improve.hitsToKill')}<input type="number" min={0} max={50} step={1} value={hitsToKill} onChange={e => setHitsToKill(Number(e.target.value))} /></label>
+          {hitsToKill > 0 && <label>{t('improve.margin')}<input type="number" min={0} max={1000} step={1} value={margin} onChange={e => setMargin(Number(e.target.value))} /></label>}
+          <label>{t('improve.critRate')}<input type="number" min={0} max={100} step={1} value={critRate} onChange={e => setCritRate(Number(e.target.value))} /></label>
+          <label>{t('improve.accuracy')}<input type="number" min={0} step={1} value={accuracy} onChange={e => setAccuracy(Number(e.target.value))} /></label>
+        </fieldset>
+        <fieldset disabled={busy} className="improve-controls">
+          <legend>{t('improve.constraints')}</legend>
+          <label>{t('improve.mvpPolicy')}<select value={mvpPolicy} onChange={e => setMvpPolicy(e.target.value as typeof mvpPolicy)}>{(['allow', 'exclude-new', 'none'] as const).map(value => <option key={value} value={value}>{t(`improve.mvp.${value}` as TextKey)}</option>)}</select></label>
+          <label>{t('improve.maxRefine')}<input type="number" min={0} max={20} step={1} value={maxRefine} onChange={e => setMaxRefine(Number(e.target.value))} /></label>
+          <label>{t('improve.forbiddenEffects')}<input value={forbiddenEffects} onChange={e => setForbiddenEffects(e.target.value)} placeholder="Oleum Sanctum" /></label>
+          <label>{t('improve.consumablesMax')}<input type="number" min={0} step={1} value={consumablesMax} onChange={e => setConsumablesMax(e.target.value)} /></label>
+          <label>{t('improve.consumablesAllowed')}<input value={consumablesAllowed} onChange={e => setConsumablesAllowed(e.target.value)} /></label>
+          <label>{t('improve.consumablesForbidden')}<input value={consumablesForbidden} onChange={e => setConsumablesForbidden(e.target.value)} /></label>
+          <label className="improve-check"><input type="checkbox" checked={externalBuffs} onChange={e => setExternalBuffs(e.target.checked)} />{t('improve.externalBuffs')}</label>
+          <label className="improve-check"><input type="checkbox" checked={statReset} onChange={e => setStatReset(e.target.checked)} />{t('improve.statReset')}</label>
+        </fieldset>
+      </details>}
       {mode === 'build' && <fieldset disabled={busy} className="improve-slots"><legend>{t('improve.slots')}</legend>{SLOTS.map(key =>
         <label key={key}><input type="checkbox" checked={slots.includes(key)} onChange={e => setSlots(current => e.target.checked ? [...current, key] : current.filter(value => value !== key))} />{slotLabel(key)}</label>)}</fieldset>}
       {(mode === 'build' || mode === 'slot') && <p>{t(mode === 'build' && equipmentMode === 'current' ? 'improve.currentHint' : 'improve.levelHint')}</p>}
@@ -156,6 +234,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
       <p>{t('improve.heuristic')}</p>
       {result['stopped'] && result['stopped'] !== 'convergiu' && <p role="status" className="improve-alert">{t('improve.incomplete')}</p>}
       {result['solves'] != null && <p>{t('improve.usedSolves', { count: result['solves'] })}</p>}
+      {result['feasibility'] && <Feasibility report={result['feasibility']} />}
       {result['objective'] && <p>{t('improve.objective')}: {result['objective']}</p>}
       {result['procContext'] && <aside className="improve-alert"><strong>{t(`improve.proc.${result['procContext'].mode}` as TextKey)}</strong><p>{t('improve.procAssumption')}</p>
         <p>{t('improve.procOffResult')}: {format(result['procContext'].baselineOff)} → {format(result['procContext'].finalOff)}</p>
@@ -163,6 +242,7 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
       {result['baseline'] && result['final'] && <div className="improve-table"><table><thead><tr><th>{t('improve.metric')}</th><th>{t('improve.before')}</th><th>{t('improve.after')}</th><th>{t('improve.gain')}</th></tr></thead><tbody>{Object.keys(result['baseline']).map(key =>
         <tr key={key}><th scope="row">{key}</th><td>{format(result['baseline'][key])}</td><td>{format(result['final'][key])}</td><td>{format(result['deltaPct']?.[key])}%</td></tr>)}</tbody></table></div>}
       {result['suggestedModel'] && <button type="button" className="ui-button" onClick={() => compare(result['suggestedModel'])}>{t('improve.compare')}</button>}
+      {mode === 'build' && result['patch'] && <AcquisitionPanel key={result['share'] ?? JSON.stringify(result['patch'])} services={services} original={original.current} patch={result['patch']} />}
       {result['share'] && <a className="improve-link" href={result['share']} target="_blank" rel="noopener noreferrer">{t('improve.open')}</a>}
       {result['equipmentChanges']?.map((piece: any) => <article key={piece.slot} className="improve-piece"><h4>{slotLabel(piece.slot)}: {piece.before || '—'} → {piece.after || '—'}</h4>
         <div className="improve-table"><table><thead><tr><th>{t('improve.setting')}</th><th>{t('improve.before')}</th><th>{t('improve.after')}</th></tr></thead><tbody>{piece.rows.map((row: any) =>

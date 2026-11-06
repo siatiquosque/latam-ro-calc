@@ -4,6 +4,7 @@ import { registerDiscoveryTools } from './tools/discovery';
 import { registerBridgeTools, registerCalculationTools } from './tools/calculate';
 import { registerCustomItemTools } from './tools/custom-items';
 import { registerOptimizationTools } from './tools/optimize';
+import { registerAcquisitionTools } from './tools/acquisition';
 import { registerStatTools } from './tools/optimize-stats';
 import { registerGuideTool } from './tools/guide';
 import { registerRandomPoolTools } from './tools/random-pools';
@@ -66,6 +67,7 @@ export function createMcpServer(dataset: Dataset, shortener?: Shortener): McpSer
   registerOptimizationTools(server, dataset, shortener);
   registerRandomPoolTools(server, dataset);
   registerStatTools(server, dataset, shortener);
+  registerAcquisitionTools(server, dataset, shortener);
 
   return server;
 }

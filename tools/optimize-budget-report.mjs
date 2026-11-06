@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Builds the result tables of docs/optimize-budget-benchmark.md from the artifacts written by
+// Builds the result tables of docs/optimize/optimize-budget-benchmark.md from the artifacts written by
 // mcp/src/engine/optimize-budget.bench.spec.ts. The numbers are never typed by hand: run this after the benchmark and it rewrites
 // the block between the two markers of the report (or prints it with --stdout).
 //   node tools/optimize-budget-report.mjs [--stdout] [dir=docs/benchmarks/optimize-budget]
@@ -9,7 +9,7 @@ import { join } from 'node:path';
 const args = process.argv.slice(2);
 const stdout = args.includes('--stdout');
 const dir = args.find((arg) => !arg.startsWith('--')) ?? 'docs/benchmarks/optimize-budget';
-const REPORT = 'docs/optimize-budget-benchmark.md';
+const REPORT = 'docs/optimize/optimize-budget-benchmark.md';
 const BUILDS = ['b1', 'b2', 'weak', 'inq'];
 const RESERVES = [10, 15, 20, 30, 40];
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Tables of docs/optimize-targeted-greedy.md, computed from the artifacts (nothing typed by hand).
+ * Tables of docs/optimize/optimize-targeted-greedy.md, computed from the artifacts (nothing typed by hand).
  *   node tools/optimize-targeted-report.mjs            prints Markdown
  *   node tools/optimize-targeted-report.mjs --write    rewrites the block of the document
  */
@@ -105,6 +105,6 @@ if (validation.length) {
 
 const body = out.join('\n');
 if (process.argv.includes('--write')) {
-  const doc = 'docs/optimize-targeted-greedy.md';
+  const doc = 'docs/optimize/optimize-targeted-greedy.md';
   writeFileSync(doc, readFileSync(doc, 'utf8').replace(/<!-- targeted:start -->[\s\S]*<!-- targeted:end -->/, () => `<!-- targeted:start -->\n${body}\n<!-- targeted:end -->`));
 } else console.log(body);

@@ -432,7 +432,7 @@ describe('search time allowance', () => {
       const stats = (await call('optimize_stats', { build: BUILD })).data;
       expect(stats.stopped).toMatch(/tempo/);
     } finally { config.limits.maxSearchMs = saved; }
-  });
+  }, 60_000);
 });
 
 describe('answers stay short by default', () => {

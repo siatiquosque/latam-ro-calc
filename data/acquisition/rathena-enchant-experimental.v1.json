@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "revision": "experimental-d4b8e7b8f16061cc2496d377ac8f777ce72a4f39",
+  "sources": [
+    {
+      "id": "rathena-enchant-d4b8e7b8f160",
+      "url": "https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_enchant.yml",
+      "version": "d4b8e7b8f16061cc2496d377ac8f777ce72a4f39; ITEM_ENCHANT_DB v1",
+      "retrievedOn": "2026-11-05",
+      "sha256": "74c8f3b9db3641aa3d5222fe786e7d7c8d7b5e2af735a60718c2abd440486fc0",
+      "license": "GPL-3.0-or-later; rAthena Development Team",
+      "locator": "selected: 2",
+      "via": null
+    },
+    {
+      "id": "calc-identities-da6fcd5bf598",
+      "url": "local:src/assets/demo/data/item.json",
+      "version": "local content snapshot da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "retrievedOn": "2026-11-05",
+      "sha256": "da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    },
+    {
+      "id": "client-identities-ded08c7fd067",
+      "url": "local:src/assets/demo/data/latam-items.json",
+      "version": "local content snapshot ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    }
+  ],
+  "enchantGroups": [],
+  "routes": [
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-2-1-PerfectEnchants-Wolf_Orb_Above_3",
+      "family": "rathena-experimental",
+      "label": "2-1-PerfectEnchants-Wolf_Orb_Above_3",
+      "target": {
+        "itemIds": [
+          480091,
+          480090
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          310581
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1000405,
+          "amount": 2500,
+          "minRefine": null,
+          "description": "Ep18_Amethyst_Fragment"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 10000000}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 7,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 10000000,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-2-1-PerfectEnchants-Wolf_Orb_P_Full_3",
+      "family": "rathena-experimental",
+      "label": "2-1-PerfectEnchants-Wolf_Orb_P_Full_3",
+      "target": {
+        "itemIds": [
+          480091,
+          480090
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          310584
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1000405,
+          "amount": 2500,
+          "minRefine": null,
+          "description": "Ep18_Amethyst_Fragment"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 10000000}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 7,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 10000000,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-2-1-PerfectEnchants-Wolf_Orb_M_Counter_3",
+      "family": "rathena-experimental",
+      "label": "2-1-PerfectEnchants-Wolf_Orb_M_Counter_3",
+      "target": {
+        "itemIds": [
+          480091,
+          480090
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          310587
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1000405,
+          "amount": 2500,
+          "minRefine": null,
+          "description": "Ep18_Amethyst_Fragment"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 10000000}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 7,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 10000000,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    }
+  ],
+  "effects": []
+}

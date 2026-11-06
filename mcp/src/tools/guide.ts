@@ -30,7 +30,7 @@ export const GUIDE_TOPICS: Record<string, { title: string; text: string }> = {
       '1) Se a pessoa colou um link, use-o em `build.share`; senão monte a build (list_classes → list_skills → search_items). ' +
       '2) `calculate` dá o número base e é a referência dos campos de `build`. 3) `explain_damage` mostra de onde vem o dano e o que ele não conta. ' +
       '4) Para auditar: `validate_build`. Para melhorar: `optimize_build` (build inteira), `scan_slot` (achar a peça improvável de um slot), `optimize_slot` (poucos candidatos conhecidos), ' +
-      '`evaluate_variants` (hipóteses suas, em lote), `optimize_stats` (atributos). 5) Devolva sempre o `share` do resultado. ' +
+      '`evaluate_variants` (hipóteses suas, em lote), `optimize_stats` (atributos). 5) Devolva sempre o `share` do resultado. 6) Como obter o sugerido: `acquisition: brief` em optimize_build, ou `get_acquisition` com os `share`. ' +
       'Antes de otimizar, entenda a situação e os limites; escolha o alvo (`ler-resposta`/`alvos`) e o objetivo (`perfil`). A busca automática é opcional; a calculadora oferece a mesma busca sem IA no botão Encontrar melhorias.',
   },
   'melhorar-build': {

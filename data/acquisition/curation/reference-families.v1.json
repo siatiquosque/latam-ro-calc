@@ -1,0 +1,2477 @@
+{
+  "schemaVersion": 1,
+  "revision": "latam-acquisition-phase2-2026-11-05",
+  "sources": [
+    {
+      "id": "wiki-invernais-20261105",
+      "url": "https://browiki.org/wiki/Equipamentos_Invernais",
+      "version": "snapshot 2026-11-05",
+      "retrievedOn": "2026-11-05",
+      "sha256": "dae44d01afdf6523a1b4663ab898ce58034f9d8f45a2c3420475ce12f556b640",
+      "license": "Reuse license unconfirmed; normalized facts only",
+      "locator": "Custos das Armas Vis Invernais; Grau; Materiais; Reciclagem",
+      "via": "https://r.jina.ai/https://browiki.org/wiki/Equipamentos_Invernais"
+    },
+    {
+      "id": "gnjoy-448",
+      "url": "https://ro.gnjoyamericas.com/pt/news/notice/448",
+      "version": "published 2026-10-29; maintenance 2026-10-28",
+      "retrievedOn": "2026-11-05",
+      "sha256": "db69fee3e7de52e10a84a32ddb7c432ae30839e95544549100055866981ab1ed",
+      "license": "Gravity copyright; normalized episode availability fact only",
+      "locator": "Entra: Episodio 19 Issgard",
+      "via": "https://r.jina.ai/https://ro.gnjoyamericas.com/pt/news/notice/448"
+    },
+    {
+      "id": "latam-client",
+      "url": "repo:src/assets/demo/data/latam-items.json",
+      "version": "423eb426a6f5f849e2f1627475ece6263c2bc8c9",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "license": "Dados do cliente Gravity; direitos de terceiros",
+      "locator": "IDs 24675..24678, 100620, 101658..101661, 18551, 1001860..1001861",
+      "via": null
+    }
+  ],
+  "routes": [
+    {
+      "id": "dim-glacier-311449-level-1-v1",
+      "importKey": "curated:dim-glacier-311449-level-1-v1",
+      "family": "dim-glacier",
+      "label": "Grau Fisico: 0 para 1",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311449
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 60,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 0,
+          "toLevel": 1,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 60
+            },
+            {
+              "itemId": 1001035,
+              "amount": 40
+            },
+            {
+              "itemId": 1001034,
+              "amount": 30
+            },
+            {
+              "itemId": 1001037,
+              "amount": 50
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Fisico 1 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311449-level-2-v1",
+      "importKey": "curated:dim-glacier-311449-level-2-v1",
+      "family": "dim-glacier",
+      "label": "Grau Fisico: 1 para 2",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311450
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 20,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 25,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 5,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 5,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311449,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 1,
+          "toLevel": 2,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 30
+            },
+            {
+              "itemId": 1001035,
+              "amount": 20
+            },
+            {
+              "itemId": 1001034,
+              "amount": 15
+            },
+            {
+              "itemId": 1001037,
+              "amount": 25
+            },
+            {
+              "itemId": 1001031,
+              "amount": 5
+            },
+            {
+              "itemId": 1001032,
+              "amount": 5
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Fisico 2 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311449-level-3-v1",
+      "importKey": "curated:dim-glacier-311449-level-3-v1",
+      "family": "dim-glacier",
+      "label": "Grau Fisico: 2 para 3",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311451
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 20,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 35,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 7,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 7,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311450,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 2,
+          "toLevel": 3,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 40
+            },
+            {
+              "itemId": 1001035,
+              "amount": 30
+            },
+            {
+              "itemId": 1001034,
+              "amount": 20
+            },
+            {
+              "itemId": 1001037,
+              "amount": 35
+            },
+            {
+              "itemId": 1001031,
+              "amount": 7
+            },
+            {
+              "itemId": 1001032,
+              "amount": 7
+            },
+            {
+              "itemId": 1001033,
+              "amount": 1
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Fisico 3 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311449-level-4-v1",
+      "importKey": "curated:dim-glacier-311449-level-4-v1",
+      "family": "dim-glacier",
+      "label": "Grau Fisico: 3 para 4",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311452
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 45,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 2,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311451,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 3,
+          "toLevel": 4,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 50
+            },
+            {
+              "itemId": 1001035,
+              "amount": 40
+            },
+            {
+              "itemId": 1001034,
+              "amount": 30
+            },
+            {
+              "itemId": 1001037,
+              "amount": 45
+            },
+            {
+              "itemId": 1001031,
+              "amount": 10
+            },
+            {
+              "itemId": 1001032,
+              "amount": 10
+            },
+            {
+              "itemId": 1001033,
+              "amount": 2
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Fisico 4 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311449-level-5-v1",
+      "importKey": "curated:dim-glacier-311449-level-5-v1",
+      "family": "dim-glacier",
+      "label": "Grau Fisico: 4 para 5",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311453
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 65,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 70,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 3,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311452,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 4,
+          "toLevel": 5,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 65
+            },
+            {
+              "itemId": 1001035,
+              "amount": 50
+            },
+            {
+              "itemId": 1001034,
+              "amount": 40
+            },
+            {
+              "itemId": 1001037,
+              "amount": 70
+            },
+            {
+              "itemId": 1001031,
+              "amount": 15
+            },
+            {
+              "itemId": 1001032,
+              "amount": 15
+            },
+            {
+              "itemId": 1001033,
+              "amount": 3
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Fisico 5 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311454-level-1-v1",
+      "importKey": "curated:dim-glacier-311454-level-1-v1",
+      "family": "dim-glacier",
+      "label": "Grau Magico: 0 para 1",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311454
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 60,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 0,
+          "toLevel": 1,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 60
+            },
+            {
+              "itemId": 1001035,
+              "amount": 40
+            },
+            {
+              "itemId": 1001034,
+              "amount": 30
+            },
+            {
+              "itemId": 1001037,
+              "amount": 50
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Magico 1 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311454-level-2-v1",
+      "importKey": "curated:dim-glacier-311454-level-2-v1",
+      "family": "dim-glacier",
+      "label": "Grau Magico: 1 para 2",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311455
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 20,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 25,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 5,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 5,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311454,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 1,
+          "toLevel": 2,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 30
+            },
+            {
+              "itemId": 1001035,
+              "amount": 20
+            },
+            {
+              "itemId": 1001034,
+              "amount": 15
+            },
+            {
+              "itemId": 1001037,
+              "amount": 25
+            },
+            {
+              "itemId": 1001031,
+              "amount": 5
+            },
+            {
+              "itemId": 1001032,
+              "amount": 5
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Magico 2 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311454-level-3-v1",
+      "importKey": "curated:dim-glacier-311454-level-3-v1",
+      "family": "dim-glacier",
+      "label": "Grau Magico: 2 para 3",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311456
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 20,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 35,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 7,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 7,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311455,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 2,
+          "toLevel": 3,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 40
+            },
+            {
+              "itemId": 1001035,
+              "amount": 30
+            },
+            {
+              "itemId": 1001034,
+              "amount": 20
+            },
+            {
+              "itemId": 1001037,
+              "amount": 35
+            },
+            {
+              "itemId": 1001031,
+              "amount": 7
+            },
+            {
+              "itemId": 1001032,
+              "amount": 7
+            },
+            {
+              "itemId": 1001033,
+              "amount": 1
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Magico 3 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311454-level-4-v1",
+      "importKey": "curated:dim-glacier-311454-level-4-v1",
+      "family": "dim-glacier",
+      "label": "Grau Magico: 3 para 4",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311457
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 45,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 2,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311456,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 3,
+          "toLevel": 4,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 50
+            },
+            {
+              "itemId": 1001035,
+              "amount": 40
+            },
+            {
+              "itemId": 1001034,
+              "amount": 30
+            },
+            {
+              "itemId": 1001037,
+              "amount": 45
+            },
+            {
+              "itemId": 1001031,
+              "amount": 10
+            },
+            {
+              "itemId": 1001032,
+              "amount": 10
+            },
+            {
+              "itemId": 1001033,
+              "amount": 2
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Magico 4 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-311454-level-5-v1",
+      "importKey": "curated:dim-glacier-311454-level-5-v1",
+      "family": "dim-glacier",
+      "label": "Grau Magico: 4 para 5",
+      "method": "enchant",
+      "target": {
+        "itemIds": [
+          500054,
+          500055,
+          510075,
+          510076,
+          520021,
+          530034,
+          540056,
+          550089,
+          550090,
+          560037,
+          570032,
+          580033,
+          590047,
+          590048,
+          600030,
+          610041,
+          620019,
+          630019,
+          640034,
+          650028,
+          700059,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311458
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo"
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 65,
+          "minRefine": null,
+          "description": "Material 1001036",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 50,
+          "minRefine": null,
+          "description": "Material 1001035",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 40,
+          "minRefine": null,
+          "description": "Material 1001034",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 70,
+          "minRefine": null,
+          "description": "Material 1001037",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001031",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001032",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 3,
+          "minRefine": null,
+          "description": "Material 1001033",
+          "consumed": true
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Encanto anterior no mesmo slot",
+          "enchantId": 311457,
+          "position": 1
+        }
+      ],
+      "steps": [
+        {
+          "fromLevel": 4,
+          "toLevel": 5,
+          "materials": [
+            {
+              "itemId": 1001036,
+              "amount": 65
+            },
+            {
+              "itemId": 1001035,
+              "amount": 50
+            },
+            {
+              "itemId": 1001034,
+              "amount": 40
+            },
+            {
+              "itemId": 1001037,
+              "amount": 70
+            },
+            {
+              "itemId": 1001031,
+              "amount": 15
+            },
+            {
+              "itemId": 1001032,
+              "amount": 15
+            },
+            {
+              "itemId": 1001033,
+              "amount": 3
+            }
+          ],
+          "zeny": 0,
+          "success": null,
+          "failure": {
+            "destroysItem": null,
+            "levelDelta": null,
+            "floor": null
+          }
+        }
+      ],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "Grau Magico 5 no indice 1; outras propriedades nao inferidas.",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia do rAthena."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation."
+    },
+    {
+      "id": "dim-glacier-incinerator-v1",
+      "importKey": "curated:dim-glacier-incinerator-v1",
+      "family": "dim-glacier",
+      "label": "Incinerador: tres Armas Vis Invernais por materiais",
+      "method": "extraction",
+      "target": {
+        "itemIds": [
+          1000811,
+          1001029,
+          1001030,
+          1000812,
+          1000813,
+          1000814,
+          1001034,
+          1001035,
+          1001036,
+          1001037
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": 3,
+          "minRefine": null,
+          "description": "Tres armas elegiveis selecionadas; nao inferir que cada ID seja exigido",
+          "anyItemIds": [
+            500054,
+            500055,
+            510075,
+            510076,
+            520021,
+            530034,
+            540056,
+            550089,
+            550090,
+            560037,
+            570032,
+            580033,
+            590047,
+            590048,
+            600030,
+            610041,
+            620019,
+            630019,
+            640034,
+            650028,
+            700059,
+            800015,
+            810015,
+            820011,
+            830015,
+            840010
+          ],
+          "consumed": true
+        },
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Incinerador, icas_in 192,58; a indexacao web tambem cita 192,57"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Conclusao de O Ninho Caotico da Serpente: a confirmar na fonte"
+        }
+      ],
+      "steps": [],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "unknown",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": null,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "Pesos, combinacao dos grupos de resultados e pre-requisito de quest nao confirmados."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation.",
+      "outputs": [
+        {
+          "itemId": 1000811,
+          "quantity": {
+            "min": 1,
+            "max": 4
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001029,
+          "quantity": {
+            "min": 1,
+            "max": 4
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001030,
+          "quantity": {
+            "min": 1,
+            "max": 3
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1000812,
+          "quantity": {
+            "min": 1,
+            "max": 3
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1000813,
+          "quantity": {
+            "min": 1,
+            "max": 3
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1000814,
+          "quantity": {
+            "min": 1,
+            "max": 2
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001034,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001035,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001036,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 1001037,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        }
+      ],
+      "outputSelection": "unknown"
+    },
+    {
+      "id": "dim-glacier-material-1001030-v1",
+      "importKey": "curated:dim-glacier-material-1001030-v1",
+      "family": "dim-glacier",
+      "label": "Troca de materiais por 1001030",
+      "method": "exchange",
+      "target": {
+        "itemIds": [
+          1001030
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001029,
+          "amount": 3,
+          "minRefine": null,
+          "description": "Material 1001029",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1000608,
+          "amount": 5,
+          "minRefine": null,
+          "description": "Material 1000608",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1000405,
+          "amount": 25,
+          "minRefine": null,
+          "description": "Material 1000405",
+          "consumed": true
+        }
+      ],
+      "steps": [],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "unknown",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "Probabilidade nao explicitada no texto; nenhum tempo de farm estimado."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation.",
+      "outputs": [
+        {
+          "itemId": 1001030,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        }
+      ],
+      "outputSelection": "one"
+    },
+    {
+      "id": "dim-glacier-material-1001031-v1",
+      "importKey": "curated:dim-glacier-material-1001031-v1",
+      "family": "dim-glacier",
+      "label": "Troca de materiais por 1001031",
+      "method": "exchange",
+      "target": {
+        "itemIds": [
+          1001031
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": "2026-10-29",
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "wiki-invernais-20261105",
+        "gnjoy-448"
+      ],
+      "requirements": [
+        {
+          "kind": "npc",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "Poruru, icas_in 188,60"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001029,
+          "amount": 15,
+          "minRefine": null,
+          "description": "Material 1001029",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1000608,
+          "amount": 30,
+          "minRefine": null,
+          "description": "Material 1000608",
+          "consumed": true
+        },
+        {
+          "kind": "material",
+          "itemId": 1000405,
+          "amount": 150,
+          "minRefine": null,
+          "description": "Material 1000405",
+          "consumed": true
+        }
+      ],
+      "steps": [],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "unknown",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "unknown",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "No economic/difficulty estimate; only published NPC zeny fee."
+      },
+      "unknowns": [
+        "Probabilidade nao explicitada no texto; nenhum tempo de farm estimado."
+      ],
+      "supersedes": null,
+      "revisionReason": "Manual documentary curation; local IDs and pool positions checked, no in-game confirmation.",
+      "outputs": [
+        {
+          "itemId": 1001031,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        }
+      ],
+      "outputSelection": "one"
+    },
+    {
+      "id": "truegem-combine-v2",
+      "family": "true-gemstone-shadow",
+      "label": "Combinador de Pedras Preciosas",
+      "target": {
+        "itemIds": [
+          24675,
+          24676,
+          24677,
+          24678
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "LATAM",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": true
+      },
+      "review": "reviewed",
+      "confidence": "medium",
+      "sources": [
+        "latam-client"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 100620,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Combinador de Pedras Preciosas",
+          "consumed": true
+        },
+        {
+          "kind": "equipment",
+          "itemId": null,
+          "amount": 6,
+          "minRefine": 7,
+          "description": "Seis materiais +7 dentre os nove tipos; repeticoes a confirmar",
+          "anyItemIds": [
+            24084,
+            24085,
+            24086,
+            24087,
+            24088,
+            24089,
+            24322,
+            24335,
+            24336
+          ],
+          "consumed": true
+        }
+      ],
+      "steps": [],
+      "success": null,
+      "outcomes": [],
+      "result": {
+        "refine": "0",
+        "grade": "unknown",
+        "cards": "unknown",
+        "enchants": "unknown",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": null,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Preço de mercado e acesso aos insumos não medidos."
+      },
+      "unknowns": [
+        "Disponibilidade atual do combinador; seleção dos seis materiais; distribuição dos quatro resultados."
+      ],
+      "supersedes": "truegem-combine-v1",
+      "revisionReason": "Normaliza alternativas e resultados com os IDs locais; conserva lacunas da revisao anterior.",
+      "importKey": "curated:truegem-combine",
+      "method": "extraction",
+      "outputs": [
+        {
+          "itemId": 24675,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 24676,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 24677,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        },
+        {
+          "itemId": 24678,
+          "quantity": {
+            "min": 1,
+            "max": 1
+          },
+          "chance": null
+        }
+      ],
+      "outputSelection": "one"
+    }
+  ],
+  "effects": [],
+  "enchantGroups": [
+    {
+      "id": "glacier-grade-311449",
+      "name": "Grau Fisico",
+      "levels": [
+        {
+          "level": 1,
+          "itemId": 311449
+        },
+        {
+          "level": 2,
+          "itemId": 311450
+        },
+        {
+          "level": 3,
+          "itemId": 311451
+        },
+        {
+          "level": 4,
+          "itemId": 311452
+        },
+        {
+          "level": 5,
+          "itemId": 311453
+        }
+      ]
+    },
+    {
+      "id": "glacier-grade-311454",
+      "name": "Grau Magico",
+      "levels": [
+        {
+          "level": 1,
+          "itemId": 311454
+        },
+        {
+          "level": 2,
+          "itemId": 311455
+        },
+        {
+          "level": 3,
+          "itemId": 311456
+        },
+        {
+          "level": 4,
+          "itemId": 311457
+        },
+        {
+          "level": 5,
+          "itemId": 311458
+        }
+      ]
+    }
+  ]
+}

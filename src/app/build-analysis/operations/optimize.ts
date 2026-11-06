@@ -342,7 +342,7 @@ export type ExplainDamageArgs = {
     maxContributions?: number;
   };
 
-/** Share of a `unified` budget held back for the final socket pass. A heuristic, measured in docs/optimize-budget-benchmark.md. */
+/** Share of a `unified` budget held back for the final socket pass. A heuristic, measured in docs/optimize/optimize-budget-benchmark.md. */
 const DEFAULT_SOCKET_RESERVE = 0.15;
 /** How many of the first socket pass's best measured candidates a `near` re-check keeps for a piece nothing changed on. */
 const NEAR_RUNNERS_UP = 5;

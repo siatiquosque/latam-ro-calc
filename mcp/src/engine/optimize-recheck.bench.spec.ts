@@ -1,5 +1,5 @@
 /**
- * Safety of `socketRecheck: 'touched'` (docs/optimize-targeted-greedy.md, task 1). The question is whether re-checking only the pieces
+ * Safety of `socketRecheck: 'touched'` (docs/optimize/optimize-targeted-greedy.md, task 1). The question is whether re-checking only the pieces
  * the first socket pass changed can miss what the full second pass finds, because changing a socket of one piece moves the best choice
  * for a socket of another (a cap, a breakpoint, a condition). Real builds rarely start in a state where that happens, so the build
  * is perturbed: every card field gets a seeded random legal card, the equipment stays (`equipmentMode: current`) and both modes

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Tables of docs/optimize-budget-efficiency.md, computed from the artifacts of the budget benchmark (b1 and inq). Nothing is typed by hand.
+ * Tables of docs/optimize/optimize-budget-efficiency.md, computed from the artifacts of the budget benchmark (b1 and inq). Nothing is typed by hand.
  *   node tools/optimize-efficiency-report.mjs            prints Markdown
- *   node tools/optimize-efficiency-report.mjs --write    rewrites the block of docs/optimize-budget-efficiency.md
+ *   node tools/optimize-efficiency-report.mjs --write    rewrites the block of docs/optimize/optimize-budget-efficiency.md
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
@@ -120,7 +120,7 @@ if (recheck.length) {
 }
 const body = out.join('\n');
 if (process.argv.includes('--write')) {
-  const doc = 'docs/optimize-budget-efficiency.md';
+  const doc = 'docs/optimize/optimize-budget-efficiency.md';
   const text = readFileSync(doc, 'utf8').replace(/<!-- efficiency:start -->[\s\S]*<!-- efficiency:end -->/, () => `<!-- efficiency:start -->\n${body}\n<!-- efficiency:end -->`);
   writeFileSync(doc, text);
 } else console.log(body);

@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "revision": "experimental-d4b8e7b8f16061cc2496d377ac8f777ce72a4f39",
+  "sources": [
+    {
+      "id": "rathena-reform-d4b8e7b8f160",
+      "url": "https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_reform.yml",
+      "version": "d4b8e7b8f16061cc2496d377ac8f777ce72a4f39; ITEM_REFORM_DB v1",
+      "retrievedOn": "2026-11-05",
+      "sha256": "08dd066c8f8b7fbe8489f8b96fd85d39672145181a99e3eb97444c1819e53e16",
+      "license": "GPL-3.0-or-later; rAthena Development Team",
+      "locator": "selected: Shadow_Changer_W_Shi",
+      "via": null
+    },
+    {
+      "id": "calc-identities-da6fcd5bf598",
+      "url": "local:src/assets/demo/data/item.json",
+      "version": "local content snapshot da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "retrievedOn": "2026-11-05",
+      "sha256": "da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    },
+    {
+      "id": "client-identities-ded08c7fd067",
+      "url": "local:src/assets/demo/data/latam-items.json",
+      "version": "local content snapshot ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    }
+  ],
+  "enchantGroups": [],
+  "routes": [
+    {
+      "id": "rathena-reform-d4b8e7b8f160-Shadow_Changer_W_Shi-S_Hasty_Weapon",
+      "family": "rathena-experimental",
+      "label": "Shadow_Changer_W_Shi-S_Hasty_Weapon",
+      "target": {
+        "itemIds": [
+          24732
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-reform-d4b8e7b8f160",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "procedure",
+          "itemId": 100784,
+          "amount": null,
+          "minRefine": null,
+          "description": "Reform UI trigger; consumption requires NPC/runtime review"
+        },
+        {
+          "kind": "equipment",
+          "itemId": 24439,
+          "amount": 1,
+          "minRefine": 0,
+          "description": "{\"MaximumRefine\": 10, \"RequiredRandomOptions\": 0, \"CardsAllowed\": true}"
+        },
+        {
+          "kind": "material",
+          "itemId": 25729,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Shadowdecon"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "input + (0) (runtime cap requires review)",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "preserved",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": null,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-reform-d4b8e7b8f160-Shadow_Changer_W_Shi-S_Infinity_Weapon",
+      "family": "rathena-experimental",
+      "label": "Shadow_Changer_W_Shi-S_Infinity_Weapon",
+      "target": {
+        "itemIds": [
+          24733
+        ],
+        "aspect": "item",
+        "enchantIds": [],
+        "position": null,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-reform-d4b8e7b8f160",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "procedure",
+          "itemId": 100784,
+          "amount": null,
+          "minRefine": null,
+          "description": "Reform UI trigger; consumption requires NPC/runtime review"
+        },
+        {
+          "kind": "equipment",
+          "itemId": 24386,
+          "amount": 1,
+          "minRefine": 0,
+          "description": "{\"MaximumRefine\": 10, \"RequiredRandomOptions\": 0, \"CardsAllowed\": true}"
+        },
+        {
+          "kind": "material",
+          "itemId": 25729,
+          "amount": 10,
+          "minRefine": null,
+          "description": "Shadowdecon"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "input + (0) (runtime cap requires review)",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "preserved",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": null,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    }
+  ],
+  "effects": []
+}

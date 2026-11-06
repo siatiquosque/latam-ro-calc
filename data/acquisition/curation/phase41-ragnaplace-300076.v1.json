@@ -1,0 +1,106 @@
+{
+ "schemaVersion": 1,
+ "revision": "latam-acquisition-phase41-2026-11-05",
+ "sources": [
+  {
+   "id": "rdb-monster-20639-01751553f82c-3bad276b-202610092242394446770000",
+   "url": "https://www.divine-pride.net/database/monster/20639",
+   "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-09T22:42:39.444677+00:00; raw=01751553f82ca23c6bd4a3e4b4f3ec9ffbf5872212b5259cf327fec4901114d3",
+   "retrievedOn": "2026-10-09",
+   "sha256": "01751553f82ca23c6bd4a3e4b4f3ec9ffbf5872212b5259cf327fec4901114d3",
+   "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+   "locator": "monster/20639 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,kROS,twRO",
+   "via": "RagnarokDB raw_json (read-only snapshot)"
+  },
+  {
+   "id": "ragnaplace-laro-pt-item-300076-20261105",
+   "url": "https://ragnaplace.com/pt/laro-pt/item/300076/carta-guarda-quebrada",
+   "version": "laRO PT page \"Dropado por (1)\"; last item patch 2026-10-27_live_client_2110 (29/10/2026)",
+   "retrievedOn": "2026-11-05",
+   "sha256": "1371fa29490f1369a1c070fc99b9e137441199c58577a4521694b0335ce31404",
+   "license": "Third-party data; reuse license unconfirmed; normalized facts only",
+   "locator": "Item 300076 > Dropado por: Guarda Quebrada 20639, 0.01%",
+   "via": "saved rendered HTML of the page (secondary database; not an official publication)"
+  }
+ ],
+ "routes": [
+  {
+   "id": "rdb-drop:20639:normal:*:6:300076@ragnaplace-20261105",
+   "family": "ragnarokdb",
+   "label": "rdb-drop:20639:normal:*:6:300076",
+   "importKey": "rdb-drop:20639:normal:*:6:300076",
+   "method": "drop",
+   "drop": {
+    "monsterId": 20639,
+    "map": null,
+    "slot": 6,
+    "channel": "normal",
+    "version": "default response (not historical variants)",
+    "probability": {
+     "numerator": 1,
+     "denominator": 10000
+    },
+    "quantity": {
+     "min": null,
+     "max": null
+    }
+   },
+   "target": {
+    "itemIds": [
+     300076
+    ],
+    "aspect": "item",
+    "enchantIds": [],
+    "position": null,
+    "refine": null,
+    "grade": null
+   },
+   "server": "generic",
+   "period": {
+    "start": null,
+    "end": null,
+    "known": false
+   },
+   "review": "unreviewed",
+   "confidence": "low",
+   "sources": [
+    "rdb-monster-20639-01751553f82c-3bad276b-202610092242394446770000",
+    "ragnaplace-laro-pt-item-300076-20261105"
+   ],
+   "requirements": [
+    {
+     "kind": "monster",
+     "itemId": null,
+     "amount": null,
+     "minRefine": null,
+     "monsterId": 20639,
+     "description": "Monster 20639; no map restriction in source"
+    }
+   ],
+   "steps": [],
+   "success": null,
+   "outcomes": [],
+   "result": {
+    "refine": "unknown",
+    "grade": "unknown",
+    "cards": "unknown",
+    "enchants": "unknown",
+    "binding": "unknown"
+   },
+   "cost": {
+    "zeny": null,
+    "marketZeny": null,
+    "difficulty": "unknown",
+    "reason": "No economic/difficulty estimate imported."
+   },
+   "unknowns": [
+    "LATAM procedure/availability requires regional review.",
+    "RagnaPlace (laRO PT) lista o mesmo drop (monstro 20639, 0,01%), o que corrobora o RagnarokDB. É base de dados secundária: não confirma período nem disponibilidade atual no LATAM."
+   ],
+   "supersedes": "rdb-drop:20639:normal:*:6:300076@rdb-monster-20639-01751553f82c-3bad276b-202610092242394446770000",
+   "revisionReason": "Added RagnaPlace laRO PT as complementary evidence for the same drop; no field changed and the review status is not promoted."
+  }
+ ],
+ "effects": [],
+ "enchantGroups": []
+}

@@ -22,3 +22,20 @@
 .improve-piece h4 { margin-top: 0; }
 .improve-values ul { padding-inline-start: 1.2rem; }
 @media (max-width: 600px) { .improve-controls { grid-template-columns: minmax(0, 1fr); } }
+
+.acq-panel { margin-block: 1rem; padding: .6rem 1rem; border: 1px solid var(--surface-border); border-radius: .5rem; }
+.acq-list, .acq-alerts { padding-inline-start: 1.1rem; }
+.acq-entry { margin-block: .7rem; }
+.acq-entry p { margin: .2rem 0; }
+.acq-entry mark { padding: 0 .35rem; border-radius: .25rem; background: #e9b949; color: #1f1f1f; }
+.acq-route { margin-block: .5rem; padding-inline-start: .8rem; border-inline-start: 2px solid var(--surface-border); }
+.acq-unknowns { color: var(--text-color-secondary); }
+
+.improve-advanced { margin-block: 1rem; }
+.improve-advanced summary { cursor: pointer; font-weight: 600; }
+.improve-advanced fieldset { margin-block: .8rem; border: 1px solid var(--surface-border); padding: .8rem; }
+.improve-extra { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; gap: .6rem; align-items: end; grid-column: 1 / -1; }
+.improve-feasibility { margin-block: 1rem; padding: .8rem; border-inline-start: 3px solid #e9b949; background: var(--surface-hover); }
+.improve-feasibility.improve-feasible { border-inline-start-color: #3fae6a; }
+.improve-feasibility.improve-invalid, .improve-feasibility.improve-infeasible { border-inline-start-color: #d9534f; }
+@media (max-width: 600px) { .improve-extra { grid-template-columns: minmax(0, 1fr); } }

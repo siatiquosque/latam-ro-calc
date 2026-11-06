@@ -25,6 +25,7 @@ const variantSchema = z.object({
 export function registerOptimizationTools(server: McpServer, dataset: Dataset, shortener?: Shortener): void {
   const operations = createOptimizationOperations(dataset, config, shortener);
   const synergies = createSynergyOperations(dataset, config, shortener);
+  let acquisitionOps: Promise<ReturnType<typeof import('src/app/build-analysis/operations/acquisition').createAcquisitionOperations>> | undefined;
   registerJsonTool<FindSynergiesArgs>(server, 'find_synergies', {
     title: 'Consultar requisitos de conjuntos',
     description: 'Consulta conjuntos: allOf/anyOf e expressão original. equipmentRequirementsMet só confere equipamentos. includePatches gera patches legais e verifica ativação no motor. Confirme o ganho em evaluate_variants.',
@@ -188,6 +189,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     require?: z.infer<typeof requireSchema>[];
     goal?: GoalSpec;
     constraints?: ConstraintSpec;
+    acquisition?: 'brief';
   }>(server, 'optimize_build', {
     title: 'Procurar uma build melhor',
     description:
@@ -227,8 +229,20 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       require: z.array(requireSchema).optional(),
       goal: compactGoalSchema.optional(),
       constraints: compactConstraintSchema.optional(),
+      acquisition: z.literal('brief').optional().describe('Anexa `acquisition`: como obter o que a build final muda (rota, LATAM, incertezas). Pós-busca.'),
     },
-  }, (args) => operations.optimizeBuild(args).then(json));
+  }, async ({ acquisition, ...args }) => {
+    const result = await operations.optimizeBuild(args);
+    if (!acquisition || !result || typeof result !== 'object' || typeof (result as { share?: unknown }).share !== 'string') return json(result);
+    // After the search, never inside it; a failure here must not cost the optimization result.
+    try {
+      const ops = await (acquisitionOps ??= import('src/app/build-analysis/operations/acquisition').then(m => m.createAcquisitionOperations(dataset, config, shortener)));
+      return json({ ...result, acquisition: await ops.brief({ original: args.build, final: { share: (result as { share: string }).share } }) });
+    } catch (error) {
+      acquisitionOps = undefined;
+      return json({ ...result, acquisition: { status: 'unavailable', reason: error instanceof Error ? error.message : String(error) } });
+    }
+  });
 
   registerJsonTool<{ itemId: number; query?: string; limit?: number; detail?: boolean }>(server, 'slot_options', {
     title: 'O que uma peça aceita',

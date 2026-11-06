@@ -1,5 +1,5 @@
 /**
- * Structural redundancy of the final socket pass (docs/optimize-budget-efficiency.md, question 3). For the build the Legacy 20000 run
+ * Structural redundancy of the final socket pass (docs/optimize/optimize-budget-efficiency.md, question 3). For the build the Legacy 20000 run
  * ended with, how many of the legal cards/enchants of each socket are interchangeable with another one (same script, same position,
  * no set partner, not named by any other item's script)? Those need one evaluation for the whole class, not one each. It measures;
  * it changes nothing and eliminates nothing that could take part in a synergy.

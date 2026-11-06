@@ -1,0 +1,245 @@
+{
+ "temporalExpired": {
+  "asOf": "2026-11-05",
+  "server": "LATAM",
+  "knowledgeRevision": "latam-acquisition-phase41-2026-11-05",
+  "configuration": {
+   "level": "partial",
+   "components": {
+    "changed": 1,
+    "preserved": 1,
+    "documented": 1
+   },
+   "withoutProcedure": {
+    "count": 0,
+    "byAspect": {},
+    "named": []
+   },
+   "expiredOnly": 1,
+   "unknownChance": 0,
+   "unconfirmedLatam": 0,
+   "note": "complete = rota documentada, confirmada no LATAM e com chance conhecida em cada componente novo; não significa fácil nem garantida. Sem procedimento = sem informação, não impossível."
+  },
+  "alerts": {
+   "expired": [
+    "Insígnia da Virtude 10"
+   ]
+  },
+  "changed": [
+   {
+    "alert": "expired",
+    "path": "gear.headUpperEnchant1",
+    "itemId": 29080,
+    "name": "Insígnia da Virtude 10",
+    "aspect": "enchant",
+    "status": "expired_routes",
+    "availability": "expired_only",
+    "chance": "certain",
+    "exceptional": true,
+    "route": {
+     "requires": [
+      "Diadema Atemporal consumido na troca",
+      "Tabela oficial especifica +17; valores acima de +17 não extrapolados"
+     ],
+     "until": "2026-10-12"
+    }
+   }
+  ],
+  "uncertainties": [],
+  "sources": {
+   "ro.gnjoyamericas.com": 2
+  },
+  "detail": "get_acquisition (itemId ou builds:[{share}]) traz rotas completas, materiais, chances e ids de fontes."
+ },
+ "temporalExactEnchant": {
+  "asOf": "2026-11-05",
+  "server": "LATAM",
+  "knowledgeRevision": "latam-acquisition-phase41-2026-11-05",
+  "configuration": {
+   "level": "complete",
+   "components": {
+    "changed": 1,
+    "preserved": 1,
+    "documented": 1
+   },
+   "withoutProcedure": {
+    "count": 0,
+    "byAspect": {},
+    "named": []
+   },
+   "expiredOnly": 0,
+   "unknownChance": 0,
+   "unconfirmedLatam": 0,
+   "note": "complete = rota documentada, confirmada no LATAM e com chance conhecida em cada componente novo; não significa fácil nem garantida. Sem procedimento = sem informação, não impossível."
+  },
+  "alerts": {
+   "exceptional": [
+    "Insígnia da Virtude 10"
+   ]
+  },
+  "changed": [
+   {
+    "alert": "exceptional",
+    "path": "gear.headUpperEnchant1",
+    "itemId": 29080,
+    "name": "Insígnia da Virtude 10",
+    "aspect": "enchant",
+    "status": "difficult",
+    "availability": "confirmed",
+    "chance": "known",
+    "exceptional": true,
+    "route": {
+     "requires": [
+      "Equipamento da família já com a Insígnia escolhida no nível 1 e demais slots encantados",
+      "Temporizador RUF-10, glast_01 142,279 (localização oficial 415)"
+     ]
+    },
+    "otherRoutes": 1
+   }
+  ],
+  "uncertainties": [],
+  "sources": {
+   "browiki.org": 1
+  },
+  "detail": "get_acquisition (itemId ou builds:[{share}]) traz rotas completas, materiais, chances e ids de fontes."
+ },
+ "visUnknown": {
+  "asOf": "2026-11-05",
+  "server": "LATAM",
+  "knowledgeRevision": "latam-acquisition-phase41-2026-11-05",
+  "configuration": {
+   "level": "partial",
+   "components": {
+    "changed": 2,
+    "preserved": 0,
+    "documented": 2
+   },
+   "withoutProcedure": {
+    "count": 0,
+    "byAspect": {},
+    "named": []
+   },
+   "expiredOnly": 0,
+   "unknownChance": 2,
+   "unconfirmedLatam": 1,
+   "note": "complete = rota documentada, confirmada no LATAM e com chance conhecida em cada componente novo; não significa fácil nem garantida. Sem procedimento = sem informação, não impossível."
+  },
+  "alerts": {
+   "exceptional": [
+    "Cristal Invernal (Grau Físico 5)"
+   ]
+  },
+  "changed": [
+   {
+    "alert": "exceptional",
+    "path": "gear.weaponEnchant1",
+    "itemId": 311453,
+    "name": "Cristal Invernal (Grau Físico 5)",
+    "aspect": "enchant",
+    "status": "insufficient_information",
+    "availability": "confirmed",
+    "chance": "unknown",
+    "exceptional": true,
+    "insufficient": true,
+    "route": {
+     "method": "enchant",
+     "requires": [
+      "Arma Vil Invernal; slot {2} da wiki = indice 1 do LaRo",
+      "Poruru, icas_in 188,60"
+     ]
+    },
+    "otherRoutes": 1
+   },
+   {
+    "path": "gear.weapon",
+    "itemId": 500054,
+    "name": "Flambergue Vil Invernal",
+    "aspect": "item",
+    "status": "insufficient_information",
+    "availability": "unconfirmed",
+    "chance": "unknown",
+    "insufficient": true,
+    "route": {
+     "method": "drop",
+     "monsterId": 21526,
+     "map": "jor_dun01"
+    },
+    "otherRoutes": 1
+   }
+  ],
+  "uncertainties": [
+   {
+    "text": "LATAM procedure/availability requires regional review.",
+    "components": 1
+   },
+   {
+    "text": "A tabela regional fornece custos, mas nao explicita probabilidades nem consequencias de falha; nao inferir garantia d...",
+    "components": 1
+   }
+  ],
+  "sources": {
+   "repo:RagnarokDB": 2,
+   "browiki.org": 1,
+   "ro.gnjoyamericas.com": 1
+  },
+  "detail": "get_acquisition (itemId ou builds:[{share}]) traz rotas completas, materiais, chances e ids de fontes."
+ },
+ "noProcedure": {
+  "asOf": "2026-11-05",
+  "server": "LATAM",
+  "knowledgeRevision": "latam-acquisition-phase41-2026-11-05",
+  "configuration": {
+   "level": "undocumented",
+   "components": {
+    "changed": 1,
+    "preserved": 0,
+    "documented": 0
+   },
+   "withoutProcedure": {
+    "count": 1,
+    "byAspect": {
+     "item": 1
+    },
+    "named": [
+     "Garra Primordial-LT"
+    ]
+   },
+   "expiredOnly": 0,
+   "unknownChance": 0,
+   "unconfirmedLatam": 0,
+   "note": "complete = rota documentada, confirmada no LATAM e com chance conhecida em cada componente novo; não significa fácil nem garantida. Sem procedimento = sem informação, não impossível."
+  },
+  "alerts": {},
+  "changed": [],
+  "uncertainties": [],
+  "sources": {},
+  "detail": "get_acquisition (itemId ou builds:[{share}]) traz rotas completas, materiais, chances e ids de fontes."
+ },
+ "unchanged": {
+  "asOf": "2026-11-05",
+  "server": "LATAM",
+  "knowledgeRevision": "latam-acquisition-phase41-2026-11-05",
+  "configuration": {
+   "level": "unchanged",
+   "components": {
+    "changed": 0,
+    "preserved": 1,
+    "documented": 0
+   },
+   "withoutProcedure": {
+    "count": 0,
+    "byAspect": {},
+    "named": []
+   },
+   "expiredOnly": 0,
+   "unknownChance": 0,
+   "unconfirmedLatam": 0,
+   "note": "complete = rota documentada, confirmada no LATAM e com chance conhecida em cada componente novo; não significa fácil nem garantida. Sem procedimento = sem informação, não impossível."
+  },
+  "alerts": {},
+  "changed": [],
+  "uncertainties": [],
+  "sources": {},
+  "detail": "get_acquisition (itemId ou builds:[{share}]) traz rotas completas, materiais, chances e ids de fontes."
+ }
+}

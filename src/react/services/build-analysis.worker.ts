@@ -7,6 +7,7 @@ import type { AnalysisRuntime } from '../../app/build-analysis/runtime';
 import { resolveBuild } from '../../app/build-analysis/engine/build-input';
 import { applyPatch } from '../../app/build-analysis/engine/variants';
 import { EQUIPMENT_SLOTS } from '../../app/app-config/equipment-slots';
+import { constraintSpecSchema, goalSpecSchema } from '../../app/build-analysis/engine/goal-spec';
 
 /** Isolated stateful engine: a search cannot mutate the calculator currently on screen. */
 globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest>) => {
@@ -18,10 +19,25 @@ globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest>) => {
       limits: { maxOptimizeCandidates: 40, maxTableMonsters: 20, maxCompareBuilds: 4,
         maxVariants: 100, maxContributions: 60, maxSearchMs: data.maxSearchMs, maxSolves: data.maxSolves },
     };
+    if (data.mode === 'acquisition' || data.mode === 'acquisitionItem') {
+      // Own chunk: the catalog is fetched only when the player opens the panel. No solver, no damage evaluation.
+      const { createAcquisitionOperations } = await import('../../app/build-analysis/operations/acquisition');
+      const acquisition = createAcquisitionOperations(dataset, runtime);
+      const result = data.mode === 'acquisition'
+        ? await acquisition.brief({ original: data.args.original, final: applyPatch(data.args.original, data.args.patch) })
+        : await acquisition.assess({ itemId: data.args.itemId });
+      globalThis.postMessage({ result } satisfies AnalysisResponse);
+      return;
+    }
     const ops = createOptimizationOperations(dataset, runtime);
     let result: Record<string, any>;
     switch (data.mode) {
-      case 'build': result = await ops.optimizeBuild(data.args); break;
+      case 'build': {
+        // The MCP validates these at its transport; the UI request is held to the same schemas before the core sees it.
+        const { goal, constraints } = data.args;
+        result = await ops.optimizeBuild({ ...data.args, ...(goal ? { goal: goalSpecSchema.parse(goal) } : {}), ...(constraints ? { constraints: constraintSpecSchema.parse(constraints) } : {}) });
+        break;
+      }
       case 'slot': result = await ops.scanSlot(data.args); break;
       case 'stats': result = await createStatOperations(dataset, runtime).optimizeStats(data.args); break;
       case 'explain': result = await ops.explainDamage(data.args); break;

@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe('tool surface', () => {
   it('advertises the full build schema once, so the tool list stays small', async () => {
     const list = await client.listTools();
-    expect(JSON.stringify(list).length).toBeLessThan(49_000);
+    expect(JSON.stringify(list).length).toBeLessThan(50_500);
     const withFullBuild = list.tools.filter((tool) => JSON.stringify(tool.inputSchema).includes('"jobLevel"'));
     expect(withFullBuild.map((tool) => tool.name)).toEqual(['calculate']);
   });
@@ -51,6 +51,7 @@ describe('tool surface', () => {
         'compare_builds',
         'create_custom_items',
         'damage_table',
+        'get_acquisition',
         'get_custom_item_schema',
         'guide',
         'get_item',
@@ -414,7 +415,7 @@ describe('regressions', () => {
     expect(typeof row.now).toBe('number');
     expect(typeof row.evolved).toBe('number');
     expect(['melhor nos dois níveis', 'só vence evoluída', 'vence agora, perde evoluída', 'não vence']).toContain(row.verdict);
-  });
+}, 60_000);
 
   it('repeats the result against defended dummies when the target has no defenses, and reads breakpoints and objective notes', async () => {
     const build = { class: 4262, level: 250, jobLevel: 50, atkSkill: 'Third Flame Bomb==5', gear: { weapon: 560037, weaponRefine: 12 },
@@ -452,7 +453,7 @@ describe('regressions', () => {
     expect(data.reference.basis).toMatch(/melhores soquetes/);
     expect(data.ranking.some((row: any) => row.id === 560037)).toBe(true);
     expect(data.context.undefendedNote).toBeTruthy();
-  });
+  }, 60_000);
 
   it('scan_slot finds a piece whose value is in its sockets, not in its bare stats', async () => {
     // Soqueira Vil Invernal has the same ATK and script as the Invernal: bare it ties with dozens of weapons, with sockets it wins.

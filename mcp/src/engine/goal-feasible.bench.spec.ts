@@ -1,5 +1,5 @@
 /**
- * feasible@budget on the Jor_ab02 study (docs/optimize-goal-search.md). The goal is 2 hits to kill on each of the five monsters. Two starts:
+ * feasible@budget on the Jor_ab02 study (docs/optimize/optimize-goal-search.md). The goal is 2 hits to kill on each of the five monsters. Two starts:
  *   gear-only  the original gear with the attributes, skill level and consumables of the "grau C" solution (a start the Greedy can finish from);
  *   original   the original as shared (the solutions also change attributes and consumables, which the Greedy does not touch: reported, not demanded).
  * For every run: found a feasible build?, where first (counted evaluations, real unique evaluations, phase), the best distance, why it stopped,

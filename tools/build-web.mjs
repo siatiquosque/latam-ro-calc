@@ -63,8 +63,15 @@ export async function buildWeb({ production = true, outputDirectory = defaultOut
   const analysisEntry = Object.entries(analysis.metafile.outputs).find(([, meta]) => meta.entryPoint?.endsWith('build-analysis.worker.ts'));
   if (!analysisEntry) throw new Error('Missing build analysis worker');
   if (Object.keys(analysis.metafile.inputs).some(name => /(?:^|[\\/])mcp[\\/]|@modelcontextprotocol/.test(name))) throw new Error('MCP transport entered the local build analysis worker');
-  const analysisBytes = Object.entries(analysis.metafile.outputs).filter(([name]) => name.endsWith('.js')).reduce((sum, [, meta]) => sum + meta.bytes, 0);
+  // The acquisition catalog sits in its own chunk, fetched only when the player opens that panel. It is budgeted on its own, so the
+  // search keeps its original limit and the lazy data cannot hide growth in the search itself.
+  const jsOutputs = Object.entries(analysis.metafile.outputs).filter(([name]) => name.endsWith('.js'));
+  const isCatalog = meta => Object.keys(meta.inputs ?? {}).some(input => /data[\/]acquisition[\/]/.test(input));
+  const acquisitionBytes = jsOutputs.filter(([, meta]) => isCatalog(meta)).reduce((sum, [, meta]) => sum + meta.bytes, 0);
+  const analysisBytes = jsOutputs.reduce((sum, [, meta]) => sum + meta.bytes, 0) - acquisitionBytes;
+  if (!acquisitionBytes) throw new Error('Acquisition catalog missing from the build analysis worker');
   if (production && analysisBytes > budgets.analysisWorkerError) throw new Error(`Optional build analysis exceeds budget: ${analysisBytes} > ${budgets.analysisWorkerError}`);
+  if (production && acquisitionBytes > budgets.acquisitionChunkError) throw new Error(`On-demand acquisition chunk exceeds budget: ${acquisitionBytes} > ${budgets.acquisitionChunkError}`);
   const result = await build({
     absWorkingDir: root,
     entryPoints: { main: resolve(root, 'src/main.ts'), styles: resolve(root, 'src/styles.css') },

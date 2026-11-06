@@ -1,5 +1,5 @@
 /**
- * Last check before `socketRecheck: 'near'` becomes the default (docs/optimize-targeted-greedy.md, section 9). `all` and `near` run
+ * Last check before `socketRecheck: 'near'` becomes the default (docs/optimize/optimize-targeted-greedy.md, section 9). `all` and `near` run
  * the same search; they are identical until the second socket pass starts (the report records the value and the unique evaluations at
  * that moment, and the test asserts both are equal), so what differs afterwards is the effect of `socketRecheck` alone.
  *

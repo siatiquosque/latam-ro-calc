@@ -1,0 +1,3116 @@
+{
+  "snapshotSha256": "f2f2fafcb77cd4248b60556af15542dcc13bb7fea8f1bdb8922c4389f5e22104",
+  "inputVersion": "rdb-f2f2fafcb77cd4248b60556af15542dcc13bb7fea8f1bdb8922c4389f5e22104",
+  "applied": true,
+  "changed": true,
+  "added": 223,
+  "enriched": 0,
+  "unchanged": 0,
+  "sources": [
+    {
+      "id": "rdb-monster-20572-74d1d3843701-3bad276b-202611012254184237530000",
+      "url": "https://www.divine-pride.net/database/monster/20572",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:54:18.423753+00:00; raw=74d1d3843701fa351e9f3698681d991bd83a622d385b8f93d7f8f53808ea98d1",
+      "retrievedOn": "2026-11-01",
+      "sha256": "74d1d3843701fa351e9f3698681d991bd83a622d385b8f93d7f8f53808ea98d1",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/20572 acquisition fields; requested region=LATAM; servers=dpRO,iRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-20573-40b5424f532f-3bad276b-202611012254195464540000",
+      "url": "https://www.divine-pride.net/database/monster/20573",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:54:19.546454+00:00; raw=40b5424f532f7a31870a50bc610f3e8e57ae8bbe92fa5772aa0c6fed0f18479b",
+      "retrievedOn": "2026-11-01",
+      "sha256": "40b5424f532f7a31870a50bc610f3e8e57ae8bbe92fa5772aa0c6fed0f18479b",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/20573 acquisition fields; requested region=LATAM; servers=dpRO,iRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-20574-1b281c2f5a90-3bad276b-202611012254210694460000",
+      "url": "https://www.divine-pride.net/database/monster/20574",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:54:21.069446+00:00; raw=1b281c2f5a90c087b50a6d32a3358e50436edd1c3444c303c64fdca88f84a991",
+      "retrievedOn": "2026-11-01",
+      "sha256": "1b281c2f5a90c087b50a6d32a3358e50436edd1c3444c303c64fdca88f84a991",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/20574 acquisition fields; requested region=LATAM; servers=dpRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-20576-4d696d72e1ae-3bad276b-202611012254242415640000",
+      "url": "https://www.divine-pride.net/database/monster/20576",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:54:24.241564+00:00; raw=4d696d72e1ae6614ffe722a4a62a4e4f73cfa5c714b849726d3aa8e87c34ae3e",
+      "retrievedOn": "2026-11-01",
+      "sha256": "4d696d72e1ae6614ffe722a4a62a4e4f73cfa5c714b849726d3aa8e87c34ae3e",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/20576 acquisition fields; requested region=LATAM; servers=dpRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-20577-1fc07b0c9f62-3bad276b-202611012254257615600000",
+      "url": "https://www.divine-pride.net/database/monster/20577",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:54:25.761560+00:00; raw=1fc07b0c9f6266fd6e67f731152f9ddd871daa7b19f495c516bbe9328ca1031e",
+      "retrievedOn": "2026-11-01",
+      "sha256": "1fc07b0c9f6266fd6e67f731152f9ddd871daa7b19f495c516bbe9328ca1031e",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/20577 acquisition fields; requested region=LATAM; servers=kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-21531-1987f85a7060-3bad276b-202610160701124147930000",
+      "url": "https://www.divine-pride.net/database/monster/21531",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:01:12.414793+00:00; raw=1987f85a7060ad33ec0844051a3d12bde71e68dc6cb857176f59a13b2ee4e3b4",
+      "retrievedOn": "2026-10-16",
+      "sha256": "1987f85a7060ad33ec0844051a3d12bde71e68dc6cb857176f59a13b2ee4e3b4",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/21531 acquisition fields; requested region=LATAM; servers=dpRO,kROM",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-21533-2ad052ba9fb8-3bad276b-202610160701154212270000",
+      "url": "https://www.divine-pride.net/database/monster/21533",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:01:15.421227+00:00; raw=2ad052ba9fb847be6a250a4af8f35bddb6191bf19b1c1a7907d9ec960932b2d4",
+      "retrievedOn": "2026-10-16",
+      "sha256": "2ad052ba9fb847be6a250a4af8f35bddb6191bf19b1c1a7907d9ec960932b2d4",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/21533 acquisition fields; requested region=LATAM; servers=dpRO,kROM",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-21537-fe7d25777bb4-3bad276b-202610302031410432840000",
+      "url": "https://www.divine-pride.net/database/monster/21537",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-15T03:36:55.807; synced=2026-10-30T20:31:41.043284+00:00; raw=fe7d25777bb4f36b7f83babb707aaa915d963ba1a26f764bf3d2ec378f7e78e5",
+      "retrievedOn": "2026-10-30",
+      "sha256": "fe7d25777bb4f36b7f83babb707aaa915d963ba1a26f764bf3d2ec378f7e78e5",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/21537 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-monster-21996-083a3c939c96-3bad276b-202610092244573992350000",
+      "url": "https://www.divine-pride.net/database/monster/21996",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-09T22:44:57.399235+00:00; raw=083a3c939c96b2d4de5b3a1d1640559bf1342b8f508c9d56d67cb4e7b9951ff5",
+      "retrievedOn": "2026-10-09",
+      "sha256": "083a3c939c96b2d4de5b3a1d1640559bf1342b8f508c9d56d67cb4e7b9951ff5",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "monster/21996 acquisition fields; requested region=LATAM; servers=dpRO,iRO,kROM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-25864-2633b50551a9-3bad276b-202611012253120720840000",
+      "url": "https://www.divine-pride.net/database/item/25864",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:53:12.072084+00:00; raw=2633b50551a95b2bf6c2112d8a8ab2a2685a50fe26d33889d1a0484a66982b4b",
+      "retrievedOn": "2026-11-01",
+      "sha256": "2633b50551a95b2bf6c2112d8a8ab2a2685a50fe26d33889d1a0484a66982b4b",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/25864 acquisition fields; requested region=LATAM; servers=cRO,dpRO,GGH,idRO,iRO,jRO,kROM,kROS,LATAM,thROG,twRO,vnRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-25865-339e16f7a7d1-3bad276b-202611012253138453770000",
+      "url": "https://www.divine-pride.net/database/item/25865",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:53:13.845377+00:00; raw=339e16f7a7d159d9bcc21ae95e78027b02f2c4bf493b96334953c1c48b18a65b",
+      "retrievedOn": "2026-11-01",
+      "sha256": "339e16f7a7d159d9bcc21ae95e78027b02f2c4bf493b96334953c1c48b18a65b",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/25865 acquisition fields; requested region=LATAM; servers=cRO,dpRO,GGH,idRO,iRO,jRO,kROM,kROS,LATAM,thROG,twRO,vnRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-25866-bb9278a5b957-3bad276b-202611012253150117670000",
+      "url": "https://www.divine-pride.net/database/item/25866",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:53:15.011767+00:00; raw=bb9278a5b95792738784ab7f674bff33c0e725b19bf7d877c65adbfe3b119a9e",
+      "retrievedOn": "2026-11-01",
+      "sha256": "bb9278a5b95792738784ab7f674bff33c0e725b19bf7d877c65adbfe3b119a9e",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/25866 acquisition fields; requested region=LATAM; servers=cRO,dpRO,GGH,idRO,iRO,jRO,kROM,kROS,LATAM,thROG,twRO,vnRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-25867-684fffd226b5-3bad276b-202611012253165120880000",
+      "url": "https://www.divine-pride.net/database/item/25867",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-11-01T22:53:16.512088+00:00; raw=684fffd226b5b783bb87bfd326f5708706be655dad3ec64e09382829b898d5da",
+      "retrievedOn": "2026-11-01",
+      "sha256": "684fffd226b5b783bb87bfd326f5708706be655dad3ec64e09382829b898d5da",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/25867 acquisition fields; requested region=LATAM; servers=cRO,dpRO,GGH,idRO,iRO,jRO,kROM,kROS,LATAM,thROG,twRO,vnRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101637-188c06828a8c-3bad276b-202610160702214537300000",
+      "url": "https://www.divine-pride.net/database/item/101637",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:02:21.453730+00:00; raw=188c06828a8c3c10232e5eb6a01bc6b1b836c1ddffb91c94d2a2b9c433c591e0",
+      "retrievedOn": "2026-10-16",
+      "sha256": "188c06828a8c3c10232e5eb6a01bc6b1b836c1ddffb91c94d2a2b9c433c591e0",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101637 acquisition fields; requested region=LATAM; servers=cRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101639-b41896e86438-3bad276b-202610160702242706580000",
+      "url": "https://www.divine-pride.net/database/item/101639",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:02:24.270658+00:00; raw=b41896e86438cb99ac48295b89e33e2aee48dbb1eb85b452b48a11e71a79bb78",
+      "retrievedOn": "2026-10-16",
+      "sha256": "b41896e86438cb99ac48295b89e33e2aee48dbb1eb85b452b48a11e71a79bb78",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101639 acquisition fields; requested region=LATAM; servers=cRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101658-12d8cf7d2ab9-3bad276b-202610300700501207920000",
+      "url": "https://www.divine-pride.net/database/item/101658",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T07:00:50.120792+00:00; raw=12d8cf7d2ab9cd551387c75e0d1dbbb38c299c9885f232a3abab08ba73a18e64",
+      "retrievedOn": "2026-10-30",
+      "sha256": "12d8cf7d2ab9cd551387c75e0d1dbbb38c299c9885f232a3abab08ba73a18e64",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101658 acquisition fields; requested region=LATAM; servers=cRO,kROM,LATAM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101659-352f74c406ad-3bad276b-202610300700516044190000",
+      "url": "https://www.divine-pride.net/database/item/101659",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T07:00:51.604419+00:00; raw=352f74c406ad17d56a27ae8751780b8b9214e89b38597a25b40d03ea185cbf0c",
+      "retrievedOn": "2026-10-30",
+      "sha256": "352f74c406ad17d56a27ae8751780b8b9214e89b38597a25b40d03ea185cbf0c",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101659 acquisition fields; requested region=LATAM; servers=cRO,kROM,LATAM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101660-bd3698e2b6cc-3bad276b-202610300700531107020000",
+      "url": "https://www.divine-pride.net/database/item/101660",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T07:00:53.110702+00:00; raw=bd3698e2b6cc462fd4713c6c55be601c5fd28675e464e7fd4755fcc991c85a40",
+      "retrievedOn": "2026-10-30",
+      "sha256": "bd3698e2b6cc462fd4713c6c55be601c5fd28675e464e7fd4755fcc991c85a40",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101660 acquisition fields; requested region=LATAM; servers=cRO,kROM,LATAM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-101661-f8893050f13e-3bad276b-202610300700546404090000",
+      "url": "https://www.divine-pride.net/database/item/101661",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T07:00:54.640409+00:00; raw=f8893050f13ee62905b921810ac227c63f1511d3e095b6ce3b42be1f2d4addc9",
+      "retrievedOn": "2026-10-30",
+      "sha256": "f8893050f13ee62905b921810ac227c63f1511d3e095b6ce3b42be1f2d4addc9",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/101661 acquisition fields; requested region=LATAM; servers=cRO,kROM,LATAM,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-500054-c720b692c10c-3bad276b-202610160711288254130000",
+      "url": "https://www.divine-pride.net/database/item/500054",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:28.825413+00:00; raw=c720b692c10cb5d93899173537616c16cef6ba09acfc7694ffe1c34feee4e684",
+      "retrievedOn": "2026-10-16",
+      "sha256": "c720b692c10cb5d93899173537616c16cef6ba09acfc7694ffe1c34feee4e684",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/500054 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-500055-5fb35b5ff0e7-3bad276b-202610160711303370440000",
+      "url": "https://www.divine-pride.net/database/item/500055",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:30.337044+00:00; raw=5fb35b5ff0e7c52bd19ab954961c67e0ebef11750da4b939d4181d48798da108",
+      "retrievedOn": "2026-10-16",
+      "sha256": "5fb35b5ff0e7c52bd19ab954961c67e0ebef11750da4b939d4181d48798da108",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/500055 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-510075-9d892bf4b0c5-3bad276b-202610160711348153430000",
+      "url": "https://www.divine-pride.net/database/item/510075",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:34.815343+00:00; raw=9d892bf4b0c5b5587caa5b22f4a6d278f57ea0e5ca7f9c6795a3b44d6d55b09c",
+      "retrievedOn": "2026-10-16",
+      "sha256": "9d892bf4b0c5b5587caa5b22f4a6d278f57ea0e5ca7f9c6795a3b44d6d55b09c",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/510075 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-510076-a5a960524ee9-3bad276b-202610160711363137960000",
+      "url": "https://www.divine-pride.net/database/item/510076",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:36.313796+00:00; raw=a5a960524ee95cc38d771f89ef7340444572120174a68df477a75c354dca1176",
+      "retrievedOn": "2026-10-16",
+      "sha256": "a5a960524ee95cc38d771f89ef7340444572120174a68df477a75c354dca1176",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/510076 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-520021-07e3b3c79b35-3bad276b-202610160711393168610000",
+      "url": "https://www.divine-pride.net/database/item/520021",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:39.316861+00:00; raw=07e3b3c79b3559050c2e99650138b8fba19e29a118aebeb868976539b14d67d9",
+      "retrievedOn": "2026-10-16",
+      "sha256": "07e3b3c79b3559050c2e99650138b8fba19e29a118aebeb868976539b14d67d9",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/520021 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-530034-ab123fdfb93c-3bad276b-202610160711423214970000",
+      "url": "https://www.divine-pride.net/database/item/530034",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:42.321497+00:00; raw=ab123fdfb93c85a098168cb7f8acc654ad99c9e509c5eda988523d75f0594869",
+      "retrievedOn": "2026-10-16",
+      "sha256": "ab123fdfb93c85a098168cb7f8acc654ad99c9e509c5eda988523d75f0594869",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/530034 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-540056-cb78478d5e0c-3bad276b-202610160711453555460000",
+      "url": "https://www.divine-pride.net/database/item/540056",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:45.355546+00:00; raw=cb78478d5e0cc9439838a18c1d013991b7d0bf5cae66ade27c4427dcc4449325",
+      "retrievedOn": "2026-10-16",
+      "sha256": "cb78478d5e0cc9439838a18c1d013991b7d0bf5cae66ade27c4427dcc4449325",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/540056 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-550089-8bdeb81fe3d1-3bad276b-202610160711498346630000",
+      "url": "https://www.divine-pride.net/database/item/550089",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:49.834663+00:00; raw=8bdeb81fe3d126135695e775a36b8ff3f0947f93505fb669ef0f5b7c35c23676",
+      "retrievedOn": "2026-10-16",
+      "sha256": "8bdeb81fe3d126135695e775a36b8ff3f0947f93505fb669ef0f5b7c35c23676",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/550089 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-550090-4c40aa5f6bf3-3bad276b-202610160711513399980000",
+      "url": "https://www.divine-pride.net/database/item/550090",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:51.339998+00:00; raw=4c40aa5f6bf32bfed984bb7b275201a81d3e50cdcbed1f13c36ba20219c7b371",
+      "retrievedOn": "2026-10-16",
+      "sha256": "4c40aa5f6bf32bfed984bb7b275201a81d3e50cdcbed1f13c36ba20219c7b371",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/550090 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-560037-0a9bf55de84d-3bad276b-202610160711558467490000",
+      "url": "https://www.divine-pride.net/database/item/560037",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:55.846749+00:00; raw=0a9bf55de84db6ab2052456ff6c9286bf1111e03d38e4f04203cde1832716e05",
+      "retrievedOn": "2026-10-16",
+      "sha256": "0a9bf55de84db6ab2052456ff6c9286bf1111e03d38e4f04203cde1832716e05",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/560037 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-570032-c872a132802b-3bad276b-202610160711588271190000",
+      "url": "https://www.divine-pride.net/database/item/570032",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:11:58.827119+00:00; raw=c872a132802bb24bab7c3e62d25230daf895071a2c803da86379d32777e3cf3b",
+      "retrievedOn": "2026-10-16",
+      "sha256": "c872a132802bb24bab7c3e62d25230daf895071a2c803da86379d32777e3cf3b",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/570032 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-580033-20b8151ffb0e-3bad276b-202610160712018241580000",
+      "url": "https://www.divine-pride.net/database/item/580033",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:01.824158+00:00; raw=20b8151ffb0e7d51414a37c7ff41a5bc63907c9d979a4cf74d93f0bfc04bc154",
+      "retrievedOn": "2026-10-16",
+      "sha256": "20b8151ffb0e7d51414a37c7ff41a5bc63907c9d979a4cf74d93f0bfc04bc154",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/580033 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-590047-40290660b314-3bad276b-202610160712063609940000",
+      "url": "https://www.divine-pride.net/database/item/590047",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:06.360994+00:00; raw=40290660b314d0e91f3bc8b4a44b1a6bbadbe0de51f140eafd92da09a79f62ef",
+      "retrievedOn": "2026-10-16",
+      "sha256": "40290660b314d0e91f3bc8b4a44b1a6bbadbe0de51f140eafd92da09a79f62ef",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/590047 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-590048-f8331645b8fd-3bad276b-202610160712078389130000",
+      "url": "https://www.divine-pride.net/database/item/590048",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:07.838913+00:00; raw=f8331645b8fdf39a1eacbe8100ceb2b472251c1e0ededa058d187ff43ec06b6e",
+      "retrievedOn": "2026-10-16",
+      "sha256": "f8331645b8fdf39a1eacbe8100ceb2b472251c1e0ededa058d187ff43ec06b6e",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/590048 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-600030-8a69303fe71a-3bad276b-202610160712112770310000",
+      "url": "https://www.divine-pride.net/database/item/600030",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:11.277031+00:00; raw=8a69303fe71a39ce505068dc330b8caa2e38a8743487cd9886826fd7e78bf09c",
+      "retrievedOn": "2026-10-16",
+      "sha256": "8a69303fe71a39ce505068dc330b8caa2e38a8743487cd9886826fd7e78bf09c",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/600030 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-610041-e67307c3e347-3bad276b-202610160712138320380000",
+      "url": "https://www.divine-pride.net/database/item/610041",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:13.832038+00:00; raw=e67307c3e347ec1a7005b3b8d823d1b315cf91dca6e2aad64899184310a3f0c0",
+      "retrievedOn": "2026-10-16",
+      "sha256": "e67307c3e347ec1a7005b3b8d823d1b315cf91dca6e2aad64899184310a3f0c0",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/610041 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-620019-a01dca4bb416-3bad276b-202610160712183198250000",
+      "url": "https://www.divine-pride.net/database/item/620019",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:18.319825+00:00; raw=a01dca4bb4169691455d86757e890568ceea2c033a98c242941feb4ccd40d602",
+      "retrievedOn": "2026-10-16",
+      "sha256": "a01dca4bb4169691455d86757e890568ceea2c033a98c242941feb4ccd40d602",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/620019 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-630019-1fdfaf83878d-3bad276b-202610160712213501550000",
+      "url": "https://www.divine-pride.net/database/item/630019",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:21.350155+00:00; raw=1fdfaf83878d9a724f2526d8fc2b2e6cd735b498d9ee5cf7bd0335611447d8b1",
+      "retrievedOn": "2026-10-16",
+      "sha256": "1fdfaf83878d9a724f2526d8fc2b2e6cd735b498d9ee5cf7bd0335611447d8b1",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/630019 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-640034-87feba12340e-3bad276b-202610160712243581070000",
+      "url": "https://www.divine-pride.net/database/item/640034",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:24.358107+00:00; raw=87feba12340e1e171689b9a63bbfe4f3d0dbb8f67c9155ba2e22e68822b96753",
+      "retrievedOn": "2026-10-16",
+      "sha256": "87feba12340e1e171689b9a63bbfe4f3d0dbb8f67c9155ba2e22e68822b96753",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/640034 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-650028-5db06bc83afc-3bad276b-202610160712288171890000",
+      "url": "https://www.divine-pride.net/database/item/650028",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:28.817189+00:00; raw=5db06bc83afc09492255ed9e574f108a1409041164b119cf548a2e3ef3bb30e6",
+      "retrievedOn": "2026-10-16",
+      "sha256": "5db06bc83afc09492255ed9e574f108a1409041164b119cf548a2e3ef3bb30e6",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/650028 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-700059-2a7052be7274-3bad276b-202610160712333370190000",
+      "url": "https://www.divine-pride.net/database/item/700059",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:33.337019+00:00; raw=2a7052be72747ce08b28c07a8d757162999e871f0ca8269280a8d9e52cb8ac20",
+      "retrievedOn": "2026-10-16",
+      "sha256": "2a7052be72747ce08b28c07a8d757162999e871f0ca8269280a8d9e52cb8ac20",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/700059 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-800015-4983acb7dc4a-3bad276b-202610160712363131060000",
+      "url": "https://www.divine-pride.net/database/item/800015",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:36.313106+00:00; raw=4983acb7dc4a4343de6b7e95a74d792ab210e8f4768ae0a26c4634d1f3ffa1f4",
+      "retrievedOn": "2026-10-16",
+      "sha256": "4983acb7dc4a4343de6b7e95a74d792ab210e8f4768ae0a26c4634d1f3ffa1f4",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/800015 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-810015-4dd3cb4c8058-3bad276b-202610160712393228370000",
+      "url": "https://www.divine-pride.net/database/item/810015",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:39.322837+00:00; raw=4dd3cb4c8058a11b75861acdb6c6d5f55e37d17dfbc92f054b6c993a911a8338",
+      "retrievedOn": "2026-10-16",
+      "sha256": "4dd3cb4c8058a11b75861acdb6c6d5f55e37d17dfbc92f054b6c993a911a8338",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/810015 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-820011-fb9e2bd2b6c1-3bad276b-202610160712423303850000",
+      "url": "https://www.divine-pride.net/database/item/820011",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:42.330385+00:00; raw=fb9e2bd2b6c10aec04d4129e453098ad17fd3d865e8f93a68cf32387b767fbeb",
+      "retrievedOn": "2026-10-16",
+      "sha256": "fb9e2bd2b6c10aec04d4129e453098ad17fd3d865e8f93a68cf32387b767fbeb",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/820011 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-830015-01856d3fe97a-3bad276b-202610160712453176330000",
+      "url": "https://www.divine-pride.net/database/item/830015",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:45.317633+00:00; raw=01856d3fe97aeb003b8a5274e0d1a624ec5b1ce3be5c0af2aa3f614943c0e723",
+      "retrievedOn": "2026-10-16",
+      "sha256": "01856d3fe97aeb003b8a5274e0d1a624ec5b1ce3be5c0af2aa3f614943c0e723",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/830015 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-840010-af8c8a67dcf4-3bad276b-202610160712483392410000",
+      "url": "https://www.divine-pride.net/database/item/840010",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:12:48.339241+00:00; raw=af8c8a67dcf418073510ecb093aa8f83cfbb0489f1393a08303ca99295ab6927",
+      "retrievedOn": "2026-10-16",
+      "sha256": "af8c8a67dcf418073510ecb093aa8f83cfbb0489f1393a08303ca99295ab6927",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/840010 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1000608-4cfb2a1b45a3-3bad276b-202610300710051958740000",
+      "url": "https://www.divine-pride.net/database/item/1000608",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-29T02:50:49.6; synced=2026-10-30T07:10:05.195874+00:00; raw=4cfb2a1b45a37c5a64375da8309c8305f69537057ef39fcd5657c7d1b41c7c86",
+      "retrievedOn": "2026-10-30",
+      "sha256": "4cfb2a1b45a37c5a64375da8309c8305f69537057ef39fcd5657c7d1b41c7c86",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1000608 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1000811-f67c42283b11-3bad276b-202610300712336717680000",
+      "url": "https://www.divine-pride.net/database/item/1000811",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-29T02:50:50.77; synced=2026-10-30T07:12:33.671768+00:00; raw=f67c42283b1117a2b47bf88bc5cd1775ec2248f0e485ada0092b3db9ea076765",
+      "retrievedOn": "2026-10-30",
+      "sha256": "f67c42283b1117a2b47bf88bc5cd1775ec2248f0e485ada0092b3db9ea076765",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1000811 acquisition fields; requested region=LATAM; servers=cRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1000812-ce4def0e5a51-3bad276b-202610302031470271540000",
+      "url": "https://www.divine-pride.net/database/item/1000812",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-29T02:50:50.78; synced=2026-10-30T20:31:47.027154+00:00; raw=ce4def0e5a516903b0873063f060b92b72d9e95619bc57f6ea0c4556c05c4a37",
+      "retrievedOn": "2026-10-30",
+      "sha256": "ce4def0e5a516903b0873063f060b92b72d9e95619bc57f6ea0c4556c05c4a37",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1000812 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1000813-07de36fe857b-3bad276b-202610302031485005480000",
+      "url": "https://www.divine-pride.net/database/item/1000813",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-29T02:50:50.79; synced=2026-10-30T20:31:48.500548+00:00; raw=07de36fe857bfde1604dc3a60c5db0566bb4bcd3ffcb86d23760dd70dd4e089b",
+      "retrievedOn": "2026-10-30",
+      "sha256": "07de36fe857bfde1604dc3a60c5db0566bb4bcd3ffcb86d23760dd70dd4e089b",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1000813 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1000814-e5f7c02d7829-3bad276b-202610302031501023700000",
+      "url": "https://www.divine-pride.net/database/item/1000814",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=2026-10-29T02:50:50.8; synced=2026-10-30T20:31:50.102370+00:00; raw=e5f7c02d78298cdd17c43fce5e6b4e3eee50f76fe7218718a195002bce84aeac",
+      "retrievedOn": "2026-10-30",
+      "sha256": "e5f7c02d78298cdd17c43fce5e6b4e3eee50f76fe7218718a195002bce84aeac",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1000814 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,jRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001029-3576b23ad621-3bad276b-202610302031560504880000",
+      "url": "https://www.divine-pride.net/database/item/1001029",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T20:31:56.050488+00:00; raw=3576b23ad621d24d628571e577412ab1b6d1b7235b8baff71f4d3985f6d14e16",
+      "retrievedOn": "2026-10-30",
+      "sha256": "3576b23ad621d24d628571e577412ab1b6d1b7235b8baff71f4d3985f6d14e16",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001029 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001030-ebc348f4a51a-3bad276b-202610302031575315990000",
+      "url": "https://www.divine-pride.net/database/item/1001030",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T20:31:57.531599+00:00; raw=ebc348f4a51a7c24c7e0bff204ed0a4eaf3710605d4c31a75a67691bb4db3775",
+      "retrievedOn": "2026-10-30",
+      "sha256": "ebc348f4a51a7c24c7e0bff204ed0a4eaf3710605d4c31a75a67691bb4db3775",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001030 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001031-aabcdb65ef7a-3bad276b-202610302031590854990000",
+      "url": "https://www.divine-pride.net/database/item/1001031",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T20:31:59.085499+00:00; raw=aabcdb65ef7aa281bfdcbd38ea1e5023255ef735be6148b0a5cd1a732571e9f9",
+      "retrievedOn": "2026-10-30",
+      "sha256": "aabcdb65ef7aa281bfdcbd38ea1e5023255ef735be6148b0a5cd1a732571e9f9",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001031 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001032-6d25417a3484-3bad276b-202610302032013041140000",
+      "url": "https://www.divine-pride.net/database/item/1001032",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-30T20:32:01.304114+00:00; raw=6d25417a3484a1b7a09f714d239717734ac0a09a6dc00c49c89e2711bba83d98",
+      "retrievedOn": "2026-10-30",
+      "sha256": "6d25417a3484a1b7a09f714d239717734ac0a09a6dc00c49c89e2711bba83d98",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001032 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001033-61013d6b7e7a-3bad276b-202610160716093923210000",
+      "url": "https://www.divine-pride.net/database/item/1001033",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:16:09.392321+00:00; raw=61013d6b7e7a31f6bdf03c2b2824763f3e50c7c2f3e29bd1a5103340b337068d",
+      "retrievedOn": "2026-10-16",
+      "sha256": "61013d6b7e7a31f6bdf03c2b2824763f3e50c7c2f3e29bd1a5103340b337068d",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001033 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001034-8b5d8af687eb-3bad276b-202610160716108172980000",
+      "url": "https://www.divine-pride.net/database/item/1001034",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:16:10.817298+00:00; raw=8b5d8af687ebbea825b89d157fd0f86c0bf80954a701cabd57b506a53bfc53a0",
+      "retrievedOn": "2026-10-16",
+      "sha256": "8b5d8af687ebbea825b89d157fd0f86c0bf80954a701cabd57b506a53bfc53a0",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001034 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001035-4e1d331bd819-3bad276b-202610160716123589620000",
+      "url": "https://www.divine-pride.net/database/item/1001035",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:16:12.358962+00:00; raw=4e1d331bd819d69c688166365f8cd75570e594c85e9104a8937b2ca67354e258",
+      "retrievedOn": "2026-10-16",
+      "sha256": "4e1d331bd819d69c688166365f8cd75570e594c85e9104a8937b2ca67354e258",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001035 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001036-78b439591291-3bad276b-202610160716138263010000",
+      "url": "https://www.divine-pride.net/database/item/1001036",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:16:13.826301+00:00; raw=78b439591291b8d65eb98c4019201ac859c8b6c04cf6e03c6949d41013a261f5",
+      "retrievedOn": "2026-10-16",
+      "sha256": "78b439591291b8d65eb98c4019201ac859c8b6c04cf6e03c6949d41013a261f5",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001036 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-item-1001037-9b34b3c37ac3-3bad276b-202610160716153326140000",
+      "url": "https://www.divine-pride.net/database/item/1001037",
+      "version": "producer=3bad276b14bfe654daf6b1ab72526f8751b0bb923909259654fb45a0191f30dd; upstream=unknown; synced=2026-10-16T07:16:15.332614+00:00; raw=9b34b3c37ac3510507ca10c3222bead7f5654bd98600b13fac0c2a4528cd99e4",
+      "retrievedOn": "2026-10-16",
+      "sha256": "9b34b3c37ac3510507ca10c3222bead7f5654bd98600b13fac0c2a4528cd99e4",
+      "license": "Third-party Divine Pride/Gravity data; redistribution license unconfirmed",
+      "locator": "item/1001037 acquisition fields; requested region=LATAM; servers=cRO,dpRO,iRO,kROM,LATAM,thROG,twRO",
+      "via": "RagnarokDB raw_json (read-only snapshot)"
+    },
+    {
+      "id": "rdb-manual-fdc9230dd293b59c0694f1c304ca988036c66c1c4408255e43c95991e16f70a1",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "fdc9230dd293b59c0694f1c304ca988036c66c1c4408255e43c95991e16f70a1",
+      "retrievedOn": "2026-11-05",
+      "sha256": "fdc9230dd293b59c0694f1c304ca988036c66c1c4408255e43c95991e16f70a1",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-da81848cc6b74de16315f0841505e209fb33f51bd87d7135959c17d93e8c5669",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "da81848cc6b74de16315f0841505e209fb33f51bd87d7135959c17d93e8c5669",
+      "retrievedOn": "2026-11-05",
+      "sha256": "da81848cc6b74de16315f0841505e209fb33f51bd87d7135959c17d93e8c5669",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-63a01caf7fba2c287d9935a4bfa875471a38a5b80dcbab2599b3d90f1fb8820a",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "63a01caf7fba2c287d9935a4bfa875471a38a5b80dcbab2599b3d90f1fb8820a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "63a01caf7fba2c287d9935a4bfa875471a38a5b80dcbab2599b3d90f1fb8820a",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-9f45d3e6b23d1e46abbb019b69b2df1ae5f3567a4448d68a09338cc4c3ddf026",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "9f45d3e6b23d1e46abbb019b69b2df1ae5f3567a4448d68a09338cc4c3ddf026",
+      "retrievedOn": "2026-11-05",
+      "sha256": "9f45d3e6b23d1e46abbb019b69b2df1ae5f3567a4448d68a09338cc4c3ddf026",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-9d01b5bbe6a008b1d14de5ba642c684bb387c495c0dac2bedd492406debdc8c8",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "9d01b5bbe6a008b1d14de5ba642c684bb387c495c0dac2bedd492406debdc8c8",
+      "retrievedOn": "2026-11-05",
+      "sha256": "9d01b5bbe6a008b1d14de5ba642c684bb387c495c0dac2bedd492406debdc8c8",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-7cac1149e07b35dca4c80102c63cbb1fde11b93b4a6d525087c0d45b20b1028a",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "7cac1149e07b35dca4c80102c63cbb1fde11b93b4a6d525087c0d45b20b1028a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "7cac1149e07b35dca4c80102c63cbb1fde11b93b4a6d525087c0d45b20b1028a",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-830c0b860d4581f5cf5480c1c1f4167fc98f4311d79d2049262cd2b830999612",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "830c0b860d4581f5cf5480c1c1f4167fc98f4311d79d2049262cd2b830999612",
+      "retrievedOn": "2026-11-05",
+      "sha256": "830c0b860d4581f5cf5480c1c1f4167fc98f4311d79d2049262cd2b830999612",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-6fd812798dec4ac03f029c6f20dc029e81e78d7ccc6d6a5bb81e2edab8774f77",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "6fd812798dec4ac03f029c6f20dc029e81e78d7ccc6d6a5bb81e2edab8774f77",
+      "retrievedOn": "2026-11-05",
+      "sha256": "6fd812798dec4ac03f029c6f20dc029e81e78d7ccc6d6a5bb81e2edab8774f77",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-3418cdcfeea9dc214d7cc72d89480f5b187a8dbcb1586e5987c4c2b8dce77baf",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "3418cdcfeea9dc214d7cc72d89480f5b187a8dbcb1586e5987c4c2b8dce77baf",
+      "retrievedOn": "2026-11-05",
+      "sha256": "3418cdcfeea9dc214d7cc72d89480f5b187a8dbcb1586e5987c4c2b8dce77baf",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-2783d8e0bce1bcde783312292b2f6cbc5e2002d6f4a6b0a43e0048323628e591",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "2783d8e0bce1bcde783312292b2f6cbc5e2002d6f4a6b0a43e0048323628e591",
+      "retrievedOn": "2026-11-05",
+      "sha256": "2783d8e0bce1bcde783312292b2f6cbc5e2002d6f4a6b0a43e0048323628e591",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-ad3a83079bf26423efbc0c0ac3112eedc87ddf9f6f58059ec44ee8a059d077fa",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "ad3a83079bf26423efbc0c0ac3112eedc87ddf9f6f58059ec44ee8a059d077fa",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ad3a83079bf26423efbc0c0ac3112eedc87ddf9f6f58059ec44ee8a059d077fa",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-edc36738c0f2327ade563f96aebb82cf964087b512a590029fd78a88aad277d3",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "edc36738c0f2327ade563f96aebb82cf964087b512a590029fd78a88aad277d3",
+      "retrievedOn": "2026-11-05",
+      "sha256": "edc36738c0f2327ade563f96aebb82cf964087b512a590029fd78a88aad277d3",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-eb3d8ef0c074ffd6e1983e3a8e31544dd40c2a6b6836aede550a0c70b5cc1466",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "eb3d8ef0c074ffd6e1983e3a8e31544dd40c2a6b6836aede550a0c70b5cc1466",
+      "retrievedOn": "2026-11-05",
+      "sha256": "eb3d8ef0c074ffd6e1983e3a8e31544dd40c2a6b6836aede550a0c70b5cc1466",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-131b74475bdd70a70525bae5bac7a65654acc8a44555a66988b62ab2730dca52",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "131b74475bdd70a70525bae5bac7a65654acc8a44555a66988b62ab2730dca52",
+      "retrievedOn": "2026-11-05",
+      "sha256": "131b74475bdd70a70525bae5bac7a65654acc8a44555a66988b62ab2730dca52",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-c0b6ebb2fd7c556f5539708787b1fa4924538329af333a5c27b0ebccc6afad28",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "c0b6ebb2fd7c556f5539708787b1fa4924538329af333a5c27b0ebccc6afad28",
+      "retrievedOn": "2026-11-05",
+      "sha256": "c0b6ebb2fd7c556f5539708787b1fa4924538329af333a5c27b0ebccc6afad28",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-ce14b7482b10995e5d5b880928d03771b4c6ce85cffaea508b0840997f3e46dd",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "ce14b7482b10995e5d5b880928d03771b4c6ce85cffaea508b0840997f3e46dd",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ce14b7482b10995e5d5b880928d03771b4c6ce85cffaea508b0840997f3e46dd",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-c5c66ec980d5643bc78d6f2a5bf25a1b47f41e13c23371f579f80af52f35f766",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "c5c66ec980d5643bc78d6f2a5bf25a1b47f41e13c23371f579f80af52f35f766",
+      "retrievedOn": "2026-11-05",
+      "sha256": "c5c66ec980d5643bc78d6f2a5bf25a1b47f41e13c23371f579f80af52f35f766",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-5a2becab0df9bc1bebe20d9410aeabcb0f8c5cc775cbc7b3130176d3cf1cad4f",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "5a2becab0df9bc1bebe20d9410aeabcb0f8c5cc775cbc7b3130176d3cf1cad4f",
+      "retrievedOn": "2026-11-05",
+      "sha256": "5a2becab0df9bc1bebe20d9410aeabcb0f8c5cc775cbc7b3130176d3cf1cad4f",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-ee388a53b70b15609b11640a843fb1dd8ada3f83751a1ba8bb9cbc371bcdb09f",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "ee388a53b70b15609b11640a843fb1dd8ada3f83751a1ba8bb9cbc371bcdb09f",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ee388a53b70b15609b11640a843fb1dd8ada3f83751a1ba8bb9cbc371bcdb09f",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-4525605b6aed94b5fc26ed64b7d0e2a5d246b61125536af5a51d322c6d77af57",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "4525605b6aed94b5fc26ed64b7d0e2a5d246b61125536af5a51d322c6d77af57",
+      "retrievedOn": "2026-11-05",
+      "sha256": "4525605b6aed94b5fc26ed64b7d0e2a5d246b61125536af5a51d322c6d77af57",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "EP 19: relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG). Taxas provisórias definidas pelo usuário em 2026-10-30: armas do Glaciar Sombrio 0.15%, Pétala de Flor Invernal 0.75%, demais materiais 0.1%. Valores não fornecidos pela página nem medidos no LATAM; revisar com observações reais. Somente relações ausentes; DivinePride prevalece.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-3b7f9d0f18824d1b15ed8050cbb48a31c11fcb3836c14b9825dab2464141407a",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "3b7f9d0f18824d1b15ed8050cbb48a31c11fcb3836c14b9825dab2464141407a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "3b7f9d0f18824d1b15ed8050cbb48a31c11fcb3836c14b9825dab2464141407a",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "Relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG), conferidas por ID contra RagnarokDB/QNAP. Somente itens confirmados LATAM. Taxa provisória 0.1% definida pelo usuário em 2026-10-30; a página não informa taxas e não confirma ativação de cada relação no LATAM. Somente relações ausentes; DivinePride prevalece no export para o mesmo mob/mapa/item.",
+      "via": "RagnarokDB selected manual relation"
+    },
+    {
+      "id": "rdb-manual-b56f9df3ae9f3715bdba4549ab04d3875e89034a66c5df635aa207f8c90b0467",
+      "url": "repo:RagnarokDB/manual_drops.json",
+      "version": "b56f9df3ae9f3715bdba4549ab04d3875e89034a66c5df635aa207f8c90b0467",
+      "retrievedOn": "2026-11-05",
+      "sha256": "b56f9df3ae9f3715bdba4549ab04d3875e89034a66c5df635aa207f8c90b0467",
+      "license": "Manual annotations; upstream rights unconfirmed",
+      "locator": "Relações baseadas em https://ro.gnjoy.in.th/map-drop-system/ (thROG), conferidas por ID contra RagnarokDB/QNAP. Somente itens confirmados LATAM. Taxa provisória 0.1% definida pelo usuário em 2026-10-30; a página não informa taxas e não confirma ativação de cada relação no LATAM. Somente relações ausentes; DivinePride prevalece no export para o mesmo mob/mapa/item.",
+      "via": "RagnarokDB selected manual relation"
+    }
+  ],
+  "issues": [
+    {
+      "code": "server_fallback",
+      "key": "20572",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "iRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "server_fallback",
+      "key": "20573",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "iRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "server_fallback",
+      "key": "20574",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "20575",
+      "path": "monsterId"
+    },
+    {
+      "code": "server_fallback",
+      "key": "20576",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "server_fallback",
+      "key": "20577",
+      "path": "availableServers",
+      "incoming": [
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "20578",
+      "path": "monsterId"
+    },
+    {
+      "code": "server_fallback",
+      "key": "21531",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "kROM"
+      ]
+    },
+    {
+      "code": "server_fallback",
+      "key": "21533",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "kROM"
+      ]
+    },
+    {
+      "code": "server_fallback",
+      "key": "21537",
+      "path": "availableServers",
+      "incoming": [
+        "cRO",
+        "dpRO",
+        "iRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "21588",
+      "path": "monsterId"
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "21853",
+      "path": "monsterId"
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "21854",
+      "path": "monsterId"
+    },
+    {
+      "code": "unknown_or_mismatched_monster",
+      "key": "21980",
+      "path": "monsterId"
+    },
+    {
+      "code": "server_fallback",
+      "key": "21996",
+      "path": "availableServers",
+      "incoming": [
+        "dpRO",
+        "iRO",
+        "kROM",
+        "twRO"
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "25865",
+      "path": "containerIds",
+      "incoming": [
+        102552,
+        102553
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "25866",
+      "path": "extractionToolIds",
+      "incoming": [
+        102105
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "25866",
+      "path": "containerIds",
+      "incoming": [
+        101599,
+        102552,
+        102553
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "25867",
+      "path": "containerIds",
+      "incoming": [
+        102552,
+        102553
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500054",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500054",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500054",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500055",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500055",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "500055",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510075",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510075",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510075",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510076",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510076",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "510076",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "520021",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "520021",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "520021",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "530034",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "530034",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "530034",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "540056",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "540056",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "540056",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550089",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550089",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550089",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550090",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550090",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "550090",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "560037",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "560037",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "560037",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "570032",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "570032",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "570032",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "580033",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "580033",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "580033",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590047",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590047",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590047",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590048",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590048",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "590048",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "600030",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "600030",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "600030",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "610041",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "610041",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "610041",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "620019",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "620019",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "620019",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "630019",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "630019",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "630019",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "640034",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "640034",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "640034",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "650028",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "650028",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "650028",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "700059",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "700059",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "700059",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "800015",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "800015",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "800015",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "810015",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "810015",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "810015",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "820011",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "820011",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "820011",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "830015",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "830015",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "830015",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "840010",
+      "path": "enchantIds",
+      "incoming": [
+        47
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "840010",
+      "path": "extractionToolIds",
+      "incoming": [
+        101639
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "840010",
+      "path": "containerIds",
+      "incoming": [
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000608",
+      "path": "enchantIds",
+      "incoming": [
+        93
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000608",
+      "path": "containerIds",
+      "incoming": [
+        102563,
+        102564,
+        102565,
+        102745
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000811",
+      "path": "containerIds",
+      "incoming": [
+        102548,
+        102563,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000812",
+      "path": "enchantIds",
+      "incoming": [
+        31,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000812",
+      "path": "containerIds",
+      "incoming": [
+        102548,
+        102563,
+        102565,
+        102745
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000813",
+      "path": "enchantIds",
+      "incoming": [
+        31,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000813",
+      "path": "containerIds",
+      "incoming": [
+        102548,
+        102563,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000814",
+      "path": "enchantIds",
+      "incoming": [
+        31,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1000814",
+      "path": "containerIds",
+      "incoming": [
+        102563,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001029",
+      "path": "enchantIds",
+      "incoming": [
+        90,
+        91,
+        92
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001029",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001030",
+      "path": "enchantIds",
+      "incoming": [
+        90,
+        91,
+        92
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001030",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001031",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        140,
+        141,
+        142
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001031",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001032",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        140,
+        141,
+        142
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001032",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001033",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        141
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001033",
+      "path": "extractionToolIds",
+      "incoming": [
+        102311
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001033",
+      "path": "containerIds",
+      "incoming": [
+        101869,
+        102565
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001034",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        93,
+        136,
+        137,
+        138,
+        139,
+        145,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001034",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565,
+        102566,
+        102567,
+        102568,
+        102947,
+        102948
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001035",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        93,
+        136,
+        137,
+        138,
+        139,
+        145,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001035",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565,
+        102566,
+        102567,
+        102568,
+        102947,
+        102948
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001036",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        93,
+        136,
+        137,
+        138,
+        139,
+        145,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001036",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565,
+        102566,
+        102567,
+        102568,
+        102746,
+        102947,
+        102948
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001037",
+      "path": "enchantIds",
+      "incoming": [
+        47,
+        90,
+        91,
+        92,
+        136,
+        137,
+        138,
+        139,
+        145,
+        146,
+        147,
+        148
+      ]
+    },
+    {
+      "code": "reference_without_procedure",
+      "key": "1001037",
+      "path": "containerIds",
+      "incoming": [
+        102564,
+        102565,
+        102566,
+        102567,
+        102568,
+        102947,
+        102948
+      ]
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:590047",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:590047",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:620019",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:620019",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:700059",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:700059",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21538:jor_ab01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21541:jor_ab01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:550089",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:550089",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:640034",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:640034",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:840010",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:840010",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21540:jor_ab01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21543:jor_ab01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:590047",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:620019",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:700059",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:540056",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:540056",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:560037",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:560037",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:590048",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:590048",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:610041",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:610041",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21544:jor_ab02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21601:jor_ab02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:570032",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:570032",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:580033",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:580033",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:800015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:800015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:810015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:810015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21542:jor_ab02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21545:jor_ab02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21524:jor_back1:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21524:jor_back1:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21523:jor_back1:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back1:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21523:jor_back1:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back1:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21521:jor_back2:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21521:jor_back2:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21520:jor_back2:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21523:jor_back2:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back2:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21520:jor_back2:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21523:jor_back2:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back2:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_back3:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21537:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21520:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21522:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_back3:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21520:jor_back3:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21522:jor_back3:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_back3:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_back3:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:500054",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:530034",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:600030",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21526:jor_dun01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:550090",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:650028",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:830015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:500054",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:530034",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:600030",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:550090",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:650028",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:830015",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun01:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:510075",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:510075",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:520021",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:520021",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:630019",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:630019",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21528:jor_dun02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21529:jor_dun02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:500055",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:500055",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:510076",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:510076",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:820011",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:820011",
+      "path": "probability",
+      "incoming": 0.15
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21527:jor_dun02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21599:jor_dun02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21524:jor_tail:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21524:jor_tail:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_tail:1000608",
+      "path": "probability",
+      "incoming": 0.75
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21525:jor_tail:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001029",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001030",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001031",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001032",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001033",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001034",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001035",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001036",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21533:1@jorlab:1001037",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:540056",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:560037",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:590048",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:610041",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:1000608",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:1000811",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:1000812",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "discarded_provisional_rate",
+      "key": "rdb-manual-drop:21600:jor_ab02:1000813",
+      "path": "probability",
+      "incoming": 0.1
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21853:1@whl:1001029",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21853:1@whl:1001030",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21853:1@whl:1001031",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21853:1@whl:1001032",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21854:1@whl:1001029",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21854:1@whl:1001030",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21854:1@whl:1001031",
+      "path": "itemId"
+    },
+    {
+      "code": "unresolved_manual_identity",
+      "key": "rdb-manual-drop:21854:1@whl:1001032",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "18551",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19474",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19475",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19476",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19477",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19478",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19479",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19480",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19481",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19482",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19483",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19484",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19485",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19486",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19487",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19488",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19489",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19490",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19491",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "19492",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "24675",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "24676",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "24677",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "24678",
+      "path": "itemId"
+    },
+    {
+      "code": "absent_in_ragnarokdb",
+      "key": "100620",
+      "path": "itemId"
+    }
+  ]
+}

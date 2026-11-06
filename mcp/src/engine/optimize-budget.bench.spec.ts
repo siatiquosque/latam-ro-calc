@@ -1,5 +1,5 @@
 /**
- * Budget benchmark of the equipment search (docs/optimize-budget-benchmark.md). It answers where the evaluations go and what the
+ * Budget benchmark of the equipment search (docs/optimize/optimize-budget-benchmark.md). It answers where the evaluations go and what the
  * final socket pass, the reserve for it, a restart and a wider search are worth at the SAME total evaluation budget. It measures;
  * it changes nothing. It takes minutes to hours, so it only runs on request, one build per process (they can run in parallel):
  *
@@ -49,7 +49,7 @@ function plan(effective?: number): RunSpec[] {
   for (const walk of [16000, 18000, 20000, 22000]) specs.push({ id: `unified-walk${walk}-r15`, group: 'walk-control', note: `search ceiling ${walk}, total ${Math.ceil(walk / 0.85)}`, args: unified(Math.ceil(walk / 0.85)) });
   specs.push({ id: 'restart-2x10000-r15', group: 'restart', note: 'second search starts from the first one\'s build; best of the two', args: unified(10000), restart: unified(10000) });
   specs.push({ id: 'wide-20000-r15', group: 'wide', note: 'candidatesPerSlot 40, rounds 4', args: unified(20000, { candidatesPerSlot: 40, rounds: 4 }) });
-  // Decoupling: the effort per slot is planned from a fixed 20000 whatever the cap, which then only stops the walk (docs/optimize-budget-efficiency.md).
+  // Decoupling: the effort per slot is planned from a fixed 20000 whatever the cap, which then only stops the walk (docs/optimize/optimize-budget-efficiency.md).
   for (const total of [2000, 4000, 8000, 12000, 16000, 23530]) specs.push({ id: `decoupled-${total}-e20000`, group: 'decoupled', note: `effort planned from 20000, total cap ${total}`, args: unified(total, { effortBudget: 20000 }) });
   // Separating the two roles of the cap: the same walk ceiling with the effort planned from another budget, and the other way round.
   specs.push({ id: 'decoupled-20000-e20000', group: 'decoupled', note: 'search ceiling 17000, effort planned from 20000', args: unified(20000, { effortBudget: 20000 }) });

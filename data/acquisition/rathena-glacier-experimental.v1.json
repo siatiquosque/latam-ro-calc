@@ -1,0 +1,1480 @@
+{
+  "schemaVersion": 1,
+  "revision": "experimental-d4b8e7b8f16061cc2496d377ac8f777ce72a4f39",
+  "sources": [
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056",
+      "url": "https://github.com/rathena/rathena/blob/d4b8e7b8f16061cc2496d377ac8f777ce72a4f39/db/re/item_enchant.yml",
+      "version": "d4b8e7b8f16061cc2496d377ac8f777ce72a4f39; ITEM_ENCHANT_DB v1",
+      "retrievedOn": "2026-11-05",
+      "sha256": "74c8f3b9db3641aa3d5222fe786e7d7c8d7b5e2af735a60718c2abd440486fc0",
+      "license": "GPL-3.0-or-later; rAthena Development Team",
+      "locator": "selected: 47",
+      "via": null
+    },
+    {
+      "id": "calc-identities-da6fcd5bf598",
+      "url": "local:src/assets/demo/data/item.json",
+      "version": "local content snapshot da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "retrievedOn": "2026-11-05",
+      "sha256": "da6fcd5bf59827ef875f3ea1443442806f00780e4257e1de24b8ebeaf0a49581",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    },
+    {
+      "id": "client-identities-ded08c7fd067",
+      "url": "local:src/assets/demo/data/latam-items.json",
+      "version": "local content snapshot ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "retrievedOn": "2026-11-05",
+      "sha256": "ded08c7fd06782be9d87ac3ccd5b591fc6710ba95ca951e093019abd90c4981a",
+      "license": "Local calculator MIT / client data Gravity; see docs/acquisition/acquisition-knowledge.md",
+      "locator": "Aegis to numeric item identity resolution",
+      "via": null
+    }
+  ],
+  "enchantGroups": [],
+  "routes": [
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-PerfectEnchants-Physical_Grade_1",
+      "family": "rathena-experimental",
+      "label": "47-1-PerfectEnchants-Physical_Grade_1",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311449
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 60,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-PerfectEnchants-Magical_Grade_1",
+      "family": "rathena-experimental",
+      "label": "47-1-PerfectEnchants-Magical_Grade_1",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311454
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 60,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Physical_Grade_2",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Physical_Grade_2",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311450
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 20,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 25,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 5,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 5,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311449,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Physical_Grade_3",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Physical_Grade_3",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311451
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 20,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 35,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 7,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 7,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 1,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311450,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Physical_Grade_4",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Physical_Grade_4",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311452
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 45,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 10,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 10,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 2,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311451,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Physical_Grade_5",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Physical_Grade_5",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311453
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 65,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 70,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 3,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311452,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Magical_Grade_2",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Magical_Grade_2",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311455
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 20,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 25,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 5,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 5,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311454,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Magical_Grade_3",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Magical_Grade_3",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311456
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 20,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 35,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 7,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 7,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 1,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311455,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Magical_Grade_4",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Magical_Grade_4",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311457
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 30,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 45,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 10,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 10,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 2,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311456,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    },
+    {
+      "id": "rathena-enchant-d4b8e7b8f160-31489056-47-1-Upgrades-Magical_Grade_5",
+      "family": "rathena-experimental",
+      "label": "47-1-Upgrades-Magical_Grade_5",
+      "target": {
+        "itemIds": [
+          600030,
+          630019,
+          500054,
+          500055,
+          530034,
+          620019,
+          520021,
+          590047,
+          590048,
+          510075,
+          510076,
+          700059,
+          560037,
+          540056,
+          610041,
+          550089,
+          640034,
+          550090,
+          570032,
+          580033,
+          650028,
+          800015,
+          810015,
+          820011,
+          830015,
+          840010
+        ],
+        "aspect": "enchant",
+        "enchantIds": [
+          311458
+        ],
+        "position": 1,
+        "refine": null,
+        "grade": null
+      },
+      "server": "generic",
+      "period": {
+        "start": null,
+        "end": null,
+        "known": false
+      },
+      "review": "unreviewed",
+      "confidence": "low",
+      "sources": [
+        "rathena-enchant-d4b8e7b8f160-31489056",
+        "calc-identities-da6fcd5bf598",
+        "client-identities-ded08c7fd067"
+      ],
+      "requirements": [
+        {
+          "kind": "material",
+          "itemId": 1001034,
+          "amount": 40,
+          "minRefine": null,
+          "description": "EP19_S_F_1_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001035,
+          "amount": 50,
+          "minRefine": null,
+          "description": "EP19_S_F_2_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001036,
+          "amount": 65,
+          "minRefine": null,
+          "description": "EP19_S_F_3_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001037,
+          "amount": 70,
+          "minRefine": null,
+          "description": "EP19_Gla_Extract"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001031,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_D_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001032,
+          "amount": 15,
+          "minRefine": null,
+          "description": "EP19_N_P_Crystal"
+        },
+        {
+          "kind": "material",
+          "itemId": 1001033,
+          "amount": 3,
+          "minRefine": null,
+          "description": "EP19_D_P_Stone"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": null,
+          "description": "{\"order\": [{\"Slot\": 3}, {\"Slot\": 2}, {\"Slot\": 1}], \"minimumGrade\": 0, \"allowRandomOptions\": true, \"zeny\": 0}"
+        },
+        {
+          "kind": "procedure",
+          "itemId": 311457,
+          "amount": 1,
+          "minRefine": null,
+          "description": "Existing enchant in the same slot"
+        },
+        {
+          "kind": "procedure",
+          "itemId": null,
+          "amount": null,
+          "minRefine": 0,
+          "description": "rAthena only; NPC and LATAM implementation unverified"
+        }
+      ],
+      "steps": [],
+      "success": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "outcomes": [],
+      "result": {
+        "refine": "preserved",
+        "grade": "preserved",
+        "cards": "preserved",
+        "enchants": "selected slot replaced",
+        "binding": "unknown"
+      },
+      "cost": {
+        "zeny": 0,
+        "marketZeny": null,
+        "difficulty": "unknown",
+        "reason": "Generic reference, no LATAM economic evidence"
+      },
+      "unknowns": [
+        "LATAM availability and NPC implementation unverified"
+      ],
+      "supersedes": null,
+      "revisionReason": "Experimental extraction; cannot supersede regional reviewed rules"
+    }
+  ],
+  "effects": []
+}

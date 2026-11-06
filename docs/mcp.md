@@ -237,7 +237,7 @@ pronto para `evaluate_variants` e um link do simulador. O que ele **não** faz:
   `evaluate_variants`; não compare uma Éden sem encantamentos com uma Invernal encantada como se fossem iguais.
 - Não sabe de disponibilidade, preço ou obtenção: use `exclude` para itens que você não tem.
 
-Comparações da build de Inquisidor usadas na revisão estão em `docs/optimization-review.md`.
+Comparações da build de Inquisidor usadas na revisão estão em `docs/optimize/optimization-review.md`.
 
 ### Refino alcançável, classes de alvo e procs
 
