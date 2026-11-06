@@ -154,9 +154,10 @@ describe('budget of the equipment search', () => {
     it('instrumenting changes nothing but the report; the final build is reproducible from its link', async () => {
       const plain = await run('unified', 400);
       const measured = await instrumented('unified', 400);
-      const { budgetReport, ...rest } = measured;
+      const { budgetReport, candidateAudit, ...rest } = measured;
       expect(budgetReport).toBeTruthy();
-      expect(rest).toEqual(JSON.parse(JSON.stringify(plain, (key, value) => (key === 'budgetReport' ? undefined : value))));
+      expect(candidateAudit).toBeTruthy();
+      expect(rest).toEqual(JSON.parse(JSON.stringify(plain, (key, value) => (key === 'budgetReport' || key === 'candidateAudit' ? undefined : value))));
       const again = await ops.evaluateVariants({ build: { share: measured.share }, variants: [{ label: 'final', patch: {} }], metrics: ['dps'], target: { monsterId: 20994 }, procMode: 'off' } as any) as any;
       expect(again.results[0].metrics.dps).toBeCloseTo(measured.final.dps, 0);
     }, 300_000);

@@ -1,0 +1,575 @@
+{
+  "batchName": "B15-garment-context",
+  "budget": 1000,
+  "previousCalls": 162,
+  "calls": 0,
+  "cumulativeCalls": 162,
+  "wallMs": 363.67920000000004,
+  "cpu": {
+    "user": 516000,
+    "system": 31000
+  },
+  "rows": [
+    {
+      "hypothesis": "Temporal LUK Manteau at +12 adds 18 permanent crit and crit damage; combine it with a head essence to cross the worst-target 100% threshold.",
+      "tool": "get_item",
+      "args": {
+        "id": 20968
+      },
+      "calls": 0,
+      "wallMs": 142.51629999999977,
+      "cpu": {
+        "user": 235000,
+        "system": 0
+      },
+      "requestBytes": 12,
+      "responseBytes": 2560,
+      "isError": false,
+      "result": {
+        "id": 20968,
+        "name": "Manto Temporal SOR",
+        "enName": "Temporal Luk Manteau [1]",
+        "aegisName": "Temporal_M_Luk",
+        "inCalcDb": true,
+        "partners": [
+          {
+            "id": 22011,
+            "name": "Bota Temporal SOR",
+            "slot": "boot"
+          },
+          {
+            "id": 22118,
+            "name": "Botas Modificadas SOR",
+            "slot": "boot"
+          },
+          {
+            "id": 420020,
+            "name": "Broto Temporal SOR",
+            "slot": "headLower"
+          }
+        ],
+        "presentInLatam": true,
+        "slots": 1,
+        "slotTags": [
+          "garment"
+        ],
+        "requiredLevel": 100,
+        "defense": 38,
+        "usableClass": [
+          "all"
+        ],
+        "description": "Embora o estilo desse manto e os símbolos nele inscritos sejam de outrora, ele, inexplicavelmente, não possui qualquer sinal de envelhecimento ou uso. Tão enigmática quanto a sua origem são as suas propriedades: ele parece possuir uma forte ligação arcana com Bota Temporal ou Botas Modificadas do mesmo tipo.\n-------------------------\nA cada 2 refinos:\nCRÍT +3.\nDano crítico +3%.\nA cada 4 refinos:\nVelocidade de ataque +5%.\n-------------------------\nRefino +7 ou mais:\nDano físico +7%.\nRefino +9 ou mais:\nIgnora 20% da DEF e DEFM das raças Bruto e Demônio.\nRefino +11 ou mais:\nIgnora +10% da DEF e DEFM das raças Bruto e Demônio adicional.\n-------------------------\nConjunto\nBota Temporal SOR [1] ou\nBotas Modificadas SOR [1]\nVelocidade de ataque +1.\nBotas com refino +10 ou mais:\nIgnora +30% da DEF e DEFM das raças Bruto e Demônio adicional.\n-------------------------\nTipo: Capa\nDEF: 38 DEFM: 0\nPeso: 40\nNível necessário: 100\nClasses: Todas",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "cri",
+            "label": "Crítico",
+            "values": [
+              "2---3"
+            ]
+          },
+          {
+            "key": "criDmg",
+            "label": "Dano crítico",
+            "values": [
+              "2---3"
+            ]
+          },
+          {
+            "key": "aspdPercent",
+            "label": "Vel.Atq %",
+            "values": [
+              "4---5"
+            ]
+          },
+          {
+            "key": "atkPercent",
+            "label": "Dano físico %",
+            "values": [
+              "7===7"
+            ]
+          },
+          {
+            "key": "aspd",
+            "label": "Vel.Atq",
+            "values": [
+              "EQUIP_ID[22011||22118]1"
+            ]
+          },
+          {
+            "key": "p_pene_race_brute",
+            "label": "Penetração Física (Raça: Bruto)",
+            "structured": "Penetração Física (Raça: Bruto)",
+            "values": [
+              "9===20",
+              "11===10",
+              "EQUIP_ID[22011||22118]REFINE[boot==10]30"
+            ]
+          },
+          {
+            "key": "p_pene_race_demon",
+            "label": "Penetração Física (Raça: Demônio)",
+            "structured": "Penetração Física (Raça: Demônio)",
+            "values": [
+              "9===20",
+              "11===10",
+              "EQUIP_ID[22011||22118]REFINE[boot==10]30"
+            ]
+          },
+          {
+            "key": "m_pene_race_brute",
+            "label": "Penetração Mágica (Raça: Bruto)",
+            "structured": "Penetração Mágica (Raça: Bruto)",
+            "values": [
+              "9===20",
+              "11===10",
+              "EQUIP_ID[22011||22118]REFINE[boot==10]30"
+            ]
+          },
+          {
+            "key": "m_pene_race_demon",
+            "label": "Penetração Mágica (Raça: Demônio)",
+            "structured": "Penetração Mágica (Raça: Demônio)",
+            "values": [
+              "9===20",
+              "11===10",
+              "EQUIP_ID[22011||22118]REFINE[boot==10]30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Find the old garment random-option positions to clear on a swap.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 20964,
+        "limit": 2
+      },
+      "calls": 0,
+      "wallMs": 7.752100000000155,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 26,
+      "responseBytes": 1480,
+      "isError": false,
+      "result": {
+        "id": 20964,
+        "name": "Manto Temporal AGI",
+        "cardSlots": 1,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [],
+        "randomOptions": {
+          "capacity": 1,
+          "slots": [
+            {
+              "slot": "garment",
+              "positions": [
+                14
+              ]
+            }
+          ],
+          "validation": "reference-ranges",
+          "poolSource": "wiki",
+          "automaticRollSearch": true,
+          "catalog": {
+            "source": "https://browiki.org/wiki/B%C3%B4nus_Aleat%C3%B3rios",
+            "profiles": [
+              {
+                "combiner": "Chave Temporal",
+                "positions": [
+                  [
+                    "hp 500-2000",
+                    "sp 50-1000",
+                    "hpPercent 3-10",
+                    "spPercent 3-10",
+                    "atk 5-40",
+                    "matk 5-40",
+                    "atkPercent 1-6",
+                    "matkPercent 1-6",
+                    "aspdPercent 3-10",
+                    "hit 3-10",
+                    "flee 10-50",
+                    "cri 3-10",
+                    "criDmg 3-10",
+                    "range 3-10",
+                    "healPower 3-10",
+                    "vct 3-10",
+                    "acd 3-15"
+                  ]
+                ]
+              }
+            ]
+          },
+          "upstream": {
+            "status": "upstream-reference",
+            "policy": "explicit-table",
+            "note": "Referência do rAthena, sem confirmação LATAM. `?` = opção sem chave no simulador.",
+            "groups": [
+              {
+                "group": "TIME_UNSEAL_KEY",
+                "slots": [
+                  [
+                    "atk 5-40",
+                    "atkPercent 1-6",
+                    "matk 5-40",
+                    "matkPercent 1-6",
+                    "hp 500-2000",
+                    "hpPercent 3-10",
+                    "sp 50-1000",
+                    "spPercent 3-10",
+                    "hit 3-10",
+                    "flee 10-50",
+                    "cri 3-10",
+                    "vct 3-10",
+                    "aspdPercent 3-10",
+                    "criDmg 3-10",
+                    "healPower 3-10",
+                    "range 3-10",
+                    "acd 3-15"
+                  ]
+                ]
+              }
+            ]
+          },
+          "input": "Passe options com o número da posição e o bônus rolado (ex.: \"melee:5\"). optimize_build busca rolagens só com catalog. `detail: true` devolve os pools brutos."
+        },
+        "note": "Esta peça usa bônus aleatórios, não itens de encantamento. Declare as rolagens em options ao comparar configurações."
+      }
+    },
+    {
+      "hypothesis": "Check legal sockets and distinguish fixed refinement bonuses from rolled options.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 20968,
+        "limit": 2
+      },
+      "calls": 0,
+      "wallMs": 0.6352999999999156,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 26,
+      "responseBytes": 1480,
+      "isError": false,
+      "result": {
+        "id": 20968,
+        "name": "Manto Temporal SOR",
+        "cardSlots": 1,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [],
+        "randomOptions": {
+          "capacity": 1,
+          "slots": [
+            {
+              "slot": "garment",
+              "positions": [
+                14
+              ]
+            }
+          ],
+          "validation": "reference-ranges",
+          "poolSource": "wiki",
+          "automaticRollSearch": true,
+          "catalog": {
+            "source": "https://browiki.org/wiki/B%C3%B4nus_Aleat%C3%B3rios",
+            "profiles": [
+              {
+                "combiner": "Chave Temporal",
+                "positions": [
+                  [
+                    "hp 500-2000",
+                    "sp 50-1000",
+                    "hpPercent 3-10",
+                    "spPercent 3-10",
+                    "atk 5-40",
+                    "matk 5-40",
+                    "atkPercent 1-6",
+                    "matkPercent 1-6",
+                    "aspdPercent 3-10",
+                    "hit 3-10",
+                    "flee 10-50",
+                    "cri 3-10",
+                    "criDmg 3-10",
+                    "range 3-10",
+                    "healPower 3-10",
+                    "vct 3-10",
+                    "acd 3-15"
+                  ]
+                ]
+              }
+            ]
+          },
+          "upstream": {
+            "status": "upstream-reference",
+            "policy": "explicit-table",
+            "note": "Referência do rAthena, sem confirmação LATAM. `?` = opção sem chave no simulador.",
+            "groups": [
+              {
+                "group": "TIME_UNSEAL_KEY",
+                "slots": [
+                  [
+                    "atk 5-40",
+                    "atkPercent 1-6",
+                    "matk 5-40",
+                    "matkPercent 1-6",
+                    "hp 500-2000",
+                    "hpPercent 3-10",
+                    "sp 50-1000",
+                    "spPercent 3-10",
+                    "hit 3-10",
+                    "flee 10-50",
+                    "cri 3-10",
+                    "vct 3-10",
+                    "aspdPercent 3-10",
+                    "criDmg 3-10",
+                    "healPower 3-10",
+                    "range 3-10",
+                    "acd 3-15"
+                  ]
+                ]
+              }
+            ]
+          },
+          "input": "Passe options com o número da posição e o bônus rolado (ex.: \"melee:5\"). optimize_build busca rolagens só com catalog. `detail: true` devolve os pools brutos."
+        },
+        "note": "Esta peça usa bônus aleatórios, não itens de encantamento. Declare as rolagens em options ao comparar configurações."
+      }
+    },
+    {
+      "hypothesis": "An alternative Critical Exoskeleton/Jetpack pair offers a structured equipment AND plus combined-refine threshold; inspect it as a fallback hypothesis.",
+      "tool": "find_synergies",
+      "args": {
+        "itemIds": [
+          450407,
+          480197
+        ],
+        "bonusKeys": [
+          "criDmg",
+          "p_element_all"
+        ],
+        "limit": 6
+      },
+      "calls": 0,
+      "wallMs": 190.76530000000002,
+      "cpu": {
+        "user": 250000,
+        "system": 31000
+      },
+      "requestBytes": 76,
+      "responseBytes": 3605,
+      "isError": false,
+      "result": {
+        "engineVersion": "0.1.211-beta",
+        "indexVersion": 2,
+        "total": 6,
+        "offset": 0,
+        "groups": [
+          {
+            "id": "item:450407:criDmg:0",
+            "sourceItemId": 450407,
+            "bonusKey": "criDmg",
+            "expression": "9===10",
+            "allOf": [],
+            "remainingExpression": "9===10",
+            "conditions": [
+              {
+                "kind": "refine",
+                "value": 9
+              }
+            ],
+            "conditionCoverage": "structured",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 450407,
+              "path": "script.criDmg",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:450407:criDmg:1",
+            "sourceItemId": 450407,
+            "bonusKey": "criDmg",
+            "expression": "EQUIP_ID[480197]REFINE[armor,garment==23]REFINE[armor,garment==1]---1",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "480197",
+                    "itemIds": [
+                      480197
+                    ],
+                    "items": [
+                      {
+                        "id": 480197,
+                        "name": "Jetpack Crítico",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "REFINE[armor,garment==23]REFINE[armor,garment==1]---1",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "REFINE[armor,garment==23]REFINE[armor,garment==1]---1",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 450407,
+              "path": "script.criDmg",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:450407:p_element_all:0",
+            "sourceItemId": 450407,
+            "bonusKey": "p_element_all",
+            "expression": "EQUIP_ID[480197]REFINE[armor,garment==18]===10",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "480197",
+                    "itemIds": [
+                      480197
+                    ],
+                    "items": [
+                      {
+                        "id": 480197,
+                        "name": "Jetpack Crítico",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "REFINE[armor,garment==18]===10",
+            "conditions": [],
+            "conditionCoverage": "partial",
+            "unparsedExpression": "REFINE[armor,garment==18]===10",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 450407,
+              "path": "script.p_element_all",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:480197:criDmg:0",
+            "sourceItemId": 480197,
+            "bonusKey": "criDmg",
+            "expression": "EQUIP[Deep Blue Sunglasses]===7",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Deep Blue Sunglasses",
+                    "itemIds": [
+                      410080
+                    ],
+                    "items": [
+                      {
+                        "id": 410080,
+                        "name": "Óculos Neon",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "===7",
+            "conditions": [],
+            "conditionCoverage": "equipment-only",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 480197,
+              "path": "script.criDmg",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:480197:criDmg:1",
+            "sourceItemId": 480197,
+            "bonusKey": "criDmg",
+            "expression": "EQUIP[Victorious Wing Ears]===7",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Victorious Wing Ears",
+                    "itemIds": [
+                      400002
+                    ],
+                    "items": [
+                      {
+                        "id": 400002,
+                        "name": "Asas Vitoriosas",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "===7",
+            "conditions": [],
+            "conditionCoverage": "equipment-only",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 480197,
+              "path": "script.criDmg",
+              "origin": "calculator-catalog"
+            }
+          },
+          {
+            "id": "item:480197:criDmg:2",
+            "sourceItemId": 480197,
+            "bonusKey": "criDmg",
+            "expression": "EQUIP[Battle Processor]===7",
+            "allOf": [
+              {
+                "anyOf": [
+                  {
+                    "reference": "Battle Processor",
+                    "itemIds": [
+                      410017
+                    ],
+                    "items": [
+                      {
+                        "id": 410017,
+                        "name": "Chip de Batalha",
+                        "latam": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "remainingExpression": "===7",
+            "conditions": [],
+            "conditionCoverage": "equipment-only",
+            "sourceConfidence": "authoritative-catalog",
+            "source": {
+              "itemId": 480197,
+              "path": "script.criDmg",
+              "origin": "calculator-catalog"
+            }
+          }
+        ],
+        "coverage": {
+          "conditions": "equipment-and-structured-conditions",
+          "catalog": "authoritative",
+          "customItems": 0,
+          "patches": "not-requested",
+          "note": "Catálogo e motor são a referência; personalizados vêm só desta build. allOf/anyOf preservam requisitos; conditions expõe predicados estruturados, unparsedExpression preserva a sintaxe ainda não decomposta. equipmentRequirementsMet só confere equipamentos. O motor verifica a expressão completa dos patches; mudanças de refino/grau/stats/skills exigem allowChanges explícito. Não promete melhor dano ou patch mínimo; not-found não prova impossibilidade. Itens sem bônus são válidos."
+        }
+      }
+    }
+  ]
+}

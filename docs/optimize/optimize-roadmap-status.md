@@ -193,7 +193,7 @@ As pendências independentes do Optimize foram tratadas:
 - `get_skill.dependencies` registra leituras condicionais dos callbacks existentes
   e de habilidades ativas/aprendidas, com restauração das leituras locais da classe.
 - Consultoria conduzida pelo agente via MCP HTTP local, sem Optimize, com comparação
-  em dois alvos e reprodução por link: ver [validação](mcp-consultation-validation.md).
+  em dois alvos e reprodução por link: ver [validação](../mcp-consultation-validation.md).
 - Release local: 9.279 testes passaram, 3 ignorados; typechecks e source checks
   passaram. Versão, Novidades em três idiomas e artefato web/Node preparados.
 
@@ -571,3 +571,76 @@ Fixture local dos quatro links (`mcp/src/engine/__tests__/fixtures/jor-ab02.json
 avaliações e a partir do original com 800; os dois casos inviáveis (300) são orçamento insuficiente (distância 0,031). Alvos extras custam
 ~1,5× fora de `solves` (medido, não refatorado). Refino de soquetes por DPS: cego confirmado em 4/26 campos, sem perda fim a fim; ajuste testado
 e revertido por custo.
+
+### Fechamento de confiabilidade do Goal & Constraint Engine (04/11/2026)
+
+Detalhes e tabelas em `docs/optimize/optimize-goal-search.md` ("Contagem corrigida e variante restrita"). O parágrafo acima descreve a primeira
+rodada (contagem anterior) e foi mantido.
+
+- **Auditoria da fixture:** o benchmark original não aplicava MVP, Abrasivo/Casaco Pirata, Oleum nem travas. Ficou como benchmark matemático
+  (`math`) e ganhou a variante `scenario` com as regras do estudo e auditoria por resposta. `scenario`: auditoria vazia em todas as
+  respostas; `math`: 2–5 violações a partir de 800 (esperado). Viabilidade idêntica nas duas: as regras não custaram viabilidade nesta meta.
+  `damageFeasible` e confiabilidade do abate seguem separados (`conditional` na maioria; `guaranteed` só em 2000 gear-only).
+- **Contagem multi-alvo:** as leituras dos outros alvos agora gastam o orçamento; sem saldo, o candidato fica sem julgamento
+  (`skippedForBudget`) e não vence; baseline e verificações finais são obrigatórias e reportadas à parte (`afterSearch`, `finalChecks`).
+  Custo real caiu de ~1,5–1,7× para ~1,01–1,09× do orçamento. Sem `GoalSpec` o caminho não mudou.
+- **Generalização:** Magus (Crimson Rock) e Windhawk (Crescive Bolt) cumprem meta de farm com 300; meta inviável por travas explícitas
+  termina com `stoppedBy: 'completed'`; com 3 monstros o pior decide (300 falha só nele, 600 cumpre os três).
+- **Verificação:** `tsc -p tsconfig.backend-tests.json` limpo; suítes de goal (25 testes) e `tools.spec.ts` (52) verdes isoladas; `mcp/src`
+  inteira: 395 verdes, 2 falhas em `tools.spec.ts` por timeout padrão de 5 s sob carga (as mesmas duas famílias de timeouts anteriores:
+  `optimize_build`/`scan_slot` e `consultant.spec.ts`), que passam sozinhas; não escondem regressão porque o resultado (asserts) é o mesmo
+  quando há folga de tempo. Limitações: trava por slot inteiro; polish ranqueia por DPS; classes extras só com builds nuas; sem Beam/VNS.
+
+### Fase de descoberta automática do Optimize V1 (04/11/2026)
+
+Detalhes, tabelas e cobertura em `docs/optimize/optimize-discovery.md`. Sem Beam/VNS, fórmulas, catálogo ou polish alterados; sem commit, publicação ou Novidades.
+
+- **Travas por campo:** `constraints.lockedFields` (campos do modelo; carta/encanto/refino/grau fixam a peça, `weapon` só impede a troca). Respeitada
+  na descoberta, nos complementos, nos movimentos de refino/grau, no polish e no juiz (`LOCKED_FIELD_CHANGED`). 8 testes (`field-locks.spec.ts`).
+- **Auditoria do gerador:** `instrument: true` devolve `candidateAudit` (catálogo → excluído → não relevante → elegível → triado → no pool → avaliado
+  → aceito, por slot; legais/oferecidos/tentados por campo; destino de candidatos conhecidos). Contagens distintas. 4 testes.
+- **Descoberta real** (`optimize-discovery.bench.spec.ts`): jor original/restrita, Meister físico (referência `b1`), Magus com equipamento real de `b1`
+  (sem build mágica equipada no repositório), Meister com arma/escudo travados. Todos viáveis com 2000–4000 avaliações (Meister ≈ referência a 2000;
+  sets a 4000). A 300–800 com 4 alvos o orçamento acaba no 9º slot de 16 (pisos de esforço × leituras por alvo): lacuna de orçamento, não de gerador.
+  Correção testada (share por custo de leitura) não mudou o resultado e foi revertida.
+- **Timeouts de 5 s:** testes de 2–4 s sozinhos chegavam a 5–6 s com um fork por core; `vitest.config.mts` ganhou `testTimeout: 20_000`.
+  Também: `optimize-budget.spec.ts` ignora `candidateAudit` na comparação instrumentado × simples.
+- **Verificação:** `tsc -p tsconfig.backend-tests.json` limpo; `mcp/src` inteira: 409 verdes, 0 falhas (21 benchmarks opt-in pulados).
+- **Pendente de decisão:** pisos/ordem de slots em metas com vários alvos; travas por campo em `optimize_slot`/`scan_slot`; commit/PR/Novidades.
+
+## Experimento de cobertura progressiva (04/11/2026)
+
+Detalhes e dados reproduzíveis: [optimize-progressive-experiment.md](optimize-progressive-experiment.md) e `docs/benchmarks/optimize-progressive/`. O A/B foi medido com procs desligados e com todas as chamadas ao motor, alvos agregados, relatórios e verificação final dentro do mesmo teto por fixture; o experimento reserva previamente uma fração fixa para a etapa posterior à busca. Resultados não são diretamente comparáveis aos números históricos de `solves`.
+
+- A sondagem progressiva aumenta a cobertura, mas não será promovida: no Jor restrito com 800 chamadas totais o Greedy chega à meta e a progressiva não; com 2.000 ambos chegam, com DPS de 46,16M e 41,35M respectivamente. Em contrapartida, no Meister a 2.000 a progressiva chega à meta e o Greedy não, e no Meister com arma/escudo travados reduz a distância a 4.000 de 0,6658 para 0,1959; nenhum dos dois a cumpre. O protótipo fica interno para reprodução, sem mudar o padrão.
+- Causa de correção confirmada por regressão: o primeiro alvo da busca usava a margem da média entre alvos. O julgamento agora lê o alvo isoladamente. O gerador e o polish também deixaram de oferecer encantos fora do LATAM, após a progressiva propor o ID 312655 e o validador rejeitá-lo.
+- `optimize_slot` e `scan_slot` aceitam as restrições existentes e compartilham a política de travas por campo; o restante do slot continua disponível. O teste de combinação da armadura 450206 e encantos 311164/311100 mostra que, com limites totais de 300/800/2000, respectivamente o conjunto completo não foi avaliado, foi avaliado mas não aceito, e foi aceito. O estado `notLegalOnTheAnswerPiece` da auditoria não identifica o histórico de peças intermediárias.
+- O golden de qualidade foi executado separadamente: 3/3 passaram. Typecheck completo passou. Testes direcionados: 37 passaram. A suíte completa em `forks` foi interrompida após erro de encerramento de workers (`kill EPERM`). Reexecutada em `threads`: 9.392 passaram, 2 falharam e 22 benchmarks opt-in foram pulados. As duas falhas foram reproduzidas isoladamente e são anteriores a esta etapa: faltam a opção de busca e o rótulo de `matk_element_holy`. A correção está na main (38b6a086), mas não integra este checkout; a suíte não está verde.
+
+**Ainda falta para aceitar Optimize V1:** definir e implementar uma contabilidade pública rígida que cubra todas as leituras agregadas de alvo e as verificações; verificar o desempenho sob limites de tempo de produção; ampliar o benchmark com uma build mágica equipada real e referências independentes, inclusive configurações de conjuntos; confirmar os critérios de qualidade por fixture e orçamento; manter visível que a busca pode parar sem encontrar solução e que isso não prova impossibilidade. O polish ainda ordena soquetes por DPS; não houve evidência fim a fim para alterá-lo. Uma busca mais sofisticada não foi demonstrada necessária por este experimento; o resultado misto exige mais evidência, não uma troca de padrão.
+
+## Aceite do Optimize V1 (04/11/2026)
+
+Ver [matriz e evidências](optimize-v1-acceptance-matrix.md). **NOT READY:** `maxSolves` continua legado e não há teto público rígido de chamadas totais; o cancelamento da UI termina o worker sem recuperar o incumbente; a UI não expõe GoalSpec/travas por campo e limita a dois alvos; ainda falta comparação de qualidade em custos verdadeiramente equivalentes. O deadline da busca e do polish agora é compartilhado, mas relatórios e uma avaliação em andamento ainda podem ultrapassá-lo. `budgetUsage` e a UI informam chamadas reais e a ausência de teto total. Existe uma fixture mágica real: Magus Pazzolino, com 19 itens e atributos/passivas registrados no replay, fórmula pré-rebalanceamento.
+
+A opção e o rótulo `matk_element_holy` receberam as mesmas correções pontuais já existentes na main; os 77 testes dos dois arquivos passaram. Golden 3/3, typecheck e cinco testes de UI passaram. A suíte completa sobre o estado final passou: 9.402 testes verdes e 23 opt-in ignorados; o golden foi executado separadamente. Sem Beam/VNS, commit, push, deploy ou Novidades.
+
+## Orçamento rígido e cancelamento (04/11/2026)
+
+`maxEngineCalls` é opt-in, por job e cobre chamadas reais incluindo alvos, procs e julgamento final; `maxSolves` permanece legado. A reserva conservadora e a contagem por fase estão descritas no [aceite](optimize-v1-acceptance-matrix.md). O worker envia checkpoints completos e verificados, aceita cancelamento cooperativo e a UI guarda o último antes de eventual encerramento forçado; sem checkpoint, informa erro. No fallback, o custo total desconhecido é explicitado.
+
+No caso de comparação reproduzível, mesmo teto total de 33 chamadas: legado 33 e modo rígido 16, ambos com 30,786M DPS; timeout devolveu baseline e cancelamento após melhoria devolveu o último checkpoint. Os relatórios opcionais não são incluídos no modo rígido, então a diferença de custo não é uma melhoria isolada do algoritmo. Passaram 89 testes direcionados, typecheck, 6 testes Playwright, golden 3/3 e suíte completa (9.414 testes passaram, 24 ignorados). Permanecem paridade de GoalSpec/travas/alvos na UI, comparação de qualidade mais ampla sob custo total igual e validação da configuração implantada; veredito global continua NOT READY.
+
+## POC de planejamento por IA/MCP — 05/11/2026
+
+A direção mudou durante a auditoria de READY: a matriz extensa Legacy/Unified foi interrompida, preservando as linhas já gravadas em `docs/benchmarks/optimize-ready-audit`. Ela permanece incompleta e não foi promovida a evidência de aceite. As correções reproduzidas de cobrança de rotações, conflitos iniciais e classificação de efeitos foram preservadas.
+
+Foram produzidos [auditoria de capacidades](mcp-ai-optimization-audit.md), [benchmark A/B/C](ai-guided-optimization-benchmark.md) e [decisão de arquitetura](optimization-architecture-decision.md). A POC congelou o snapshot original de `5hTy6pd`, Inquisidor com Técnica da Mão Explosiva, cinco alvos de jor_ab02, grau C, sem MVP/Oleum ativo/Abrasivo e sem mudanças de atributos/skills/buffs/consumíveis. O link curto não resolveu; não foi substituído por uma build mais favorável.
+
+- **A — Greedy, esforço padrão 10.000:** 0/5 metas nos tetos reais 200 e 1.000, retornando a baseline verificada; o custo ficou em triagem. Sensibilidade com esforço 200/1.000 e 100.000 também foi preservada.
+- **B — hipóteses do agente via MCP:** faixa 200: 177 chamadas reais, 5/5 metas, confiabilidade condicional; faixa 1.000: 252 chamadas, 5/5 metas e 5/5 garantias dentro do modelo, margem mínima 0,83%, quatro slots de peças e 24 campos alterados. Foram 33 variantes exploratórias, sem Optimize/scan/optimize_slot no braço B. O journal registra também hipóteses refutadas e alternativas.
+- **C — listas/slots indicados pelo agente + busca local:** com esforço legado alinhado ao teto, 2/5 metas em 200 chamadas e 5/5 em 1.000; a solução maior mantém as peças principais, altera 15 campos e tem margem crítica mínima 21,53%, mas o abate é condicional. Com esforço 10.000/100.000 o resultado não foi o mesmo. Não foi alterado o algoritmo para produzir a melhoria.
+- **Custos ausentes:** tokens, preço e latência isolada do modelo. B/1.000 fez 45 chamadas MCP e recebeu 181.209 bytes; menor número de cálculos não demonstrou menor CPU ou custo total. Há uma sessão de agente informada pelo histórico, não amostragem independente de agentes.
+- **Conhecimento:** contexto, estágios, buscas filtradas, AND/OR e patches existentes bastaram para a demonstração. O texto de scaling pode conservar coeficientes antigos após override da fórmula; `get_skill` ganhou proveniência/advertência aditivas. A classificação de crítico certo versus precisão normal foi corrigida contra `calcDmgDpsDetailed`, sem alterar dano ou fórmulas.
+
+**Decisão:** priorizar planejamento externo B e ferramentas verificáveis D; preservar A e aprofundar C somente com medição. Não integrar API paga nem tornar IA obrigatória. O Optimize V1 continua NOT READY para aceite geral; esta POC não fecha a matriz ampla nem valida a versão publicada, que respondeu 0.1.221-beta com outro dataset/schema. Sem commit, push, deploy, Beam/VNS ou Novidades.

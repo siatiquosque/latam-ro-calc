@@ -33,7 +33,7 @@ async function openDialog(page: Page) {
   await dialog.getByRole('combobox', { name: 'Slot para explorar ou fixar candidatos', exact: true }).selectOption('weapon');
   await dialog.getByLabel('Candidatos deste slot', { exact: false }).fill(String(fixture.preset.weapon));
   await dialog.getByLabel('Buscar cartas, encantamentos e bônus aleatórios', { exact: true }).uncheck();
-  await dialog.getByLabel('Limite de cálculos', { exact: true }).fill('80');
+  await dialog.getByLabel('Orçamento de avaliações da busca', { exact: true }).fill('80');
   return dialog;
 }
 
@@ -43,9 +43,9 @@ test('goal, extra targets, constraints and locked slots reach the core as the MC
   await dialog.getByRole('button', { name: 'Adicionar alvo' }).click();
   await dialog.getByLabel('Alvo adicional').selectOption('9000002');
   await dialog.getByLabel('Golpes no máximo para abater cada alvo').fill('2');
-  await dialog.getByLabel('Folga de dano (%)').fill('10');
+  await dialog.getByLabel('Margem de dano mínima (%)').fill('10');
   await dialog.getByLabel('Crítico efetivo mínimo (%)').fill('5');
-  await dialog.getByLabel('Cartas de MVP').selectOption('none');
+  await dialog.getByLabel('Cartas MVP').selectOption('none');
   await dialog.getByLabel('Refino máximo de qualquer peça').fill('12');
   await dialog.getByLabel('Efeitos ativos proibidos').fill('Oleum Sanctum');
   await dialog.getByLabel('Máximo de consumíveis').fill('3');
@@ -66,7 +66,7 @@ test('goal, extra targets, constraints and locked slots reach the core as the MC
   expect(request.args.lock).not.toContain('weapon');
   expect(request.args.lock.length).toBeGreaterThan(10);
   // The core's verdict is shown, with the baseline and a per-target breakdown.
-  const verdict = dialog.getByRole('complementary', { name: 'Viabilidade da meta e das restrições' });
+  const verdict = dialog.getByRole('complementary', { name: 'Viabilidade por alvo e confiabilidade' });
   await expect(verdict).toBeVisible();
   await expect(verdict).toContainText('Build de partida');
   await expect(verdict.getByText('Veredito por alvo')).toBeVisible();
@@ -80,7 +80,7 @@ test('without goal or constraints the request carries neither, and no verdict is
   expect(request.args.goal).toBeUndefined();
   expect(request.args.constraints).toBeUndefined();
   expect(request.args.targets).toBeUndefined();
-  await expect(dialog.getByRole('complementary', { name: 'Viabilidade da meta e das restrições' })).toHaveCount(0);
+  await expect(dialog.getByRole('complementary', { name: 'Viabilidade por alvo e confiabilidade' })).toHaveCount(0);
 });
 
 test('a goal outside its bounds is blocked by the form and nothing runs', async ({ page }) => {

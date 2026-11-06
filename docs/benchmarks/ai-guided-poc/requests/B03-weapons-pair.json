@@ -1,0 +1,116 @@
+{
+  "experiment": "B",
+  "budget": 200,
+  "requests": [
+    {
+      "tool": "evaluate_variants",
+      "hypothesis": "Test direct skill multipliers and the explicitly indexed Faith/Vivatus dependency; preserve non-gear context. Include the pair even if either isolated change loses damage. No GoalSpec filtering so failed-goal candidates remain inspectable.",
+      "args": {
+        "build": "$build",
+        "targets": "$targets",
+        "constraints": "$constraints",
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "current-weapon-12-C",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C"
+              }
+            }
+          },
+          {
+            "label": "demonic-swap-only",
+            "patch": {
+              "gear": {
+                "weapon": 560036,
+                "weaponRefine": 11,
+                "weaponGrade": "",
+                "weaponEnchant1": null,
+                "weaponEnchant2": null,
+                "weaponEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "demonic-12-C",
+            "patch": {
+              "gear": {
+                "weapon": 560036,
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "weaponEnchant1": null,
+                "weaponEnchant2": null,
+                "weaponEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "paenitentia-12-C",
+            "patch": {
+              "gear": {
+                "weapon": 560013,
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "weaponEnchant1": null,
+                "weaponEnchant2": null,
+                "weaponEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "vivatus-12-C",
+            "patch": {
+              "gear": {
+                "weapon": 560021,
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "weaponEnchant1": null,
+                "weaponEnchant2": null,
+                "weaponEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "faith-helm-alone",
+            "patch": {
+              "gear": {
+                "headUpper": 400181,
+                "headUpperRefine": 12,
+                "headUpperEnchant1": null,
+                "headUpperEnchant2": null,
+                "headUpperEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "faith-vivatus-pair",
+            "patch": {
+              "gear": {
+                "weapon": 560021,
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "headUpper": 400181,
+                "headUpperRefine": 12,
+                "headUpperEnchant1": null,
+                "headUpperEnchant2": null,
+                "headUpperEnchant3": null,
+                "weaponEnchant1": null,
+                "weaponEnchant2": null,
+                "weaponEnchant3": null
+              }
+            }
+          }
+        ],
+        "limit": 10
+      }
+    }
+  ]
+}

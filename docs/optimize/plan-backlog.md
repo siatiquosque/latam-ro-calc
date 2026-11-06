@@ -19,7 +19,7 @@ Sair de NOT READY com o menor trabalho possível. Cada etapa tem um critério de
 | Paridade UI/MCP | Feita aqui | Feita lá também; as duas precisam ser unificadas |
 | Benchmark legacy × unified | `docs/benchmarks/optimize-acceptance/` | Matriz `optimize-ready-audit`, interrompida e incompleta |
 | POC de IA pelo MCP | Ausente | Concluída, com 1 build e 1 sessão de agente |
-| Documento de aceite | `docs/optimize/optimize-v1-acceptance.md` | `docs/optimize-v1-acceptance.md`, outro texto, com a matriz de 7 critérios |
+| Documento de aceite | `docs/optimize/optimize-v1-acceptance.md` | `docs/optimize/optimize-v1-acceptance-matrix.md`, outro texto, com a matriz de 7 critérios |
 
 Consequências:
 
@@ -27,7 +27,7 @@ Consequências:
 - A frase "`maxEngineCalls` não existe" do aceite da `main` deixa de valer depois do merge.
 - A memória medida não inclui o código do worktree, nem o custo da base de conhecimento carregada.
 
-Decisão registrada no worktree em [optimization-architecture-decision.md](../../../latam-ro-calc-goal-search/docs/optimization-architecture-decision.md), em 2026-11-05: priorizar o planejamento por agentes externos via MCP (modalidade B) e as ferramentas verificáveis (D), preservar a busca automática (A) e aprofundar a busca local guiada (C) só com medição, sem Beam ou VNS. A evidência é de uma build e uma sessão, e o dono do projeto precisa confirmar essa direção.
+Decisão registrada no worktree em [optimization-architecture-decision.md](optimization-architecture-decision.md), em 2026-11-05: priorizar o planejamento por agentes externos via MCP (modalidade B) e as ferramentas verificáveis (D), preservar a busca automática (A) e aprofundar a busca local guiada (C) só com medição, sem Beam ou VNS. A evidência é de uma build e uma sessão, e o dono do projeto precisa confirmar essa direção.
 
 ## Plano
 

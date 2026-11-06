@@ -1,0 +1,2731 @@
+{
+  "rows": [
+    {
+      "name": "jor-restricted",
+      "mode": "goal",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 35459,
+      "engineCalls": 10827,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 101,
+        "cacheMisses": 2427,
+        "uncachedEvaluations": 16,
+        "engineCalls": 10827,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 133,
+            "uncached": 0,
+            "cacheHits": 6,
+            "engineCalls": 645
+          },
+          "search": {
+            "unique": 166,
+            "uncached": 0,
+            "cacheHits": 32,
+            "engineCalls": 410
+          },
+          "socket": {
+            "unique": 2111,
+            "uncached": 0,
+            "cacheHits": 60,
+            "engineCalls": 9715
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 10,
+            "cacheHits": 0,
+            "engineCalls": 10
+          }
+        },
+        "feasibilityVerificationCalls": 10,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 23304627.4,
+      "dps": 58207437.2,
+      "reproduced": 58207437.2,
+      "patchDps": 58207437.2,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGCjSMvcUwgbtFvsD80HUfjswFuoAVSGQwIJlm3CcC6Xq-XyGrtbpDZAi6wK7XBGndWHOWkAHYH.Y91fkACSFQLEwh.ReLNtCcG5z0vA8Py-XlGFnf9.CceYz1fMDP2-Rh3S2B9tG2BCLwAWSgOo6kcLYom0WYzn7VAfC2HRjCfZ00BQI861PCiUBvU5ZiEEBWPfZDIN-aQok0aRyIY3iIKYWdBO0HR4J48CULQ6SdBuMAzCgCRby2UttGMLC1I0mA6iYk9.T0dTNPYrZONUiyjIU-ipFmYT4IMzSHMkpyXPMwy6g81CvOkLCYgo6kpFI-hgtCpgTPrSIuJCtBqSskdtF4DC2CURBECybgMNIrCspy2LTyKxgUvvJxgjK1sLzikBO0y7LGH82dt34G4yv8tC8sw50qCoNQrVygComfbiBqG8r.y01L0tqLBJprFq.J-Ycon4QT.sG5bWvW7RNvHRaduG7r9u4ADtqTKAYjMEbdJ3K6bruiqcgfIp10YFREDsJl7B4I5QUYdAqX3DcDmMfgHyw44wGBqlvvzCI.ByKJAbhkG8GbaLcqq7hZHR.G8H8sGImk4xZnHWGif8xHwfJuDCcx-zsaS6oGdqNSLzGVZKxOP98acJ4LDqHm.ZIErsnM7nRiSMSpG4KHXJFsY5cow8a2YqXwBV0ZrDsrTeDyqHpdFvWDcltGdZlyFmoV2Dgi5s3beKzXTKtp2xgBfsHRIGJ7f4cdPdGb26BKGJLcd3XjRIOpIIDrjg5juOYrduKPd.GBIXQK0rRwwsKFAPsmEQKheTqfD0E2YJ3BEKkmCgZZyGCJI-YkKuKGCCpUBGIhsUQcF86Fau2CBIZG-7zu2E8Hu8DeBum.CasYBu4gp5ASEGHeKBXhB9frEQTBwUQK1wQACQLcQSHBcvwVDxgzHX3EmQ2VBeWP0-JmQHK8FeHEn5fmAN.18T7ggfngcEqwfbEAiMEZ.K8gHv1AeAwesQd6NyuHAwBwCP7gngFAcQd867UhHiAOWMQGRV3BPkJY69yGULAOCXE7dUDry-ngfQJBGFJCoBpUh9wsAAC87DglXN-fs68VBYHQHHWIw9JHSLjuCFMGBSFJDqPQEgL86TKKro-ZubBphIyYWYZAVcsjBF5j2cExpkBWl-v3TBbB4BuBEQfTA.9dbgncfsYILiYDHGvj49ezYvCUm8YfXxbB0QVxIAAckYUY8GwR84xCFKgKE9AsBdAMRvdAyFcH6wdD3deOFsokBXrdRg3iCAMDqvvfwUBoB.3XqSawsQuT4M0q0g.yBOT0GQKSKoRA0mN08b5bx64-i5MhKiOICSbGIEpPvUY4dwTNF5JyUpdg4Y7yZOCJIPcV61jLo4-eUyYB31WtiFpuT859LMLgr.pBYSLzYNYWpWiGi4IAFJoksPEXJqx1JwyIi3Tg-oiDX3uKCRhoDrD5P0BYtgSQ1wiFwRUOo.T15nxBqgcO68kAPHyXgBZABpDYpCPnIAyJycEVoUDggAJqH3Xs0MxGSIQoMhC6RgIhazdNyddP2uCAByUAlDtzbk4kAVRRCYDpKiJQ6LrAaRiFaB07x15Jj0Uwge6xY74umcEAEX4B4H1ucEawdge5mFICI0B31xCwOcQ6GIMQFkWv9rktQbYFmtHGLkjZn4IHrAfpA9A3qu4kGPJkCBuLUD4stWwHCVc9mXKqLCGAMi4o10QFSaphyhjassFpYIGzkAQHBLXNEbK8BKBzlaNpIx6B32BN4MEMqkwWCGGARAdQHWnzwnSUYKAIDJLYM2Gs9iSCN3BKK0uwNkCmWCOiVEk9ckAgyJcnx1baD6HXlUexf9.bBHwCQfN4Ju5DHoJwf.uTM2IAMHss5MzMiwmrV4MthivAiBldepklIwq5LaSgfpBAhlcJurOrApJn7IA1DSX8wRQN9NqYM4Z0HG5wf7Ih0ks4UO9PAxhqDozYPwbw2hQjYH0OQZGTBnDCG56km4CE1EGQlivpQzhPAGxYSkgAIroGybm6JIgQbeM2fDTuABffq2JxA-FgDAfOxbyCgGulCmI6y5n8ytlOpg6LcSHy-OCAAtOCTEvc40hOpEZkzjyLNJBXuIde99Hn6xEy6kAxmlg7vHg6LIxgbjuFoJo6pZ9Jjr1C3Qak3iou5PyDERlgSGhcJdPes9N1GVjw7Zl5xHBHkzyyvvEo4G8GWAfoSqwGSXGZH0cEJJdij51aq9cZxVg4YVfq4spG68fkyI1E-dSA422MvgNgKk690TiYye0z80mQPsIyHgUYpJ853sIRNrAVIoQwmSXJiaCm8BKbgMSNGuhLssGCywK7d3bsPZ6Pdy7uZhiQoISdzOxJDho0OHINGAPdA9B6GjYHj2WA9EOD0fgr2hjvcU5nVThcQAXyZMONgrRKLXx5e7ctunoX5pKwcZxTI-13x7lYOKRRcQ3QINW3kF6rhW2aAQusNjv5vBPUzru39r5n3LmkDH-ahvtZAElnL7bQT3puJptZ7LYh6eCAZvlEDjPoFM05lzcUbjK-s.rxzlm1xS7eFoNgKi4caj2-6ZFIAVDPUYLOkV112yi-F8gcEqWGBgAy-zELFgSiftQETs4KY4gitxA6Y9Sw9szFF.sOAuDWv6P4IdwJYAQZYGVRwigRI9LvRhzJoAA/",
+      "patch": {
+        "gear": {
+          "weapon": 560026,
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "armor": 450177,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20964,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470094,
+          "bootRefine": 12,
+          "bootGrade": "C",
+          "shadowShield": 24767,
+          "shadowShieldRefine": 10,
+          "bootEnchant2": 4865,
+          "bootEnchant3": 4704,
+          "weaponCard1": 300241,
+          "weaponCard2": 300241,
+          "shieldCard": 4925,
+          "shieldEnchant1": 29539,
+          "shieldEnchant2": 29539,
+          "shieldEnchant3": 29534,
+          "headUpperCard": 300377,
+          "headUpperEnchant3": 4704,
+          "armorEnchant2": 310509,
+          "armorEnchant3": 310505,
+          "bootCard": 300380,
+          "accLeftEnchant1": 310631,
+          "accLeftEnchant2": 310631,
+          "accLeftEnchant3": 310490
+        },
+        "options": {
+          "38": null,
+          "39": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 2
+                  },
+                  "actual": 3,
+                  "message": "hitsToKill 3 fora do pedido (máx 2)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 39995354,
+                  "required": {
+                    "min": 45202652
+                  },
+                  "message": "2 golpe(s) de dano mínimo somam 39995354; o HP com margem de 10% é 45202652."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 3 fora do pedido (máx 2).",
+                  "2 golpe(s) de dano mínimo somam 39995354; o HP com margem de 10% é 45202652."
+                ]
+              }
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 2
+                  },
+                  "actual": 3,
+                  "message": "hitsToKill 3 fora do pedido (máx 2)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 37239876,
+                  "required": {
+                    "min": 54117294.00000001
+                  },
+                  "message": "2 golpe(s) de dano mínimo somam 37239876; o HP com margem de 10% é 54117294."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 3 fora do pedido (máx 2).",
+                  "2 golpe(s) de dano mínimo somam 37239876; o HP com margem de 10% é 54117294."
+                ]
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 46425396,
+                  "required": {
+                    "min": 46663771.00000001
+                  },
+                  "message": "2 golpe(s) de dano mínimo somam 46425396; o HP com margem de 10% é 46663771."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "2 golpe(s) de dano mínimo somam 46425396; o HP com margem de 10% é 46663771."
+                ]
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 2
+                  },
+                  "actual": 3,
+                  "message": "hitsToKill 3 fora do pedido (máx 2)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 36887976,
+                  "required": {
+                    "min": 46836900.00000001
+                  },
+                  "message": "2 golpe(s) de dano mínimo somam 36887976; o HP com margem de 10% é 46836900."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 3 fora do pedido (máx 2).",
+                  "2 golpe(s) de dano mínimo somam 36887976; o HP com margem de 10% é 46836900."
+                ]
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 2
+                  },
+                  "actual": 3,
+                  "message": "hitsToKill 3 fora do pedido (máx 2)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 34730076,
+                  "required": {
+                    "min": 48682183.00000001
+                  },
+                  "message": "2 golpe(s) de dano mínimo somam 34730076; o HP com margem de 10% é 48682183."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 3 fora do pedido (máx 2).",
+                  "2 golpe(s) de dano mínimo somam 34730076; o HP com margem de 10% é 48682183."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "hitsToKill 3 fora do pedido (máx 2)."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": true,
+            "constraintsMet": true,
+            "reliability": "guaranteed"
+          },
+          "worstTarget": {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "search": {
+          "feasible": true,
+          "startedFeasible": false,
+          "firstFeasible": {
+            "evaluations": 298,
+            "unique": 297,
+            "phase": "search"
+          },
+          "stoppedBy": "search-budget",
+          "evaluations": {
+            "counted": 300,
+            "otherTargets": 256,
+            "skippedForBudget": 10,
+            "afterSearch": 17,
+            "unique": 2427,
+            "finalChecks": 10
+          },
+          "socketFieldsRefusedByGoal": 0,
+          "note": "A meta foi cumprida em todos os alvos."
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 133,
+            "uncached": 0,
+            "cacheHits": 6,
+            "engineCalls": 645
+          },
+          "search": {
+            "unique": 166,
+            "uncached": 0,
+            "cacheHits": 32,
+            "engineCalls": 410
+          },
+          "socket": {
+            "unique": 2111,
+            "uncached": 0,
+            "cacheHits": 60,
+            "engineCalls": 9715
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 71.65839999999935,
+          "discovery": 2458.6581000000006,
+          "search": 1210.077699999999,
+          "socket": 27274.470600000073,
+          "levelCheck": 0,
+          "report": 125.34269999999378,
+          "feasibility": 23.71059999999852
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 35426
+      }
+    },
+    {
+      "name": "jor-restricted",
+      "mode": "general",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 34128,
+      "engineCalls": 11232,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 58,
+        "cacheMisses": 2252,
+        "uncachedEvaluations": 16,
+        "engineCalls": 11232,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 150,
+            "uncached": 0,
+            "cacheHits": 7,
+            "engineCalls": 750
+          },
+          "search": {
+            "unique": 149,
+            "uncached": 0,
+            "cacheHits": 8,
+            "engineCalls": 745
+          },
+          "socket": {
+            "unique": 1936,
+            "uncached": 0,
+            "cacheHits": 40,
+            "engineCalls": 9680
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 10,
+            "cacheHits": 0,
+            "engineCalls": 10
+          }
+        },
+        "feasibilityVerificationCalls": 10,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 23304627.4,
+      "dps": 60853975.2,
+      "reproduced": 60853975.2,
+      "patchDps": 60853975.2,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFeLwENJgROXzeMjUA0AGYHZFUZBQW1sLBfSLSZFmI0m6mRZFYMBDOq..Uh5UGkaja7a3UxkWG5nuo4AJRdmqRob1GdjAF02KM8FgRldNPwcgI8wWi0m8FaSnhAhXC6QAOKohr-dzI-NNkjuLDIOrGCjSMvcUwgbtFvsD80HUfjswFuoAVSGQwIJlm3CcC6Xq-XyGrtbpDZAi6wK7XBGndWHOWkAHYH.Y91fkACSFQLEwh.ReLNtCcG5z0vA8Py-XlGFnf9.CceYz1fMDP2-Rh3S2B9tG2BCLwAWSgOo6kcLYom0WYzhAlQxg3LYgm0B8in7VAfC2HRjCfZ00BQI861PRiUBvU5ZiEEA.PfZDIN-aQok0aQzlE8CUNnKTtB0eD5PEpg0OUnQbjAMwoAkW8tlLbQgj0fTDO4k9ImEvSDJgOoBLnUyHywuzDNbC960oTtzPsuoFMgpSoicfh4PchzAs04cQrCtgYkY6kpFI-gsIStBqSs7zjGE9KqSYJyRxc4IlEQRAsm4DDSKw0ryqy09asYQr7ycEqysYTz2x85FGqiqCeFCm5eo01CeAwrCsCoKg1CtCqAKiZ8RKmmamv7Iyit4B9akm6aa0YPrJKifgpOdZa9r64LtGO4SdpWvqtKibgANOqgkygGIzDm7RjB3F63o.1aBzvHJ6LYddGEouwmXsHgjlBRh0CpfdqKk-hXLhsAEapSj8wiPgciiDGsbwZtEuqbdMNkInEbwPrkYiZTjFmcdjkxmm.pxlGoh..DWeJvrSYy6pGacWo9IvMZVkrE4-24aRQvMiXRilnt6uyRW6jGJJOIiXhuDR8KLE10ZtaYw8ax49XwCNsZrAshypEqtGNdt.26jVwnraVyF2sd2DgnF42fbqi3rM9wOxgBfsHRIGI-f4ccI9GKO6BKGIPYDm3RmNEg6kg.PbKznO86YDO9F.GBIXQK0rRwwsKFAPsmEQKheTqfD0E2YJ3BEfLsWWchgiSWOJE7ihggqVARiIbFEHBOuhS7tggSGKAXWIce2E8Ke8DeJg183kBqxgd6N8HthIQYd4oFeRHD.sRBMHBRArXBAAJAtxBIcE2-BFPGDMIfXETINioF5M-V.kxkDlTwK8HEQCQFgDAd-F.4IAF4HBKsaOxAIjBGASfJB4DUHoPnrEG.a8rh4MQcgiB4J4BQHEH-Xu1Il4gG1jEBkndwT5CWIfdhnCwDglxKPVAh8oF4H0CQQRSQqAGVYfcLAAAvOw4JVzQP7IfFQWB0B51iIvTR2i87ghTBgVhSQ6j0BICAukxjO6APPiAaYuMhFmGQJ3LIwQVZFnBMaZAVpYGz0oWweAbgVEP0wPfLO4Jwn7GCCEmAxxv4xMPs2LwlJomP1iWwdE7cSAAHJBFOOosEOuMQhSoChPQLAXQHFV2QrQu2Dop6HxwmVEgJ8AbRIIAwLy99-BQGgLHQ.pJrCxC5PQwywyH7IE5PQZApIqhEDKQfBxdt-LRPXH8WpqI4gFJ8YgSk99Rhp3BM0XknIWl2ExjfJk4IkhTxPrWVugT76bJgH-EaacWn9i-LQqBpBYQD2CNYbpViGi0IAFJoksPEBxqx9KYyIkPTg-oiDf3uKCQRqDrDoCkbvPha4RC0IqHUXFh836I1QF8hxSAHi4rwHsgA0hsVhILkAZE5OCK0KBwQAE1H6H2aG4ipEISGQhdIwEQtZJkOLerHWhAA5KAShR4jyCSAKoohMB0lREoIl1gDIxCtA6d4h8kx2KEXPdYucqVbOCACL8c8H5DNWXYKeZhSAqNQZRcQuDgkOhiDEPZzq44OLUG2PZrRxgOLOZ.DB6wAGYPQKGieJBjyZAwRS1AVKXUlM7jc95VRYQwB0d5buiAqSMDuc02VlgjLBDOcgCA4Ie5okFXgJQ1crQjJGPQP.wJvBgnVUmCwQwwCIDqF61.eE6SjBQBAYpbBmw1n8SQNe4IFUtwRsgaywR0SolnofAEGR3kxJbbQfQh8qj.LgTLYI.ASAVvBJPIY9BODwIcUWxABgbkvNqZkWELavD1rYNMOADAr1TyZJSJKDiRkoFmQQBZUj3prqwKSYByANQ0l-MEeDMzunzMWahteGH.zYdJLOPD0zENEZQ8s9DmGKNoWowhwjyGllobI1h3epJuApNRBkJYf68M4TwBsWEpIACK6BqlluySIRG0TzlY3HgAX1OticQPxYAwDrkMBuR8NgnKFbEGWntl1MCJbiR.vyAC04JMTTwzSk6k1nbNmHBA5pIJ9xBHv7Imu2cm-UgBs0sU9q8HRZGMDcdwtBLFVrfpMQ.cW6DUmiclhx.QYg8sSQ0KR6871sGyzyleg6P1xI4J57epV74lEQ3QywADD70LQI1zI9jghFL8U-EJHWtDBKsJjdribuuHwhTojUQD9IDn7Ty.A2AqSH3RIpipozPyqbg.IjIeBRikjru.xhC2sBUihDCYpGmlpabwDpuAxJCa6EeywGLLAntvdex9no73Hu5mGKihhN2K7EkOITQ4chCYQ90D0HohNoefZYD0Q4PR.C-aGP97TFd9OGY-kyYcbBWhMW-uKsODadkQhq4gPHIB4kiG-gCKeVhvJFFxO9AgLbeSPquJ7ZoDC6w.OgW8W9XOJ7QO-m-NuaR8cTqm9cYr71SsDtBB.m4b00UxFOWT4XS63MYJs.gezdzfPeRuJZyVuuPNecc2uJXbwBtHxO2jjUZ3-QeLYCod6n013yrel1G4JXkDgjywwMAhXixbwsCUIDqBasHDYCmOI8rcQOhvUsM7MxZcgHWHAWhfXmvkH4JdxJYBEZYD1RIigRJjBOxR2poAA/",
+      "patch": {
+        "gear": {
+          "weapon": 560026,
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "shield": 460020,
+          "shieldRefine": 12,
+          "shieldGrade": "C",
+          "shieldEnchant1": null,
+          "shieldEnchant2": 310869,
+          "armor": 450177,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20964,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470094,
+          "bootRefine": 12,
+          "bootGrade": "C",
+          "shadowShield": 24767,
+          "shadowShieldRefine": 10,
+          "bootEnchant2": 4865,
+          "bootEnchant3": 4704,
+          "shieldEnchant3": 310869,
+          "headUpper": 19481,
+          "headUpperRefine": 12,
+          "headUpperGrade": "",
+          "headUpperCard": 300377,
+          "headMiddle": 410093,
+          "headMiddleGrade": "",
+          "headLower": 420076,
+          "headLowerGrade": "",
+          "weaponCard1": 300241,
+          "weaponCard2": 300241,
+          "shieldCard": 300274,
+          "headUpperEnchant3": 4704,
+          "armorEnchant2": 310509,
+          "armorEnchant3": 310505,
+          "bootCard": 300380,
+          "accLeftEnchant1": 310631,
+          "accLeftEnchant2": 310632,
+          "accLeftEnchant3": 310490
+        },
+        "options": {
+          "6": null,
+          "7": null,
+          "36": null,
+          "37": null,
+          "38": null,
+          "39": null,
+          "40": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 150,
+            "uncached": 0,
+            "cacheHits": 7,
+            "engineCalls": 750
+          },
+          "search": {
+            "unique": 149,
+            "uncached": 0,
+            "cacheHits": 8,
+            "engineCalls": 745
+          },
+          "socket": {
+            "unique": 1936,
+            "uncached": 0,
+            "cacheHits": 40,
+            "engineCalls": 9680
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 14.57539999999426,
+          "discovery": 2090.9188000000577,
+          "search": 2077.1121999999887,
+          "socket": 26803.422800000037,
+          "levelCheck": 0,
+          "report": 105.69399999997404,
+          "feasibility": 25.38169999999809
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 34100
+      }
+    },
+    {
+      "name": "meister",
+      "mode": "goal",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 34206,
+      "engineCalls": 10755,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 70,
+        "cacheMisses": 2909,
+        "uncachedEvaluations": 13,
+        "engineCalls": 10755,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 140,
+            "uncached": 0,
+            "cacheHits": 2,
+            "engineCalls": 548
+          },
+          "search": {
+            "unique": 159,
+            "uncached": 0,
+            "cacheHits": 15,
+            "engineCalls": 384
+          },
+          "socket": {
+            "unique": 2595,
+            "uncached": 0,
+            "cacheHits": 50,
+            "engineCalls": 9780
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 8,
+            "cacheHits": 0,
+            "engineCalls": 8
+          }
+        },
+        "feasibilityVerificationCalls": 8,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 10863465,
+      "dps": 65948841,
+      "reproduced": 65948841,
+      "patchDps": 65948841,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgMxDSYEVlMPaI0EiPB07nCiUgLCveXIRWMTaa0Vas2mi1Sy2Sm0Su3mq2O20O53W7Wy-WGyLaE1OsUAXTYozwWBGZ00-G02mkQhAwdDpAASngAGYlPCBIMhsMAcWRDS.SUR8bDAFESFQLEwfXtjMZpNoLnHs6Ry5WsExjBRpHXpNxaiXWxWq4xeN3e5pY4OSG2R9Jx-W.OYQ3UAKpDIYEHhRqJNswr9eb5DJtMkDPZZdYNcbgh5q-nkBFy-Xo-ual1btR6QAdm-z8PBCzh2jBdrWMh1v.N7IEBTBjmBDZ-jKK4ALJQHUdSOJsUQyPs.5Xqh6EiG.yAfnsO7flsOpoD4mw6MYvCIdSqAoCe6aZlRzEeO.RzaLGTEoDBIHjtoURFPx0HDsBcE9lGszzBxAmSUw861rJ8lgH8EikdwkYiZRGlQFprFnuxBlacR2n8LIeiaTAdSCaBvCzJofY2YZdmCXBTkufptn2UpjAqd5rkgDETEMFkQSzFZbBhWgEXGee9GxeFTAWTw-DfrGSiIIgWTcN.UbfvsOV5Yl7GlYw6VkbxxiIZVd4FpQT46lQVBqCm.WzFGvBNlgbUdVV3E1XWYkDamjAOcJ9HRONnWecJ2hOJR-XtRNgkqTJS0rW1iZQDEZhdSJTimK1VB7QdQ0kZ.RVjed.2HVNqmzMYtSrRdj0BXB-a8Hxu0PZNAUqQV3CUZujAqIgdhYDA9g8HoHwwOC6ApimBJRCwGMY7oOMsLj.N44TBPE0TpMk.TZOUxT1NU7TNP03TROBuAiPI6jyGhhQoBvkwiBUB2dRoegGwYyA7giOSmJLN6bBJCQMQSMLaRsBUqAjEQmKIACHM8hswSlgYQxQLqxAUMEnhq3gjxMMbZtsMmMD7ab5DBOCDBPFADzoKgdsgNYiCYACiApgCAASIbiCQAICwCpbUowZi.98MPrKgHZByHkzIHleAPFiScp2AadR8HAIJ2CKzUsgxARMEyeO0X6el.X2uxJ7xtnHXhfFxnQJQOIscSxFeuy8gMToIwwsAvkjDS8ESRjxPU-fIrPsu2wWd4PoJBgACSRUIZI9i8iABedgAuu2fUr7KhYOgVKxLrN931SAKJlgGBH0kdT0CQKdnm-YWid14gGmMGZAAJfjIGFlkYIKwWxR31CmXOmtO5sHgG4c.-tMC.2sBYOoYwATYN2MEDBMAqCkCIQHEhbAcxeDJFQnBIDUSCxIAAcl3mArcICOYxB5KgCE9AsDdBAcjYcvc8HVzVr7ZCuUSCO0ukQggDB7y4P8FAaA8tfZEmsLENk8B3KkWCDolArJ6DICJFUIgfDbYgLwYYohm5PiiORHEDhAJphklwaMEoMQAQtA7KyGRdgwCYn5jAPeatHZpn5qg3BTiImCV8TI6klZe5Z1II8ZEuDlF-waL3AAUiiSw8QQErD.KEzC89OBYE4CUAEVxECcAkegHeVtfZJA3CIXuFQ6itN9qHb2qBkkgKQNcVpeB3EAGl1hH2sAQDIrIAQphQACAAmgHX2LRoECMoS3cEupGAiDTFpX2e15a9wAHJQCUIreWDBfZVFEJgM8yIlDdOsIZGIKZq5PDOUAyBWs1gkDqMM5x.tKxa39louxdg1ZmFIOfUukNxC13QdXGIMR3HQpiDfAgV53FtHGCAgJFYK6ZDMACFY6BcUgKqKeTIYJBmoGGTC4IyFhaexhgCKoWSYD33PObKEVtIlDDOZYIxbAAk0gadgYlwQ2hKBRimHRIx6Cx0Nt4IghwQGJgsEMMAiA6hIpDqhM8owUAQG4cEHMqZkEkGNgCS5fNJ7IBMsw5EmtfalgyBE4hDTaD6EeSQZBecdXBHwCQKEPK1b0DqeGlWvMDBcriaIzIWSGleElaArwIg0EgFVkMGGZIIraP9gaZRFirH7QdVgIkycx5WyJKBYx5azEEEsTvGtxt63UgVowIkcFW2mMrZ26xtbe2NoHSpYdFbzFju7XWht-aiQMhAXeDIs9U3GOQngdYWSiQAEV0DCMFWwVEIhvZEMCZPNe2gAC.bB.qYnEO8WAMAOZivIKAPaRALnbNiDq0WtqmDdO.AHNJABaAE6J1aMt9iBo5YJwPoCg3vR24gtBsDjtcSleDT1op.Hlbl1gjbVyyMYJs7haC-0YGHSYvtqN0AikQhjID8gxFWRQkFDAwAmwTSADjqyDY7CafnUZHBKUWxyrgko7agSWATr7AxaAFMUt9lw5AKZA4YPU.cdBVhQlqYTh4sY1q2AFPvgrJOfwSIatWcCD.Z6QAXrwFe3RFZb3aM3hkPAowiQczqQPRzoIIQcCyWbR9rUX14DfXAdGuMLi6Eo4zRLdNmZFqC7FxGBJegY16HILGyXdAXAuBjUrhMKu9AuPwDLtSiCvsRp.rmIBw4w27FKjkUcDnutFgBzjUdpOIA6yAMhebY5qysOeIo3x9oEAaR2KNZw.v93TB47Ojww3LeCBUbOUdQ4C2ViAFoRrrP6cE-tYTmqxM6qbL.3x-jXFAZtRFMDEHKXQaSBh88TZENvdQx9mDG4xOPCwyAd.as9FhdqbAtgKgAYOouXtJqTYhMQO4w0He-HwxsHcBYepQ2RvvziBc741dQ2zzCzMc7aw4C9100p8g-B733qAA/",
+      "patch": {
+        "gear": {
+          "weapon": 560032,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "weaponEnchant0": 311305,
+          "weaponEnchant1": 311348,
+          "shield": 460014,
+          "shieldRefine": 12,
+          "shieldGrade": "",
+          "shieldCard": 4636,
+          "headMiddle": 410233,
+          "headMiddleGrade": "",
+          "headMiddleCard": 300174,
+          "armor": 450127,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20963,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470073,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "headUpper": 400105,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headUpperEnchant1": 312311,
+          "headUpperEnchant2": 312307,
+          "headUpperEnchant3": null,
+          "weaponEnchant3": 311342,
+          "weaponEnchant2": 311352,
+          "shieldEnchant2": 29534,
+          "shieldEnchant3": 29534,
+          "headUpperCard": 300377,
+          "armorCard": 4302,
+          "garmentCard": 4672,
+          "bootCard": 300217,
+          "accRightEnchant1": 310918,
+          "accRightEnchant2": 4822,
+          "accRightEnchant3": 4744
+        },
+        "options": {
+          "8": null,
+          "9": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 11,
+                  "message": "hitsToKill 11 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 11617674,
+                  "required": {
+                    "min": 45202652
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 11617674; o HP com margem de 10% é 45202652."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 11 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 11617674; o HP com margem de 10% é 45202652."
+                ]
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 15,
+                  "message": "hitsToKill 15 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 8977725,
+                  "required": {
+                    "min": 46836900.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 8977725; o HP com margem de 10% é 46836900."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 15 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 8977725; o HP com margem de 10% é 46836900."
+                ]
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 9,
+                  "message": "hitsToKill 9 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 14615610,
+                  "required": {
+                    "min": 46663771.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 14615610; o HP com margem de 10% é 46663771."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 9 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 14615610; o HP com margem de 10% é 46663771."
+                ]
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 17,
+                  "message": "hitsToKill 17 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 8125566,
+                  "required": {
+                    "min": 48682183.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 8125566; o HP com margem de 10% é 48682183."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 17 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 8125566; o HP com margem de 10% é 48682183."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "reason": "hitsToKill 17 fora do pedido (máx 3)."
+          }
+        },
+        "final": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": true,
+                "constraintsMet": true,
+                "reliability": "guaranteed",
+                "reasons": []
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 47795232,
+                  "required": {
+                    "min": 48682183.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 47795232; o HP com margem de 10% é 48682183."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "3 golpe(s) de dano mínimo somam 47795232; o HP com margem de 10% é 48682183."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "reason": "3 golpe(s) de dano mínimo somam 47795232; o HP com margem de 10% é 48682183."
+          }
+        },
+        "search": {
+          "feasible": false,
+          "startedFeasible": false,
+          "bestGap": {
+            "worst": 0.0179,
+            "total": 0.0179
+          },
+          "stoppedBy": "search-budget",
+          "evaluations": {
+            "counted": 300,
+            "otherTargets": 216,
+            "skippedForBudget": 48,
+            "afterSearch": 15,
+            "unique": 2909,
+            "finalChecks": 8
+          },
+          "socketFieldsRefusedByGoal": 0,
+          "note": "A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível."
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 140,
+            "uncached": 0,
+            "cacheHits": 2,
+            "engineCalls": 548
+          },
+          "search": {
+            "unique": 159,
+            "uncached": 0,
+            "cacheHits": 15,
+            "engineCalls": 384
+          },
+          "socket": {
+            "unique": 2595,
+            "uncached": 0,
+            "cacheHits": 50,
+            "engineCalls": 9780
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 11.739400000005844,
+          "discovery": 1473.0598999999347,
+          "search": 1043.0559999999969,
+          "socket": 26787.135400000043,
+          "levelCheck": 0,
+          "report": 72.26050000001851,
+          "feasibility": 19.849800000010873
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 34184
+      }
+    },
+    {
+      "name": "meister",
+      "mode": "general",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 35536,
+      "engineCalls": 10155,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 75,
+        "cacheMisses": 2543,
+        "uncachedEvaluations": 13,
+        "engineCalls": 10155,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 150,
+            "uncached": 0,
+            "cacheHits": 6,
+            "engineCalls": 600
+          },
+          "search": {
+            "unique": 149,
+            "uncached": 0,
+            "cacheHits": 16,
+            "engineCalls": 596
+          },
+          "socket": {
+            "unique": 2229,
+            "uncached": 0,
+            "cacheHits": 50,
+            "engineCalls": 8916
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 8,
+            "cacheHits": 0,
+            "engineCalls": 8
+          }
+        },
+        "feasibilityVerificationCalls": 8,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 10863465,
+      "dps": 69665496.75,
+      "reproduced": 69665496.75,
+      "patchDps": 69665496.75,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgMxDSYEVlMPaI0EiPB07nCiUgLCveXIRWMTaa0Vas2mi1Sy2Sm0Su3mq2O20O53W7Wy-WGyLaE1OsUAXTYozwWBGZ00-G02mkQhAwdDpAASngAGYlPCBIMhsMAcWRDS.SUR8bDAFESFQLEwfXtjMZpNoLnHs6Ry5WsExjBRpHXpNxaiXWxWq4xeN3e5pY4OSG2R9Jx-W.OYQ3UAKpDIYEHhRqJNswr9eb5DJtMkDPZZdYNcbgh5q-nkBFy-Xo-ual1btR6QAdm-z8PBCzh2jBdrWMh1v.N7IEBTBjmBDZ-jKK4ALJQHUdSOJsUQyPs.5Xqh6EiG.yAfnsO7flsSFXioYxbpsQS8FEbDUqgPibDoxi8IhLEoCe6aZjqaAoMRpHcA2sY8dBw7AaBPbaFERSSTBo7jlGszzIJrFSe2TDzrWakaWAfwSKJkbyZRRlQCZfFnnMejGTAdQiTw-CyPZVmOcpoG8LMmh9u5JnKXBPl.RZDl1Mpekhf5IAxCxDBZEEsyuWwcVoAlNnnpxqXxUwzmbPw36xkoiCIFk3DflG377CVZWZQJtWMPlDbaIxiGNXeBaUE.OpUFQagpuVsxRrwTZYH1A1Ne.n7ycYikTamjBeapnHRAtg1Bap2hOJR439YtkVbTtzF9YmUAxGYQ3yU4pi9VQZ0XVNJEzdo37zfd52Xct.mzMYtR7Q9X3SbBPBOLwEmnZ9S3A4wekVdwlGbowNF2FgMD2DwegfDA4LoCmKYEkxRO6CTLCk.TZOUxT1NU7TNP03TjMM8zTOsyz7Ns3TgbgNjuP48hoYUKAb5MIgVAdnUaHoBsTEgO4IjkpiSzemwSQkDEEjS2kbAVKgIxEJiiAAgLPIbMEpYGEMUC6sQFDBJ4et4I8TDW3bbDJjA522.QwTggwTxQA86CoG7IDWIgmAAogKYAgAEiG4gkACEsAqW1KMGYoffGj6yoB2Ucx5MyBlXgDxYlnOdgHnSfRwCGdgis1LIMQETBNnntV-ntf18bsSB9bZxt5X1cF0CUDiKnCsJWbqvIDE6CMNLAL5IwyvBEkc8L0v3yayHPtsEXeD6CQYAAkkVBWTPcvIgAXnYALrsX1KhyoWDoFSsSmy-b9UgCiZYBgK.SQ6j0BIDnM8f9paZ33iAaYwZkAAl.MgaWWRggrBbEnfUKZS6G0HmweAbh77h0wKHawFg6hjABMQ3YwQCEwCoKQKhEcaFsBzF4MkTCSEwNRJLEgAByU.cC6LBAFjEHkqAIT0CwN0GBuNhyjzIc3PWodkKlRIJ7R6VCCAMHvKQ-wUBoDq1DkSawsQ2TwA8qRYIJiUCsnoMgIkVQiBiNdjAshliqGbk.LI5EcQBEAmmGSUhowSgxABC0DsrIVF2DAJicWMAz5609mmcWuDSFeIScpUJKjqSVlHkXUgjxkSkO0WAhoo8ABSKJLDxBgSsP4sTMLr04FgTgJQARXEQJwBR6AT5O1DkkDcIhR4VDqL00Osdg6oGyTApA1xel4H8QAaXWFfawBAMisgBCmFAAIACaEdQ4tGQRIxhPdwS6kYCINMJlQ5nXVqPAAclAJQmt1YMFDlUUQmAzzIiUMM6wVkYgpmbk8O5UDEFGzWCQOo0zvHm0rEbcORi3F2D1mYUg99a40XEK3fBzcYgxH8cimIL8CBXn8W0cYMCIkVgbpkMwAIVjoFJTAqop5MhgkmagaZKKRHS0DmjAEVQikwHfuee2UInaJKGHcywVi2ARJpB07A1LghtCUHjFMJiRj0FTpbbwRBDgwMTBYIYYBEB1CxTHVCZ5RgoAgMI1hqZsEkGtgCR5YtF7IFstw5EhtQ6lgyAk6hHTaD6E.SQbBZdjXBHwCQKEwq9b0DabGnWosDCCrSbIzIRSOleAVbArwIg8EgF1kMNGZIErGPDgabRDinHnTdVgIk2c55OyJKBaxta7EEEcSfJt1tW3Ug1owIkcFu22Prf25xzbh3trHXpSddb7EzsHS2tto6iQMhgXeDIq9s3WOQngdYRSiQAEV0DSIlWwVEIhg5UMiYvPe2gAC.J1MTiHeLAGAAtZXkFAGdIgDzjmxGNbLHMCVhnfAjnkgAtACdE.tOWh0g0waDsHGUIaSJ7cQWg2Bp2uIysh168U-DKkK6wVtm5ZGME2dwtBQGMDjpMUODG6AJSoaxmB.QYi7IYTChgYAbZppALx3ZFsdhdPLrMjgjKHYlVISUXtQJLAZ1DhYtAqmGWhyEcgFMkcCE6fOPgqwsTtMZwCbRMjFT34ayzn8Ei.rdnAgATekAd68APtMRWZ9xjD4ZDwKMIkAs2kT1c6CCEHAil23fb1T9eBv1wEJqTC4ug6Oc1S2zbmFawuJexgSXoTFehyGJiwJiFwLgVZYGlmrdXegXH4Dl1pRAv3Yz-ULEA8c0bdkVRyJOFzfWy1A3xpOCnEC9ZAHQktqc9ZWHPEUb450CAdI7Ams4w3x7pgCcXR4MaNvBAqMXJOscJbaxAC0S19mTNifOhJg10njVNiA6E8JvjwPBDQ1csEMH0DwbPrh88TYvsYb.1hxDG5pOPHwyAf.eszFRdaagtgKgoZuoeWdLqTZxMIIEw0E.InwxsHcBYdp43Jv-ziA874zdo2ryizMG7aw4CjyM.p8g-BX2vqAA/",
+      "patch": {
+        "gear": {
+          "weapon": 560032,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "weaponEnchant0": 311305,
+          "weaponEnchant1": 311348,
+          "headMiddle": 410233,
+          "headMiddleGrade": "",
+          "headMiddleCard": 300174,
+          "armor": 450127,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20963,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470073,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "headUpper": 400105,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headUpperEnchant1": 312311,
+          "headUpperEnchant2": 312307,
+          "headUpperEnchant3": null,
+          "weaponEnchant3": 311342,
+          "headUpperCard": 300377,
+          "headLower": 420210,
+          "headLowerGrade": "",
+          "weaponEnchant2": 311352,
+          "shieldCard": 4636,
+          "armorCard": 4302,
+          "garmentCard": 4672,
+          "bootCard": 300217,
+          "accRightEnchant1": 310918,
+          "accRightEnchant2": 4822,
+          "accRightEnchant3": 4744,
+          "shieldEnchant2": 29534,
+          "shieldEnchant3": 29534
+        },
+        "options": {
+          "8": null,
+          "9": null,
+          "36": null,
+          "37": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 150,
+            "uncached": 0,
+            "cacheHits": 6,
+            "engineCalls": 600
+          },
+          "search": {
+            "unique": 149,
+            "uncached": 0,
+            "cacheHits": 16,
+            "engineCalls": 596
+          },
+          "socket": {
+            "unique": 2229,
+            "uncached": 0,
+            "cacheHits": 50,
+            "engineCalls": 8916
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 8.148700000005192,
+          "discovery": 1436.7100999999238,
+          "search": 1467.161600000065,
+          "socket": 27734.081099999952,
+          "levelCheck": 0,
+          "report": 106.98440000004484,
+          "feasibility": 23.829300000041258
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 35508
+      }
+    },
+    {
+      "name": "meister-sets",
+      "mode": "goal",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 30877,
+      "engineCalls": 8314,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 54,
+        "cacheMisses": 2244,
+        "uncachedEvaluations": 13,
+        "engineCalls": 8314,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 137,
+            "uncached": 0,
+            "cacheHits": 1,
+            "engineCalls": 536
+          },
+          "search": {
+            "unique": 162,
+            "uncached": 0,
+            "cacheHits": 12,
+            "engineCalls": 423
+          },
+          "socket": {
+            "unique": 1930,
+            "uncached": 0,
+            "cacheHits": 38,
+            "engineCalls": 7312
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 8,
+            "cacheHits": 0,
+            "engineCalls": 8
+          }
+        },
+        "feasibilityVerificationCalls": 8,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 10863465,
+      "dps": 29855576.25,
+      "reproduced": 29855576.25,
+      "patchDps": 29855576.25,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgMxDSYEVlMPaI0EiPB07nCiUgLCveXIRWMTaa0Vas2mi1Sy2Sm0Su3mq2O20O53W7Wy-WGyLaE1OsUAXTYozwWBGZ00-G02mkQhAwdDpAASngAGYlPDOIMhsMAcWRDS.LURZhDdQAqkMhgQeFGohcZaWK1XkMm0yQM9lzI3KwQ81gC5QksXu833NS6hRpFHpAB2Gdd-tNggAURIVAsTGMk.MMmMpgbi57yFX66wTF425k2nnB7qAFkoHU6o5NlEZPsS-2H0.RGPkBO9lrGctlvFQxmrTYgl4KI2GpVAfE2HQdxvOCUFbdNAlgtAUD-ADuCnWNUOPNcN0YLc9iiKIiiIk9SIvCio1meYdWw4jTyYaRt0Y5iwD.CQ8MjbRjBA3ioH49D2zmPQ.JgOpcJ4SMeJkupaLPMipFmTRpBE5TVPPDStP3UT.L0xhOLpTTpH3GI4IYLIglmfh9hstA7IkjsdzYFzyUYeTNn4GdYyURBECybgZyjGd9mC0L3MwkAYt88dJyjaCb0SvsBxAIdYKoKg1BTMLZlS.ssDygqkv-FKhOMajytTRhTPIqyhJyHV6sK0z6Ja7QnBAsr8oa0zzJ6vrcqoRMoBiMwiqEpx9wGybpsqgCp0iuqJqmmamq42ZjFqRatsaki1Po7gnF4Qi8qW7aTo4nhgJAqtGDAuwsBgeweD0D4YHBdAUxTAkYOB3RQZYMGIfBqHIZh6G4dhhH4aRxGUeRtHUYx9H4cDcAfr.gG71DChQDHJhECoM86kfdANhgkB3BEHyoCWb02CSEgYgkGm0jYCpUBGIhMUQAFCZ5DZgmXAwhmZoWKGCTx.bwR4mGZuW2GTGApuINWQHBBgnigB50FQHXrEQTAAUQFMAQACRDcQSABSmAWXalGDMHXvne9ZUDPS3rcmZBQrwB4sU972wF9x2rYBd2wRWalkGICJgi9zXI79mO45F2JDeZs5U4jqP-aBKBxBdxm7PFtnkBidBGBpgF8kYFngiSWv68b74uZN8hgkDvB9BIMAASSKgxOr.nkQALzsAEKyD6kdZULB0CpWIxeX1eqQBRMsAwSekjqegSG99td5pj2.7YaZg2QAFfmQGmsmCFZs1IAF9RTEOhYLth4DcHPM2mBTYWDqGMAEwDdjBAATAKgH8oE6xzF4MkkDzbQLYKiKmJAADkI9b4QWCITGIPJUAQnoFgbo19dboBIiXawZgk78x1neEKJBNbLUgQQBg-YOzBHCFAaAHMdZEmsLENk8AxKyREWbA03DkBEiqEQEhqtqEMKkYCawVZPjUPBMiOIeDP6IDJKbUYJQYgAhaGeVkLC7BgExBTGAo9.aazTBTX.pttFONMuYlh1J1wl0DqQR4yJTbcNPg0EuAApFElh4jUJWH8exL426cCwJwEoAIriIE4PQ2h.gX5s0rCIEuFQ6i0J1jbY2qBfHUKQNcWheBDEAGl1iT2sAQDIrIAQphQACAAmubHWLQn5kI-tncEupGAiDTPxHWk0OYlwAHJQCUFzDmDAdZVFEJgdsyIlAlOsGJGIKYk5PHmZfB.ws1gkDqDUnREt1zCzNsItRdh.ZmFIHPGOYFxAp3-knGIMRDEvJiMvAg-ZDFtHGNQqxa546ZDMACFY6AwXUKqG2TIYIqmoBqa8ohNNDbvQBFUEJMA158LYArJWzihjzMsABYIViaRZOwDCpleAlD-RTKIkY9AXZS28EQQ41DEwWCGGARAdRvnWwfO2UYKAICELYDmVM38SDMwBEs8mDdkCSWoaiZEstqHLgyE4qBWTaD6C2SQb.ocRXBHwCQKEJL.b0AyQ63mZMDBEo8bozIISsleEZTfLwIg-4gD5kMd6ZI7IyJQKyegCilFTQ1VgIkXta5KyJORYIoiE3yMUcPVNzMM3Uk5owIk9E82yMTQQItyi01lqzZW8yNaC1JobSW9NmaK1EgZNQvsGQW5.rzXePA6wQlEgAIroEoZSkAqIRDG0gdYhuvdtAAF9cqYnEO8WAMBCZ0vIKASaRBFkjNiCKumqqmAlO.ObAJABaAE6IBZYqQXZe9j6kUvqSJrcQWg2Cu2uEihh87-k-FCsSrRVgCiRHrO4WgJ9GC20mDrJDdA7KQPQ9Q-IMQ.nwNuQwMAuow54amn0yWOwcnkZgRwJFCtgqmxKHWoElh3Y60kWgdjiKdYEOQCmC2AC.PnH-lYexvH3ZGLvjrKJa9Oaez.P.AVfTgT7wXUuvAK6xFrnXSIgeGQ8CjCJITDJ5d1OgghBwEJctt3tV3XgfdcAgZgwuLoYw7msa6C8zDHG0bzNOZ.gSXoMFehyBBiwGCFwLjRZYF5mLLBegXH4P59JRA90-SPcTEAdt3qTjYG0eCjtJn6rppegjjsmOIAKyAWB4aXb8ysB2Io3wpoECyWeZ1Zxytl3TJ-IOjx7U9eCBUIOjsbaUx5iAFoUrFNiZAPhqjgraMivrGe8xlj9HXuCLe6ZYIH3oGfaPADHZ6x7e-Ud39r7Ky0ceEBkAe9.biOs.kwpIAVBHQ1YsyaA56xLfvkRhow8yNrapRYTJ1Xat7ziIs74Sc7Ut2szMBbaw4AlxE5x8g-BN2bqAA/",
+      "patch": {
+        "gear": {
+          "headMiddle": 410233,
+          "headMiddleGrade": "",
+          "headMiddleCard": 300174,
+          "armor": 450127,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20963,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470073,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "headUpper": 400105,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headUpperEnchant1": 312311,
+          "headUpperEnchant2": 312307,
+          "headUpperEnchant3": null,
+          "headUpperCard": 300377,
+          "headLower": 420210,
+          "headLowerGrade": "",
+          "armorCard": 4302,
+          "garmentCard": 4672,
+          "bootCard": 300217,
+          "accRightEnchant1": 310918,
+          "accRightEnchant2": 4822,
+          "accRightEnchant3": 4744
+        },
+        "options": {
+          "8": null,
+          "9": null,
+          "36": null,
+          "37": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 11,
+                  "message": "hitsToKill 11 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 11617674,
+                  "required": {
+                    "min": 45202652
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 11617674; o HP com margem de 10% é 45202652."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 11 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 11617674; o HP com margem de 10% é 45202652."
+                ]
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 15,
+                  "message": "hitsToKill 15 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 8977725,
+                  "required": {
+                    "min": 46836900.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 8977725; o HP com margem de 10% é 46836900."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 15 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 8977725; o HP com margem de 10% é 46836900."
+                ]
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 9,
+                  "message": "hitsToKill 9 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 14615610,
+                  "required": {
+                    "min": 46663771.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 14615610; o HP com margem de 10% é 46663771."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 9 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 14615610; o HP com margem de 10% é 46663771."
+                ]
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 17,
+                  "message": "hitsToKill 17 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 8125566,
+                  "required": {
+                    "min": 48682183.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 8125566; o HP com margem de 10% é 48682183."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 17 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 8125566; o HP com margem de 10% é 48682183."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "reason": "hitsToKill 17 fora do pedido (máx 3)."
+          }
+        },
+        "final": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 4,
+                  "message": "hitsToKill 4 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 31220868,
+                  "required": {
+                    "min": 45202652
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 31220868; o HP com margem de 10% é 45202652."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 4 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 31220868; o HP com margem de 10% é 45202652."
+                ]
+              }
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 6,
+                  "message": "hitsToKill 6 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 23942676,
+                  "required": {
+                    "min": 46836900.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 23942676; o HP com margem de 10% é 46836900."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 6 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 23942676; o HP com margem de 10% é 46836900."
+                ]
+              }
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 4,
+                  "message": "hitsToKill 4 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 38977461,
+                  "required": {
+                    "min": 46663771.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 38977461; o HP com margem de 10% é 46663771."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 4 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 38977461; o HP com margem de 10% é 46663771."
+                ]
+              }
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 7,
+                  "message": "hitsToKill 7 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 21670293,
+                  "required": {
+                    "min": 48682183.00000001
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 21670293; o HP com margem de 10% é 48682183."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 7 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 21670293; o HP com margem de 10% é 48682183."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "reason": "hitsToKill 7 fora do pedido (máx 3)."
+          }
+        },
+        "search": {
+          "feasible": false,
+          "startedFeasible": false,
+          "bestGap": {
+            "worst": 0.5103,
+            "total": 2.3323
+          },
+          "stoppedBy": "search-budget",
+          "evaluations": {
+            "counted": 300,
+            "otherTargets": 161,
+            "skippedForBudget": 41,
+            "afterSearch": 15,
+            "unique": 2244,
+            "finalChecks": 8
+          },
+          "socketFieldsRefusedByGoal": 0,
+          "note": "A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível."
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 137,
+            "uncached": 0,
+            "cacheHits": 1,
+            "engineCalls": 536
+          },
+          "search": {
+            "unique": 162,
+            "uncached": 0,
+            "cacheHits": 12,
+            "engineCalls": 423
+          },
+          "socket": {
+            "unique": 1930,
+            "uncached": 0,
+            "cacheHits": 38,
+            "engineCalls": 7312
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 10.968499999988126,
+          "discovery": 1624.0814000000828,
+          "search": 1383.4614000001457,
+          "socket": 23555.366000000475,
+          "levelCheck": 0,
+          "report": 101.63550000000396,
+          "feasibility": 22.309700000070734
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 30852
+      }
+    },
+    {
+      "name": "meister-sets",
+      "mode": "general",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 31510,
+      "engineCalls": 8239,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 65,
+        "cacheMisses": 2064,
+        "uncachedEvaluations": 13,
+        "engineCalls": 8239,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 156,
+            "uncached": 0,
+            "cacheHits": 2,
+            "engineCalls": 624
+          },
+          "search": {
+            "unique": 143,
+            "uncached": 0,
+            "cacheHits": 22,
+            "engineCalls": 572
+          },
+          "socket": {
+            "unique": 1750,
+            "uncached": 0,
+            "cacheHits": 38,
+            "engineCalls": 7000
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 8,
+            "cacheHits": 0,
+            "engineCalls": 8
+          }
+        },
+        "feasibilityVerificationCalls": 8,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 10863465,
+      "dps": 29855576.25,
+      "reproduced": 29855576.25,
+      "patchDps": 29855576.25,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEAAVMys6gAE8GwqDwAIAQohUEoALwwzSsEDILCjADyQ0YxBI3wMjA2AG1hgB9CR4UFMIl1LDICDkXjcRFDInIqh4Slk0jZVgkTAwFg8uD83lCwUCvlikXi4UgMxDSYEVlMPaI0EiPB07nCiUgLCveXIRWMTaa0Vas2mi1Sy2Sm0Su3mq2O20O53W7Wy-WGyLaE1OsUAXTYozwWBGZ00-G02mkQhAwdDpAASngAGYlPDOIMhsMAcWRDS.LURZhDdQAqkMhgQeFGohcZaWK1XkMm0yQM9lzI3KwQ81gC5QksXu833NS6hRpFHpAB2Gdd-tNggAURIVAsTGMk.MMmMpgbi57yFX66wTF425k2nnB7qAFkoHU6o5NlEZPsS-2H0.RGPkBO9lrGctlvFQxmrTYgl4KI2GpVAfE2HQdxvOCUFbdNAlgtAUD-ADuCnWNUOPNcN0YLc9iiKIiiIk9SIvCio1meYdWw4jTyYaRt0Y5iwD.CQ8MjbRjBA3ioH49D2zmPQ.JgOpcJ4SMeJkupaLPMipFmTRpBE5TVPPDStP3UT.L0xhOLpTTpH3GI4IYLIglmfh9hstA7IkjsdzYFzyUYeTNn4GdYyURBECybgZyjGd9mC0L3MwkAYt88dJyjaCb0SvsBxAIdYKoKg1BTMLZlS.ssDygqkv-FKhOMajytTRhTPIqyhJyHV6sK0z6Ja7QnBAsr8oa0zzJ6vrcqoRMoBiMwiqEpx9wGybpsqgCp0iuqJqmmamq42ZjFqRatsaki1Po7gnF4Qi8qW7aTo4nhgJAqtGDAuwsBgeweD0D4YHBdAUxTAkYOB3RQZYMGIfBqHIZh6G4dhhH4aRxGUeRtHUYx9H4cDcAfr.gG71DChQDHJhECoM86kfdANhgkB3BEHyoCWb02CSEgYgkGm0jYCpUBGIhMUQAFCZ5DZgmXAwhmZoWKGCTx.bwR4mGZuW2GTGApuINWQHBBgnigB50FQHXrEQTAAUQFMAQACRDcQSABSmAWXalGDMHXvne9ZUDPS3rcmZBQrwB4sU972wF9x2rYBd2wRWalkGICJgi9zXI79mO45F2JDeZs5U4jqP-aBKBxBdxm7PFtnkBidBGBpgF8kYFngiSWv68b74uZN8hgkDvB9BIMAASSKgxOr.nkQALzsAEKyD6kdZULB0CpWIxeX1eqQBRMsAwSekjqegSG99td5pj2.7YaZg2QAFfmQGmsmCFZs1IAF9RTEOhYLth4DcHPM2mBTYWDqGMAEwDdjBAATAKgH8oE6xzF4MkkDzbQLYKiKmJAADkI9b4QWCITGIPJUAQnoFgbo19dboBIiXawZgk78x1neEKJBNbLUgQQBg-YOzBHCFAaAHMdZEmsLENk8AxKyREWbA03DkBEiqEQEhqtqEMKkYCawVZPjUPBMiOIeDP6IDJKbUYJQYgAhaGeVkLC7BgExBTGAo9.aazTBTX.pttFONMuYlh1J1wl0DqQR4yJTbcNPg0EuAApFElh4jUJWH8exL426cCwJwEoAIriIE4PQ2h.gX5s0rCIEuFQ6i0J1jbY2qBfHUKQNcWheBDEAGl1iT2sAQDIrIAQphQACAAmubHWLQn5kI-tncEupGAiDTPxHWk0OYlwAHJQCUFzDmDAdZVFEJgdsyIlAlOsGJGIKYk5PHmZfB.ws1gkDqDUnREt1zCzNsItRdh.ZmFIHPGOYFxAp3-knGIMRDEvJiMvAg-ZDFtHGNQqxa546ZDMACFY6AwXUKqG2TIYIqmoBqa8ohNNDbvQBFUEJMA158LYArJWzihjzMsABYIViaRZOwDCpleAlD-RTKIkY9AXZS28EQQ41DEwWCGGARAdRvnWwfO2UYKAICELYDmVM38SDMwBEs8mDdkCSWoaiZEstqHLgyE4qBWTaD6C2SQb.ocRXBHwCQKEJL.b0AyQ63mZMDBEo8bozIISsleEZTfLwIg-4gD5kMd6ZI7IyJQKyegCilFTQ1VgIkXta5KyJORYIoiE3yMUcPVNzMM3Uk5owIk9E82yMTQQItyi01lqzZW8yNaC1JobSW9NmaK1EgZNQvsGQW5.rzXePA6wQlEgAIroEoZSkAqIRDG0gdYhuvdtAAF9cqYnEO8WAMBCZ0vIKASaRBFkjNiCKumqqmAlO.ObAJABaAE6IBZYqQXZe9j6kUvqSJrcQWg2Cu2uEihh87-k-FCsSrRVgCiRHrO4WgJ9GC20mDrJDdA7KQPQ9Q-IMQ.nwNuQwMAuow54amn0yWOwcnkZgRwJFCtgqmxKHWoElh3Y60kWgdjiKdYEOQCmC2AC.PnH-lYexvH3ZGLvjrKJa9Oaez.P.AVfTgT7wXUuvAK6xFrnXSIgeGQ8CjCJITDJ5d1OgghBwEJctt3tV3XgfdcAgZgwuLoYw7msa6C8zDHG0bzNOZ.gSXoMFehyBBiwGCFwLjRZYF5mLLBegXH4P59JRA90-SPcTEAdt3qTjYG0eCjtJn6rppegjjsmOIAKyAWB4aXb8ysB2Io3wpoECyWeZ1Zxytl3TJ-IOjx7U9eCBUIOjsbaUx5iAFoUrFNiZAPhqjgraMivrGe8xlj9HXuCLe6ZYIH3oGfaPADHZ6x7e-Ud39r7Ky0ceEBkAe9.biOs.kwpIAVBHQ1YsyaA56xLfvkRhow8yNrapRYTJ1Xat7ziIs74Sc7Ut2szMBbaw4AlxE5x8g-BN2bqAA/",
+      "patch": {
+        "gear": {
+          "headMiddle": 410233,
+          "headMiddleGrade": "",
+          "headMiddleCard": 300174,
+          "armor": 450127,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "garment": 20963,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470073,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "headUpper": 400105,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headUpperEnchant1": 312311,
+          "headUpperEnchant2": 312307,
+          "headUpperEnchant3": null,
+          "headUpperCard": 300377,
+          "headLower": 420210,
+          "headLowerGrade": "",
+          "armorCard": 4302,
+          "garmentCard": 4672,
+          "bootCard": 300217,
+          "accRightEnchant1": 310918,
+          "accRightEnchant2": 4822,
+          "accRightEnchant3": 4744
+        },
+        "options": {
+          "8": null,
+          "9": null,
+          "36": null,
+          "37": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 4
+          },
+          "discovery": {
+            "unique": 156,
+            "uncached": 0,
+            "cacheHits": 2,
+            "engineCalls": 624
+          },
+          "search": {
+            "unique": 143,
+            "uncached": 0,
+            "cacheHits": 22,
+            "engineCalls": 572
+          },
+          "socket": {
+            "unique": 1750,
+            "uncached": 0,
+            "cacheHits": 38,
+            "engineCalls": 7000
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 15,
+            "uncached": 4,
+            "cacheHits": 3,
+            "engineCalls": 31
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 13.84320000000298,
+          "discovery": 1967.6828000000387,
+          "search": 1889.463799999823,
+          "socket": 23163.253699999885,
+          "levelCheck": 0,
+          "report": 103.70570000004955,
+          "feasibility": 27.69940000004135
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 31480
+      }
+    },
+    {
+      "name": "magus-replay",
+      "mode": "goal",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 13761,
+      "engineCalls": 3038,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 60,
+        "cacheMisses": 3031,
+        "uncachedEvaluations": 7,
+        "engineCalls": 3038,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 1
+          },
+          "discovery": {
+            "unique": 146,
+            "uncached": 0,
+            "cacheHits": 18,
+            "engineCalls": 146
+          },
+          "search": {
+            "unique": 153,
+            "uncached": 0,
+            "cacheHits": 13,
+            "engineCalls": 153
+          },
+          "socket": {
+            "unique": 2719,
+            "uncached": 0,
+            "cacheHits": 28,
+            "engineCalls": 2719
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 13,
+            "uncached": 4,
+            "cacheHits": 1,
+            "engineCalls": 17
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 2,
+            "cacheHits": 0,
+            "engineCalls": 2
+          }
+        },
+        "feasibilityVerificationCalls": 2,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 7375780,
+      "dps": 29237070,
+      "reproduced": 29237070,
+      "patchDps": 29237070,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgAOyeAtLQEZbYkDGeIANCG9mGAoAWAEwBWMTxh4AbnhgURQySABWiRgBlZ8imIAMPMHgAeFAIw8AFlijIAygBcAntMWWQNuwGFEMFBQA7Dx8iI5WeGC.-sgUAMxGjrHkHuqMTskeWADmUBbmhmoaAIK5QTwyUI4WIoVpOFUUABw8UCTVKXF1GgCS7RYqACamet2MACIj5C0gMOgQFvpjmvPCiVjxAJw8aU4b5MEgAO5QguRx20WMAOqnFABsRlQKKUs7GvbP.e.MvmTTP28yA6HmM0jYjjwg2Kjgg9mgcAoIAAKigSFhBogAAROFCoAC8.LE3BAyCwRwA8lRHMQSMiTI4zgBtEiYGBcVlwDls7lczns-m8gU8wWC8BUAAKBA47XIxJ4WDYgzl3FFIvVfI1ws1XM8VHOgXuqp5eqlyBljhSxt1WDAVGV5hJtvtVqFbrVurtMHIQmt7PAAFksLDXR7tf6wEkVUYgyHAn73VqALo8I54LBUUgPIRLEQiVPpzMkABKeAAZm1OCl88dC6QAOJk4ZI4oktMZ0jeLDIQaO8giQJxJpCAsdkhdnsiRSD4fWdODACqVCoBGES3MG7nGKXK.QpYrJCr5hrEW3y4IjYxVZAra3i-PyAng2EcUCI8884DUEGgzcPoKIhxAkH4Yl.P7SE.wgGMBp6DJoiBpskoj6CI5jAd2qABD6BjmIElwYSg.6VjUCpoCgkHnEs.hNIUYBWFA8jPj69y5rR9GMURh4keA7EwIMFFCPccSPDxDF8ZezaULeomMQAouwNjtFO5wFE0gQ1nRYmDPJbCKY4cTxKp6k8NkGF4P0Po0V0ImmWg5mOJxR41rZqD2QJYiGjwjCIGEwiBPox41t5YSOdxwWOBRXQoUIMzhRJ17SYqbDaGWHRxHmr4KmwyXlhF3ZMcogSHElxZQNkVgdEImz6DFNYlWVFXuUVPArh0mwbpcrXwc4LAuGsvCIJG6CuTuq4.kscRCIcbCDY4w14GBv5VkIBT6JslwzUNrnwYhig1foKibXNrn1mZFm1GI1UhLN806Xpo3JHEqmzgNW14HdWDtItf5PdRTSHTdrkfe0O1jb9TRNCJR23Qpn2OKddnnZscRiDMdEYgh1x1v8SiBGIwHo5iRxY2OoWvEYNhE8UZHJEoEME5TCHU5he7lsR5M8RjRzMygwP6X5x4U1z9i8UxuNiO.hMISLWlkwUQtEwAQj5HR0y9UtHMrIVs1xHMa1rjh8wZPqBILnNE7J3bIG02SKIJ9wqBrlvINbJDZHLbFc1KJCDHDdv3PcaOM0c3u..0HtGAiMCK.gZZlsy8uGEnXDJ6nKfp2nmcZ9nWe5zn.d54XBfF0XpclwXKbgFHMdx0GVAUKAXbtIgbCfYM37oGc8sgN40iue0UD7IUxRu-IncUIUPSoJmRA0tiQasmchSySYVCD3PE88L4094JCA9DzwpYwGVxCbyAivmVCUAQsNZ-2IgmBYogZZYgAEumcgkFibdYs74Rn8iFgpxUCfSfi-CUyAwh4AhLSABQCwAgK-s-LE4Q8BYmuFbYgyRCiAOPgg0ByDUFYiDLkNgg9-g4PgYgsBWJ4BQDkL-Pu9kl48GptkdAc0wBYgaI4A.N5kDsM4ViZEY9UBnwgZEcyXDihkMiGfIEWAABezgsRLkgd2M.mgsDoF9jkRemjtG.yxMWLAGAWE3kGLQdEx9DzGM7lYcRCECDCKsMgTuHRCgkyLFiM0ZZoFzwoTweAthkAqPvpgO.wccQPxeIUYJMAZpf3CbEng9Y-B4FQNEiJ5BCgUnbiQAA5FwiUTjsE8BIayTJitaBYAWDkngMcFI0JFtbaeZ8Aw.RIMfcqjgcQEHMleO.SQoDQDdmfAA.vYHIeBxl0MYhM..5p.nIHGX0Ig2QSCD0iVpHEK5ET1PPmSXIRSfGIAyXfE4bssTjE.hwdpzhIzXxYFiYo09j4VlbgEu.eyYC-1hgPMZBygzmisDQiBpBIRkjvv09EwwaEAClyS2DyAc649FIx-mHgIW0RAv5AkGlw5B9h0AkGMB41hy5pA0J6IMElZ9X7DVQDbM.SBgQkrwCcgA0qccx9gCCVA4FiMsKAsQAE0H5n3GG4zJpAUERCxIrYMjhpAVnmQc0qVzkEADkoCMDHqPQJIA.gyEwIeMkjAqX2AYtkMs1soRn2LPY4R2Jbg.yZfs5eulsT30BYUewzhp5WFICo5B8E5BlJAPAa22RsgnJ9bbA52gmwnMmEcSVty0G3HCOg9ACbJ4kAPFUNBDLUBMt9eUzuTzfl9EhXMSShRt67xeW09VtgmKFBucgCAWJe7kklXgRgscyyTMzLQX.q9-BECzOqmwVAwCIEGCGl.X5DxHBQBAMahR6zlj8ZsrAWItUtzmsgXWuSyQbwObJSovzkk9vQIQKs.a-EwOnYUfAJBECZKnjQSIU7DU1sQCYJ5XyDmKyqJCntfh208BKXAcyZ9v0sAyfZBZKAOC0BWWssqe7xmAIEbvcZfZCiTLQ8s1ZpLsOD1w92bIBHlLEcWehgg5H1k4bw7Rxw4zjYMdIxhljlGsDUfw5x30BzLyVF4SB4jAY8CnEheMgAiugWpj6eAUmkMNHEtzjoTwAL5ZRpHIeEsAYB1wbiAAMDyaSt1.a854UAPnBlgRzUsM0NlQEUVCXZ8gXgeEbb0uzCH2hSIc8B5zhQj7pmMNBnux8QFmAOQALTwFQKwzgI3yQINkFRfxw1-r0wZ.heBjNwAToYSwhdK5UBxUVkrMBmSSEsPLeWjXDD5gSJYSQXWuBNa4E0KrNWjNRzM.QRuUGFV.A6CoKNs1rlFcyDwKZfiXDoJYL5v1MTrlkjaIsVJZIJNOdIM8uZfE9DlKs1W5t9nHMge7lGvAeBFE228-smsJj27j3OIfaBiB3OecGC93zi3Nsr2qxR6dKh-NnZ7l4L.mgGqOE2YClQ8Eew0PwGgWAzmPAychCK3EaALA8GRGurEikAd7DjsQ20kLnDNF07poAA/",
+      "patch": {
+        "gear": {
+          "weapon": 640022,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "headUpper": 400111,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headLower": 420213,
+          "headLowerGrade": "",
+          "armor": 450179,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorCard": 300080,
+          "boot": 470122,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "shadowArmor": 24883,
+          "shadowArmorRefine": 10,
+          "shadowArmorEnchant3": 4712,
+          "shadowBoot": 24884,
+          "shadowBootRefine": 10,
+          "shadowBootEnchant3": 4712,
+          "shield": 460020,
+          "shieldRefine": 12,
+          "shieldGrade": "A",
+          "shieldEnchant3": 310872,
+          "headUpperEnchant2": null,
+          "headUpperEnchant3": null,
+          "headUpperCard": 4374,
+          "shieldCard": 4636,
+          "shieldEnchant2": 310872,
+          "headMiddleCard": 4503,
+          "garmentCard": 4576,
+          "bootCard": 300248,
+          "weaponCard1": 27384,
+          "weaponCard2": 27384
+        },
+        "options": {
+          "0": null,
+          "1": null,
+          "2": null,
+          "6": null,
+          "7": null,
+          "8": null,
+          "9": null,
+          "36": "str:5",
+          "37": "sMatk:7",
+          "40": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 543,
+                  "message": "hitsToKill 543 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 11063676,
+                  "required": {
+                    "min": 2200000000
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 11063676; o HP com margem de 10% é 2200000000."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 543 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 11063676; o HP com margem de 10% é 2200000000."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "hitsToKill 543 fora do pedido (máx 3)."
+          }
+        },
+        "final": {
+          "status": "infeasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "infeasible",
+              "violations": [
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "hitsToKill",
+                  "required": {
+                    "max": 3
+                  },
+                  "actual": 134,
+                  "message": "hitsToKill 134 fora do pedido (máx 3)."
+                },
+                {
+                  "code": "GOAL_NOT_MET",
+                  "metric": "margin",
+                  "actual": 45107337,
+                  "required": {
+                    "min": 2200000000
+                  },
+                  "message": "3 golpe(s) de dano mínimo somam 45107337; o HP com margem de 10% é 2200000000."
+                }
+              ],
+              "unknowns": [],
+              "kill": {
+                "damageFeasible": false,
+                "constraintsMet": true,
+                "reasons": [
+                  "hitsToKill 134 fora do pedido (máx 3).",
+                  "3 golpe(s) de dano mínimo somam 45107337; o HP com margem de 10% é 2200000000."
+                ]
+              }
+            }
+          ],
+          "kill": {
+            "damageFeasible": false,
+            "constraintsMet": true
+          },
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "hitsToKill 134 fora do pedido (máx 3)."
+          }
+        },
+        "search": {
+          "feasible": false,
+          "startedFeasible": false,
+          "bestGap": {
+            "worst": 0.9774,
+            "total": 1.4723
+          },
+          "stoppedBy": "search-budget",
+          "evaluations": {
+            "counted": 300,
+            "otherTargets": 0,
+            "skippedForBudget": 0,
+            "afterSearch": 13,
+            "unique": 3031,
+            "finalChecks": 2
+          },
+          "socketFieldsRefusedByGoal": 0,
+          "note": "A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível."
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 1
+          },
+          "discovery": {
+            "unique": 146,
+            "uncached": 0,
+            "cacheHits": 18,
+            "engineCalls": 146
+          },
+          "search": {
+            "unique": 153,
+            "uncached": 0,
+            "cacheHits": 13,
+            "engineCalls": 153
+          },
+          "socket": {
+            "unique": 2719,
+            "uncached": 0,
+            "cacheHits": 28,
+            "engineCalls": 2719
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 13,
+            "uncached": 4,
+            "cacheHits": 1,
+            "engineCalls": 17
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 5.7233999999880325,
+          "discovery": 643.2427000000898,
+          "search": 626.1943000001484,
+          "socket": 10515.451799999079,
+          "levelCheck": 0,
+          "report": 66.78130000003148,
+          "feasibility": 7.1875
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 13750
+      },
+      "replay": {
+        "equippedCount": 19,
+        "skippedItems": [],
+        "traits": {
+          "pow": 0,
+          "sta": 39,
+          "wis": 39,
+          "spl": 100,
+          "con": 0,
+          "crt": 0
+        },
+        "learnedSkillCount": 66,
+        "activeSetup": {
+          "Recognized Spell": 1,
+          "Mystical Amplification": 10
+        },
+        "formulaVersion": "pre-rebalance"
+      }
+    },
+    {
+      "name": "magus-replay",
+      "mode": "general",
+      "runtime": "mcp",
+      "procMode": "off",
+      "maxSearchMs": 45000,
+      "maxSolves": 300,
+      "wallMs": 12869,
+      "engineCalls": 3038,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 300,
+        "effectiveLimit": 300,
+        "counted": 300,
+        "cacheHits": 60,
+        "cacheMisses": 3031,
+        "uncachedEvaluations": 7,
+        "engineCalls": 3038,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 1
+          },
+          "discovery": {
+            "unique": 146,
+            "uncached": 0,
+            "cacheHits": 18,
+            "engineCalls": 146
+          },
+          "search": {
+            "unique": 153,
+            "uncached": 0,
+            "cacheHits": 13,
+            "engineCalls": 153
+          },
+          "socket": {
+            "unique": 2719,
+            "uncached": 0,
+            "cacheHits": 28,
+            "engineCalls": 2719
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 13,
+            "uncached": 4,
+            "cacheHits": 1,
+            "engineCalls": 17
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 2,
+            "cacheHits": 0,
+            "engineCalls": 2
+          }
+        },
+        "feasibilityVerificationCalls": 2,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 7375780,
+      "dps": 29420560,
+      "reproduced": 29420560,
+      "patchDps": 29420560,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgAOyeAtLQEZbYkDGeIANCG9mGAoAWAEwBWMTxh4AbnhgURQySABWiRgBlZ8imIAMPMHgAeFAIw8AFlijIAygBcAntMWWQNuwGFEMFBQA7Dx8iI5WeGC.-sgUAMxGjrHkHuqMTskeWADmUBbmhmoaAIK5QTwyUI4WIoVpOFUUABw8UCTVKXF1GgCS7RYqACamet2MACIj5C0gMOgQFvpjmvPCiVjxAJw8aU4b5MEgAO5QguRx20WMAOqnFABsRlQKKUs7GvbP.e.MvmTTP28yA6HmM0jYjjwg2Kjgg9mgcAoIAAKigSFhBogAAROFCoAC8.LE3BAyCwRwA8lRHMQSMiTI4zgBtEiYGBcVlwDls7lczns-m8gU8wWC8BUAAKBA47XIxJ4WDYgzl3FFIvVfI1ws1XM8VHOgXuqp5eqlyBljhSxt1WDAVGV5hJtvtVqFbrVurtMHIQmt7PAAFksLDXR7tf6wEkVUYgyHAn73VqALo8I54LBUUgPIRLEQiVPpzMkABKeAAZm1OCl88dC6QAOJk4ZI4oktMZ0jeLDIQaO8giQJxJpCAsdkhdnsiRSD4fWdODACqVCoBGES3MG7nGKXK.QpYrJCr5hrEW3y4IjYxVZAra3i-PyAng2EcUCI8884DUEGgzcPoKIhxAkH4Yl.P7SE.wgGMBp6DJoiBpskoj6CI5jAd2qABD6BjmIElwYSg.6VjUCpoCgkHnEs.hNIUYBWFA8jPj69y5rR9GMURh4keA7EwIMFFCPccSPDxDF8ZezaULeomMQAouwNjtFO5wFE0LFGLxgzyWwimOHE8SqepIDZBheD9D6NFdCJJloGZjicUeNY2agdkCWIho8IwiBhMIgT6MeNZeWEDncUFjgUV0KFCDMYUSde0mKmw2hlh0cR5q.CpsEl5bhd2THKIEhyJcWUDZFYHRCJs.jRTWxWleVbmFTwK4dJsG6XC18HOCwLhrLwiCRugLk7quPpLHEQiHGwA2OENeBgb.VZCAU.ibJc02DS58GIYo1X6CoG2zS59ameZtRiFVIQzXN2m6SNyRxKps79ZteC3Vg7QLX.j3UU0B3XS573tNto0-U0alXa9QOOCdtlnZscRiDMdEYgh1x1v8SiBGIwEo5iRzo2OIWvBpqNHMUZHJEo4O4zY.MU5he7lsRJM8WTDMoND.k.oEx6k-j9iaYok1iO.eMIYLYmDMTBT8whABC3kdNTz3i0civBczXGs2rGuOFzvl82z.Oyd2yBtNkwv3PcKhq6byDmyQ2Qy2xZNSiQgwfcrgn3MjdMIe7nvtC7RgIjA8voGWZbMrLhhx1w8eJwnydJ6nKfp2nmcZ9nWe5zn.d54XBc5ym4BhxHUdBlQFCgF27SIGwH2DN.6BnLLIDeNILntFA.yFMUTvyK3FCFD0qCZkQNLYkGrJnIUskmFQvdTyPPC.OPeCQj3fc8KWMClcQq8gPLZlQlAEJDUf9iIJgWKIGWWIABLpnIJBYk3WL2.ER-IiwpyoB9O.D8JTIDCHgCEtIf5-zAAAt.98sThDwFia4ZtiDJEKL-feMDAHwMQViIMuQ2C93.Bg6BsCgFYngFAOQn8u52TnjwCm2R0CzTAFiBojgd43mQMw1hWJkRD1QEfEBkQzJsOKEQyIR8gRYAAF7OCxEuUB3Yj6aCwOgT2ORZ6qPUZ7LExYsAYAYTeQYtB0T70PPo1uVhhEIQIPwqwyBW4dEKITIsWIzRlnAVPEhPB4C2GQAo6.mAr7.yODiG.LxCj.JgNNN.wSok8HrH4PAqAIkhPIIUCkzcSAAHI2ESjsegngBDWRpPlrQLACxMk8AjgpChgtzbjyPgGbyJB95lUcDiAgZkrxXySFAaATsj4AH17A5DwCMqhjFRnX3ND05AIy.hEGyCQXuoSpY4hXIiGpx8yS5HyR4xAqSr4nCdlicYH0OAtOcJGc.LAsTFHHvvCsjcfFX22TAT.CkvYWxad2HSFCQGkEhGSK.PT0TDAoQAKXJLYPIuzrj0UjH.fuAhbREDfkCAabD4H2HQCQYwLjGHLmkBQnogwCVH0fkNVAfzdlIGBASvAhyADSpxjH2AIJUDgWIywoCxAATRvkfcYTi0mkAQRELE8tgyOGkBWGZuySrnPgQAOSgIwIeg9fEgD6DITAh4ySMDJfYBi2QyzmyhEfYs1j.HYluB7OlOz546WxNfYZuz7DOHHlYUgCj4HwTkMUkA8BzbZGyIcj1ltdnaCbIcyYRxRVXKQbccIyD0AxtHiQA8VQkE0tQHSz1hQAyt3uV8vooK5iSUKOvTejzmnKtsExQolzkAQCxJ3ckoq8CMEjmWMZmZaCf0Xv4IgWZlU2CoGARAgwA0Py-IeI4KAICjUKPWcsXi1lYCxGqhus1kDayyWSFeuzZKVC.Qkzt6BCBVmzV4iBE7Cj4BIIgNJY8aCRHHbqytiATD3Pebs.WVRQWdr8C2nghS4BmSPh.lgqS7KzJQBwWgizlmlW3SM3.PDN4jL7IUMZyGFlLMJRh3uWHuzZFw8pAjcyUMEBIyszD2GqOOBGdzWjRHUOMbI1gCjOG2O.l2ZeSonDAMEYDHgU4oKRkAEV0BVLvTwCk0gho4iuUdEeABfTKNI5DwlgDAKuNcQABluTSRuXynnPCgK84MkDWalmmqsqAsioRbPkC8DwdaunWdg.0MRtmAMOcKHvdMxgIMd33gAswuyABaeAqBWGcCG.SBBsgKL.MG792ndPULwAZuAMdDCWFzqXKgGL8uFZgMySQlhZayzq4YfMCRLCSHa1werXAmjlcq-psOxnyC13AzKvwHQVBhpmhc-LmQeDjK8S4ZBLAvOFCvWK2w-x24iaqPZ0gDzpl8T0CU8z5aG02bs4B9uYa8B4FkRbDzOyawGObsPc4u9wGIBc25wYD2vNzciSOirpGJ0qB80djuXg36aHqo4NZnqVDwR7BQ-AaBYAOY8JJyEArcRoAsDwZEy6sSKR.3sKO.DbSgucM0LTWmgA/",
+      "patch": {
+        "gear": {
+          "weapon": 640022,
+          "weaponRefine": 12,
+          "weaponGrade": "A",
+          "headUpper": 400111,
+          "headUpperRefine": 12,
+          "headUpperGrade": "A",
+          "headLower": 420213,
+          "headLowerGrade": "",
+          "boot": 470122,
+          "bootRefine": 12,
+          "bootGrade": "A",
+          "shadowArmor": 24883,
+          "shadowArmorRefine": 10,
+          "shadowArmorEnchant3": 4712,
+          "shadowBoot": 24884,
+          "shadowBootRefine": 10,
+          "shadowBootEnchant3": 4712,
+          "shield": 460020,
+          "shieldRefine": 12,
+          "shieldGrade": "A",
+          "shieldEnchant3": 310860,
+          "headUpperEnchant2": null,
+          "headUpperEnchant3": null,
+          "headUpperCard": 4374,
+          "shieldCard": 4636,
+          "shieldEnchant2": 310860,
+          "headMiddleCard": 4503,
+          "armorCard": 300080,
+          "garmentCard": 4576,
+          "bootCard": 300248,
+          "weaponCard1": 27384,
+          "weaponCard2": 27384
+        },
+        "options": {
+          "0": null,
+          "1": null,
+          "2": null,
+          "6": null,
+          "7": null,
+          "8": null,
+          "9": null,
+          "36": "str:5",
+          "37": "sMatk:7",
+          "40": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (300 de 300): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21065,
+              "name": "Dummy - Médio",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21065,
+            "name": "Dummy - Médio",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 1
+          },
+          "discovery": {
+            "unique": 146,
+            "uncached": 0,
+            "cacheHits": 18,
+            "engineCalls": 146
+          },
+          "search": {
+            "unique": 153,
+            "uncached": 0,
+            "cacheHits": 13,
+            "engineCalls": 153
+          },
+          "socket": {
+            "unique": 2719,
+            "uncached": 0,
+            "cacheHits": 28,
+            "engineCalls": 2719
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 13,
+            "uncached": 4,
+            "cacheHits": 1,
+            "engineCalls": 17
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 3.7123999999894295,
+          "discovery": 578.8244000000705,
+          "search": 574.281399999978,
+          "socket": 9772.182899999432,
+          "levelCheck": 0,
+          "report": 57.27480000004289,
+          "feasibility": 6.942799999989802
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 12859
+      },
+      "replay": {
+        "equippedCount": 19,
+        "skippedItems": [],
+        "traits": {
+          "pow": 0,
+          "sta": 39,
+          "wis": 39,
+          "spl": 100,
+          "con": 0,
+          "crt": 0
+        },
+        "learnedSkillCount": 66,
+        "activeSetup": {
+          "Recognized Spell": 1,
+          "Mystical Amplification": 10
+        },
+        "formulaVersion": "pre-rebalance"
+      }
+    }
+  ]
+}

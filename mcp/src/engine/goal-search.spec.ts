@@ -91,7 +91,8 @@ describe('Greedy with a goal', () => {
     // The objective (HP) says nothing about damage and the secondary weighs a thousandth: only the goal can move the secondary. The
     // old reading (the goal's rule as a filter on the first target) leaves it where it was; the ranking walks it to the goal.
     const targets = [{ monsterId: ONE }, { monsterId: THIRD, weight: 0.001 }];
-    const args = { objective: 'hp', targets, maxSolves: 600, slots: ['weapon', 'armor', 'headUpper', 'garment'] };
+    // 600 before the secondary's reads were charged to the budget. Measured now: first feasible at 716 counted evaluations (900 still stops 2.7% short), so 1500.
+    const args = { objective: 'hp', targets, maxSolves: 1500, slots: ['weapon', 'armor', 'headUpper', 'garment'] };
     const filtered = await search({ ...args, require: [{ metric: 'hitsToKill', max: 2 }], constraints: {} });
     expect(statuses(filtered.feasibility.final)).toEqual([`${ONE}:feasible`, `${THIRD}:infeasible`]);
 
@@ -110,6 +111,37 @@ describe('Greedy with a goal', () => {
     expect(again.feasibility.final.status).toBe('feasible');
     expect(again.final.dps).toBeGreaterThanOrEqual(again.baseline.dps);
   }, 300_000);
+
+  describe('what the other targets cost', () => {
+    const targets = [ONE, TWO, THIRD].map((monsterId) => ({ monsterId }));
+
+    it('the reads of the other targets spend the budget, and what comes after the search is reported apart', async () => {
+      const found = await search({ targets, goal: { maxHitsToKill: 2 }, maxSolves: 300 });
+      const { evaluations } = found.feasibility.search;
+      expect(evaluations.otherTargets).toBeGreaterThan(0);
+      expect(evaluations.otherTargets).toBeLessThan(evaluations.counted);
+      expect(evaluations.counted).toBe(found.solves);
+      expect(evaluations.counted).toBeLessThanOrEqual(300);
+      // Every fresh evaluation made while searching is in `counted` (the +1 is the baseline); the rest is the reports after it.
+      expect(evaluations.unique - evaluations.afterSearch).toBe(evaluations.counted - 1);
+      // The independent judgement of the base and of the answer: one run per target each, mandatory, outside the budget.
+      expect(evaluations.finalChecks).toBe(2 * targets.length);
+    }, 300_000);
+
+    it('with the budget spent it reads no more targets: the candidate stays unjudged and cannot win, and the claim matches the independent judgement', async () => {
+      const found = await search({ targets, goal: { maxHitsToKill: 2 }, maxSolves: 120 });
+      const { evaluations, feasible } = found.feasibility.search;
+      expect(evaluations.skippedForBudget).toBeGreaterThan(0);
+      expect(evaluations.counted).toBeLessThanOrEqual(120);
+      // `search.feasible` is the search's own reading; the final judgement recomputes every target, so a skipped read can never turn into a feasible claim.
+      expect(found.feasibility.final.status === 'feasible').toBe(feasible);
+    }, 300_000);
+
+    it('a single target has nothing else to read: the count is the one it always was', async () => {
+      const found = await search({ target: { monsterId: TWO }, goal: { maxHitsToKill: 2 }, maxSolves: 300 });
+      expect(found.feasibility.search.evaluations).toMatchObject({ otherTargets: 0, skippedForBudget: 0, counted: found.solves });
+    }, 300_000);
+  });
 
   it('without a goal rule the search is the one it always was (a goal with no rule changes nothing)', async () => {
     const plain = await search({ target: { monsterId: ONE }, maxSolves: 150 });

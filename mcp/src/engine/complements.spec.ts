@@ -2,12 +2,19 @@ import { expect, it } from 'vitest';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { loadRandomPools, randomOptionCatalogFor } from 'src/app/core/random-option-catalog';
 import { complementChoices, searchComplements, swapPatch } from './complements';
+import { socketOptions } from 'src/app/build-analysis/engine/complements';
 import { resolveBuild } from 'src/app/build-analysis/engine/build-input';
 import { validateCataloguedRolls } from 'src/app/core/random-option-catalog';
 
 await loadRandomPools();
 
 const dataset = loadDatasetFromDisk();
+
+it('never offers a non-LATAM enchant from an otherwise valid item pool', () => {
+  expect(dataset.itemIndex.get(312655)?.latam).toBe(false);
+  expect(socketOptions(dataset, 'shadowArmor', 24872).flatMap(field => field.ids)).not.toContain(312655);
+  expect(complementChoices(dataset, 'shadowArmor', 24872, ['p_atk'], new Set()).flat().some(patch => Object.values(patch.gear ?? {}).includes(312655))).toBe(false);
+});
 
 it('offers only valid coin profiles and never assigns random options to an item with no pool', () => {
   const fields = complementChoices(dataset, 'headMiddle', 410233, ['atk', 'melee', 'range', 'sMatk'], new Set());

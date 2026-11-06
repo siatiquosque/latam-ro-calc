@@ -1,0 +1,689 @@
+{
+  "batchName": "B05-details",
+  "budget": 200,
+  "previousCalls": 42,
+  "calls": 0,
+  "cumulativeCalls": 42,
+  "wallMs": 179.81820000000016,
+  "cpu": {
+    "user": 219000,
+    "system": 32000
+  },
+  "rows": [
+    {
+      "hypothesis": "Resolve exact critical keys using an ASCII query; the previous accented query returned no keys.",
+      "tool": "list_bonus_keys",
+      "args": {
+        "query": "cri"
+      },
+      "calls": 0,
+      "wallMs": 35.94979999999987,
+      "cpu": {
+        "user": 93000,
+        "system": 32000
+      },
+      "requestBytes": 15,
+      "responseBytes": 95,
+      "isError": false,
+      "result": {
+        "total": 2,
+        "keys": [
+          {
+            "key": "cri",
+            "label": "Taxa Crít."
+          },
+          {
+            "key": "criDmg",
+            "label": "Dano Crít."
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "The combined crit+crit-damage predicate had no head-card results; inspect permanent crit sources alone.",
+      "tool": "search_items",
+      "args": {
+        "slot": "headCard",
+        "classId": 4262,
+        "bonus": [
+          "cri"
+        ],
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 4.203200000000379,
+      "cpu": {
+        "user": 16000,
+        "system": 0
+      },
+      "requestBytes": 103,
+      "responseBytes": 387,
+      "isError": false,
+      "result": {
+        "total": 3,
+        "shown": 3,
+        "offset": 0,
+        "items": [
+          {
+            "id": 4923,
+            "name": "Essência de SOR 1",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 1",
+              "Crítico: 1",
+              "DES: -1"
+            ]
+          },
+          {
+            "id": 4924,
+            "name": "Essência de SOR 2",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 2",
+              "Crítico: 2",
+              "DES: -2"
+            ]
+          },
+          {
+            "id": 4925,
+            "name": "Essência de SOR 3",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 4",
+              "Crítico: 4",
+              "DES: -4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Find the largest legal accessory critical-rate contribution, not only cards that also have crit damage.",
+      "tool": "search_items",
+      "args": {
+        "slot": "accCard",
+        "classId": 4262,
+        "bonus": [
+          "cri"
+        ],
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 15
+      },
+      "calls": 0,
+      "wallMs": 2.8028999999996813,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 102,
+      "responseBytes": 1305,
+      "isError": false,
+      "result": {
+        "total": 10,
+        "shown": 10,
+        "offset": 0,
+        "items": [
+          {
+            "id": 4331,
+            "name": "Carta Aquecedor",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 3",
+              "Esquiva Perfeita: USED[Swordman]3"
+            ]
+          },
+          {
+            "id": 27116,
+            "name": "Carta Aquecedor Ominoso",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 3 / EQUIP_ID[27117]2",
+              "Dano crítico: 5 / EQUIP_ID[27117]2"
+            ]
+          },
+          {
+            "id": 4487,
+            "name": "Carta Ifrit Selada",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "ATQ: SUM[jobLevel==20]---1",
+              "Crítico: SUM[jobLevel==20]---1",
+              "Precisão: SUM[jobLevel==20]---1"
+            ]
+          },
+          {
+            "id": 4091,
+            "name": "Carta Kobold",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "FOR: 1",
+              "Crítico: 4"
+            ]
+          },
+          {
+            "id": 300366,
+            "name": "Carta Rgan Ínfimo",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 6",
+              "T.CRIT: 1"
+            ]
+          },
+          {
+            "id": 300368,
+            "name": "Carta Rgan Intermediário",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "Crítico: 6",
+              "T.CRIT: 1",
+              "Dano crítico: EQUIP_ID[300366]===10"
+            ]
+          },
+          {
+            "id": 4272,
+            "name": "Carta Zhu Po Long",
+            "db": true,
+            "slot": "accCard",
+            "bonuses": [
+              "AGI: 1",
+              "Crítico: 3"
+            ]
+          },
+          {
+            "id": 4923,
+            "name": "Essência de SOR 1",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 1",
+              "Crítico: 1",
+              "DES: -1"
+            ]
+          },
+          {
+            "id": 4924,
+            "name": "Essência de SOR 2",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 2",
+              "Crítico: 2",
+              "DES: -2"
+            ]
+          },
+          {
+            "id": 4925,
+            "name": "Essência de SOR 3",
+            "db": true,
+            "slot": "weaponCard",
+            "bonuses": [
+              "SOR: 4",
+              "Crítico: 4",
+              "DES: -4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Check the discovered Hero Boots-LT partner and which permanent benefits survive without its proc.",
+      "tool": "get_item",
+      "args": {
+        "id": 470094
+      },
+      "calls": 0,
+      "wallMs": 105.32319999999982,
+      "cpu": {
+        "user": 94000,
+        "system": 0
+      },
+      "requestBytes": 13,
+      "responseBytes": 3358,
+      "isError": false,
+      "result": {
+        "id": 470094,
+        "name": "Bota Primordial-LT",
+        "enName": "Hero Boots-LT [1]",
+        "aegisName": "Hero_Boots_LT",
+        "inCalcDb": true,
+        "partners": [
+          {
+            "id": 500038,
+            "name": "Vingadora Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 500039,
+            "name": "Sabre Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 500040,
+            "name": "Lâmina Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 510040,
+            "name": "Punhal Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 510041,
+            "name": "Adaga Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 510060,
+            "name": "Wakizashi Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 510072,
+            "name": "Faca Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 530019,
+            "name": "Lança Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 540035,
+            "name": "Tomo Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 540048,
+            "name": "Enciclopédia Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 550045,
+            "name": "Cajado Primordial-LT",
+            "slot": "weapon"
+          },
+          {
+            "id": 550046,
+            "name": "Feitiço Primordial-LT",
+            "slot": "weapon"
+          }
+        ],
+        "presentInLatam": true,
+        "slots": 1,
+        "slotTags": [
+          "boot"
+        ],
+        "requiredLevel": 190,
+        "weaponLevel": 2,
+        "defense": 15,
+        "usableClass": [
+          "all"
+        ],
+        "description": "Isto era de um antigo herói e foi reformado para dar mais poderes.\n-------------------------\nHP máx. +1.500.\nSP máx. +150.\n-------------------------\nA cada 3 refinos:\nHP e SP máx. +1%.\n-------------------------\nRefino +7 ou mais:\nDano físico e mágico +5%.\nRefino +9 ou mais:\nCRÍT +5.\nPrecisão perfeita +10.\nConjuração variável -5%.\nRefino +11 ou mais:\nPós-conjuração -5%.\nConjuração fixa -0,8 segundos.\n-------------------------\nNv. base 210 ou mais:\nP.ATQ e S.ATQM +1.\n-------------------------\nGrau D ou mais:\nTEN e TENM +50.\nGrau C ou mais:\nDano físico e mágico contra oponentes de todas as propriedades +10%.\nGrau B ou mais:\nSTA e SAB +5.\nGrau A ou mais:\nP.ATQ e S.ATQM +5.\n-------------------------\nGrau A e refino +13 ou mais:\nConjuração fixa -0,2 segundo adicional.\n-------------------------\nTipo: Calçado\nDEF: 15 DEFM: 0\nPeso: 60\nNível do equip.: 2\nNível necessário: 190\nClasses: Todas",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "hp",
+            "label": "HP máx.",
+            "values": [
+              "1500"
+            ]
+          },
+          {
+            "key": "sp",
+            "label": "SP máx.",
+            "values": [
+              "150"
+            ]
+          },
+          {
+            "key": "pAtk",
+            "label": "P.ATQ",
+            "values": [
+              "SUM[level==210]===1",
+              "GRADE[boot==A]===5"
+            ]
+          },
+          {
+            "key": "sMatk",
+            "label": "S.ATQM",
+            "values": [
+              "SUM[level==210]===1",
+              "GRADE[boot==A]===5"
+            ]
+          },
+          {
+            "key": "hpPercent",
+            "label": "HP máx. %",
+            "values": [
+              "3---1"
+            ]
+          },
+          {
+            "key": "spPercent",
+            "label": "SP máx. %",
+            "values": [
+              "3---1"
+            ]
+          },
+          {
+            "key": "atkPercent",
+            "label": "Dano físico %",
+            "values": [
+              "7===5"
+            ]
+          },
+          {
+            "key": "matkPercent",
+            "label": "Dano mágico %",
+            "values": [
+              "7===5"
+            ]
+          },
+          {
+            "key": "cri",
+            "label": "Crítico",
+            "values": [
+              "9===5"
+            ]
+          },
+          {
+            "key": "perfectHit",
+            "label": "Precisão perfeita",
+            "values": [
+              "9===10"
+            ]
+          },
+          {
+            "key": "vct",
+            "label": "Conj. Variável",
+            "values": [
+              "9===5"
+            ]
+          },
+          {
+            "key": "fct",
+            "label": "Conj. Fixa",
+            "values": [
+              "11===0.8",
+              "GRADE[boot==A]13===0.2"
+            ]
+          },
+          {
+            "key": "acd",
+            "label": "Pós-conjuração",
+            "values": [
+              "11===5"
+            ]
+          },
+          {
+            "key": "res",
+            "label": "TEN",
+            "values": [
+              "GRADE[boot==D]===50"
+            ]
+          },
+          {
+            "key": "mres",
+            "label": "TENM",
+            "values": [
+              "GRADE[boot==D]===50"
+            ]
+          },
+          {
+            "key": "p_element_all",
+            "label": "Dano Físico (Elemento: Todos)",
+            "structured": "Dano Físico (Elemento: Todos)",
+            "values": [
+              "GRADE[boot==C]===10"
+            ]
+          },
+          {
+            "key": "m_element_all",
+            "label": "Dano Mágico (Elemento: Todos)",
+            "structured": "Dano Mágico (Elemento: Todos)",
+            "values": [
+              "GRADE[boot==C]===10"
+            ]
+          },
+          {
+            "key": "sta",
+            "label": "STA",
+            "values": [
+              "GRADE[boot==B]===5"
+            ]
+          },
+          {
+            "key": "wis",
+            "label": "SAB",
+            "values": [
+              "GRADE[boot==B]===5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Inspect legal Winter Armor enchants before proposing a piece-and-enchant move; never guess socket IDs.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 450206,
+        "limit": 12
+      },
+      "calls": 0,
+      "wallMs": 8.078500000000076,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 28,
+      "responseBytes": 1206,
+      "isError": false,
+      "result": {
+        "id": 450206,
+        "name": "Armadura Invernal",
+        "cardSlots": 1,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [
+          {
+            "position": 1,
+            "total": 54,
+            "options": [
+              {
+                "id": 311138,
+                "name": "Flor Invernal (Dragão)"
+              },
+              {
+                "id": 311139,
+                "name": "Flor Invernal (Rúnico)"
+              },
+              {
+                "id": 311140,
+                "name": "Flor Invernal (Lança)"
+              },
+              {
+                "id": 311141,
+                "name": "Flor Invernal (Guardião)"
+              },
+              {
+                "id": 311142,
+                "name": "Flor Invernal (Hoplita)"
+              },
+              {
+                "id": 311143,
+                "name": "Flor Invernal (Domini)"
+              },
+              {
+                "id": 311144,
+                "name": "Flor Invernal (Canhão)"
+              },
+              {
+                "id": 311145,
+                "name": "Flor Invernal (Lenhador)"
+              },
+              {
+                "id": 311146,
+                "name": "Flor Invernal (Machado)"
+              },
+              {
+                "id": 311147,
+                "name": "Flor Invernal (Biologia)"
+              },
+              {
+                "id": 311148,
+                "name": "Flor Invernal (Física)"
+              },
+              {
+                "id": 311149,
+                "name": "Flor Invernal (Química)"
+              }
+            ],
+            "truncated": true
+          },
+          {
+            "position": 2,
+            "total": 5,
+            "options": [
+              {
+                "id": 311100,
+                "name": "Flor Invernal (Atirador)"
+              },
+              {
+                "id": 311101,
+                "name": "Flor Invernal (Guerreiro)"
+              },
+              {
+                "id": 311102,
+                "name": "Flor Invernal (Mágico)"
+              },
+              {
+                "id": 311104,
+                "name": "Flor Invernal (Híbrido)"
+              },
+              {
+                "id": 311105,
+                "name": "Flor Invernal (Pós)"
+              }
+            ]
+          },
+          {
+            "position": 3,
+            "total": 2,
+            "options": [
+              {
+                "id": 311098,
+                "name": "Flor Invernal (DEF)"
+              },
+              {
+                "id": 311099,
+                "name": "Flor Invernal (DEFM)"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Read Winter Armor stat bonuses and its full refine/set conditions.",
+      "tool": "get_item",
+      "args": {
+        "id": 450206
+      },
+      "calls": 0,
+      "wallMs": 0.41010000000005675,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 13,
+      "responseBytes": 1330,
+      "isError": false,
+      "result": {
+        "id": 450206,
+        "name": "Armadura Invernal",
+        "enName": "Snow Flower Armor [1]",
+        "aegisName": "Snowflower_Armor",
+        "inCalcDb": true,
+        "partners": [
+          {
+            "id": 480159,
+            "name": "Manto Invernal",
+            "slot": "garment"
+          },
+          {
+            "id": 480160,
+            "name": "Sobrepeliz Invernal",
+            "slot": "garment"
+          },
+          {
+            "id": 470115,
+            "name": "Bota Invernal",
+            "slot": "boot"
+          },
+          {
+            "id": 470116,
+            "name": "Sapato Invernal",
+            "slot": "boot"
+          }
+        ],
+        "presentInLatam": true,
+        "slots": 1,
+        "slotTags": [
+          "armor"
+        ],
+        "requiredLevel": 210,
+        "weaponLevel": 2,
+        "defense": 150,
+        "usableClass": [
+          "all"
+        ],
+        "description": "Equipamento feito com pétalas das flores invernais encontradas em Issgard.\n--------------------------\nATQ +130.\nA cada 2 refinos:\nATQ +15.\n--------------------------\nRefino +7 ou mais:\nVelocidade de ataque +15%.\nRefino +9 ou mais:\nP.ATQ +2.\n--------------------------\nConjunto\nManto Invernal\nATQ +50 adicional.\n--------------------------\nConjunto\nSobrepeliz Invernal\nPós-conjuração -10%.\n--------------------------\nTipo: Armadura\nDEF: 150 DEFM: 0\nPeso: 80\nNível do Equip.: 2\nNível necessário: 210\nClasses: Todas",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "atk",
+            "label": "ATQ",
+            "values": [
+              "130",
+              "2---15",
+              "EQUIP_ID[480159]===50"
+            ]
+          },
+          {
+            "key": "aspdPercent",
+            "label": "Vel.Atq %",
+            "values": [
+              "7===15"
+            ]
+          },
+          {
+            "key": "pAtk",
+            "label": "P.ATQ",
+            "values": [
+              "9===2"
+            ]
+          },
+          {
+            "key": "acd",
+            "label": "Pós-conjuração",
+            "values": [
+              "EQUIP_ID[480160]===10"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

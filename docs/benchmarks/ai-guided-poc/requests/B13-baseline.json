@@ -1,0 +1,8 @@
+{
+  "experiment": "B",
+  "budget": 200,
+  "final": true,
+  "verify": {
+    "patch": {}
+  }
+}

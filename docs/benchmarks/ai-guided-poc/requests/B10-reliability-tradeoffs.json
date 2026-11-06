@@ -1,0 +1,251 @@
+{
+  "experiment": "B",
+  "budget": 200,
+  "requests": [
+    {
+      "tool": "evaluate_variants",
+      "hypothesis": "Trade damage for permanent ranged crit using discovered Drosera and Rgan cards; compare against fewer-piece alternatives. A crit-100 result is useful only if it still meets every damage target.",
+      "args": {
+        "build": "$build",
+        "targets": "$targets",
+        "constraints": "$constraints",
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "winter-ultra-collar-no-boot",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "winter-ultra-hero-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "full-drosera-1",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard1": 4421
+              }
+            }
+          },
+          {
+            "label": "full-drosera-2",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "full-two-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "full-rgan-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "full-rgan-one-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "weaponCard1": 4421
+              }
+            }
+          },
+          {
+            "label": "full-rgan-two-drosera",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          },
+          {
+            "label": "no-boot-rgan-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "accLeftCard": 300366,
+                "accRightCard": 300368,
+                "headLower": 420076
+              }
+            }
+          },
+          {
+            "label": "no-boot-two-drosera-collar",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "headLower": 420076,
+                "weaponCard1": 4421,
+                "weaponCard2": 4421
+              }
+            }
+          }
+        ],
+        "limit": 12
+      }
+    }
+  ]
+}

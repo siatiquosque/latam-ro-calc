@@ -2,7 +2,7 @@ import { buildDataset } from '../../app/build-analysis/data/dataset';
 import { createOptimizationOperations } from '../../app/build-analysis/operations/optimize';
 import { createStatOperations } from '../../app/build-analysis/operations/optimize-stats';
 import { loadRandomPools } from '../../app/core/random-option-catalog';
-import type { AnalysisRequest, AnalysisResponse } from '../../app/build-analysis/browser-protocol';
+import type { AnalysisCancel, AnalysisRequest, AnalysisResponse } from '../../app/build-analysis/browser-protocol';
 import type { AnalysisRuntime } from '../../app/build-analysis/runtime';
 import { resolveBuild } from '../../app/build-analysis/engine/build-input';
 import { applyPatch } from '../../app/build-analysis/engine/variants';
@@ -10,7 +10,12 @@ import { EQUIPMENT_SLOTS } from '../../app/app-config/equipment-slots';
 import { constraintSpecSchema, goalSpecSchema } from '../../app/build-analysis/engine/goal-spec';
 
 /** Isolated stateful engine: a search cannot mutate the calculator currently on screen. */
-globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest>) => {
+let controller: AbortController | undefined;
+globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest | AnalysisCancel>) => {
+  if ('type' in data && data.type === 'cancel') { controller?.abort(); return; }
+  const request = data as AnalysisRequest;
+  data = request;
+  controller = new AbortController();
   try {
     await loadRandomPools();
     const dataset = buildDataset(data.sources, async () => data.descriptions);
@@ -35,7 +40,11 @@ globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest>) => {
       case 'build': {
         // The MCP validates these at its transport; the UI request is held to the same schemas before the core sees it.
         const { goal, constraints } = data.args;
-        result = await ops.optimizeBuild({ ...data.args, ...(goal ? { goal: goalSpecSchema.parse(goal) } : {}), ...(constraints ? { constraints: constraintSpecSchema.parse(constraints) } : {}) });
+        result = await ops.optimizeBuild({ ...data.args, ...(goal ? { goal: goalSpecSchema.parse(goal) } : {}), ...(constraints ? { constraints: constraintSpecSchema.parse(constraints) } : {}), execution: { signal: controller.signal, onCheckpoint: checkpoint => {
+          const suggestedModel = resolveBuild(applyPatch(data.args.build, checkpoint['patch'] as any), dataset).model;
+          const targetId = data.args.target?.monsterId ?? (data.mode === 'build' ? data.args.targets?.[0]?.monsterId : undefined) ?? runtime.defaultTargetId;
+          globalThis.postMessage({ checkpoint: { ...checkpoint, suggestedModel, analysisTarget: { id: targetId, name: dataset.monsters[targetId]?.name } } } satisfies AnalysisResponse);
+        } } });
         break;
       }
       case 'slot': result = await ops.scanSlot(data.args); break;
@@ -60,7 +69,7 @@ globalThis.onmessage = async ({ data }: MessageEvent<AnalysisRequest>) => {
     if (data.mode === 'slot') for (const row of result['ranking'] ?? []) {
       if (row.patch) row.suggestedModel = resolveBuild(applyPatch(data.args.build, row.patch), dataset).model;
     }
-    const targetId = data.args.target?.monsterId ?? runtime.defaultTargetId;
+    const targetId = data.args.target?.monsterId ?? (data.mode === 'build' ? data.args.targets?.[0]?.monsterId : undefined) ?? runtime.defaultTargetId;
     result['analysisTarget'] = { id: targetId, name: dataset.monsters[targetId]?.name };
     globalThis.postMessage({ result } satisfies AnalysisResponse);
   } catch (error) {

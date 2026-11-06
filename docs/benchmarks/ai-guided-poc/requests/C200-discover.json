@@ -1,0 +1,106 @@
+{
+  "experiment": "C200",
+  "budget": 200,
+  "requests": [
+    {
+      "tool": "get_build_context",
+      "args": {
+        "build": "$build",
+        "target": {
+          "monsterId": 21544
+        }
+      },
+      "hypothesis": "Establish actual skill, stats and selected effects; no automatic search."
+    },
+    {
+      "tool": "get_skill",
+      "args": {
+        "classId": 4262,
+        "skill": "Explosion Blaster==5"
+      },
+      "hypothesis": "Find formula inputs, crit behavior and active-effect dependency."
+    },
+    {
+      "tool": "explain_damage",
+      "args": {
+        "build": "$build",
+        "target": {
+          "monsterId": 21544
+        },
+        "parts": [
+          "stages",
+          "crit"
+        ]
+      },
+      "hypothesis": "Use executed damage stages rather than trusting descriptive formula text."
+    },
+    {
+      "tool": "search_items",
+      "args": {
+        "classId": 4262,
+        "slot": "weapon",
+        "skill": "5244",
+        "synergy": true,
+        "withBonuses": true,
+        "limit": 10
+      },
+      "hypothesis": "Find weapons with direct skill or documented scaling support before testing."
+    },
+    {
+      "tool": "search_items",
+      "args": {
+        "slot": "armor",
+        "classId": 4262,
+        "bonus": [
+          "pAtk",
+          "pene_res",
+          "cRate"
+        ],
+        "bonusMode": "any",
+        "maxLevel": 236,
+        "withBonuses": true,
+        "limit": 10
+      },
+      "hypothesis": "DEF is already bypassed; seek P.ATQ/T.Cr\u00edt or RES penetration rather than redundant DEF penetration."
+    },
+    {
+      "tool": "find_synergies",
+      "args": {
+        "itemIds": [
+          560026
+        ],
+        "bonusKeys": [
+          "atkPercent",
+          "pAtk"
+        ],
+        "limit": 8
+      },
+      "hypothesis": "The current weapon names Hero Boots-LT; discover that companion instead of discarding a strong current weapon."
+    },
+    {
+      "tool": "slot_options",
+      "args": {
+        "itemId": 450206,
+        "query": "Espiritual",
+        "limit": 5
+      },
+      "hypothesis": "Confirm the exact skill flower is legal on the selected armor position."
+    },
+    {
+      "tool": "search_items",
+      "args": {
+        "slot": "headCard",
+        "bonus": [
+          "range",
+          "pAtk",
+          "cRate"
+        ],
+        "bonusMode": "any",
+        "excludeMvpCards": true,
+        "withBonuses": true,
+        "limit": 12
+      },
+      "hypothesis": "A permanent ranged/trait multiplier may raise non-critical minimum enough even without achieving 100% crit."
+    }
+  ]
+}

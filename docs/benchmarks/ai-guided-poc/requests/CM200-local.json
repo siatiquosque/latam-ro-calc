@@ -1,0 +1,31 @@
+{
+  "experiment": "CM200",
+  "budget": 200,
+  "automatic": {
+    "slots": [
+      "weapon",
+      "armor",
+      "boot"
+    ],
+    "candidates": {
+      "weapon": [
+        560026
+      ],
+      "armor": [
+        450206,
+        450217
+      ],
+      "boot": [
+        470094
+      ]
+    },
+    "pairs": [
+      [
+        "armor",
+        "boot"
+      ]
+    ],
+    "levelChecks": false,
+    "maxSolves": 200
+  }
+}

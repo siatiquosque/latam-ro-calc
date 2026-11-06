@@ -1,0 +1,213 @@
+{
+  "batchName": "B07-socket-check",
+  "budget": 200,
+  "previousCalls": 42,
+  "calls": 0,
+  "cumulativeCalls": 42,
+  "wallMs": 164.80560000000014,
+  "cpu": {
+    "user": 78000,
+    "system": 62000
+  },
+  "rows": [
+    {
+      "hypothesis": "Confirm the exact skill flower is legal on the selected armor position.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 450206,
+        "query": "Espiritual",
+        "limit": 5
+      },
+      "calls": 0,
+      "wallMs": 38.42579999999998,
+      "cpu": {
+        "user": 15000,
+        "system": 15000
+      },
+      "requestBytes": 48,
+      "responseBytes": 330,
+      "isError": false,
+      "result": {
+        "id": 450206,
+        "name": "Armadura Invernal",
+        "cardSlots": 1,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [
+          {
+            "position": 1,
+            "total": 1,
+            "options": [
+              {
+                "id": 311166,
+                "name": "Flor Invernal (Espiritual)"
+              }
+            ]
+          },
+          {
+            "position": 2,
+            "total": 0,
+            "options": [],
+            "positions": [
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Identify current armor random-bonus positions so a piece swap does not carry incompatible rolls for free.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 450177,
+        "limit": 1
+      },
+      "calls": 0,
+      "wallMs": 0.5785999999998239,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 27,
+      "responseBytes": 411,
+      "isError": false,
+      "result": {
+        "id": 450177,
+        "name": "Traje do Lobo Cinzento",
+        "cardSlots": 1,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [
+          {
+            "position": 1,
+            "total": 55,
+            "options": [
+              {
+                "id": 310511,
+                "name": "Orbe Lupino - Refletor 1"
+              }
+            ],
+            "truncated": true
+          },
+          {
+            "position": 2,
+            "total": 34,
+            "options": [
+              {
+                "id": 310478,
+                "name": "Orbe Lupino - FOR 1"
+              }
+            ],
+            "truncated": true,
+            "positions": [
+              2,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Check the current boot sockets before replacing boots and clearing their enchants.",
+      "tool": "slot_options",
+      "args": {
+        "itemId": 22005,
+        "limit": 1
+      },
+      "calls": 0,
+      "wallMs": 0.3661000000001877,
+      "cpu": {
+        "user": 0,
+        "system": 0
+      },
+      "requestBytes": 26,
+      "responseBytes": 360,
+      "isError": false,
+      "result": {
+        "id": 22005,
+        "name": "Bota Temporal SOR",
+        "cardSlots": 0,
+        "cardSearch": "search_items com `slot` = weaponCard, headCard, shieldCard, armorCard, garmentCard, bootCard ou accCard.",
+        "enchants": [
+          {
+            "position": 2,
+            "total": 6,
+            "options": [
+              {
+                "id": 4875,
+                "name": "Delírio"
+              }
+            ],
+            "truncated": true
+          },
+          {
+            "position": 3,
+            "total": 7,
+            "options": [
+              {
+                "id": 4832,
+                "name": "Mira Apurada 1"
+              }
+            ],
+            "truncated": true
+          }
+        ]
+      }
+    },
+    {
+      "hypothesis": "Confirm the permanent ranged multiplier supplied by the legal Atirador flower.",
+      "tool": "get_item",
+      "args": {
+        "id": 311100
+      },
+      "calls": 0,
+      "wallMs": 103.4670000000001,
+      "cpu": {
+        "user": 63000,
+        "system": 47000
+      },
+      "requestBytes": 13,
+      "responseBytes": 665,
+      "isError": false,
+      "result": {
+        "id": 311100,
+        "name": "Flor Invernal (Atirador)",
+        "enName": "Ice Flower Spell (Shooter)",
+        "aegisName": "Ice_F_Orb_Ran",
+        "inCalcDb": true,
+        "partners": [],
+        "presentInLatam": true,
+        "slots": 0,
+        "slotTags": [
+          "enchant"
+        ],
+        "description": "ATQ +100.\nDano físico +6%.\n--------------------------\nRefino +7 ou mais:\nDano físico à distância +5%.\nRefino +9 ou mais:\nDano físico à distância +5% adicional.\nRefino +11 ou mais:\nDano físico à distância +5% adicional.",
+        "autoCasts": [],
+        "bonuses": [
+          {
+            "key": "atkPercent",
+            "label": "Dano físico %",
+            "values": [
+              "6"
+            ]
+          },
+          {
+            "key": "atk",
+            "label": "ATQ",
+            "values": [
+              "100"
+            ]
+          },
+          {
+            "key": "range",
+            "label": "Dano à distância",
+            "values": [
+              "7===5",
+              "9===5",
+              "11===5"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

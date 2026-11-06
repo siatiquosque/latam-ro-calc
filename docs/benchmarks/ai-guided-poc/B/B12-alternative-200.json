@@ -1,0 +1,218 @@
+{
+  "batchName": "B12-alternative-200",
+  "budget": 200,
+  "previousCalls": 152,
+  "calls": 5,
+  "cumulativeCalls": 157,
+  "wallMs": 61.182000000000244,
+  "cpu": {
+    "user": 47000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {
+        "gear": {
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "armor": 450206,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorEnchant1": 311166,
+          "armorEnchant2": 311100,
+          "armorEnchant3": 311099,
+          "headUpperCard": 300377,
+          "headLower": 420076
+        }
+      },
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 70,
+            "canCri": 1,
+            "minNoCri": 7799382,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 26790952,
+            "dps": 30242415,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 72,
+            "canCri": 1,
+            "minNoCri": 7262044,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 24945189,
+            "dps": 28657337,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 61,
+            "canCri": 1,
+            "minNoCri": 9053286,
+            "hitChance": 70,
+            "conditionalEffects": 0,
+            "min": 31098123,
+            "dps": 30745575,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 71,
+            "canCri": 1,
+            "minNoCri": 7193421,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 24709467,
+            "dps": 28139655,
+            "hit": 667
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 63,
+            "canCri": 1,
+            "minNoCri": 6772615,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 23263995,
+            "dps": 24634005,
+            "hit": 667
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7799382 × 2) não cobre o HP (41093320): o abate depende de críticos, com chance efetiva de 70%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7262044 × 2) não cobre o HP (49197540): o abate depende de críticos, com chance efetiva de 72%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "A habilidade acerta o alvo com chance de 70% (menos de 100%): um golpe pode errar.",
+                "Sem crítico o dano mínimo (9053286 × 2) não cobre o HP (42421610): o abate depende de críticos, com chance efetiva de 61%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (7193421 × 2) não cobre o HP (42579000): o abate depende de críticos, com chance efetiva de 71%."
+              ]
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "Sem crítico o dano mínimo (6772615 × 2) não cobre o HP (44256530): o abate depende de críticos, com chance efetiva de 63%."
+              ]
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": true,
+          "constraintsMet": true,
+          "reliability": "conditional"
+        },
+        "worstTarget": {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      },
+      "changes": [
+        "weaponRefine",
+        "weaponGrade",
+        "headUpperCard",
+        "headLower",
+        "armor",
+        "armorRefine",
+        "armorGrade",
+        "armorEnchant1",
+        "armorEnchant2",
+        "armorEnchant3"
+      ]
+    }
+  ]
+}

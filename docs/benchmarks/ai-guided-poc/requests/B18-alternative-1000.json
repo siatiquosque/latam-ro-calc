@@ -1,0 +1,38 @@
+{
+  "experiment": "B",
+  "budget": 1000,
+  "final": true,
+  "verify": {
+    "patch": {
+      "gear": {
+        "weaponRefine": 12,
+        "weaponGrade": "C",
+        "armor": 450206,
+        "armorRefine": 12,
+        "armorGrade": "",
+        "armorEnchant1": 311166,
+        "armorEnchant2": 311100,
+        "armorEnchant3": 311099,
+        "headUpperCard": 300377,
+        "boot": 470094,
+        "bootRefine": 12,
+        "bootGrade": "C",
+        "bootEnchant1": null,
+        "bootEnchant2": null,
+        "bootEnchant3": null,
+        "accLeftCard": 300366,
+        "accRightCard": 300368,
+        "headLower": 420076,
+        "garment": 20968,
+        "garmentRefine": 12,
+        "garmentGrade": "",
+        "garmentEnchant1": null,
+        "garmentEnchant2": null,
+        "garmentEnchant3": null
+      },
+      "options": {
+        "14": "cri:10"
+      }
+    }
+  }
+}

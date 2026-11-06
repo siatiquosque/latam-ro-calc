@@ -1,0 +1,239 @@
+{
+  "batchName": "B17-selected-1000",
+  "budget": 1000,
+  "previousCalls": 202,
+  "calls": 5,
+  "cumulativeCalls": 207,
+  "wallMs": 61.647799999999734,
+  "cpu": {
+    "user": 63000,
+    "system": 0
+  },
+  "rows": [
+    {
+      "tool": "independent-final-verification",
+      "calls": 5,
+      "patch": {
+        "gear": {
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "armor": 450206,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorEnchant1": 311166,
+          "armorEnchant2": 311100,
+          "armorEnchant3": 311099,
+          "headUpperCard": 300377,
+          "boot": 470094,
+          "bootRefine": 12,
+          "bootGrade": "C",
+          "bootEnchant1": null,
+          "bootEnchant2": null,
+          "bootEnchant3": null,
+          "headLower": 420076,
+          "garment": 20968,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "garmentEnchant1": null,
+          "garmentEnchant2": null,
+          "garmentEnchant3": null,
+          "accRightCard": 300368
+        },
+        "options": {
+          "14": "cri:10"
+        }
+      },
+      "readings": [
+        {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "hp": 41093320,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 109,
+            "canCri": 1,
+            "minNoCri": 7607272,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 26638363,
+            "dps": 38054792,
+            "hit": 662
+          }
+        },
+        {
+          "monsterId": 21545,
+          "name": "Dolocaris de Dois Olhos",
+          "hp": 49197540,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 111,
+            "canCri": 1,
+            "minNoCri": 7083169,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 24803112,
+            "dps": 35433006,
+            "hit": 662
+          }
+        },
+        {
+          "monsterId": 21542,
+          "name": "Hallucigenia",
+          "hp": 42421610,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 100,
+            "canCri": 1,
+            "minNoCri": 8830290,
+            "hitChance": 65,
+            "conditionalEffects": 0,
+            "min": 30921000,
+            "dps": 44172843,
+            "hit": 662
+          }
+        },
+        {
+          "monsterId": 21601,
+          "name": "Rgan Intermediário Enredado",
+          "hp": 42579000,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 110,
+            "canCri": 1,
+            "minNoCri": 7016236,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 24568732,
+            "dps": 35098178,
+            "hit": 662
+          }
+        },
+        {
+          "monsterId": 21539,
+          "name": "Rgan Intermediário Descartado",
+          "hp": 44256530,
+          "metrics": {
+            "hitsToKill": 2,
+            "critRate": 102,
+            "canCri": 1,
+            "minNoCri": 6605795,
+            "hitChance": 100,
+            "conditionalEffects": 0,
+            "min": 23131495,
+            "dps": 33044982,
+            "hit": 662
+          }
+        }
+      ],
+      "feasibility": {
+        "status": "feasible",
+        "violations": [],
+        "targets": [
+          {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "guaranteed",
+              "reasons": []
+            }
+          },
+          {
+            "monsterId": 21545,
+            "name": "Dolocaris de Dois Olhos",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "guaranteed",
+              "reasons": []
+            }
+          },
+          {
+            "monsterId": 21542,
+            "name": "Hallucigenia",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "conditional",
+              "reasons": [
+                "A habilidade acerta o alvo com chance de 65% (menos de 100%): um golpe pode errar."
+              ]
+            }
+          },
+          {
+            "monsterId": 21601,
+            "name": "Rgan Intermediário Enredado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "guaranteed",
+              "reasons": []
+            }
+          },
+          {
+            "monsterId": 21539,
+            "name": "Rgan Intermediário Descartado",
+            "status": "feasible",
+            "violations": [],
+            "unknowns": [],
+            "kill": {
+              "damageFeasible": true,
+              "constraintsMet": true,
+              "reliability": "guaranteed",
+              "reasons": []
+            }
+          }
+        ],
+        "kill": {
+          "damageFeasible": true,
+          "constraintsMet": true,
+          "reliability": "conditional"
+        },
+        "worstTarget": {
+          "monsterId": 21544,
+          "name": "Dolocaris de Um Olho",
+          "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+        }
+      },
+      "changes": [
+        "rawOptionTxts",
+        "weaponRefine",
+        "weaponGrade",
+        "headUpperCard",
+        "headLower",
+        "armor",
+        "armorRefine",
+        "armorGrade",
+        "armorEnchant1",
+        "armorEnchant2",
+        "armorEnchant3",
+        "garment",
+        "garmentRefine",
+        "garmentGrade",
+        "garmentEnchant1",
+        "garmentEnchant2",
+        "garmentEnchant3",
+        "boot",
+        "bootRefine",
+        "bootGrade",
+        "bootEnchant1",
+        "bootEnchant2",
+        "bootEnchant3",
+        "accRightCard"
+      ]
+    }
+  ]
+}

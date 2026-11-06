@@ -8,6 +8,7 @@ import { compactBuildSchema } from '../engine/build-input';
 import { Shortener } from '../engine/share';
 import { json, registerJsonTool } from './helpers';
 import type { AcquisitionArgs } from 'src/app/build-analysis/operations/acquisition';
+import { loadAcquisitionOperations } from './acquisition-operations';
 
 /** Same ceiling as the operation's own check; the operation module is not imported here (see below). */
 const MAX_BUILDS = 10;
@@ -16,7 +17,7 @@ export function registerAcquisitionTools(server: McpServer, dataset: Dataset, sh
   // The acquisition catalog is ~0.8 MB of JSON. Imported on first use, the bundler keeps it in its own chunk, so the other
   // tools and the Worker's startup never pay for it.
   let operations: Promise<ReturnType<typeof import('src/app/build-analysis/operations/acquisition').createAcquisitionOperations>> | undefined;
-  const load = () => operations ??= import('src/app/build-analysis/operations/acquisition').then(m => m.createAcquisitionOperations(dataset, config, shortener));
+  const load = () => operations ??= loadAcquisitionOperations().then(m => m.createAcquisitionOperations(dataset, config, shortener));
   registerJsonTool<AcquisitionArgs>(server, 'get_acquisition', {
     title: 'Como obter itens e encantamentos',
     description:

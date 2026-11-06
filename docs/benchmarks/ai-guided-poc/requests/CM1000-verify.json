@@ -1,0 +1,46 @@
+{
+  "experiment": "CM1000",
+  "budget": 1000,
+  "final": true,
+  "verifications": [
+    {
+      "patch": {
+        "gear": {
+          "weapon": 560026,
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "armor": 450177,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorEnchant2": 310509,
+          "armorEnchant3": 310506,
+          "boot": 22005,
+          "bootRefine": 12,
+          "bootGrade": "",
+          "bootEnchant3": 4835,
+          "garment": 20964,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "headUpper": 19481,
+          "headUpperRefine": 12,
+          "headUpperGrade": "",
+          "headUpperCard": 4925,
+          "headUpperEnchant1": 29090,
+          "headUpperEnchant3": 4704
+        },
+        "options": {},
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      }
+    },
+    {
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSKCFZRxMijkQKCZnROUASVLyFxAAE0NA8qUAEUaa4XQIQulc1S7fEAAHRAB3NOaABTGKAE4.2yxCvoB1KC5ybgWhyXJe6lIefdDPMnJNPvdkLKL9ESpGPDqkxghraDgKEABRAx3EIikAAEACEOI9kABeSGaVggZBYUYAeSGjGIJAAKgZGBsANrDAD6EjwqAYjAJJDw6H8WBgNThQwJCKoeAJOywTHIs1YJEwMBYvLgAr5wqFgv54tFEpFktlMpF8I5MTwkW0PPlYo10qF4CGkwILM5vDhqAaADM9nCqMgoJa2FhXpFpHCzHqDWTInCsGAhnVPVKA3KdSNRud1ZqI-zdXTnWwqAAlB0q2GBrWpyMAXTYozwWBGZ00-G02gE2dz.fjeDNJTwgTLedIAHEEQ0vu44TmGyR3FhkHVjFIAOyyUwgTv5nt942bIu1My5uoAVSGQwIJlm3Cco-nWCXK4IlerlLrIB3e9XHl7dR4s14F1PC.XF..JCoFiYA-IvFm2h-5kf.7IC.b4cow07fvwTjzA.u5PgQwHvowzqbIO2hbDBdQALJQHUdSOJsUS-vsvaoD4mw6MYg6DvaaAoIeNYniRKCTtemzSLeNGkUBr6IZ.0hRJo0jEbR3EgUw078doOjQUxomIchkk6LcZhQBIrHcEW2jGOhYAqWp9HHlyeh6TAdQsTwRbQbpqmmQhoGft.gk6SZdR2eJUizIJo7WWpblIR5XlsDEJFklIv78OhwVoGSBm1tkQUhUw5l7MWvCoWwSiIIgWS8EEUkZVljCxSemXZX506boO96lYwfnIZu0j3lgVBUGoZpZNwP5RNRIDNa1VaMMl0ipYOtR9W1tU8fZFCSfw0hCL1LUTeVM1RIIC3jQNdWrWhTjRC18ZQDEZgdV1W72gdR0nUNxbaIORSrowKiIHYtL2DwcYAow6CknBET8fwg7oVQX0-Xgz05hEfDFlEn1gN9pKNolHV7dwshwwjeB.X9O3GLMo4g-DYN.RDa57FExhQRjxNTUwSPRdUkmU7Uum7mMKzlocX5o04yls6MHNdsVqrGfzSQiVIGmDlZFh1GM4tccLsPgLLYzWC5kv3T1rNy6M6s2XUwsy-zIKFZLkHBDrYym9lSuW6rozfL2NokDE5v8N5DtO3QJQxHbou6-qJB1KB7sLVboxByHTD..AHwwCC6BmmamF5hQoA9kwiBUBydQ4egGzBO4IikkwUBLOQwRJK7EgFxQwQVKgIxEGiiBAqnvKF2wvxDOXrf12wnhN3gjxlxXwSVjAR3EAPIAggwTxQA8P2z9YiCYECiBmkCAASubiCQQK50C3uMGYs8YrS6yoBym-b5MyDZXgDzohfV9gDfh9b0CZ94ECKzO2IBEYIl8p4f1vt-X.7dYhL3LmcEB79P53yBPAKA4gT4lzJF3EA4sYjUgLkCfIjBx5sFwfgsAQIMS11QLPB.eB9AkAoUkKgqlsFXCwAALzsECZcj9eyzxUFgdAIdYidwEUIkOQJEwYGwUkOo9ASBX0pFIgu59K5sGmJDShZhkAFyyMEQW.YgT6mQGaZ.rd4FsHgG4bha9MCrwdkCOxuxgjWJgCDQ.zjZ6Ni8CSJx68XFsCRHnEgAByChmiybBFTjEXkqBQT0CwN0dRc90A8WQerG0TdZ6YSyiQKex1GBOIIAwXccVgjhCgNAV2s8CTWFiKyVBalalr2QCyegyACRVCILE8uDiDZONXJ8FJIIERxHCcYxAJJV6jF9kCFoHIWQ5LsPDJetIgRJCblPasOcLGryGTAE.tM0Q1JSanNpZhkEP1IBCEhIBrAlMUQ0ZBAApRElh4gpJWCpeG.Eq6cG9EQQ.VwAQUO-tYNJ.h9GkJXCIZBFQ6hpNnjvH6qBfazyQNcNJeAJkAGl1jYIecgDILIgRmhQECAAmuvWeLRdHxOBFAkEDpGAiGrM0lJh1XbIIAHJQCULXGuliQBVFEJgSkCIlBwusKpGIZobRPFnvGVRlC25rGDmi4ZwRvhvjbmvU5FS7BNzMKQbh39nriGAVYm0MQYgTP1W7FJagWwTLaOMFJCzXx-zWGff.6BHUNxIEeTIf8UWoDRQatgmEC5rMOVUCEMBhHlMHogUkRTNlDCVZYViwQFnIAgECYuiJaV4CUEnM0dSRj0BPn8bwgJhXxgsEMMAiA6hmu3thSkowUAQCiWwRsVYzEkHLkCHl2dvrIEMsEJECJ.4pO.BkQ5zjC20H0LPKoZiX5c2CPgEgqagSNyGPQTgr8UnxsQAYNZeyRmZAhIWrwOaNFeBEMKw9tISShRSXUlA7SCBdMYUdYdWACSX2QMqckn5gjfraSUzp3TAPlxA72cDBJpxQdab.uDAHenAdAyh5C6Gf2wf-T0oDSGwMjwJNwbxCIMjEOvVBzCeB1gQgJAARXQEk5NIAkQiB.k4xZCN64AF8LponEO8WAMBU6ZvIKAQ6QKYjzLGVzZWA6mBwoxOvN8QIAC0QIUTNxDd4skmntOXP00kKe4hZ6n0uerLjVqQBaeIUu3uNosjGHvO4WgCiik70mLPHzdAyROMCyk-IMQKUeIaIwh0p6d1HQpT3OtCWrEcEuUPTKq8Si-pQZYM.GKrDxOsZkNRwRImmI3qVwrKTUGECKTVy5lXZ4vOEcqC.Kk.w1opfAbApJZ68apPE.pr4hNfroRkPAowCSpxPegvrWBSSgnBFE0Ti1xN4Ek3APEsNdD7ZYF5lgB2TvHbO6dk7WZhiArQVt.OeJeiw16HIWGr3dAXAuLDD7Z3vu9AuPwK7QwbsSfjjJ9OIA960hmmwNopFD7MsMsrOlsRgRZcQNDkAbiX0nyblYOKRQMRHQIIWjke6zhI7QTWYxj9HhbvJw3R.h8d65zSDD1tHXzhsEi8l2tAJT33gU3M5HUX6f9tM3-LT6AdOWes3Fe86nWUS-M3pgzK4.ePC0GwaRQPlQre9NCkAKgrqMGHdyw6rZOcgG58gIEMWGBgHi1zbzFgSj3tQNlvYWuYHcoxDaTdxCVszEt2sOAyCmuFGE8JoAA/"
+    }
+  ]
+}

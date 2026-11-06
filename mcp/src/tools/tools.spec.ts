@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe('tool surface', () => {
   it('advertises the full build schema once, so the tool list stays small', async () => {
     const list = await client.listTools();
-    expect(JSON.stringify(list).length).toBeLessThan(50_500);
+    expect(JSON.stringify(list).length).toBeLessThan(51_500);
     const withFullBuild = list.tools.filter((tool) => JSON.stringify(tool.inputSchema).includes('"jobLevel"'));
     expect(withFullBuild.map((tool) => tool.name)).toEqual(['calculate']);
   });

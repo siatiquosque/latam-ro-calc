@@ -1,0 +1,302 @@
+{
+  "rows": [
+    {
+      "name": "jor-restricted",
+      "mode": "general",
+      "runtime": "ui",
+      "procMode": "off",
+      "maxSearchMs": 60000,
+      "maxSolves": 800,
+      "wallMs": 49592,
+      "engineCalls": 12187,
+      "budgetUsage": {
+        "mode": "legacy",
+        "semantics": "legacy-cache-misses",
+        "requested": 800,
+        "effectiveLimit": 800,
+        "counted": 800,
+        "cacheHits": 196,
+        "cacheMisses": 2443,
+        "uncachedEvaluations": 16,
+        "engineCalls": 12187,
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 405,
+            "uncached": 0,
+            "cacheHits": 23,
+            "engineCalls": 2025
+          },
+          "search": {
+            "unique": 394,
+            "uncached": 0,
+            "cacheHits": 71,
+            "engineCalls": 1970
+          },
+          "socket": {
+            "unique": 1627,
+            "uncached": 0,
+            "cacheHits": 99,
+            "engineCalls": 8135
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          },
+          "feasibility": {
+            "unique": 0,
+            "uncached": 10,
+            "cacheHits": 0,
+            "engineCalls": 10
+          }
+        },
+        "mandatoryVerificationCalls": 10,
+        "stoppedBy": "search-budget",
+        "hardTotalLimit": false
+      },
+      "baseline": 23304627.4,
+      "dps": 62290728.8,
+      "reproduced": 62290728.8,
+      "patchDps": 62290728.8,
+      "replayErrors": [],
+      "share": "https://laro-calc.siatiquosque.com.br/s/N4Igzg1glgNjBiB7ATgWwK4wIYDUCmyYUiAdiAFwgDG6yyeJALiADTXZhgUAsATAGy82MPADc8MCrwDM-NgCtEAIwAyYiRQCsABjZg8ADwoBGNgAssUZAGVGATxEUAHOcvIAwohgoTexshNeXRBFJVsA8mNgrABzKC1g0IBBOJNg0ShmSO1E5RxMijkQKCZnXKUASVLyFxAAE0NA8oARRprhdAg0zQVlFU7fEAAHRAB3NPKABTGKAE5esMYsQoWAdSgucm4F6yHJcmk2KlIeQ5DlTzJyHvOld2Qsov0RKkY8OqTGCGtoOAoQACiBj2iCIpAABAAhDhvZAAXjhmlYIGQWFGAHkhoxiCQACoGRibADawwA.hI8KgGIxSSQ8Oh-FgYDVkUNSaiqHhSXssExyLNWCRMDAWEK4KLhRLxWKRTKpbLJXKlYrJSjeTE8NlBSrpTqFbqDSLqMgoAdteKQGYhpMCJy.cZkVgwEM6pFzfqPfKvcrDXo9majgAlLBva7u716iNwAC6bFGeCwIyumn4OQEcYTScDeAAZiU8IEM4nSABxVENf7uZHx4skdxYZB1B0HNPcUwgGtJ.uN3gUaSt9tmBN1ACqQyGBBMs24TkHw7HE.Q2bzdMLlvn44I3bqfZy0gA7PvzBvFwCSFQLExm7xZtonDch1hR5vkGeL7zGL3yDf.E55uunwXAg30vRhpB4fdtG2AC6gAWSgOo6kcLYom0WYzkfOoVDGSctiCbR9yKBtUB8LYdGMQ82GIlBl3zNdqI8Bsdy2aRZiEEAGJAj9m2kKJNGkM5OPPUCv147QdH-IT3yYcCDj48S9DMKAJGY7hU20IJFOUmA6lo1dInYsAlJU7ddw0-doKM7S6jLJ8C0oKstJUrimFEqInH4f8rOc4SP1ksSPP-GJiOpKQ0P4aDgrQak9Ps4x2KiqkmFMltzOCJREEQLJuEgtDoIyrLYrXArGBS-ttGkJx0syxhbIrBzkRKlzPx4Dybia3yZIgqCqKoKg1BzbLbyiI8OL6gbSqYszeH3WosHG3NGGanion4Xjev6xbmrc7Q1vbebNsG5r-KiGdJL6wMoBiMwhu0YxZw2y7rsmxszIIooJ0YbC7CZeweCOUFGHQKkgIiXj.AsgGwCBqlsPjCI.ByKIoZhvASxC6oZyg2QUeBvBmtBvsomMWZ22OaG8eauHcLE.7-3J1HmvR6LqlppxaiMp8xlWTMTm-HLNHbTm6m53mSCK7JFK50YkjQUjeBnSHwAsEWZblpdczoyXlel2WSNfTqwO6wyVbGaxjJ0qQcohqXVfN6yJeRnXVchGqracfcbmFsZXcKzX9Kd73Rl9pbDdknKNNtsYAQbE0SBiK3.H4IXTdGGO6BKGJHeCIObRIOoP0TwQo9GPOC6YbO9F.GBIXQHMc1gxMKFAesmEQKheTqBD0E2YJ3BEJLsWWchgiSeOJB7ihggqVARiIbFEHBRuhV7tggSGKAQ2IKe2E8We8DeJhN53kBsxgK7t5HthIQYd4oFeYGT.sRBMHBRAc3BAAJBNxBIcFO-BOnRgZgT64iZBsVAvI34f0mMgLKeBXg4lAeAsAkC-7v3BMAvA4JVix2IBEYIYDz6oKgRgrBS9Yj303lcQhKC0HQPBPAKA4hAED2pKvEAssYgMh7uCfISwT5cJ4WAcEuIJ6oBPrAvA.gSAiKSFQZSHD7hYAAF52HBGOOBDYT4qCwOgAusQV46L0QXcEwYMAcKSHUegJBwF0jMT3EBV8QDTHhqIswyAe5ZGCDzWs4IbTIBzAgheNC2DwDcOo5.mAn6p3BFE-YwRwkwGOH-eJJ8SxeEpHEl.CS2Doi7iQAA5CI1xuFgiNxiEKVAUJ6BYC6M42uwkGHmxNLPE.sFMokHPs9OJBAGB2Sfv4KA0B44n1JNYWIXImEqTGc-ZAnJ6DIFJFUIglTj7OPtipOJE4-gNNRHEYp-jECUifqMTO4Jmi8k5O0uw0N75MnBEkWe588wdxCU-HZMBAGG0zu0hsF4GGwNILCYewRrB9NsQ0BhAApNElh4jONWEpaGyFR6cCdEQP.9xQQiIwdYdAsiD6CPHCIBhFQ6gEpPp-YGqBfnOKQA8AleBDkAGkNgcPBcgDInJwQ5hQOCAAmi-E.zRPHVIhOQyEIZGAiDzDM5xl144MIAHJQCUBPceoSQBVFEJgOkqIlCkusMpGIOYTTvBPoGRxojF7rHzrS3ZwQAQXkXs-UZGy7CzzMKQdRGDsLiAIWEk0MQYiHLdQnZxahyyHNaOMZxlzzzYPWMAnB6AI3TxICuTI2DqWoFpe68pPd7lfKqLCGA.j7J90QFSRgjy2kKssMxYIlzkAQHBP3NEIq8BKDrjmcZIx6CAOBN4MEWrAwWCGGARAdRfUf3gnSUYKAIBlLYCWXMQSSCb3BMq9uQNkD6WCOiVEC8T4AgyF8.J7baD6BPlUIJiC.bBHwCQat4IZ5DHoJwJBzjS2IAMPc95DTMiwnbV4JtbBphwAYLe2eTJKShWceMlACyCDLNkVdTdWBSRgOQBqGkzZghIfmX0pZKyMOb2ww2PDpIvyEbmSh0j6G1lYZw9R2SdHkMkbQ6szDlHcMH1JNwdJqIMhLEA4R2CeANiwlJAARXQHUyteSRDAziVcmGU8AC.vVsTiB.LAGAjchjN1Phsc5orYh8ydmupgpLcQvwBQAWnBJiOe2b0nUjsw5sw4JnNJHPuIU9DYU3m0U4GkA9mlgXo3iaLIxgbjuFoDY2tn9Jgn0S3QakcS0vOPyDEflKSGiyK3o.tgeX.XrxHd.xJHAfN7wyk-EoKHGGWGASfJhaAWuZCccEUpgTX7hO61oMJVhoZdZTX1k.0L9EalAUpRsQ7.XwGwFSE.6IVPVImeeDTiGpEZDwKMUkjcv0sOW1gKkUIYRlO02NXTeB9NwGJMjXQL2WDxZYK9z7H3vs9C.y92MwwMXMPu9XYkhxkaHDkMjaHugeg9GRnDn7LAeiHB6PwAHQwgd6erkZkz38mR9jYK0Eif8pUB2bfsiE9XECE5AEkkQf8ASzysPZIouIroEHbbyF9VwnbNGYfmfxcC3gPt59POBf9P6dzSET6ds3rhlauhV4doJv03EupimIFzKdi9XZ57B9n0BOceQF.yNwbMyoN953zLnxyq7eMN0.53Mcaku06bxbAVBXRupupVl16o3HK8gcEhWGBgBK8mXeFgSigdQA1g4bBgxxCVbiE096liXZmArkA6w4AMMG218g-AbspLAMDLAhrpEUCJMYa26PNNAA/",
+      "patch": {
+        "gear": {
+          "weapon": 560026,
+          "weaponRefine": 12,
+          "weaponGrade": "C",
+          "shield": 460020,
+          "shieldRefine": 12,
+          "shieldGrade": "C",
+          "shieldEnchant1": null,
+          "shieldEnchant2": 310869,
+          "shieldEnchant3": 310869,
+          "headUpper": 19481,
+          "headUpperRefine": 12,
+          "headUpperGrade": "",
+          "headUpperCard": 300377,
+          "armor": 450177,
+          "armorRefine": 12,
+          "armorGrade": "",
+          "armorEnchant3": 310505,
+          "garment": 20964,
+          "garmentRefine": 12,
+          "garmentGrade": "",
+          "boot": 470094,
+          "bootRefine": 12,
+          "bootGrade": "C",
+          "bootEnchant3": 4704,
+          "accLeft": 490107,
+          "accLeftRefine": 0,
+          "accLeftGrade": "",
+          "accLeftEnchant3": 310489,
+          "shadowShield": 24767,
+          "shadowShieldRefine": 10,
+          "bootEnchant2": 4865,
+          "headMiddle": 410093,
+          "headMiddleGrade": "",
+          "headLower": 420076,
+          "headLowerGrade": "",
+          "shadowWeapon": 24751,
+          "shadowWeaponRefine": 10,
+          "shadowArmor": 24874,
+          "shadowArmorRefine": 10,
+          "shadowBoot": 24875,
+          "shadowBootRefine": 10,
+          "shadowArmorEnchant3": 4702,
+          "shadowBootEnchant3": 4702,
+          "weaponCard1": 300241,
+          "weaponCard2": 300241,
+          "shieldCard": 300274,
+          "headUpperEnchant3": 4704,
+          "armorEnchant2": 310509,
+          "bootCard": 300380,
+          "accLeftEnchant1": 310631,
+          "accLeftEnchant2": 310631
+        },
+        "options": {
+          "6": null,
+          "7": null,
+          "20": null,
+          "21": null,
+          "23": null,
+          "30": null,
+          "31": null,
+          "33": null,
+          "36": null,
+          "37": null,
+          "38": null,
+          "39": null,
+          "40": null
+        },
+        "stats": {},
+        "customAttachments": {},
+        "skills": {
+          "active": {},
+          "passive": {},
+          "buffs": {}
+        },
+        "customItems": []
+      },
+      "stopped": "orçamento de cálculos ou de tempo esgotado (800 de 800): pode haver trocas melhores que a busca não alcançou. Restrinja `slots`, fixe `candidates`, use `complements: false` ou aumente `maxSolves` para a busca caber.",
+      "feasibility": {
+        "baseline": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        },
+        "final": {
+          "status": "feasible",
+          "violations": [],
+          "targets": [
+            {
+              "monsterId": 21544,
+              "name": "Dolocaris de Um Olho",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21545,
+              "name": "Dolocaris de Dois Olhos",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21542,
+              "name": "Hallucigenia",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21601,
+              "name": "Rgan Intermediário Enredado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            },
+            {
+              "monsterId": 21539,
+              "name": "Rgan Intermediário Descartado",
+              "status": "feasible",
+              "violations": [],
+              "unknowns": []
+            }
+          ],
+          "worstTarget": {
+            "monsterId": 21544,
+            "name": "Dolocaris de Um Olho",
+            "reason": "Cumpre todas as regras; é o alvo com mais golpes para abater."
+          }
+        }
+      },
+      "report": {
+        "phases": {
+          "baseline": {
+            "unique": 0,
+            "uncached": 1,
+            "cacheHits": 0,
+            "engineCalls": 5
+          },
+          "discovery": {
+            "unique": 405,
+            "uncached": 0,
+            "cacheHits": 23,
+            "engineCalls": 2025
+          },
+          "search": {
+            "unique": 394,
+            "uncached": 0,
+            "cacheHits": 71,
+            "engineCalls": 1970
+          },
+          "socket": {
+            "unique": 1627,
+            "uncached": 0,
+            "cacheHits": 99,
+            "engineCalls": 8135
+          },
+          "levelCheck": {
+            "unique": 0,
+            "uncached": 0,
+            "cacheHits": 0,
+            "engineCalls": 0
+          },
+          "report": {
+            "unique": 17,
+            "uncached": 5,
+            "cacheHits": 3,
+            "engineCalls": 42
+          }
+        },
+        "phaseEngineMs": {
+          "baseline": 69.19549999999981,
+          "discovery": 7754.351100000013,
+          "search": 7356.305800000013,
+          "socket": 28352.797600000096,
+          "levelCheck": 0,
+          "report": 151.40729999999894,
+          "feasibility": 35.48840000000928
+        },
+        "stoppedReason": "search-budget",
+        "wallClockMs": 49544
+      }
+    }
+  ]
+}

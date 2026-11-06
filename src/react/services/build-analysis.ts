@@ -8,19 +8,36 @@ declare const BUILD_ANALYSIS_WORKER_URL: string;
 export class BuildAnalysis {
   private worker?: Worker;
   private reject?: (reason: Error) => void;
+  private fallback?: () => void;
+  private fallbackTimer?: ReturnType<typeof setTimeout>;
+  private lastCheckpoint?: Record<string, any>;
   private generation = 0;
   constructor(private readonly data: DataClient) {}
 
   cancel(): void {
     this.generation++;
+    if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
+    this.fallbackTimer = undefined;
+    this.fallback = undefined;
     this.worker?.terminate();
     this.worker = undefined;
     this.reject?.(new DOMException('Search cancelled', 'AbortError'));
     this.reject = undefined;
   }
 
-  async run(request: Omit<AnalysisRequest, 'sources' | 'descriptions' | 'origin'>, targetOverride?: { id: number; monster: any }): Promise<Record<string, any>> {
+  /** Cooperative stop; force termination only after the externally retained checkpoint is available. */
+  requestCancel(): void {
+    if (!this.worker) { this.cancel(); return; }
+    try { this.worker.postMessage({ type: 'cancel' }); }
+    catch { this.fallback?.(); return; }
+    if (!this.fallbackTimer) this.fallbackTimer = setTimeout(() => this.fallback?.(), 2_000);
+  }
+
+  getLastCheckpoint(): Record<string, any> | undefined { return this.lastCheckpoint; }
+
+  async run(request: Omit<AnalysisRequest, 'sources' | 'descriptions' | 'origin'>, targetOverride?: { id: number; monster: any }, onCheckpoint?: (checkpoint: Record<string, any>) => void): Promise<Record<string, any>> {
     this.cancel();
+    this.lastCheckpoint = undefined;
     const generation = this.generation;
     const [items, latamExtra, monsters, latamMonsters, hpSpTable, classes, descriptions] = await Promise.all([
       this.data.load<DatasetSources['items']>('itemsCore'), this.data.load<DatasetSources['latamExtra']>('latamExtra'),
@@ -33,8 +50,22 @@ export class BuildAnalysis {
     this.worker = worker;
     return new Promise((resolve, reject) => {
       this.reject = reject;
-      const finish = () => { worker.terminate(); if (this.worker === worker) { this.worker = undefined; this.reject = undefined; } };
+      const finish = () => {
+        if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
+        this.fallbackTimer = undefined;
+        this.fallback = undefined;
+        worker.terminate();
+        if (this.worker === worker) { this.worker = undefined; this.reject = undefined; }
+      };
+      this.fallback = () => {
+        const checkpoint = this.lastCheckpoint;
+        finish();
+        if (!checkpoint) { reject(new Error('Cancelamento: nenhuma build verificada ficou disponível.')); return; }
+        resolve({ ...checkpoint, checkpointFallback: true, stopped: 'cancelled',
+          budgetUsage: { ...checkpoint['budgetUsage'], stoppedBy: 'cancelled', stoppedReasons: ['cancelled'], accountingIncomplete: true } });
+      };
       worker.onmessage = ({ data }: MessageEvent<AnalysisResponse>) => {
+        if (data.checkpoint) { this.lastCheckpoint = data.checkpoint; onCheckpoint?.(data.checkpoint); return; }
         finish();
         if (data.error) reject(new Error(data.error)); else resolve(data.result);
       };

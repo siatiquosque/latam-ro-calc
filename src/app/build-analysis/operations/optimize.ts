@@ -14,20 +14,22 @@ import { Dataset } from '../data/dataset';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
 import { BuildInput, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
-import { DEFAULT_METRICS, Metric, Metrics, objectiveFor, Profile } from '../engine/metrics';
+import { rotationCallBound, DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
 import { engineCallCount, evaluate, evaluationCache } from '../engine/evaluate';
+import { JobBudget, minimumEngineCalls } from '../engine/job-budget';
 // Preserve imports used by older callers while evaluation is owned by the engine layer.
 export { evaluate, evaluationCache } from '../engine/evaluate';
 import { applyPatch, BuildPatch, decodeOnce } from '../engine/variants';
 import { MVP_CARD_IDS } from 'src/app/constants/mvp-cards';
-import { adaptSpecs, ConstraintSpec, GoalSpec, goalRequirements, judgedMetrics, Requirement, requireSchema } from '../engine/goal-spec';
+import { adaptSpecs, goalSpecSchema, constraintSpecSchema, ConstraintSpec, GoalSpec, goalRequirements, judgedMetrics, Requirement, requireSchema, slotOfField } from '../engine/goal-spec';
 import { compareStanding, constraintViolations, FeasibilityReport, goalStanding, improvesStanding, judgeFeasibility, RankedStanding, TargetReading } from '../engine/feasibility';
 import { introducesHeadConflict, validateBuild } from '../engine/validate';
 import { APP_VERSION } from 'src/app/core/app-version';
 import { complementChoices, damageContext, keptSockets, REACHABLE_REFINE, relevantKeys, searchComplements, socketOptions, swapPatch, searchRefineFor } from '../engine/complements';
 import { enchantCombinationError, refineLimitFor } from 'src/app/core/equipment-rules';
 import { partnerIndex } from '../engine/item-partners';
+import { candidateRecorder, FieldAudit } from '../engine/candidate-audit';
 import { pacing } from '../engine/pacing';
 import { procData, procEstimate, prepareProcPolicy, ProcMode } from '../engine/proc';
 import { CHECK_DUMMIES, isUndefended } from '../engine/dummies';
@@ -37,6 +39,7 @@ import { createBuildContext } from './context';
 import { SEARCH_SLOTS } from '../engine/search-slots';
 import { AnalysisRuntime } from '../runtime';
 import { compact } from './compact';
+import { equipmentLocks } from '../engine/equipment-locks';
 
 type TargetArg = z.infer<typeof targetSchema>;
 
@@ -314,6 +317,7 @@ export type EvaluateVariantsArgs = {
   };
 
 export type ScanSlotArgs = {
+    constraints?: ConstraintSpec;
     procMode?: ProcMode;
     procHitsPerSecond?: number;
     includePatches?: boolean;
@@ -348,12 +352,22 @@ const DEFAULT_SOCKET_RESERVE = 0.15;
 const NEAR_RUNNERS_UP = 5;
 
 export type OptimizeBuildArgs = {
-    /** `legacy` (default, the preserved baseline): the final socket pass has its own allowance outside the budget. `unified`: the pass is paid from the same calculation budget (the last 15% is reserved for it), so Quality@budget is comparable across strategies. */
+    /** Optional hard limit on actual engine calls, including final verification. */
+    maxEngineCalls?: number;
+    /** Local worker lifecycle; never sent through the public MCP schema. */
+    execution?: { signal?: AbortSignal; onCheckpoint?: (result: Record<string, unknown>) => void };
+    /** Internal A/B only. Default preserves the current Greedy walk. */
+    exploration?: 'greedy' | 'progressive';
+    /** Internal A/B: charge every engine call (procMode off), including aggregate target reads. */
+    budgetAccounting?: 'legacy' | 'engine';
+    /** Legacy gives polish a separate allowance. Unified shares a cache-miss allowance with polish; neither is a hard cap on engine calls or final reports. */
     budgetMode?: 'legacy' | 'unified';
     /** Experiment, not exposed by the MCP: share of the `unified` budget held back for the final socket pass (default 0.15, 0 to 0.9). Ignored in `legacy`. */
     socketReserve?: number;
     /** Experiment, not exposed by the MCP: adds `budgetReport` (who paid for what, per phase) to the result. Nothing else changes. */
     instrument?: boolean;
+    /** Experiment (with `instrument`): pieces or sockets the caller knows to be good, e.g. `{ key: 'boot', id }` or `{ key: 'accRightEnchant2', id }`; the audit says what became of each. */
+    knownCandidates?: { key: string; id: number }[];
     /** Experiment, not exposed by the MCP: the budget the effort per slot is planned from (screening, tuning, shares), apart from `maxSolves`, which then only stops the search. Default: the search ceiling, so the effort follows the cap as it always did. */
     effortBudget?: number;
     /** What the second pass over the sockets re-checks (internal, not exposed by the MCP). `near` (default): every field, but the pieces the first pass did not change are re-checked only against the best few candidates it measured; `all`: every field against every candidate (the fallback and the reference); `touched`: only the fields of pieces the first pass changed (experiment; measured to miss a cross-piece dependency). */
@@ -511,7 +525,8 @@ async function evaluateVariants(args: EvaluateVariantsArgs) {
     };
   }
 
-async function scanSlot({ build, slot, target, effects = [], objective: objectiveArg, profile = 'sustained', base: baseMode = 'tuned', query, limit = 15, topSockets = 12, refine, maxGrade, maxSolves, includePatches = false, excludeMvpCards = false, procMode = 'off', procHitsPerSecond }: ScanSlotArgs) {
+async function scanSlot({ build, slot, target, effects = [], objective: objectiveArg, profile = 'sustained', base: baseMode = 'tuned', query, limit = 15, topSockets = 12, refine, maxGrade, maxSolves, includePatches = false, excludeMvpCards = false, procMode = 'off', procHitsPerSecond, constraints }: ScanSlotArgs) {
+    if (constraints) constraints = constraintSpecSchema.parse(constraints);
     const noCards = excludeMvpCards ? new Set(MVP_CARD_IDS) : new Set<number>();
     const policy = await prepareProcPolicy(dataset, procMode, procHitsPerSecond);
     const measure = (...args: Parameters<typeof evaluate>) => {
@@ -531,11 +546,14 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     if (!baseValue) throw new Error(`A build não produz ${objective} para varrer.`);
 
     const rb = baseline.rb;
+    const locks = equipmentLocks(rb.model, constraints);
+    const inherited = new Set(constraintViolations(constraints ?? {}, dataset, rb.model, rb.model).map(v => `${v.code}:${v.message}`));
+    const choicesFor = (id: number) => locks.choices(complementChoices(dataset, slot, id, keys, noCards));
     const worn = (rb.model as Record<string, any>)[slot] as number;
     const canWear = canUsedByClass(rb.char);
     const found = dataset.itemIndex.search({ slot: slot as SlotTag, maxLevel: rb.model.level, inCalcDb: true, limit: 4000, query }, rb.char).rows
       .map((row) => row.id)
-      .filter((id) => dataset.items[id] && canWear(dataset.items[id]) && (dataset.items[id].requiredLevel ?? 0) <= rb.model.level);
+      .filter((id) => locks.permitsItem(slot, id) && dataset.items[id] && canWear(dataset.items[id]) && (dataset.items[id].requiredLevel ?? 0) <= rb.model.level);
 
     const keys = relevantKeys(baseline.solved.calc);
     const skillId = SKILL_ID_BY_NAME[String(rb.model.selectedAtkSkill ?? '').split('==')[0] as keyof typeof SKILL_ID_BY_NAME];
@@ -546,14 +564,18 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     const run = (patch: BuildPatch) => {
       if (solves >= budget || pace.timeUp()) { stopped = true; return null; }
       solves++;
-      try { return measure(input, patch, dataset, monster, effects, wanted); } catch { return null; }
+      try {
+        if (!locks.permits(patch)) return null;
+        const result = measure(input, patch, dataset, monster, effects, wanted);
+        return constraintViolations(constraints ?? {}, dataset, rb.model, result.rb.model).some(v => !inherited.has(`${v.code}:${v.message}`)) ? null : result;
+      } catch { return null; }
     };
 
     // 1) Every candidate, bare (the ideal refine and grade, no sockets).
     const bare: { id: number; patch: BuildPatch; value: number }[] = [];
     for (const id of found) {
       await pace.breathe();
-      const patch = swapPatch(dataset, rb, slot, id, { refine, maxGrade });
+      const patch = locks.preserve(swapPatch(dataset, rb, slot, id, { refine, maxGrade }));
       const result = run(patch);
       const value = result?.metrics[objective];
       if (result && value !== undefined) bare.push({ id, patch, value });
@@ -567,7 +589,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     const tune = (id: number, patch: BuildPatch, value: number, effort: number) => {
       const first = run(patch);
       if (!first) return { patch, value, result: undefined };
-      const tuned = searchComplements({ patch, result: first }, complementChoices(dataset, slot, id, keys, noCards), objective, (candidate) => run(candidate), effort);
+      const tuned = searchComplements({ patch, result: first }, choicesFor(id), objective, (candidate) => run(candidate), effort);
 
       return { patch: tuned.patch, value: tuned.result.metrics[objective] ?? value, result: tuned.result };
     };
@@ -598,7 +620,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
       finalists = quick.slice(0, topSockets);
     }
     if (worn > 0 && !finalists.some((entry) => entry.id === worn)) {
-      const wornPatch = swapPatch(dataset, rb, slot, worn, { refine, maxGrade });
+      const wornPatch = locks.preserve(swapPatch(dataset, rb, slot, worn, { refine, maxGrade }));
       const first = run(wornPatch);
       if (first && first.metrics[objective] !== undefined) finalists.push({ id: worn, patch: wornPatch, value: first.metrics[objective]! });
     }
@@ -606,7 +628,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     const tunedRows: { id: number; patch: BuildPatch; value: number; bare: number }[] = [];
     for (const entry of finalists) {
       await pace.breathe();
-      const fields = complementChoices(dataset, slot, entry.id, keys, noCards);
+      const fields = choicesFor(entry.id);
       const full = topSockets > 0 ? tune(entry.id, bare.find((candidate) => candidate.id === entry.id)?.patch ?? entry.patch, entry.value,
         Math.max(48, fields.reduce((sum, field) => sum + field.length, 0) * 2)) : { patch: entry.patch, value: entry.value, result: undefined };
       // No budget for the full search (`result` is empty): the quick stage's patch and value are the pair that was measured.
@@ -702,14 +724,20 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     return out;
   }
 
-async function searchBuild({ build, target, targets, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', socketReserve = DEFAULT_SOCKET_RESERVE, instrument = false, effortBudget, socketRecheck = 'near', effortParts, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [], goal, constraints }: OptimizeBuildArgs) {
+async function searchBuild({ build, target, targets, maxEngineCalls, execution, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', exploration = 'greedy', budgetAccounting = 'legacy', socketReserve = DEFAULT_SOCKET_RESERVE, instrument = false, knownCandidates = [], effortBudget, socketRecheck = 'near', effortParts, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [], goal, constraints }: OptimizeBuildArgs) {
     if (!(socketReserve >= 0 && socketReserve <= 0.9)) throw new Error('socketReserve deve estar entre 0 e 0,9.');
     const startedAt = Date.now();
+    const pace = pacing(config.limits.maxSearchMs);
     mvpPolicy ??= strictMvp ? 'none' : avoidMvp ? 'exclude-new' : 'allow';
     strictMvp = mvpPolicy === 'none';
     avoidMvp = mvpPolicy !== 'allow';
     const resolvedProcMode = optimizeProcMode(procMode, countProcs);
     const procPolicy = await prepareProcPolicy(dataset, resolvedProcMode, procHitsPerSecond);
+    const targetBudget = budgetAccounting === 'engine';
+    if (targetBudget && (budgetMode !== 'unified' || resolvedProcMode !== 'off')) throw new Error('engine accounting requires unified and procMode off');
+    if (exploration === 'progressive' && !targetBudget) throw new Error('progressive requires engine accounting');
+    let realSpent = 0;
+    let jobBudget: JobBudget | undefined;
     const memo = evaluationCache();
     // Budget ledger: who paid for what. Unit of the budget (`solves`): one evaluation that the cache did not have, that is one build
     // against the first target (extra targets and averaged procs add engine calls to it, not budget). The ledger keeps four things
@@ -717,6 +745,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     const PHASES = ['baseline', 'discovery', 'search', 'socket', 'levelCheck', 'report'] as const;
     type Phase = (typeof PHASES)[number];
     const ledger = Object.fromEntries(PHASES.map((name) => [name, { unique: 0, uncached: 0, cacheHits: 0, engineCalls: 0 }])) as Record<Phase, { unique: number; uncached: number; cacheHits: number; engineCalls: number }>;
+    const phaseEngineMs = Object.fromEntries(PHASES.map(name => [name, 0])) as Record<Phase, number>;
     let phase: Phase = 'baseline';
     /** Every complete build the search accepted, with what it had spent by then: the best result up to each budget. */
     const checkpoints: { spent: number; phase: Phase; value: number }[] = [];
@@ -725,33 +754,42 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     /** Where the second socket pass started (instrument only): value, unique evaluations and clock, to compare the re-check modes from the same state. */
     let secondPass: { startedWith: number; uniqueBefore: number; startedAt: number } | undefined;
     const measured = <T>(cached: boolean, run: () => T): T => {
-      const hits = memo.hits, misses = memo.misses, calls = engineCallCount();
+      const hits = memo.hits, misses = memo.misses, calls = engineCallCount(), started = performance.now();
+      if (jobBudget) jobBudget.phase = phase;
       try { return run(); } finally {
+        phaseEngineMs[phase] += performance.now() - started;
+        if (phase !== 'report') realSpent += engineCallCount() - calls;
         const row = ledger[phase];
         row.cacheHits += memo.hits - hits; row.unique += memo.misses - misses; row.engineCalls += engineCallCount() - calls;
         if (!cached && engineCallCount() > calls) row.uncached++;
       }
     };
     let stopCause: string | undefined;
-    const stopFor = (cause: string) => { stopCause ??= cause; return true; };
+    const stopCauses = new Set<string>();
+    const stopFor = (cause: string) => { stopCause ??= cause; stopCauses.add(cause); return true; };
     // What the search has calculated, counted where the calculation happens (a cache hit costs nothing, and the final socket pass has
     // its own allowance and is reported apart): one number for the budget, the answer and the coverage. It used to be attempts minus
     // hits, which went negative once the pass that does not count attempts began to hit the cache (`solves: -2`).
     let polishFresh = 0;
-    /** Evaluations that only read the goal on the other targets: they are not candidates, so they do not spend the budget. */
+    /** Evaluations that read the goal on the other targets. They are real engine work, so they spend the budget (and are reported apart). */
     let sideFresh = 0;
-    const spent = () => 1 + memo.misses - polishFresh - sideFresh;
+    /** Targets whose goal reading was skipped because the stage had no budget left: that candidate cannot be judged feasible. */
+    let sideSkipped = 0;
+    const spent = () => targetBudget ? realSpent : 1 + memo.misses - polishFresh;
     const evalBuild = (...args: Parameters<typeof evaluate>) => {
       if (introducesHeadConflict(args[0], args[1], dataset)) throw new Error('head slot conflict');
-      args[8] = procPolicy; return measured(true, () => memo.evaluate(...args));
+      args[8] = procPolicy; args[9] = jobBudget; args[10] = constraints?.forbiddenEffects; return measured(true, () => memo.evaluate(...args));
     };
-    const evalFresh = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; return measured(false, () => evaluate(...args)); };
+    const evalFresh = (...args: Parameters<typeof evaluate>) => { args[8] = procPolicy; args[9] = jobBudget; args[10] = constraints?.forbiddenEffects; return measured(false, () => evaluate(...args)); };
     /** `evaluate` without the cache and with the caller's own proc policy (reports after the search): still on the ledger. */
-    const evalRaw = (...args: Parameters<typeof evaluate>) => measured(false, () => evaluate(...args));
+    const evalRaw = (...args: Parameters<typeof evaluate>) => { args[9] = jobBudget; args[10] = constraints?.forbiddenEffects; return measured(false, () => evaluate(...args)); };
     const requestedBudget = Math.min(maxSolves ?? config.limits.maxSolves, config.limits.maxSolves);
-    const pace = pacing(config.limits.maxSearchMs);
     const base = decodeOnce(await normalizeShare(build, shortener));
-    const hasRotation = (((resolveBuild(base, dataset).model as { rotation?: string[] }).rotation) ?? []).length > 0;
+    const baseModel = resolveBuild(base, dataset).model;
+    const rotation = (baseModel as { rotation?: string[] }).rotation ?? [];
+    const hasRotation = rotation.length > 0;
+    const conflicts = constraints ? constraintViolations(constraints, dataset, baseModel, baseModel, effects).filter(v => v.code !== 'MVP_CARD_EXCLUDED' || constraints.mvpPolicy !== 'none') : [];
+    if (conflicts.length) throw new Error(`Conflito na build inicial: ${conflicts.map(v => `${v.code}: ${v.message}`).join('; ')}`);
     const objective: Metric = objectiveArg ?? objectiveFor(profile, hasRotation);
     // A rotation costs a calculation per step: search on the chosen skill's DPS and measure only the finalists on the real objective.
     const proxy: Metric | undefined = objective === 'rotationDps' || objective === 'burstDps' ? 'dps' : undefined;
@@ -771,6 +809,14 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     });
     const monster = aims[0].monster;
     const more = aims.slice(1);
+    if (maxEngineCalls !== undefined) {
+      // At most three independent procs (8 states), or two solves for legacy active procs.
+      const perTarget = typeof procPolicy === 'object' ? 8 : procPolicy === true ? 2 : 1;
+      const reserve = 2 * aims.length * perTarget;
+      const minimum = minimumEngineCalls(aims.length, typeof procPolicy === 'object' ? 'average' : procPolicy === true ? 'active' : 'off', proxy ? rotationCallBound(rotation) : 0);
+      if (!Number.isSafeInteger(maxEngineCalls) || maxEngineCalls < minimum) throw new Error(`maxEngineCalls insuficiente: mínimo conservador ${minimum}, incluindo verificações.`);
+      jobBudget = new JobBudget(maxEngineCalls, reserve);
+    }
     const baseline = evalFresh(base, undefined, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
     // Both limits apply; a wall-clock stop returns the best measured build so far.
     const unified = budgetMode === 'unified';
@@ -778,8 +824,8 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     const budget = unified && complements ? Math.floor(requestedBudget * (1 - socketReserve)) : requestedBudget;
     if (effortBudget !== undefined && !(effortBudget > 0)) throw new Error('effortBudget deve ser positivo.');
     const plan = effortBudget ?? budget;
-    const outOfBudget = () => (spent() >= budget && stopFor('search-budget')) || (pace.timeUp() && stopFor('time'));
-    const outOfTotalBudget = () => (spent() >= requestedBudget && stopFor('total-budget')) || (pace.timeUp() && stopFor('time'));
+    const outOfBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= budget && stopFor('search-budget')) || (pace.timeUp() && stopFor('time'));
+    const outOfTotalBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= requestedBudget && stopFor('total-budget')) || (pace.timeUp() && stopFor('time'));
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);
     if (maxGrade !== undefined) {
       const above = MAIN_ITEM_SLOTS.filter(slot => GRADES.indexOf(baseline.rb.model[`${slot}Grade`] ?? '') > gradeLimit);
@@ -789,6 +835,14 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     if (!baseValue) throw new Error(`A build não produz ${objective} para otimizar.`);
 
     const locked = new Set(lock);
+    // Field locks: the field stays as the base has it and the rest of its slot stays open. A locked card, enchant, refine or grade only makes
+    // sense on the piece that carries it, so that piece is pinned (its sockets, refine and grade are searched, the item is not swapped).
+    const equipmentLockPolicy = equipmentLocks(baseline.rb.model, constraints);
+    const fieldLocks = equipmentLockPolicy.fields;
+    const strayLocks = [...fieldLocks].filter((field) => !slotOfField(field));
+    if (strayLocks.length) throw new Error(`lockedFields: não são campos de equipamento: ${strayLocks.join(', ')}.`);
+    const pinned = equipmentLockPolicy.pinned;
+    const lockedByField = (patch: BuildPatch) => Object.keys(patch.gear ?? {}).some((key) => fieldLocks.has(key));
     if (equipmentMode === 'current') { combos = false; if (pairs.length) throw new Error('equipmentMode current mantém as peças; não aceita pairs.'); }
     const walk = (slots ?? SEARCH_SLOTS).filter((slot) => !locked.has(slot));
     const badPair = pairs.find(([a, b]) => a === b || ![a, b].every(slot => walk.includes(slot)));
@@ -807,7 +861,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     const complementPools = new Map<string, BuildPatch[][]>();
     const complementsFor = (slot: string, id: number) => {
       const key = `${slot}:${id}`;
-      if (!complementPools.has(key)) complementPools.set(key, complementChoices(dataset, slot, id, keys, banned));
+      if (!complementPools.has(key)) complementPools.set(key, complementChoices(dataset, slot, id, keys, banned).map((choices) => choices.filter((choice) => !lockedByField(choice))).filter((choices) => choices.length));
       return complementPools.get(key)!;
     };
     const canWear = canUsedByClass(baseline.rb.char);
@@ -821,15 +875,20 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     let discovery = 0;
     const screening: Record<string, { eligible: number; tested: number }> = {};
     const pools = new Map<string, number[]>();
+    const audit = candidateRecorder();
+    const excludedIds = new Set(exclude);
+    const discoverPools = async () => {
     // Screening (every eligible item measured bare) is the discovery phase and has its own budget: 35% of the calculations, shared
     // out slot by slot with what an earlier slot did not use passed on. Without it the first slots (the weapon has hundreds of
     // candidates) took the whole of a short budget and the later slots, and the search itself, never started.
     const discoveryBudget = Math.floor(plan * 0.35);
     phase = 'discovery';
+    const screeningStart = spent();
     for (const [slotPosition, slot] of walk.entries()) {
       const worn = baseline.rb.model[slot];
-      if (equipmentMode === 'current') { pools.set(slot, worn ? [worn] : []); continue; }
+      if (equipmentMode === 'current' || pinned.has(slot)) { audit.fix(slot, pinned.has(slot) ? 'pinned' : 'equipmentMode'); pools.set(slot, worn ? [worn] : []); continue; }
       if (candidates?.[slot]) {
+        audit.fix(slot, 'callerList');
         skippedNotInLatam.push(...candidates[slot].filter((id) => !dataset.itemIndex.get(id)?.latam));
         pools.set(slot, candidates[slot].filter((id) => (id !== worn || maxGrade === undefined || canGradeItem(dataset.items[id])) && !banned.has(id) && eligible(id, slot)));
         continue;
@@ -840,7 +899,9 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
       if (skillId) searches.push(dataset.itemIndex.search({ ...common, skill: String(skillId) }, baseline.rb.char));
       for (const { rows } of searches) for (const row of rows) found.set(row.id, row);
       // A plain parent can derive its value entirely from enchants (Wolf/Nebula/Varmundt among others).
-      for (const row of dataset.itemIndex.search(common, baseline.rb.char).rows) {
+      const everyRow = dataset.itemIndex.search(common, baseline.rb.char).rows;
+      audit.open(slot, everyRow.map((row) => row.id), (id) => (excludedIds.has(id) ? 'unavailable' : excludeMvpCards && MVP_CARD_IDS.has(id) ? 'mvp' : undefined));
+      for (const row of everyRow) {
         if (enchantPoolsFor(dataset.items[row.id])?.some(pool => pool?.length)) found.set(row.id, row);
       }
 
@@ -848,8 +909,11 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
       const ordered = [...found.values()]
         .filter((row) => row.id !== worn && !banned.has(row.id))
         .sort((a, b) => matches(b.id) - matches(a.id) || (b.reqLv ?? 0) - (a.reqLv ?? 0));
+      for (const row of ordered) audit.reach(slot, row.id, 'screenCut');
       const scored: { id: number; value: number }[] = [];
-      const slotShare = Math.max(6, Math.floor((discoveryBudget - discovery) / (walk.length - slotPosition)));
+      const slotShare = targetBudget
+        ? Math.max(1, Math.floor((discoveryBudget - (spent() - screeningStart)) / ((walk.length - slotPosition) * aims.length)))
+        : Math.max(6, Math.floor((discoveryBudget - discovery) / (walk.length - slotPosition)));
       for (const row of ordered.slice(0, slotShare)) {
         if (outOfBudget()) break;
         await pace.breathe();
@@ -857,6 +921,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         try {
           const trial = evalBuild(base, swapPatch(dataset, baseline.rb, slot, row.id, { refine, maxGrade }), dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs);
           scored.push({ id: row.id, value: trial.metrics[rankMetric] ?? -Infinity });
+          audit.reach(slot, row.id, 'bareCut');
         } catch { /* an incompatible candidate is not a recommendation */ }
       }
       screening[slot] = { eligible: ordered.length, tested: scored.length };
@@ -882,6 +947,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         ranked.push(...siblings);
       }
       pools.set(slot, ranked);
+      for (const id of ranked) audit.reach(slot, id, 'pooled');
       if ((maxGrade === undefined || canGradeItem(dataset.items[worn])) && worn > 0 && !banned.has(worn)) ranked.unshift(worn);
     }
 
@@ -893,10 +959,13 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         if (typeof id !== 'number' || id <= 0) continue;
         for (const partner of partners.of(id)) {
           const slot = partners.slotOf(partner);
-          if (slot && walk.includes(slot) && eligible(partner, slot) && baseline.rb.model[slot] !== partner && !banned.has(partner) && !pools.get(slot)?.includes(partner)) pools.get(slot)!.push(partner);
+          if (slot && walk.includes(slot) && !pinned.has(slot) && eligible(partner, slot) && baseline.rb.model[slot] !== partner && !banned.has(partner) && !pools.get(slot)?.includes(partner)) { pools.get(slot)!.push(partner); audit.reach(slot, partner, 'pooled'); }
         }
       }
     }
+
+    };
+    if (!jobBudget && !execution) await discoverPools();
 
     interface Move { anchor: string; changes: [string, number][]; grades: Record<string, string> }
     /** One move per grade combination the cap allows; a new item never inherits the old item's grade. */
@@ -904,7 +973,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
       let variants: Record<string, string>[] = [{}];
       for (const [slot, item] of changes) {
         // Higher grades only add bonuses: measure the highest grade the caller allows.
-        const grades = equipmentMode === 'current' ? [baseline.rb.model[`${slot}Grade`] ?? ''] : canGradeItem(dataset.items[item]) ? [maxGrade === 'none' ? '' : maxGrade ?? 'A']
+        const grades = equipmentMode === 'current' || fieldLocks.has(`${slot}Grade`) ? [baseline.rb.model[`${slot}Grade`] ?? ''] : canGradeItem(dataset.items[item]) ? [maxGrade === 'none' ? '' : maxGrade ?? 'A']
           : [rb.model[slot] === item ? rb.model[`${slot}Grade`] ?? '' : ''];
         variants = variants.flatMap(v => grades.map(grade => ({ ...v, [slot]: grade })));
       }
@@ -927,7 +996,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         if (!combos) continue;
         for (const partner of partners.of(item)) {
           const slot = partners.slotOf(partner);
-          if (slot && slot !== anchor && walk.includes(slot) && eligible(partner, slot) && !banned.has(partner)) add([[anchor, item], [slot, partner]]);
+          if (slot && slot !== anchor && walk.includes(slot) && !pinned.has(slot) && eligible(partner, slot) && !banned.has(partner)) add([[anchor, item], [slot, partner]]);
         }
       }
 
@@ -935,7 +1004,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     };
 
     /** The ideal refine unless the caller capped it; pieces with no refine field are left alone. */
-    const refineFor = (target: string, item: number): number | undefined => equipmentMode === 'current' ? baseline.rb.model[`${target}Refine`] : searchRefineFor(rb, target, item, refine);
+    const refineFor = (target: string, item: number): number | undefined => equipmentMode === 'current' || fieldLocks.has(`${target}Refine`) ? baseline.rb.model[`${target}Refine`] : searchRefineFor(rb, target, item, refine);
     const patchFor = (move: Move): BuildPatch => ({
       gear: Object.fromEntries(move.changes.flatMap(([target, id]) => [
         [target, id],
@@ -954,27 +1023,47 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     let rb = baseline.rb;
 
     // Goal: hard constraints and `require` stay filters; the goal is a ranking (see `compareStanding`). Without goal rules none of this runs.
-    const standingFor = (patch: BuildPatch | undefined, tried: { metrics: Metrics }, objectiveValue: number): RankedStanding => {
+    // What the running stage may still spend: the search stops at `budget`, the socket pass at the full budget (legacy mode gives it its own allowance).
+    const stageRoom = () => Math.min(jobBudget?.remainingSearch ?? Infinity, phase === 'socket' && !unified ? Infinity : (phase === 'socket' ? requestedBudget : budget) - spent());
+    const standingFor = (patch: BuildPatch | undefined, tried: { metrics: Metrics }, objectiveValue: number, mandatory = false): RankedStanding & { complete?: boolean } => {
       if (!goalOn) return { feasible: true, worst: 0, total: 0, value: objectiveValue };
-      const readings: TargetReading[] = [{ monsterId: aims[0].id, hp: monster.stats?.health, metrics: tried.metrics }];
-      // Each other target is read on its own (a weighted average would hide a failing one); the reads are off the budget.
+      // The objective can be a weighted aggregate. Goal rules, including the damage margin,
+      // must instead use each target's own metrics, including the first target.
+      let complete = true;
+      let firstMetrics = tried.metrics;
+      if (more.length) {
+        if (!mandatory && stageRoom() <= 0) { sideSkipped++; complete = false; firstMetrics = {}; }
+        else {
+          try { firstMetrics = evalBuild(current, patch, dataset, monster, effects, goalWanted, [], 1, countProcs).metrics; }
+          catch { complete = false; firstMetrics = {}; }
+        }
+      }
+      const readings: TargetReading[] = [{ monsterId: aims[0].id, hp: monster.stats?.health, metrics: firstMetrics }];
+      // Each other target is read on its own (a weighted average would hide a failing one) and each fresh read spends the budget. A stage
+      // with no budget left reads no more: the target stays unreadable (the worst gap) and the candidate cannot win. Only the baseline is mandatory.
       for (const aim of aims.slice(1)) {
+        if (!mandatory && stageRoom() <= 0) {
+          sideSkipped++; complete = false;
+          readings.push({ monsterId: aim.id, metrics: {} });
+          continue;
+        }
         const before = memo.misses;
         try {
           readings.push({ monsterId: aim.id, hp: aim.monster.stats?.health, metrics: evalBuild(current, patch, dataset, aim.monster, effects, goalWanted, [], 1, countProcs).metrics });
-        } catch { readings.push({ monsterId: aim.id, metrics: {} }); }
+        } catch { complete = false; readings.push({ monsterId: aim.id, metrics: {} }); }
         sideFresh += memo.misses - before;
       }
 
-      return { ...goalStanding(readings, goal), value: objectiveValue };
+      return { ...goalStanding(readings, goal), value: objectiveValue, complete };
     };
-    let standing: RankedStanding = standingFor(undefined, baseline, baseValue);
-    const goalTrace = { startedFeasible: standing.feasible, firstFeasible: standing.feasible ? { evaluations: 1, unique: memo.misses, phase: 'baseline' as string } : undefined };
+    let standing: RankedStanding = standingFor(undefined, baseline, baseValue, true);
+    const goalTrace = { startedFeasible: standing.feasible, firstFeasible: standing.feasible ? { evaluations: spent(), unique: memo.misses, phase: 'baseline' as string } : undefined };
     // A constraint the base already breaks cannot be repaired by the search; only a new violation makes a candidate illegal.
-    const inheritedViolations = new Set(constraints ? constraintViolations(constraints, dataset, baseline.rb.model, baseline.rb.model).map((violation) => `${violation.code}:${violation.message}`) : []);
-    const lawful = (model: Parameters<typeof constraintViolations>[3]) => !constraints || constraintViolations(constraints, dataset, baseline.rb.model, model).every((violation) => inheritedViolations.has(`${violation.code}:${violation.message}`));
+    const inheritedViolations = new Set(constraints ? constraintViolations(constraints, dataset, baseline.rb.model, baseline.rb.model, effects).map((violation) => `${violation.code}:${violation.message}`) : []);
+    const lawful = (model: Parameters<typeof constraintViolations>[3]) => !constraints || constraintViolations(constraints, dataset, baseline.rb.model, model, effects).every((violation) => inheritedViolations.has(`${violation.code}:${violation.message}`));
     /** Whether `candidate` replaces what the search holds: the objective alone without a goal, the lexicographic order with one. */
-    const takes = (candidate: Chosen) => (goalOn ? improvesStanding(candidate.standing, standing) : candidate.value > value * 1.001);
+    const takes = (candidate: Chosen) => (!(jobBudget || execution?.onCheckpoint) || (candidate.standing as RankedStanding & { complete?: boolean }).complete !== false)
+      && (goalOn ? improvesStanding(candidate.standing, standing) : candidate.value > value * 1.001);
     const ahead = (candidate: Chosen, incumbent: Chosen | null) => !incumbent || (goalOn ? compareStanding(candidate.standing, incumbent.standing) > 0 : candidate.value > incumbent.value);
     let changes: BuildPatch = { gear: {} };
     const steps: Record<string, unknown>[] = [];
@@ -985,7 +1074,32 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     const slotCoverage = new Map<string, { available: number; measured: number }>();
 
     type Chosen = { move: Move; patch: BuildPatch; value: number; metrics: Metrics; rb: ResolvedBuild; standing: RankedStanding };
+    let lastCheckpoint: Record<string, any> | undefined;
+    let checkpointBaseline: FeasibilityReport | undefined;
+    const verifiedCheckpoint = (patch: BuildPatch | undefined, nextMetrics: Metrics, nextRb: ResolvedBuild) => {
+      if (!jobBudget && !execution?.onCheckpoint) return true;
+      try {
+        const build = patch ? applyPatch(current, patch) : current;
+        const wantedForCheck = [...new Set<Metric>([...judgedMetrics(goal, rules), objective])];
+        const check = jobBudget ? evalBuild : evalFresh;
+        const readings: TargetReading[] = aims.map(aim => ({ monsterId: aim.id, name: aim.monster.name, hp: aim.monster.stats?.health,
+          metrics: check(current, patch, dataset, aim.monster, effects, wantedForCheck, [], 1, countProcs).metrics }));
+        if (readings.some(reading => reading.metrics[objective] === undefined || !meets(reading.metrics, rules))) return false;
+        const report = judgeFeasibility({ dataset, base, build, goal, constraints, effects, require: rules, readings });
+        if (report.status === 'invalid' || report.targets.some(target => target.status === 'unknown')) return false;
+        if (!patch && current === base) checkpointBaseline = report;
+        const nextPatch = patch ? applyPatch(changes, patch) : changes;
+        lastCheckpoint = { objective, baseline: roundMetrics(baseline.metrics, shown), final: roundMetrics(nextMetrics, shown),
+          deltaPct: Object.fromEntries(shown.map(key => [key, deltaPct(nextMetrics[key], baseline.metrics[key])])),
+          patch: nextPatch, share: shareOf(nextRb), feasibility: { ...(checkpointBaseline ? { baseline: checkpointBaseline } : {}), final: report },
+          solves: spent(), budgetUsage: { stoppedBy: 'cancelled', stoppedReasons: ['cancelled'],
+            engineCalls: jobBudget?.calls ?? Object.values(ledger).reduce((sum, row) => sum + row.engineCalls, 0), hardTotalLimit: !!jobBudget } };
+        return true;
+      } catch { return false; }
+    };
+    const publishCheckpoint = () => { if (lastCheckpoint) { try { execution?.onCheckpoint?.(lastCheckpoint); } catch { /* notification is optional */ } } };
     const accept = (best: Chosen) => {
+      if (!verifiedCheckpoint(best.patch, best.metrics, best.rb)) return false;
       checkpoints.push({ spent: spent(), phase, value: best.value });
       if (best.standing.feasible && !goalTrace.firstFeasible) goalTrace.firstFeasible = { evaluations: spent(), unique: memo.misses, phase };
       standing = best.standing;
@@ -1013,6 +1127,8 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
       value = best.value;
       metrics = best.metrics;
       rb = best.rb;
+      publishCheckpoint();
+      return true;
     };
 
     // The build only changes when a move is accepted. A slot already searched against the current build, and a combined
@@ -1028,7 +1144,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     if (strictMvp) {
       const wornMvp = ITEM_ID_KEYS.filter((key) => MVP_CARD_IDS.has(rb.model[key]));
       const owner = (field: string) => EQUIPMENT_SLOTS.find((descriptor) => (descriptor.cardFields as readonly string[]).includes(field))?.key;
-      const blocked = wornMvp.filter((field) => locked.has(String(owner(field))));
+      const blocked = wornMvp.filter((field) => locked.has(String(owner(field))) || fieldLocks.has(field));
       if (blocked.length) throw new Error(`strictMvp: ${blocked.map((field) => `${dataset.items[rb.model[field]]?.name} (${owner(field)})`).join(', ')} está em peça travada (lock) e é carta de MVP. Destrave o slot ou use excludeMvpCards.`);
       if (wornMvp.length) {
         const patch: BuildPatch = { gear: Object.fromEntries(wornMvp.map((field) => [field, null])) };
@@ -1041,17 +1157,36 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         value = startValue;
         metrics = start.metrics;
         rb = start.rb;
+        // The incumbent and its goal standing must describe the same MVP-free build.
+        standing = standingFor(undefined, start, startValue, true);
+        goalTrace.startedFeasible = standing.feasible;
+        goalTrace.firstFeasible = standing.feasible ? { evaluations: spent(), unique: memo.misses, phase: 'baseline' } : undefined;
       }
     }
+
+    verifiedCheckpoint(undefined, metrics, rb);
+    publishCheckpoint();
+    if (jobBudget) jobBudget.shouldStop = () => execution?.signal?.aborted ? 'cancelled' : pace.timeUp() ? 'time' : undefined;
+    if (jobBudget || execution) await discoverPools();
 
     // Round -1 tunes what the build already wears (best cards, enchants and catalogued rolls) before anything is compared with it:
     // otherwise a worn piece the link left bare loses to a replacement that the walk happened to reach first.
     let valueAfterTuning: number | undefined;
-    for (let round = complements ? -1 : 0; round < rounds && !exhausted; round++) {
-      const tuning = round < 0;
+    const progressive = exploration === 'progressive';
+    // Survey scores are gains over the incumbent at that slot, not absolute scores
+    // from different build versions (which would systematically favor later slots).
+    const promise = new Map<string, { feasible: number; worst: number; total: number; value: number }>();
+    for (let round = progressive ? -2 : complements ? -1 : 0; round < rounds && !exhausted; round++) {
+      if (progressive && round === -1) continue;
+      const survey = round === -2;
+      const tuning = round === -1;
       if (!tuning) valueAfterTuning ??= value;
       let improved = false;
-      for (const [slotIndex, slot] of walk.entries()) {
+      const orderedWalk = progressive && !survey ? [...walk].sort((a, b) => {
+        const x = promise.get(a), y = promise.get(b);
+        return x && y ? y.feasible - x.feasible || y.worst - x.worst || y.total - x.total || y.value - x.value : x ? -1 : y ? 1 : 0;
+      }) : walk;
+      for (const [slotIndex, slot] of orderedWalk.entries()) {
         if (searchedAt.get(slot) === version) continue;
         // Discovery (35%) and tuning what is worn (40% more) leave a quarter of the calculations for the walk: a short budget spent
         // on the sockets of the current pieces never looks at a replacement. What was not reached is reported in `coverage`.
@@ -1064,21 +1199,25 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         if (tuning) tunedSlots++;
         const remainingSlots = walk.length - slotIndex + (rounds - round - 1) * walk.length;
         const shareAt = (budgetFor: number) => Math.max(0, Math.floor((budgetFor - spent()) / Math.max(1, remainingSlots)));
-        const share = shareAt(plan);
+        const surveyCost = Math.max(1, aims.length * (goalOn ? 2 : 1) - (goalOn && aims.length === 1 ? 1 : 0));
+        const share = survey ? Math.max(surveyCost, Math.floor((budget - spent()) * 0.5 / (walk.length - slotIndex))) : shareAt(plan);
+        const localEnd = survey ? Math.min(budget, spent() + share) : budget;
         // Three stages, so every candidate is judged with the same care as the piece it competes with: all of them bare, a quick
         // search of sockets and rolls for the best dozen, the full search for the best few. A small even share for each candidate
         // (what this used to give) cannot find the right enchant among eight, and the worn piece, which had the full search, won.
         const quickEffort = tuning ? 0 : Math.max(4, Math.min(8, Math.floor(shareAt(effortParts?.quick ?? plan) / (2 * Math.max(1, Math.min(12, moves.length))))));
         const fullEffort = Math.max(0, tuning ? share - 1 : effortParts?.fullFixed ?? Math.floor(shareAt(effortParts?.full ?? plan) / 3));
         const solveFor = (candidatePatch: BuildPatch) => {
+          if (survey && spent() + aims.length > localEnd) return null;
           if (outOfBudget()) { exhausted = true; return null; }
+          for (const [key, value] of Object.entries(candidatePatch.gear ?? {})) audit.tryField(key, value);
           try { return evalBuild(current, candidatePatch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs); } catch { return null; }
         };
         type Tried = ReturnType<typeof evalBuild>;
         const entries: { move: Move; patch: BuildPatch; tried: Tried; fields: BuildPatch[][] }[] = [];
         // Discovery (measuring every candidate bare) may take at most half of the slot's share, so a long list of candidates cannot
         // leave nothing for the sockets of the ones that matter. What the cap leaves unmeasured is reported in `coverage`.
-        const discoveryCap = tuning ? Infinity : Math.max(12, Math.floor(shareAt(effortParts?.discoveryCap ?? plan) / 2));
+        const discoveryCap = survey ? Math.max(1, Math.floor(share / surveyCost)) : tuning ? Infinity : Math.max(12, Math.floor(shareAt(effortParts?.discoveryCap ?? plan) / 2));
         let discovered = 0;
         let selectedCount = 0;
         phase = 'discovery';
@@ -1090,7 +1229,8 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           if (discovered >= discoveryCap) break;
           discovered++;
           discovery++;
-          solvedMoves.add(key);
+          if (!survey) solvedMoves.add(key);
+          for (const [target, item] of move.changes) audit.reach(target, item, 'evaluated');
           try {
             const patch = patchFor(move);
             const tried = evalBuild(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, countProcs);
@@ -1109,7 +1249,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           entry.patch = refined.patch;
           entry.tried = refined.result;
         };
-        if (complements && !exhausted) {
+        if (complements && !exhausted && !survey) {
           entries.sort((x, y) => valueOf(y) - valueOf(x));
           // A bare score cannot compare different enchant families. Give the best representative
           // of each family a socket search before allowing damage ranking to prune it.
@@ -1154,18 +1294,27 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           if (candidate === undefined || !meets(entry.tried.metrics, rules) || !lawful(entry.tried.rb.model)) continue;
           seen.push({ to: entry.move.changes, grades: entry.move.grades, value: candidate, against: value });
           const chosen: Chosen = { move: entry.move, patch: entry.patch, value: candidate, metrics: entry.tried.metrics, rb: entry.tried.rb, standing: standingFor(entry.patch, entry.tried, candidate) };
+          if (jobBudget && (chosen.standing as RankedStanding & { complete?: boolean }).complete === false) continue;
           if (ahead(chosen, best)) best = chosen;
         }
         // 0,1% is the floor: below it the "gain" is rounding in the engine, and the walk would chase noise.
-        if (!exhausted && !tuning) searchedAt.set(slot, version);
-        slotLog.push({ round, slot, spent: spent(), share, quick: quickEffort, full: fullEffort, discoveryCap: tuning ? null : discoveryCap, moves: moves.length, discovered, selected: selectedCount, best: best ? JSON.stringify(best.move.changes) : null, bestValue: best?.value ?? null, before: value, accepted: !!best && takes(best) });
-        if (best && takes(best)) {
-          accept(best); improved = true; version++; solvedMoves.clear();
+        if (best && survey) promise.set(slot, {
+          feasible: Number(best.standing.feasible) - Number(standing.feasible),
+          worst: standing.worst - best.standing.worst,
+          total: standing.total - best.standing.total,
+          value: (best.value - value) / Math.max(1, Math.abs(value)),
+        });
+        if (!exhausted && !tuning && !survey) searchedAt.set(slot, version);
+        const before = value;
+        const accepted = !!best && takes(best) && accept(best);
+        slotLog.push({ round, slot, spent: spent(), share, quick: quickEffort, full: fullEffort, discoveryCap: tuning ? null : discoveryCap, moves: moves.length, discovered, selected: selectedCount, best: best ? JSON.stringify(best.move.changes) : null, bestValue: best?.value ?? null, before, accepted });
+        if (accepted) {
+          improved = true; version++; solvedMoves.clear();
           if (tuning) { steps[steps.length - 1]['atual'] = true; steps[steps.length - 1]['kind'] = 'ajuste'; }
         }
         if (exhausted) break;
       }
-      if (!improved && !tuning) break;
+      if (!improved && !tuning && !survey) break;
     }
     valueAfterTuning ??= value;
     phase = 'search';
@@ -1203,9 +1352,8 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     let fieldTimeCuts = 0;
     phase = 'socket';
     if (complements) {
-      const allowanceMs = Math.max(25_000, Math.round(config.limits.maxSearchMs * 0.5));
-      const polishPace = pacing(allowanceMs);
-      const polishEnd = Date.now() + allowanceMs;
+      const polishPace = pace;
+      const polishEnd = Date.now() + pace.remainingMs();
       const relevant = new Set(relevantKeys(baseline.solved.calc, aims.map((aim) => aim.monster)));
       const score = (id: number) => Object.keys(dataset.items[id]?.script ?? {}).filter((key) => relevant.has(key) || key.startsWith('chance__')).length;
       const touchedSlots = new Set<string>();
@@ -1216,10 +1364,10 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         let changed = false;
         // Every socket gets an equal share of what is left, so the first slots cannot spend the allowance (a weapon has hundreds of
         // legal cards) and leave the garment and the boots unchecked.
-        const fields = walk.filter((slot) => pass === 0 || socketRecheck !== 'touched' || touchedSlots.has(slot)).flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).map((option) => ({ slot, option })) : []));
+        const fields = walk.filter((slot) => pass === 0 || socketRecheck !== 'touched' || touchedSlots.has(slot)).flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).filter((option) => !fieldLocks.has(option.field)).map((option) => ({ slot, option })) : []));
         if (pass === 0) polish.total = fields.length;
         for (const [position, { slot, option }] of fields.entries()) {
-          if ((polishPace.timeUp() && stopFor('time:socket')) || (unified && outOfTotalBudget())) break;
+          if ((execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (polishPace.timeUp() && stopFor('time:socket')) || (unified && outOfTotalBudget())) break;
           const itemId = rb.model[slot];
           if (!(itemId > 0) || !socketOptions(dataset, slot, itemId).some((entry) => entry.field === option.field)) continue;
           const fieldEnd = Date.now() + Math.max(250, (polishEnd - Date.now()) / (fields.length - position));
@@ -1232,7 +1380,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           const candidates = pass > 0 && socketRecheck === 'near' && !touchedSlots.has(slot) && near.has(fieldKey) ? ordered.filter((id) => near.get(fieldKey)!.slice(0, NEAR_RUNNERS_UP).includes(id)) : ordered;
           const measuredHere: { id: number; ranked: number }[] = [];
           for (const id of candidates) {
-            if ((polishPace.timeUp() && stopFor('time:socket')) || (Date.now() > fieldEnd && ++fieldTimeCuts) || (unified && outOfTotalBudget())) break;
+            if ((execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (polishPace.timeUp() && stopFor('time:socket')) || (Date.now() > fieldEnd && ++fieldTimeCuts) || (unified && outOfTotalBudget())) break;
             await polishPace.breathe();
             const patch: BuildPatch = { gear: { [option.field]: id } };
             if (option.kind === 'enchant') {
@@ -1241,9 +1389,10 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
               if (enchantCombinationError(item, enchants)) continue;
             }
             polish.tried++;
+            audit.tryField(option.field, id);
             try {
               // Scanned without the proc average (it doubles the cost of a build with a proc); the winner is measured in full below.
-              const tried = measured(true, () => memo.evaluate(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, false));
+              const tried = measured(true, () => memo.evaluate(current, patch, dataset, monster, effects, searchWanted, more, aims[0].weight, false, jobBudget, constraints?.forbiddenEffects));
               const ranked = tried.metrics[rankMetric];
               if (ranked !== undefined) measuredHere.push({ id, ranked });
               if (ranked !== undefined && (!best || ranked > best.ranked)) best = { id, ranked };
@@ -1254,7 +1403,9 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           socketLog.push(logged);
           if (!best) continue;
           const patch: BuildPatch = { gear: { [option.field]: best.id } };
-          const full = evalBuild(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs);
+          if (targetBudget && spent() + aims.length > requestedBudget) break;
+          let full: ReturnType<typeof evalBuild>;
+          try { full = evalBuild(current, patch, dataset, monster, effects, wanted, more, aims[0].weight, countProcs); } catch { continue; }
           const candidate = full.metrics[objective];
           if (candidate === undefined || !meets(full.metrics, rules) || !lawful(full.rb.model)) continue;
           const chosen: Chosen = { move: { anchor: slot, changes: [[slot, itemId]], grades: { [slot]: (rb.model as unknown as Record<string, string>)[`${slot}Grade`] ?? '' } }, patch, value: candidate, metrics: full.metrics, rb: full.rb, standing: standingFor(patch, full, candidate) };
@@ -1263,7 +1414,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
             if (goalOn && candidate > value * 1.001) polish.goalBlocked++;
             continue;
           }
-          accept(chosen);
+          if (!accept(chosen)) continue;
           steps[steps.length - 1]['kind'] = 'ajuste';
           steps[steps.length - 1]['polish'] = `${option.field}: ${dataset.items[best.id]?.name}`;
           polish.improved++;
@@ -1337,8 +1488,42 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
     }
 
     // The search is over: what the profiles, targets and reports below calculate is not part of what the budget paid for.
+    if (pace.timeUp()) stopFor('time');
     const searchedCalcs = spent();
+    const missesAtSearchEnd = memo.misses;
     phase = 'report';
+
+    // A hard-budget or cancelled job returns only the complete, independently judged incumbent.
+    // Optional explanatory reports can cost unbounded proc/target evaluations and are omitted.
+    if (jobBudget || execution?.signal?.aborted) {
+      if (!lastCheckpoint) throw new Error('Nenhuma build completa e verificada foi encontrada antes da interrupção ou do orçamento.');
+      const reason = execution?.signal?.aborted ? 'cancelled' : stopCause ?? (jobBudget && (jobBudget.exhausted || jobBudget.remainingSearch <= 0) ? 'engine-budget' : 'completed');
+      const searchable = walk.filter(slot => (pools.get(slot)?.length ?? 0) > 0);
+      const unreached = searchable.filter(slot => !slotCoverage.has(slot));
+      const partial = [...slotCoverage].filter(([, entry]) => entry.measured < entry.available);
+      return {
+        ...lastCheckpoint, objective, baseline: roundMetrics(baseline.metrics, shown), final: roundMetrics(metrics, shown),
+        patch: changes, share: shareOf(rb), mvpPolicy, steps, solves: searchedCalcs,
+        ...(reason !== 'completed' ? { stopped: `Busca interrompida: ${reason}.` } : {}),
+        coverage: { complete: reason === 'completed' && !unreached.length && !partial.length && (!complements || polish.fields >= polish.total),
+          slots: { searched: searchable.length - unreached.length, total: searchable.length, ...(unreached.length ? { notReached: unreached } : {}) },
+          candidates: { measured: [...slotCoverage.values()].reduce((sum, entry) => sum + entry.measured, 0), available: [...slotCoverage.values()].reduce((sum, entry) => sum + entry.available, 0) } },
+        ...(goalOn ? { goalSearch: { feasible: standing.feasible, startedFeasible: goalTrace.startedFeasible,
+          ...(goalTrace.firstFeasible ? { firstFeasible: goalTrace.firstFeasible } : {}),
+          ...(standing.feasible ? {} : { bestGap: { worst: round(standing.worst, 4), total: round(standing.total, 4) } }),
+          stoppedBy: reason, stoppedReasons: reason === 'completed' ? [] : [reason], evaluations: { counted: searchedCalcs, unique: memo.completed } } } : {}),
+        budgetUsage: { mode: budgetMode, semantics: 'engine-calls-total', requested: maxEngineCalls ?? null,
+          effectiveLimit: maxEngineCalls ?? null, counted: searchedCalcs, cacheHits: memo.hits, cacheMisses: memo.misses,
+          completedEvaluations: memo.completed, incompleteEvaluations: memo.misses - memo.completed,
+          uncachedEvaluations: Object.values(ledger).reduce((sum, row) => sum + row.uncached, 0),
+          engineCalls: jobBudget?.calls ?? Object.values(ledger).reduce((sum, row) => sum + row.engineCalls, 0),
+          phases: ledger, feasibilityVerificationCalls: 0, reservedVerificationCalls: jobBudget?.reserved ?? 0,
+          stoppedBy: reason, stoppedReasons: reason === 'completed' ? [] : [reason], hardTotalLimit: !!jobBudget },
+        ...(instrument ? { budgetReport: { phases: ledger, phaseEngineMs, stoppedReason: reason, wallClockMs: Date.now() - startedAt } } : {}),
+        __jobBudget: jobBudget,
+        candidateIds: Object.fromEntries(pools),
+      };
+    }
 
 
     // Both kinds of build side by side: a piece can win the opening and lose the long fight.
@@ -1515,8 +1700,11 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         ...(goalTrace.firstFeasible ? { firstFeasible: goalTrace.firstFeasible } : {}),
         ...(standing.feasible ? {} : { bestGap: { worst: round(standing.worst, 4), total: round(standing.total, 4) } }),
         stoppedBy: stopCause ?? 'completed',
-        // `counted` is what the budget paid (`solves`); the reads of the other targets are real engine work outside it.
-        evaluations: { counted: searchedCalcs, otherTargets: sideFresh, unique: memo.misses },
+        stoppedReasons: [...stopCauses],
+        // `counted` is what the budget paid (`solves`) and it includes `otherTargets`, the fresh reads of the goal on the other targets.
+        // `afterSearch` is what the reports calculated once the search was over; `finalChecks` (the independent judgement of the base and of
+        // the answer) is added by `optimizeBuild`. Neither spends the budget. `unique` is every fresh evaluation of the cache.
+        evaluations: { counted: searchedCalcs, otherTargets: sideFresh, skippedForBudget: sideSkipped, afterSearch: memo.misses - missesAtSearchEnd, unique: memo.misses },
         socketFieldsRefusedByGoal: polish.goalBlocked,
         note: standing.feasible ? 'A meta foi cumprida em todos os alvos.' : 'A meta não foi cumprida com o que a busca percorreu; bestGap é a menor distância encontrada (0 = cumprida, 1 = ilegível). Não é prova de que a meta seja impossível.',
       } } : {}),
@@ -1530,12 +1718,39 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         note: 'Média estimada por estados ativo/inativo de até 3 procs com chance e duração conhecidas, independentes e ataques regulares. HP mínimo é verificado sem os procs adicionais. A comparação visual usa os efeitos explicitamente selecionados.' },
       limits: { refine: refine ?? REACHABLE_REFINE, maxGrade: maxGrade ?? 'A' },
       coverage,
+      ...(instrument ? { candidateAudit: (() => {
+        const model = rb.model as unknown as Record<string, number | undefined>;
+        const fields: FieldAudit[] = walk.flatMap((slot) => (rb.model[slot] > 0 ? socketOptions(dataset, slot, rb.model[slot]).map((option) => ({
+          field: option.field,
+          legal: option.ids.length,
+          offered: Math.max(0, (complementsFor(slot, rb.model[slot]).find((list) => list.some((choice) => option.field in (choice.gear ?? {})))?.length ?? 0) - 1),
+          tried: audit.triedCount(option.field),
+          locked: fieldLocks.has(option.field),
+        })) : []));
+        const known = knownCandidates.map(({ key, id }) => {
+          const slot = slotOfField(key);
+          const name = dataset.itemIndex.get(id)?.name;
+          const isPiece = MAIN_ITEM_SLOTS.includes(key);
+          let fate: string;
+          if (!slot) fate = 'unknownField';
+          else if (locked.has(slot)) fate = 'slotLocked';
+          else if (fieldLocks.has(key)) fate = 'fieldLocked';
+          else if (model[key] === id) fate = 'accepted';
+          else if (isPiece) fate = audit.fateOf(key, id);
+          else if (excludedIds.has(id) || (excludeMvpCards && MVP_CARD_IDS.has(id))) fate = 'excluded';
+          else if (!(model[slot] as number > 0) || !socketOptions(dataset, slot, model[slot] as number).some((option) => option.field === key && option.ids.includes(id))) fate = 'notLegalOnTheAnswerPiece';
+          else if (audit.hasTried(key, id)) fate = 'tried';
+          else fate = fields.find((entry) => entry.field === key)?.offered ? 'legalNotTried' : 'legalNotOffered';
+          return { key, id, name, fate };
+        });
+        return { note: 'Candidatos DISTINTOS por estação (um cache hit ou movimento repetido não conta duas vezes). accepted = a resposta usa a peça (inclui a que já estava).', pieces: audit.report((slot, id) => rb.model[slot] === id), notSearched: { ...audit.fixedSlots(), ...Object.fromEntries([...locked].map((slot) => [slot, 'locked'])) }, fields, ...(known.length ? { known } : {}) };
+      })() } : {}),
       ...(instrument ? { budgetReport: (() => {
         const rows = PHASES.map((name) => ledger[name]);
         const sum = (pick: (row: (typeof rows)[number]) => number) => rows.reduce((total, row) => total + pick(row), 0);
         const verification = { unique: ledger.levelCheck.unique + ledger.report.unique, uncached: ledger.levelCheck.uncached + ledger.report.uncached };
         return {
-          unit: 'solves: evaluations the cache did not have (one build against the first target); engine calls are counted apart',
+          unit: targetBudget ? 'engine calls including all targets; reports and final checks outside cap' : 'solves: evaluations the cache did not have (one build against the first target); engine calls are counted apart',
           mode: budgetMode,
           requested: requestedBudget,
           searchBudget: budget,
@@ -1552,6 +1767,7 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
           socketEvaluations: ledger.socket.unique,
           finalVerificationEvaluations: verification.unique + verification.uncached,
           phases: ledger,
+          phaseEngineMs,
           // `inCap` is what the cap counted; `socketOutsideCap` is the legacy pass, which has its own allowance.
           budgeted: { inCap: searchedCalcs, socketOutsideCap: polishFresh, effective: searchedCalcs + polishFresh, unused: Math.max(0, requestedBudget - searchedCalcs - polishFresh) },
           socket: { availableAtStart: unified ? Math.max(0, requestedBudget - spentBeforeSocket) : null, used: ledger.socket.unique, fields: polish.fields, totalFields: polish.total, fieldTimeCuts },
@@ -1580,32 +1796,68 @@ async function searchBuild({ build, target, targets, effects = [], objective: ob
         complementSearch: { enabled: complements, uncataloguedRandomItems: uncatalogued, note: 'Itens sem pool confirmado ficam fora da busca de rolagens. Orçamento: até 48 cálculos de complementos por movimento.' },
         note: 'Heurística (peças, conjuntos, graus e complementos); patch/link incluem cartas, encantamentos e rolagens. Antes de comparar, a peça que a build já usa é ajustada com os melhores cartas, encantamentos e rolagens catalogadas (passos com `atual`), mesmo que o link não os traga. Não prova ótimo global.',
       } : {}),
+      budgetUsage: {
+        mode: budgetMode,
+        semantics: targetBudget ? 'engine-calls-search-only' : 'legacy-cache-misses',
+        requested: maxSolves ?? config.limits.maxSolves,
+        effectiveLimit: requestedBudget,
+        counted: searchedCalcs,
+        cacheHits: memo.hits,
+        cacheMisses: memo.misses,
+        uncachedEvaluations: Object.values(ledger).reduce((sum, row) => sum + row.uncached, 0),
+        engineCalls: Object.values(ledger).reduce((sum, row) => sum + row.engineCalls, 0),
+        phases: ledger,
+        feasibilityVerificationCalls: 0,
+        stoppedBy: stopCause ?? 'completed',
+        stoppedReasons: [...stopCauses],
+        hardTotalLimit: false,
+      },
     };
   }
 
 /** The goal and constraints against the build the search started from and the one it ended with, each target judged on its own. */
-async function judgeSearch(args: OptimizeBuildArgs, result: { patch: BuildPatch }, explicit: Requirement[]) {
+async function judgeSearch(args: OptimizeBuildArgs, result: { patch: BuildPatch }, explicit: Requirement[], jobBudget?: JobBudget) {
     const { goal, constraints, effects = [], require: rules = [] } = args;
     const base = decodeOnce(await normalizeShare(args.build, shortener));
     const final = applyPatch(base, result.patch);
     const policy = await prepareProcPolicy(dataset, optimizeProcMode(args.procMode, args.countProcs), args.procHitsPerSecond);
     const wanted = judgedMetrics(goal, rules);
     const aims = (args.targets ?? [{ monsterId: args.target?.monsterId ?? config.defaultTargetId }]).map((aim) => resolveTarget(dataset, aim.monsterId));
+    if (jobBudget) { jobBudget.verifying = true; jobBudget.phase = 'feasibility'; }
+    let finalEngineCalls = 0;
+    let finalEngineMs = 0;
+    const readTarget = (build: BuildInput, monster: any) => {
+      const calls = engineCallCount(), started = performance.now();
+      try { return evaluate(build, undefined, dataset, monster, effects, wanted, [], 1, policy, jobBudget, constraints?.forbiddenEffects).metrics; }
+      finally { finalEngineCalls += engineCallCount() - calls; finalEngineMs += performance.now() - started; }
+    };
     const judge = (build: BuildInput, tolerateInherited: boolean) => judgeFeasibility({
-      dataset, base, build, goal, constraints, require: explicit, tolerateInherited,
-      readings: aims.map(({ id, monster }): TargetReading => ({ monsterId: id, name: monster.name, hp: monster.stats?.health, metrics: evaluate(build, undefined, dataset, monster, effects, wanted, [], 1, policy).metrics })),
+      dataset, base, build, goal, constraints, effects, require: explicit, tolerateInherited,
+      readings: aims.map(({ id, monster }): TargetReading => ({ monsterId: id, name: monster.name, hp: monster.stats?.health, metrics: readTarget(build, monster) })),
     });
 
     // The base's own errors cannot be repaired by a search, so the final build is not called invalid for them; the baseline is judged as it is.
-    return { baseline: judge(base, false), final: judge(final, true) };
+    // `finalChecks`: the engine runs of this judgement (one per target for the base and for the answer, no cache): mandatory, outside the budget.
+    const baseline = judge(base, false), checked = judge(final, true);
+    return { baseline, final: checked, finalChecks: 2 * aims.length, finalEngineCalls, finalEngineMs };
   }
 
 async function optimizeBuild(args: OptimizeBuildArgs) {
+    args = { ...args, ...(args.goal ? { goal: goalSpecSchema.parse(args.goal) } : {}), ...(args.constraints ? { constraints: constraintSpecSchema.parse(args.constraints) } : {}) };
     const adapted = adaptSpecs(args);
+    if (adapted.target && adapted.targets) throw new Error('Use target ou targets, não ambos.');
+    if (adapted.targets) goalSpecSchema.parse({ targets: adapted.targets });
     // The goal's rules rank candidates inside the search; only what the caller put in `require` filters them.
-    const { goalSearch, ...result } = (await searchBuild({ ...adapted, require: args.require ?? [] })) as Awaited<ReturnType<typeof searchBuild>> & { goalSearch?: unknown };
+    const { goalSearch, __jobBudget, ...result } = (await searchBuild({ ...adapted, require: args.require ?? [] })) as Awaited<ReturnType<typeof searchBuild>> & { goalSearch?: { evaluations: Record<string, number> }; __jobBudget?: JobBudget };
+    if (!args.goal && !args.constraints && !__jobBudget) return result;
+    const { finalChecks, finalEngineCalls, finalEngineMs, ...judged } = await judgeSearch(adapted, result, args.require ?? [], __jobBudget);
 
-    return args.goal || args.constraints ? { ...result, feasibility: { ...(await judgeSearch(adapted, result, args.require ?? [])), ...(goalSearch ? { search: goalSearch } : {}) } } : result;
+    return { ...result, budgetUsage: { ...result.budgetUsage, engineCalls: result.budgetUsage.engineCalls + finalEngineCalls,
+      uncachedEvaluations: result.budgetUsage.uncachedEvaluations + finalChecks,
+      phases: { ...result.budgetUsage.phases, feasibility: { unique: 0, uncached: finalChecks, cacheHits: 0, engineCalls: finalEngineCalls } },
+      feasibilityVerificationCalls: finalEngineCalls },
+      ...(result.budgetReport ? { budgetReport: { ...result.budgetReport, phaseEngineMs: { ...result.budgetReport.phaseEngineMs, feasibility: finalEngineMs } } } : {}),
+      feasibility: { ...judged, ...(goalSearch ? { search: { ...goalSearch, evaluations: { ...goalSearch.evaluations, finalChecks } } } : {}) } };
   }
 
 async function slotOptions({ itemId, query, limit = 40, detail = false }: SlotOptionsArgs) {

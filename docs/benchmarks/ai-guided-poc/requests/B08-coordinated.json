@@ -1,0 +1,172 @@
+{
+  "experiment": "B",
+  "budget": 200,
+  "requests": [
+    {
+      "tool": "evaluate_variants",
+      "hypothesis": "Compare bare Winter Armor with its legal skill/ranged flowers, current-weapon/Hero Boots synergy and permanent Ultra Limacina multiplier. Test Rgan card pair as one coordinated move; keep skills/stats/consumables fixed.",
+      "args": {
+        "build": "$build",
+        "targets": "$targets",
+        "constraints": "$constraints",
+        "procMode": "off",
+        "metrics": [
+          "min",
+          "dps",
+          "hitsToKill",
+          "critRate"
+        ],
+        "variants": [
+          {
+            "label": "upgrade-ultra-card",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "headUpperCard": 300377
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-bare",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": null,
+                "armorEnchant2": null,
+                "armorEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-flowers",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099
+              }
+            }
+          },
+          {
+            "label": "upgrade-freeoni",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450217,
+                "armorRefine": 12,
+                "armorGrade": "C",
+                "armorEnchant1": null,
+                "armorEnchant2": null,
+                "armorEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "upgrade-hero-pair",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-hero",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-ultra",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-ultra-hero",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "boot": 470094,
+                "bootRefine": 12,
+                "bootGrade": "C",
+                "bootEnchant1": null,
+                "bootEnchant2": null,
+                "bootEnchant3": null
+              }
+            }
+          },
+          {
+            "label": "upgrade-winter-ultra-rgan",
+            "patch": {
+              "gear": {
+                "weaponRefine": 12,
+                "weaponGrade": "C",
+                "armor": 450206,
+                "armorRefine": 12,
+                "armorGrade": "",
+                "armorEnchant1": 311166,
+                "armorEnchant2": 311100,
+                "armorEnchant3": 311099,
+                "headUpperCard": 300377,
+                "accLeftCard": 300366,
+                "accRightCard": 300368
+              }
+            }
+          }
+        ],
+        "limit": 12
+      }
+    }
+  ]
+}

@@ -3,6 +3,10 @@
  * derived starting state of the gear-only scenario.
  */
 import fixture from './fixtures/jor-ab02.json';
+import { Dataset } from '../../../../src/app/build-analysis/data/dataset';
+import { BuildInput, resolveBuild } from '../../../../src/app/build-analysis/engine/build-input';
+import { constraintViolations } from '../../../../src/app/build-analysis/engine/feasibility';
+import { applyPatch, BuildPatch } from '../../../../src/app/build-analysis/engine/variants';
 
 export const JOR = fixture as { monsters: number[]; builds: Record<'original' | 'grauC' | 'invernal' | 'semGrau', { link: string; label: string; preset: Record<string, any> }> };
 export const MONSTERS = JOR.monsters;
@@ -27,6 +31,33 @@ export function gearOnlyStart(): Record<string, any> {
   for (const [key, value] of Object.entries(original)) if (GEAR_KEY.test(key)) out[key] = value;
 
   return out;
+}
+
+/**
+ * The hard constraints of the study as written in `docs/optimize/optimize-roadmap-status.md`, in the terms the engine states them: no MVP card, grade C at most,
+ * Abrasivo (14536) and Casaco Pirata (480174) unavailable, the active effect of Oleum Sanctum forbidden. No `maxRefine`: the study does not set one.
+ */
+export const SCENARIO_RULES = { mvpPolicy: 'none', maxGrade: 'C', unavailableIds: [14536, 480174], forbiddenEffects: ['Oleum Sanctum'] } as const;
+/**
+ * Two limits of the study the spec cannot say field by field: Insígnia do Talento 5 stays (headUpperEnchant1) and the Cordão do Inquisidor takes no new
+ * enchant (accRightEnchant1..3). A lock is per slot, so the search is run with the whole slot locked (narrower than the study, never wider) and
+ * `fieldLocks` checks the study's own wording on any build.
+ */
+export const SCENARIO_SLOT_LOCKS = ['headUpper', 'accRight'] as const;
+export const SCENARIO = { ...SCENARIO_RULES, lockedSlots: [...SCENARIO_SLOT_LOCKS] };
+const FIELD_LOCKS = ['headUpperEnchant1', 'accRightEnchant1', 'accRightEnchant2', 'accRightEnchant3'] as const;
+export const SCENARIO_EXACT = { ...SCENARIO_RULES, lockedFields: [...FIELD_LOCKS] };
+const blank = (value: unknown) => (value === null || value === undefined || value === 0 || value === '' ? null : value);
+
+/** Every limit of the study that applies to `build` (a preset patched over `start`), by the study's own wording. Empty means the build respects them. */
+export function audit(dataset: Dataset, start: Record<string, any>, patch?: BuildPatch): string[] {
+  const input: BuildInput = { preset: start } as BuildInput;
+  const base = resolveBuild(input, dataset).model as Record<string, any>;
+  const model = resolveBuild(patch ? applyPatch(input, patch) : input, dataset).model as Record<string, any>;
+  const rules = constraintViolations(SCENARIO_RULES as never, dataset, base as never, model as never).map((violation) => `${violation.code}: ${violation.message}`);
+  const moved = FIELD_LOCKS.filter((key) => JSON.stringify(blank(base[key])) !== JSON.stringify(blank(model[key]))).map((key) => `FIELD_LOCK: ${key} mudou (${blank(base[key])} → ${blank(model[key])}).`);
+
+  return [...rules, ...moved];
 }
 
 /** Keys whose values differ between two presets. */

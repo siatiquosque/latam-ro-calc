@@ -1,0 +1,51 @@
+{
+  "experiment": "CM1000",
+  "budget": 1000,
+  "automatic": {
+    "slots": [
+      "weapon",
+      "armor",
+      "boot",
+      "garment",
+      "headUpper",
+      "accLeft",
+      "accRight",
+      "headLower"
+    ],
+    "candidates": {
+      "weapon": [
+        560026
+      ],
+      "armor": [
+        450206,
+        450217
+      ],
+      "boot": [
+        470094
+      ],
+      "garment": [
+        20968
+      ],
+      "headUpper": [
+        19481
+      ],
+      "accLeft": [
+        490107
+      ],
+      "accRight": [
+        490181
+      ],
+      "headLower": [
+        420076
+      ]
+    },
+    "pairs": [
+      [
+        "armor",
+        "boot"
+      ]
+    ],
+    "levelChecks": false,
+    "maxSolves": 1000
+  }
+}

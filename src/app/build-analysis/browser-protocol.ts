@@ -22,4 +22,5 @@ export type AnalysisRequest = {
   | { mode: 'acquisitionItem'; args: { itemId: number } }
 );
 
-export type AnalysisResponse = { result?: Record<string, any>; error?: string };
+export type AnalysisCancel = { type: 'cancel' };
+export type AnalysisResponse = { result?: Record<string, any>; checkpoint?: Record<string, any>; error?: string };

@@ -51,7 +51,7 @@ export function socketOptions(dataset: Dataset, slot: string, itemId: number): {
   const pools = (enchantPoolsFor(item) ?? []) as (string[] | null | undefined)[];
   descriptor.enchantFields.forEach((field, position) => {
     if (!field) return;
-    const ids = (pools[position] ?? []).map((name) => index.byAegis.get(name)).filter((id): id is number => !!id && !!dataset.items[id]);
+    const ids = (pools[position] ?? []).map((name) => index.byAegis.get(name)).filter((id): id is number => !!id && !!dataset.items[id] && dataset.itemIndex.get(id)?.latam === true);
     if (ids.length) result.push({ field, kind: 'enchant', position, ids });
   });
 
@@ -87,7 +87,7 @@ export function complementChoices(dataset: Dataset, slot: string, itemId: number
   const enchants = enchantPoolsFor(item) ?? [];
   descriptor.enchantFields.forEach((field, position) => {
     if (!field) return;
-    const ids = rank((enchants[position] ?? []).map(name => byAegis.get(name)).filter((id): id is number => !!id));
+    const ids = rank((enchants[position] ?? []).map(name => byAegis.get(name)).filter((id): id is number => !!id && dataset.itemIndex.get(id)?.latam === true));
     if (ids.length) fields.push([...ids.map(id => ({ gear: { [field]: id } })), { gear: { [field]: null } }]);
   });
   const catalog = randomOptionCatalogFor(itemId);

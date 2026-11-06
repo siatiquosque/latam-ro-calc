@@ -8,7 +8,7 @@
  * deterministic `hitsToKill` metric and says nothing about the chance that any two hits kill.
  */
 import { z } from 'zod';
-import { MAIN_ITEM_SLOTS } from './build-input';
+import { ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys } from './build-input';
 import { Metric, METRICS } from './metrics';
 
 const metricEnum = z.enum(METRICS);
@@ -42,11 +42,23 @@ export const compactGoalSchema = z.looseObject({}).pipe(goalSpecSchema);
 
 const slotEnum = z.string().refine((slot) => MAIN_ITEM_SLOTS.includes(slot), { message: 'Não é um slot de equipamento.' });
 
+/** The model keys a field lock may name: a piece, its cards and enchants, its refine and its grade. */
+const FIELD_KEYS: ReadonlySet<string> = new Set([...ITEM_ID_KEYS, ...MAIN_ITEM_SLOTS.flatMap((slot) => [`${slot}Refine`, `${slot}Grade`])]);
+const fieldEnum = z.string().refine((field) => FIELD_KEYS.has(field), { message: 'Não é um campo de equipamento (peça, carta, encantamento, refino ou grau).' });
+
+/** The slot a field belongs to ('accRightEnchant2' → 'accRight'), or undefined when it is none. */
+export function slotOfField(field: string): string | undefined {
+  const bare = field.replace(/(Refine|Grade)$/, '');
+
+  return MAIN_ITEM_SLOTS.find((slot) => slot === bare || relatedItemKeys(slot).includes(field));
+}
+
 export const constraintSpecSchema = z.object({
   mvpPolicy: z.enum(['allow', 'exclude-new', 'none']).optional().describe('allow (padrão); exclude-new não aceita carta de MVP além das já usadas; none não aceita nenhuma.'),
   maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Teto de grau de qualquer peça.'),
   maxRefine: z.number().int().min(0).max(20).optional().describe('Teto de refino de qualquer peça.'),
   lockedSlots: z.array(slotEnum).optional().describe('Slots que ficam exatamente como na build base: peça, refino, grau, cartas, encantamentos e rolagens.'),
+  lockedFields: z.array(fieldEnum).optional().describe('Campos que ficam como na build base, o resto do slot continua livre: uma carta/encantamento ("accRightEnchant1"), o refino ("weaponRefine"), o grau ("weaponGrade") ou a peça ("weapon", troca proibida; refino, grau e soquetes seguem livres). Travar carta, encantamento, refino ou grau também prende a peça usada.'),
   unavailableIds: z.array(z.number().int().positive()).optional().describe('Itens que o jogador não tem ou não quer: proibidos em qualquer lugar da build.'),
   forbiddenEffects: z.array(z.string().min(1)).optional()
     .describe('Habilidades cujo EFEITO ATIVO é proibido (ex.: "Oleum Sanctum"). Não toca o nível aprendido, que continua valendo como pré-requisito.'),
@@ -63,6 +75,12 @@ export const constraintSpecSchema = z.object({
 });
 export type ConstraintSpec = z.infer<typeof constraintSpecSchema>;
 export const compactConstraintSchema = z.looseObject({}).pipe(constraintSpecSchema);
+
+/** Small advertised shape for slot tools; operations parse it with constraintSpecSchema. */
+export const compactSlotConstraintSchema = z.looseObject({
+  lockedFields: z.array(z.string()).optional().describe('Campos de equipamento preservados.'),
+  lockedSlots: z.array(z.string()).optional().describe('Slots inteiros preservados.'),
+});
 
 export type MvpPolicy = NonNullable<ConstraintSpec['mvpPolicy']>;
 
@@ -88,7 +106,7 @@ export function goalRequirements(goal?: GoalSpec): Requirement[] {
 
 /** Everything the judgement reads off a target: the rules' metrics, plus what a kill needs to be classified (minimum hit, crit, hit chance). */
 export function judgedMetrics(goal: GoalSpec | undefined, require: Requirement[] = []): Metric[] {
-  const kill: Metric[] = goal?.maxHitsToKill === undefined ? [] : ['critRate', 'canCri', 'minNoCri', 'hitChance', ...((goal.margin ?? 0) > 0 ? ['min' as const] : [])];
+  const kill: Metric[] = goal?.maxHitsToKill === undefined ? [] : ['critRate', 'canCri', 'minNoCri', 'hitChance', 'conditionalEffects', ...((goal.margin ?? 0) > 0 ? ['min' as const] : [])];
 
   return [...new Set<Metric>([...require.map((rule) => rule.metric), ...goalRequirements(goal).map((rule) => rule.metric), ...kill])];
 }

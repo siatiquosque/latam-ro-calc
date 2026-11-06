@@ -10,6 +10,7 @@ export function pacing(maxMs: number, sliceMs = 40) {
   return {
     /** True once the allowance is spent; the search stops and reports its best build so far. */
     timeUp: (): boolean => Date.now() > deadline,
+    remainingMs: (): number => Math.max(0, deadline - Date.now()),
     /** Lets pending requests run if the search has held the loop for a slice. Cheap when it has not. */
     async breathe(): Promise<void> {
       if (Date.now() - lastYield < sliceMs) return;

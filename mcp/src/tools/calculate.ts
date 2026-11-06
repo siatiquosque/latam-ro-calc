@@ -1,3 +1,4 @@
+import { compactSlotConstraintSchema, ConstraintSpec } from 'src/app/build-analysis/engine/goal-spec';
 /** MCP schemas and JSON envelopes only; calculations and searches live in build-analysis. */
 
 import { z } from 'zod';
@@ -90,6 +91,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
     target?: TargetArg;
     limit?: number;
     complements?: boolean;
+    constraints?: ConstraintSpec;
     refine?: number;
     maxGrade?: 'none' | 'D' | 'C' | 'B' | 'A';
     excludeMvpCards?: boolean;
@@ -108,6 +110,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       query: z.string().optional().describe('Filtra os candidatos automáticos por nome.'),
       target: targetSchema,
       limit: z.number().int().min(1).max(20).optional().default(10),
+      constraints: compactSlotConstraintSchema.optional(),
       complements: z.boolean().optional().default(true).describe('Buscar também cartas e encantamentos de cada candidato. false compara só as peças nuas.'),
       refine: z.number().int().min(0).max(20).optional().describe('Refino de cada candidato (e da peça atual, para medir o que subir o refino vale). Padrão: +12, o teto alcançável (acima disso é endgame alto); informe um valor, até +20, para mudar.'),
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau de cada candidato que aceita grau (e da peça atual). Padrão: A, o ideal; informe só para limitar.'),

@@ -91,6 +91,7 @@ export interface FeasibilityInput {
   constraints?: ConstraintSpec;
   /** Older `require` rules, judged like the goal's. */
   require?: Requirement[];
+  effects?: string[];
   /** Validation errors the caller already has for `build` (skips a second `validateBuild`). */
   issues?: BuildIssue[];
   /** Errors the base build has too are reported under `inherited` instead of making the build invalid (a search cannot repair them). */
@@ -111,7 +112,7 @@ interface Model {
 }
 
 /** Properties of the build that a hard constraint forbids. */
-export function constraintViolations(constraints: ConstraintSpec, dataset: Dataset, base: Model, build: Model): Violation[] {
+export function constraintViolations(constraints: ConstraintSpec, dataset: Dataset, base: Model, build: Model, effects: readonly string[] = []): Violation[] {
   const out: Violation[] = [];
   const name = (id: number) => dataset.itemIndex.get(id)?.name ?? String(id);
   const worn = (key: string) => (typeof build[key] === 'number' && build[key] > 0 ? (build[key] as number) : undefined);
@@ -144,10 +145,13 @@ export function constraintViolations(constraints: ConstraintSpec, dataset: Datas
     if (moved.length) out.push({ code: 'LOCKED_SLOT_CHANGED', message: `${slot} está travado e mudou (${moved.join(', ')}).` });
   }
 
+  const movedFields = (constraints.lockedFields ?? []).filter((key) => blank(base[key]) !== blank(build[key]));
+  if (movedFields.length) out.push({ code: 'LOCKED_FIELD_CHANGED', message: `Campo travado mudou (${movedFields.join(', ')}).` });
+
   // The effect, not the skill: the toggles and active selectors are inspected, the learned (passive) level never is.
   for (const effect of constraints.forbiddenEffects ?? []) {
     const level = Math.max(build.skillBuffMap?.[effect] ?? 0, build.activeSkillMap?.[effect] ?? 0);
-    if (level > 0) out.push({ code: 'FORBIDDEN_EFFECT_ACTIVE', message: `O efeito de ${effect} está ativo (nível ${level}) e é proibido.` });
+    if (level > 0 || effects.includes(effect)) out.push({ code: 'FORBIDDEN_EFFECT_ACTIVE', message: `O efeito de ${effect} está ativo (nível ${level}) e é proibido.` });
   }
 
   if (constraints.allowExternalBuffs === false) {
@@ -240,8 +244,14 @@ function reliabilityOf(reading: TargetReading, goal: GoalSpec): { reliability: N
   const conditional: string[] = [];
   const unknown: string[] = [];
 
-  if (hitChance === undefined) unknown.push('A chance de acerto da habilidade no alvo não pôde ser medida.');
-  else if (hitChance < 100) conditional.push(`A habilidade acerta o alvo com chance de ${hitChance}% (menos de 100%): um golpe pode errar.`);
+  if ((reading.metrics.conditionalEffects ?? 0) > 0) conditional.push('O dano foi medido com efeitos temporários/procs selecionados; sua ativação não é assegurada.');
+
+  // calcDmgDpsDetailed gates only the non-critical branch by accuracy. A certain critical hit bypasses it.
+  const certainCrit = canCri > 0 && critRate !== undefined && critRate >= 100;
+  if (!certainCrit) {
+    if (hitChance === undefined) unknown.push('A chance de acerto da habilidade no alvo não pôde ser medida.');
+    else if (hitChance < 100) conditional.push(`A habilidade acerta o alvo com chance de ${hitChance}% (menos de 100%): um golpe pode errar.`);
+  }
 
   if (canCri === undefined) unknown.push('Não se sabe se a habilidade pode causar crítico.');
   else if (canCri > 0) {
@@ -278,7 +288,7 @@ function judgeTarget(reading: TargetReading, rules: Requirement[], goal?: GoalSp
   return { monsterId: reading.monsterId, name: reading.name, status: violations.length ? 'infeasible' : unknowns.length ? 'unknown' : 'feasible', violations, unknowns, ...(kill ? { kill } : {}), gap: Math.max(damage?.gap ?? 0, limits.gap) };
 }
 
-export function judgeFeasibility({ dataset, base, build, readings, goal, constraints, require = [], issues, tolerateInherited = false }: FeasibilityInput): FeasibilityReport {
+export function judgeFeasibility({ dataset, base, build, readings, goal, constraints, require = [], effects = [], issues, tolerateInherited = false }: FeasibilityInput): FeasibilityReport {
   const limitRules = [...require, ...goalLimits(goal)];
   const damageRule = goalDamageRule(goal);
   const violations: Violation[] = [];
@@ -292,13 +302,14 @@ export function judgeFeasibility({ dataset, base, build, readings, goal, constra
   // Constraints compare resolved models; a build that does not resolve is already reported as a validation error above.
   if (constraints && !violations.length) {
     try {
-      violations.push(...constraintViolations(constraints, dataset, resolveBuild(base, dataset).model, resolveBuild(build, dataset).model));
+      violations.push(...constraintViolations(constraints, dataset, resolveBuild(base, dataset).model, resolveBuild(build, dataset).model, effects));
     } catch (error) {
       violations.push({ code: 'INVALID_BUILD', message: (error as Error).message });
     }
   }
 
   const judged = readings.map((reading) => judgeTarget(reading, limitRules, goal));
+  if (violations.length) for (const target of judged) if (target.kill) target.kill.constraintsMet = false;
   const targets: TargetFeasibility[] = judged.map(({ gap: _gap, ...target }) => target);
   // A goal with rules but nothing measured has no evidence to stand on.
   const unmeasured = (limitRules.length > 0 || !!damageRule) && readings.length === 0;
