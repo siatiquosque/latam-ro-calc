@@ -107,7 +107,7 @@ describe('assessAcquisition evidence facets (real catalog)', () => {
 
   it('Phase 4.1: the six previously refused cards have a drop route from the client monster list', () => {
     for (const card of [4392, 4393, 4582, 4608, 4609, 300076]) {
-      const drops = acquisitionKnowledge.routes.filter(r => r.method === 'drop' && r.target.itemIds.includes(card));
+      const drops = queryAcquisition({ server: 'LATAM', asOf: '2026-11-05', itemId: card }).filter(r => r.method === 'drop');
       expect(drops.length, String(card)).toBeGreaterThan(0);
       expect(drops.every(r => r.review === 'unreviewed'), String(card)).toBe(true);
     }

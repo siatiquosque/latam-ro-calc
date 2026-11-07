@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { acquisitionKnowledge } from './catalog';
 import { AcquisitionKnowledge, AcquisitionRoute, effectiveRoutes } from './contracts';
+import { DropIndex, dropRoutes, indexDrops } from './drops';
 
 export function routeAvailability(route: AcquisitionRoute, server: string, asOf: string) {
   if (route.server !== server || route.review === 'unreviewed' || !route.period.known) return 'unknown' as const;
@@ -9,8 +10,8 @@ export function routeAvailability(route: AcquisitionRoute, server: string, asOf:
   return 'active' as const;
 }
 
-/** Effective routes and their item/enchant/monster indexes, built once per knowledge object (the quadratic revision scan must not run per query). */
-const indexes = new WeakMap<AcquisitionKnowledge, { routes: AcquisitionRoute[]; byItem: Map<number, AcquisitionRoute[]>; byMonster: Map<number, AcquisitionRoute[]> }>();
+/** Effective routes and their item/enchant/monster indexes (drops stay columnar and are expanded per query, unless a catalog route already carries the same fact), built once per knowledge object (the quadratic revision scan must not run per query). */
+const indexes = new WeakMap<AcquisitionKnowledge, { routes: AcquisitionRoute[]; byItem: Map<number, AcquisitionRoute[]>; byMonster: Map<number, AcquisitionRoute[]>; drops?: DropIndex; curated: Set<string> }>();
 function indexOf(knowledge: AcquisitionKnowledge) {
   let index = indexes.get(knowledge);
   if (index) return index;
@@ -21,7 +22,8 @@ function indexOf(knowledge: AcquisitionKnowledge) {
     for (const id of new Set([...route.target.itemIds, ...route.target.enchantIds])) byItem.set(id, [...(byItem.get(id) ?? []), route]);
     if (route.drop) byMonster.set(route.drop.monsterId, [...(byMonster.get(route.drop.monsterId) ?? []), route]);
   }
-  indexes.set(knowledge, index = { routes, byItem, byMonster });
+  indexes.set(knowledge, index = { routes, byItem, byMonster, drops: knowledge.drops && indexDrops(knowledge.drops),
+    curated: new Set(knowledge.routes.flatMap(route => route.importKey ? [route.importKey] : [])) });
   return index;
 }
 
@@ -32,8 +34,9 @@ export function queryAcquisition(
 ) {
   z.iso.date().parse(query.asOf);
   const index = indexOf(knowledge);
-  const pool = query.itemId != null ? index.byItem.get(query.itemId) ?? []
+  const stored = query.itemId != null ? index.byItem.get(query.itemId) ?? []
     : query.monsterId != null ? index.byMonster.get(query.monsterId) ?? [] : index.routes;
+  const pool = index.drops && (query.aspect == null || query.aspect === 'item') ? [...stored, ...dropRoutes(index.drops, query).filter(route => !index.curated.has(route.importKey!))] : stored;
   return pool.filter(route => (route.server === query.server || route.server === 'generic')
     && (query.monsterId == null || route.drop?.monsterId === query.monsterId)
     && (query.aspect == null || route.target.aspect === query.aspect))

@@ -3,7 +3,7 @@
   "initialError": 2470000,
   "releaseVersionsLimit": 8000,
   "analysisWorkerError": 3500000,
-  "acquisitionChunkError": 2100000,
+  "acquisitionChunkError": 2200000,
   "componentStyleWarning": 6000,
   "componentStyleError": 10000,
   "existingStyleLimits": {

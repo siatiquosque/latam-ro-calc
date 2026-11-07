@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { fractionProbability } from './drops';
 import { AcquisitionKnowledge, AcquisitionRoute, effectiveRoutes, knowledgeSchema, reviseKnowledge } from './contracts';
 export { knowledgeSchema, reviseKnowledge } from './contracts';
 
@@ -6,11 +7,14 @@ export { knowledgeSchema, reviseKnowledge } from './contracts';
 export function applyCuratedKnowledge(base: AcquisitionKnowledge, additions: AcquisitionKnowledge) {
   base = knowledgeSchema.parse(base);
   additions = knowledgeSchema.parse(additions);
-  const fresh = <T extends { id: string }>(existing: T[], incoming: T[]) => incoming.filter(next => {
-    const previous = existing.find(row => row.id === next.id);
-    if (previous && JSON.stringify(previous) !== JSON.stringify(next)) throw new Error(`ID imutável: ${next.id}`);
-    return !previous;
-  });
+  const fresh = <T extends { id: string }>(existing: T[], incoming: T[]) => {
+    const byId = new Map(existing.map(row => [row.id, row]));
+    return incoming.filter(next => {
+      const previous = byId.get(next.id);
+      if (previous && JSON.stringify(previous) !== JSON.stringify(next)) throw new Error(`ID imutável: ${next.id}`);
+      return !previous;
+    });
+  };
   const routes = fresh(base.routes, additions.routes);
   const effects = fresh(base.effects, additions.effects);
   const sources = fresh(base.sources, additions.sources);
@@ -50,20 +54,7 @@ export const ragnarokSnapshotSchema = z.object({
 export interface ImportIssue { code: string; key: string; path: string; existing?: unknown; incoming?: unknown; sources?: string[] }
 export interface AcquisitionIdentities { items: Record<number, { aegisName?: string }>; monsterIds: readonly number[] }
 
-/** API drops[] is a fraction, never the aggregated mob_drops.rate column. */
-export function fractionProbability(value: number | null) {
-  if (value == null) return null;
-  if (!Number.isFinite(value) || value < 0 || value > 1) throw new Error('Probability outside [0,1]');
-  const [mantissa, exponent = '0'] = value.toString().split('e');
-  const decimals = (mantissa.split('.')[1] ?? '').length - Number(exponent);
-  let numerator = Number(mantissa.replace('.', '')) * 10 ** Math.max(-decimals, 0);
-  let denominator = 10 ** Math.max(decimals, 0);
-  if (!Number.isSafeInteger(numerator) || !Number.isSafeInteger(denominator)) throw new Error('Probability precision exceeds safe integers');
-  let a = numerator, b = denominator;
-  while (b) [a, b] = [b, a % b];
-  numerator /= a; denominator /= a;
-  return { numerator, denominator };
-}
+export { fractionProbability };
 
 export function transformRagnarokSnapshot(input: unknown, identities: AcquisitionIdentities, snapshotVersion: string) {
   const snapshot = ragnarokSnapshotSchema.parse(input);
@@ -172,8 +163,9 @@ export function mergeImportedKnowledge(base: AcquisitionKnowledge, incoming: Acq
     const keys = Object.keys(a).sort();
     return JSON.stringify(keys) === JSON.stringify(Object.keys(b).sort()) && keys.every(k => equal(a[k], b[k]));
   };
+  const effectiveByKey = new Map(effectiveRoutes(knowledge).filter(r => r.importKey).map(r => [r.importKey, r]));
   for (const candidate of incoming.routes) {
-    const previous = effectiveRoutes(knowledge).find(r => r.importKey === candidate.importKey);
+    const previous = effectiveByKey.get(candidate.importKey);
     const sourceRecords = incoming.sources.filter(s => candidate.sources.includes(s.id));
     let next = candidate;
     if (previous) {
@@ -203,6 +195,7 @@ export function mergeImportedKnowledge(base: AcquisitionKnowledge, incoming: Acq
     } else added++;
     knowledge = reviseKnowledge(knowledge, { schemaVersion: 1, revision: incoming.revision,
       sources: [...sourceRecords, ...knowledge.sources.filter(s => next.sources.includes(s.id) && !sourceRecords.some(n => n.id === s.id))], routes: [next], effects: [], enchantGroups: [] });
+    effectiveByKey.set(candidate.importKey, next);
   }
   return { knowledge, issues, added, enriched, unchanged };
 }

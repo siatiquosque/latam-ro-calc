@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { dropTableSchema } from './drops';
 
 const id = z.number().int().positive();
 const count = z.number().int().nonnegative();
@@ -61,6 +62,8 @@ export const knowledgeSchema = z.object({
     id: z.string(), server: z.string(), itemIds: z.array(id).min(1), minRefineSum: count,
     effect: z.string(), engineCoverage: z.enum(['represented', 'missing', 'partial']), sources: z.array(z.string()).min(1),
   }).strict()),
+  /** Monster drops served as columns, not routes (see drops.ts). Absent in latam.v1.json; catalog.ts attaches drops.v1.json. */
+  drops: dropTableSchema.optional(),
 }).strict().superRefine((kb, ctx) => {
   const sources = new Set(kb.sources.map(s => s.id));
   if (sources.size !== kb.sources.length) ctx.addIssue({ code: 'custom', message: 'Fonte duplicada' });
@@ -83,10 +86,14 @@ export type AcquisitionRoute = z.infer<typeof routeSchema>;
 
 /** Same revision policy for queries and import: drafts may replace drafts only. */
 export function effectiveRoutes(knowledge: AcquisitionKnowledge): AcquisitionRoute[] {
-  const superseded = new Set(knowledge.routes.filter(next => knowledge.routes.some(previous =>
-    previous.id === next.supersedes && (next.review !== 'unreviewed' || previous.review === 'unreviewed')
-    && (previous.review !== 'confirmed' || next.review === 'confirmed')
-    && (previous.server === 'generic' || next.server === previous.server))).map(r => r.supersedes));
+  const byId = new Map(knowledge.routes.map(route => [route.id, route]));
+  const superseded = new Set<string>();
+  for (const next of knowledge.routes) {
+    const previous = next.supersedes ? byId.get(next.supersedes) : undefined;
+    if (previous && (next.review !== 'unreviewed' || previous.review === 'unreviewed')
+      && (previous.review !== 'confirmed' || next.review === 'confirmed')
+      && (previous.server === 'generic' || next.server === previous.server)) superseded.add(previous.id);
+  }
   return knowledge.routes.filter(r => !superseded.has(r.id));
 }
 
@@ -94,26 +101,29 @@ export function effectiveRoutes(knowledge: AcquisitionKnowledge): AcquisitionRou
 export function reviseKnowledge(base: AcquisitionKnowledge, additions: AcquisitionKnowledge): AcquisitionKnowledge {
   knowledgeSchema.parse(base);
   knowledgeSchema.parse(additions);
+  const baseRoutes = new Map(base.routes.map(route => [route.id, route]));
   for (const next of additions.routes) {
-    if (base.routes.some(r => r.id === next.id)) throw new Error(`ID imutável: ${next.id}`);
+    if (baseRoutes.has(next.id)) throw new Error(`ID imutável: ${next.id}`);
     if (!next.supersedes) continue;
-    const previous = base.routes.find(r => r.id === next.supersedes);
+    const previous = baseRoutes.get(next.supersedes);
     if (!previous || !next.revisionReason.trim() || next.review === 'unreviewed' && previous.review !== 'unreviewed' || previous.review === 'confirmed' && next.review !== 'confirmed'
       || previous.server !== 'generic' && next.server !== previous.server) {
       throw new Error(`Substituição não revisada: ${next.id}`);
     }
   }
   const sources = [...base.sources];
+  const sourceById = new Map(sources.map(source => [source.id, source]));
   for (const source of additions.sources) {
-    const previous = sources.find(s => s.id === source.id);
+    const previous = sourceById.get(source.id);
     if (previous && JSON.stringify(previous) !== JSON.stringify(source)) throw new Error(`Fonte imutável: ${source.id}`);
-    if (!previous) sources.push(source);
+    if (!previous) { sources.push(source); sourceById.set(source.id, source); }
   }
   const enchantGroups = [...base.enchantGroups];
+  const groupById = new Map(enchantGroups.map(group => [group.id, group]));
   for (const group of additions.enchantGroups) {
-    const previous = enchantGroups.find(g => g.id === group.id);
+    const previous = groupById.get(group.id);
     if (previous && JSON.stringify(previous) !== JSON.stringify(group)) throw new Error(`Grupo imutável: ${group.id}`);
-    if (!previous) enchantGroups.push(group);
+    if (!previous) { enchantGroups.push(group); groupById.set(group.id, group); }
   }
   return knowledgeSchema.parse({ ...base, revision: additions.revision, sources,
     enchantGroups, routes: [...base.routes, ...additions.routes], effects: [...base.effects, ...additions.effects] });

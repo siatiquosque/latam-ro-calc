@@ -17,11 +17,13 @@ Sair de NOT READY com o menor trabalho possível. Cada etapa tem um critério de
 | 2 | Feita: 1627 IDs sincronizados, fila vazia para esse lote. Nenhum dos 1130 lista LATAM no DivinePride, e os 878 sem rota listam. | Nada. |
 | 3 | Reduzida: a evidência confirma o sistema nos 1130, sem contradição. | Conferir uma amostra no jogo, em especial as 5 linhas usadas em builds da VPS. |
 | 4 | Provavelmente fechada: as 5 builds saíram sem item fora do LATAM com `maxSolves` 3000. | Repetir com o orçamento padrão e conferir `evaluate_variants` em `strict`. |
-| 5 | Aberta: pico de 626 MB com 1 busca e 662 MB com 3, acima dos 512 MB do PM2. A memória não voltou ao fim (658 MB). `/healthz` chegou a 4,6 s. | Tudo o que a etapa lista. Windows e Node 22, ainda sem Linux e Node 24. |
+| 5 | Resolvida no teto de heap (ver atualização de 2026-11-07); antes: pico de 626 MB com 1 busca e 662 MB com 3, acima dos 512 MB do PM2. A memória não voltou ao fim (658 MB). `/healthz` chegou a 4,6 s. | Tudo o que a etapa lista. Windows e Node 22, ainda sem Linux e Node 24. |
 | 6 a 9 | Não iniciadas. | Dependem das etapas acima. |
 
-Achado novo para a base de conhecimento: 2223 itens sem rota têm drop registrado no RagnarokDB, 1711 em monstro com spawn conhecido, e 31 são usados em builds da VPS (por exemplo Carta Engkanto, em 33 builds). Importar esses drops é a melhoria mais barata de cobertura, depois do aceite ou antes, se o dono preferir.
+### Atualização de 2026-11-07
 
+- **Etapa 5 (memória):** com `--max-old-space-size=256` o RSS aquecido ficou em 148 MB e o pico em 297 MB (1 busca) e 306 MB (3 buscas), abaixo dos 512 MB do PM2. `/healthz` ainda para por 4 a 5 s durante a busca, porque o motor roda no mesmo processo. O teto só vale depois do deploy (exige `pm2 delete` e `pm2 start`) e não foi medido em Linux com Node 24.
+- **Drops na base de conhecimento:** o import pelo pipeline de rotas era inviável (um lote de 256 itens passou de 10 minutos e geraria milhares de rotas de 1,4 KB). Os drops viraram uma tabela em colunas, `data/acquisition/drops.v1.json`, que cobre 3.510 itens e 2.279 monstros e vira rota só na consulta. O custo medido foi de 352 KB no arquivo e nenhuma alteração visível no RSS. Desenho e números em `docs/optimize/drops-table-strategy.md`.
 
 ## Estado das duas linhas
 
