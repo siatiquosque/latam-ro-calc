@@ -76,3 +76,6 @@ backup-preset.json
 /.tmp/
 /.pnpm-store/
 tools/__pycache__/
+
+# Local SQLite database for saved links (created when the server runs)
+data/links.sqlite*

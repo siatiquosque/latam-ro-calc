@@ -2,11 +2,26 @@
 
 Data: 2026-11-06. Parte do veredito NOT READY de [optimize-v1-acceptance.md](optimize-v1-acceptance.md). Nada aqui autoriza commit, merge, implantação, mudança na VPS ou escrita no NAS: cada um desses passos precisa de aprovação própria.
 
-Esta versão considera as duas linhas de trabalho: a árvore da `main` e o worktree `D:/Developer/latam-ro-calc-goal-search` (`feat/goal-search`). Nenhuma das duas foi commitada, e nenhuma medição existente cobre as duas juntas.
+As duas linhas de trabalho foram consolidadas em `integrate/optimize-v1` (merge `eff3ec08`), que ainda não foi para a `main`. A tabela "Estado das duas linhas" guarda a situação anterior ao merge.
 
 ## Objetivo
 
 Sair de NOT READY com o menor trabalho possível. Cada etapa tem um critério de saída medível. Funcionalidade nova fica para depois do aceite.
+
+## Situação em 2026-11-06, depois do merge e do sync
+
+| Etapa | Situação | O que falta |
+| --- | --- | --- |
+| 0 | Quase feita: `tsc` do backend e do React passam, 12 testes de UI do Optimize passam, suíte completa com 1 falha restante (`tools/cache-headers.spec.ts`, causada por `analysis-*.js` antigos em `dist/`). | Limpar `dist/`, tirar `data/links.sqlite*` do commit, unificar os dois documentos de aceite, rodar os demais testes de ponta a ponta. |
+| 1 | Corrigida: a porta estática `mcp/src/tools/acquisition-operations.static.ts` faz o bundle subir, e `/mcp` executou `optimize_build` com 200. Ociosa, a memória ficou em 111 MB, contra 91 MB antes. | Teste automatizado da subida. Confirmar em Node 24. |
+| 2 | Feita: 1627 IDs sincronizados, fila vazia para esse lote. Nenhum dos 1130 lista LATAM no DivinePride, e os 878 sem rota listam. | Nada. |
+| 3 | Reduzida: a evidência confirma o sistema nos 1130, sem contradição. | Conferir uma amostra no jogo, em especial as 5 linhas usadas em builds da VPS. |
+| 4 | Provavelmente fechada: as 5 builds saíram sem item fora do LATAM com `maxSolves` 3000. | Repetir com o orçamento padrão e conferir `evaluate_variants` em `strict`. |
+| 5 | Aberta: pico de 626 MB com 1 busca e 662 MB com 3, acima dos 512 MB do PM2. A memória não voltou ao fim (658 MB). `/healthz` chegou a 4,6 s. | Tudo o que a etapa lista. Windows e Node 22, ainda sem Linux e Node 24. |
+| 6 a 9 | Não iniciadas. | Dependem das etapas acima. |
+
+Achado novo para a base de conhecimento: 2223 itens sem rota têm drop registrado no RagnarokDB, 1711 em monstro com spawn conhecido, e 31 são usados em builds da VPS (por exemplo Carta Engkanto, em 33 builds). Importar esses drops é a melhoria mais barata de cobertura, depois do aceite ou antes, se o dono preferir.
+
 
 ## Estado das duas linhas
 
