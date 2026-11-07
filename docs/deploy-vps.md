@@ -79,6 +79,8 @@ pm2 startOrReload deploy/vps/ecosystem.config.cjs --update-env
 pm2 save
 ```
 
+O PM2 limita o heap do Node com `node_args: '--max-old-space-size=256'`. Sem o limite, uma busca do `optimize_build` chega a 430-480 MB de RSS por acúmulo de lixo, perto do `max_memory_restart` de 512 MB. Com o limite, medido com `tools/mcp-load-probe.mjs`, o pico foi de 308 MB com três buscas simultâneas, com o mesmo resultado e o mesmo tempo. Mudar `node_args` só vale após `pm2 delete laro-calc` seguido de `pm2 start`; `startOrReload` mantém os argumentos antigos.
+
 Incorpore o bloco de `deploy/vps/Caddyfile` à configuração existente sem substituir
 os sites que a VPS já hospeda. Valide com `caddy validate --config /etc/caddy/Caddyfile`
 antes de recarregar o serviço. O DNS do domínio deve apontar para a VPS e as portas
