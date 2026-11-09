@@ -6997,7 +6997,7 @@
             "5"
           ],
           "chance": [
-            "2"
+            "USED[Priest]2"
           ],
           "trigger": "physical-hit"
         }
@@ -33068,8 +33068,12 @@
     ],
     "script": {
       "atk": [
+        "1---1",
         "10",
         "EQUIP[Critical Shadow Armor]REFINE[shadowWeapon,shadowArmor==1]---1"
+      ],
+      "matk": [
+        "1---1"
       ],
       "criDmg": [
         "7===1",
@@ -48605,6 +48609,12 @@
       "all"
     ],
     "script": {
+      "atk": [
+        "1---1"
+      ],
+      "matk": [
+        "1---1"
+      ],
       "hpPercent": [
         "3"
       ],
@@ -51132,6 +51142,12 @@
       "all"
     ],
     "script": {
+      "atk": [
+        "1---1"
+      ],
+      "matk": [
+        "1---1"
+      ],
       "con": [
         "1---1"
       ],
@@ -51205,6 +51221,12 @@
       "all"
     ],
     "script": {
+      "atk": [
+        "1---1"
+      ],
+      "matk": [
+        "1---1"
+      ],
       "wis": [
         "1---1"
       ],
@@ -51269,6 +51291,12 @@
       "all"
     ],
     "script": {
+      "atk": [
+        "1---1"
+      ],
+      "matk": [
+        "1---1"
+      ],
       "sta": [
         "1---1"
       ],
@@ -51333,6 +51361,12 @@
       "all"
     ],
     "script": {
+      "atk": [
+        "1---1"
+      ],
+      "matk": [
+        "1---1"
+      ],
       "crt": [
         "2---1"
       ],
@@ -55095,10 +55129,10 @@
       "matk": [
         "175"
       ],
-      "m_element_neutral": [
+      "m_my_element_neutral": [
         "5"
       ],
-      "m_element_earth": [
+      "m_my_element_earth": [
         "5"
       ],
       "vct": [
@@ -55519,10 +55553,10 @@
       "m_race_angel": [
         "11===20"
       ],
-      "p_element_holy": [
+      "m_element_holy": [
         "EQUIP[King Schmidt's Suit&&King Schmidt's Manteau]REFINE[weapon,armor,garment==30]===20"
       ],
-      "p_element_undead": [
+      "m_element_undead": [
         "EQUIP[King Schmidt's Suit&&King Schmidt's Manteau]REFINE[weapon,armor,garment==30]===20"
       ],
       "chance__m_my_element_holy": [
@@ -58445,7 +58479,7 @@
       "matk": [
         "10"
       ],
-      "m_element_neutral": [
+      "m_my_element_neutral": [
         "5",
         "9===5"
       ]
@@ -100871,7 +100905,7 @@
     "compositionPos": 65535,
     "script": {
       "vct": [
-        "LEARN_SKILL[Diamond Dust==1]---1"
+        "LEARN_SKILL[Diamond Dust==1]---2"
       ],
       "2449": [
         "EQUIP_ID[25420||29435]===15"
@@ -207897,20 +207931,16 @@
       "matk": [
         "175"
       ],
-      "m_element_neutral": [
-        "10"
+      "m_my_element_neutral": [
+        "10",
+        "9===30"
       ],
-      "m_element_earth": [
-        "10"
+      "m_my_element_earth": [
+        "10",
+        "9===30"
       ],
       "vct": [
         "7===10"
-      ],
-      "m_my_element_neutral": [
-        "9===30"
-      ],
-      "m_my_element_fire": [
-        "9===30"
       ],
       "acd": [
         "11===15"
@@ -235176,7 +235206,7 @@
   },
   "4990": {
     "id": 4990,
-    "aegisName": "리액토_보조",
+    "aegisName": "Reactor_A_FROZ",
     "name": "I-Gelo",
     "unidName": "I-Gelo",
     "resName": "",
@@ -235194,7 +235224,11 @@
     "usableClass": [
       "all"
     ],
-    "script": {}
+    "script": {
+      "freezeResist": [
+        "100"
+      ]
+    }
   },
   "470373": {
     "id": 470373,
@@ -258276,7 +258310,7 @@
             "5"
           ],
           "chance": [
-            "REFINE[9]===10"
+            "USED[Crusader]REFINE[9]===10"
           ],
           "trigger": "physical-hit"
         }
@@ -267736,6 +267770,15 @@
       "Warlock"
     ],
     "script": {
+      "m_my_element_fire": [
+        "11===5"
+      ],
+      "m_my_element_earth": [
+        "11===5"
+      ],
+      "m_my_element_neutral": [
+        "11===5"
+      ],
       "acd": [
         "9===5"
       ],
@@ -282942,6 +282985,18 @@
       "all"
     ],
     "script": {
+      "m_my_element_neutral": [
+        "11===10"
+      ],
+      "m_my_element_holy": [
+        "11===10"
+      ],
+      "m_my_element_dark": [
+        "11===10"
+      ],
+      "m_my_element_ghost": [
+        "11===10"
+      ],
       "fct": [
         "7===0.5"
       ],
@@ -285638,6 +285693,12 @@
       "all"
     ],
     "script": {
+      "chance__m_my_element_neutral": [
+        "11===20"
+      ],
+      "chance__m_my_element_holy": [
+        "11===20"
+      ],
       "atk": [
         "9===30"
       ],
@@ -332925,7 +332986,7 @@
             "5"
           ],
           "chance": [
-            "1"
+            "USED[Swordman]1"
           ],
           "trigger": "physical-hit"
         }
@@ -333158,6 +333219,12 @@
       "all"
     ],
     "script": {
+      "46": [
+        "5"
+      ],
+      "47": [
+        "5"
+      ],
       "agi": [
         "1"
       ],
@@ -333462,6 +333529,15 @@
       "all"
     ],
     "script": {
+      "14": [
+        "EQUIP_ID[4325&&4309&&4258&&4208&&4327]10"
+      ],
+      "19": [
+        "EQUIP_ID[4325&&4309&&4258&&4208&&4327]10"
+      ],
+      "20": [
+        "EQUIP_ID[4325&&4309&&4258&&4208&&4327]10"
+      ],
       "def": [
         "EQUIP_ID[4325&&4309&&4258&&4208&&4327]5"
       ],
@@ -333848,6 +333924,9 @@
       "all"
     ],
     "script": {
+      "15": [
+        "5"
+      ],
       "spPercent": [
         "10"
       ]
@@ -335292,6 +335371,12 @@
       "all"
     ],
     "script": {
+      "316": [
+        "10"
+      ],
+      "324": [
+        "10"
+      ],
       "luk": [
         "2"
       ]
@@ -335647,6 +335732,9 @@
       "all"
     ],
     "script": {
+      "156": [
+        "10"
+      ],
       "luk": [
         "2"
       ]
@@ -336151,6 +336239,9 @@
       "all"
     ],
     "script": {
+      "5": [
+        "9===10"
+      ],
       "hp": [
         "300"
       ]
@@ -336212,6 +336303,9 @@
       "all"
     ],
     "script": {
+      "42": [
+        "EQUIP_ID[4281&&4186&&4206&&4233]20"
+      ],
       "luk": [
         "EQUIP_ID[4281&&4186&&4206&&4233]10"
       ]
@@ -336322,6 +336416,9 @@
       "all"
     ],
     "script": {
+      "11": [
+        "5"
+      ],
       "subele_neutral": [
         "15"
       ]
@@ -336370,6 +336467,9 @@
       "all"
     ],
     "script": {
+      "18": [
+        "5"
+      ],
       "vct": [
         "-30"
       ]
@@ -336451,6 +336551,9 @@
       "all"
     ],
     "script": {
+      "271": [
+        "EQUIP_ID[4312&&4293&&4185]10"
+      ],
       "int": [
         "1"
       ],
@@ -336611,6 +336714,9 @@
       "all"
     ],
     "script": {
+      "42": [
+        "EQUIP_ID[4036&&4281&&4186&&4233]20"
+      ],
       "luk": [
         "2"
       ],
@@ -336667,7 +336773,17 @@
     "usableClass": [
       "all"
     ],
-    "script": {}
+    "script": {
+      "21": [
+        "5"
+      ],
+      "84": [
+        "5"
+      ],
+      "85": [
+        "5"
+      ]
+    }
   },
   "4346": {
     "id": 4346,
@@ -336738,6 +336854,9 @@
       "all"
     ],
     "script": {
+      "212": [
+        "EQUIP_ID[4230&&4210&&4039&&4257]10"
+      ],
       "str": [
         "EQUIP_ID[4230&&4210&&4039&&4257]6"
       ],
@@ -336788,7 +336907,14 @@
     "usableClass": [
       "all"
     ],
-    "script": {}
+    "script": {
+      "88": [
+        "3"
+      ],
+      "89": [
+        "3"
+      ]
+    }
   },
   "4351": {
     "id": 4351,
@@ -337347,7 +337473,14 @@
     "usableClass": [
       "all"
     ],
-    "script": {}
+    "script": {
+      "80": [
+        "5"
+      ],
+      "83": [
+        "5"
+      ]
+    }
   },
   "4382": {
     "id": 4382,
@@ -337370,6 +337503,12 @@
       "all"
     ],
     "script": {
+      "21": [
+        "EQUIP_ID[4325&&4258&&4208&&4327]10"
+      ],
+      "91": [
+        "EQUIP_ID[4325&&4258&&4208&&4327]10"
+      ],
       "hp": [
         "500"
       ],
@@ -338014,7 +338153,14 @@
     "usableClass": [
       "all"
     ],
-    "script": {}
+    "script": {
+      "80": [
+        "40"
+      ],
+      "83": [
+        "40"
+      ]
+    }
   },
   "4431": {
     "id": 4431,
@@ -338215,6 +338361,15 @@
       "all"
     ],
     "script": {
+      "11": [
+        "USED[Mage]20"
+      ],
+      "13": [
+        "USED[Mage]20"
+      ],
+      "400": [
+        "USED[Mage]20"
+      ],
       "hp": [
         "USED[Mage]-100"
       ],
@@ -338502,6 +338657,9 @@
       "all"
     ],
     "script": {
+      "153": [
+        "USED[Merchant]50"
+      ],
       "str": [
         "2"
       ]
@@ -373360,6 +373518,9 @@
       "cd__2321": [
         "EQUIP_ID[500027]1"
       ],
+      "cd__5267": [
+        "EQUIP_ID[500027]REFINE[weapon==10]0.7"
+      ],
       "spl": [
         "EQUIP_ID[500027]GRADE[weapon==C]5"
       ],
@@ -373439,6 +373600,30 @@
       ],
       "sMatk": [
         "EQUIP_ID[570020||580020]GRADE[weapon==C]5"
+      ],
+      "autoCast": [
+        {
+          "skillId": 382,
+          "skillLevel": [
+            "EQUIP_ID[700035]REFINE[weapon==10]5"
+          ],
+          "chance": [
+            "EQUIP_ID[700035]REFINE[weapon==10]50"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 5334
+        },
+        {
+          "skillId": 5356,
+          "skillLevel": [
+            "EQUIP_ID[570020||580020]REFINE[weapon==10]3"
+          ],
+          "chance": [
+            "EQUIP_ID[570020||580020]REFINE[weapon==10]50"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 2413
+        }
       ]
     }
   },
@@ -373698,6 +373883,19 @@
       ],
       "con": [
         "EQUIP_ID[700033]GRADE[weapon==C]5"
+      ],
+      "autoCast": [
+        {
+          "skillId": 2288,
+          "skillLevel": [
+            "EQUIP_ID[700033]REFINE[weapon==10]8"
+          ],
+          "chance": [
+            "EQUIP_ID[700033]REFINE[weapon==10]50"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 5322
+        }
       ]
     }
   },
@@ -373783,6 +373981,19 @@
       ],
       "atkPercent": [
         "EQUIP_ID[560020]10"
+      ],
+      "autoCast": [
+        {
+          "skillId": 5252,
+          "skillLevel": [
+            "EQUIP_ID[560020]REFINE[weapon==10]4"
+          ],
+          "chance": [
+            "EQUIP_ID[560020]REFINE[weapon==10]100"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 5248
+        }
       ]
     }
   },
@@ -373863,6 +374074,30 @@
       ],
       "atkPercent": [
         "EQUIP_ID[650022]10"
+      ],
+      "autoCast": [
+        {
+          "skillId": 5483,
+          "skillLevel": [
+            "EQUIP_ID[650021]REFINE[weapon==10]8"
+          ],
+          "chance": [
+            "EQUIP_ID[650021]REFINE[weapon==10]50"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 3009
+        },
+        {
+          "skillId": 5486,
+          "skillLevel": [
+            "EQUIP_ID[650022]REFINE[weapon==10]4"
+          ],
+          "chance": [
+            "EQUIP_ID[650022]REFINE[weapon==10]50"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 5477
+        }
       ]
     }
   },
@@ -374030,6 +374265,19 @@
       ],
       "cd__5425": [
         "EQUIP_ID[550063]REFINE[weapon==10]0.2"
+      ],
+      "autoCast": [
+        {
+          "skillId": 5429,
+          "skillLevel": [
+            "EQUIP_ID[550064]REFINE[weapon==10]4"
+          ],
+          "chance": [
+            "EQUIP_ID[550064]REFINE[weapon==10]100"
+          ],
+          "trigger": "skill-use",
+          "triggerSkillId": 5428
+        }
       ]
     }
   },
@@ -374767,7 +375015,7 @@
         "EQUIP_ID[25801||29614]===15"
       ],
       "vct": [
-        "SKILL_ID[2447==1]---1"
+        "SKILL_ID[2447==1]---2"
       ]
     }
   },
@@ -392372,5 +392620,208 @@
     "location": null,
     "compositionPos": null,
     "script": {}
-  }
+  },
+  "4974": {
+    "id": 4974,
+    "aegisName": "Reactor_T_FIRE",
+    "name": "R-Fogo",
+    "unidName": "Fire Resistance Reactor",
+    "resName": "리액토_내성",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "subele_fire": [
+        "25"
+      ],
+      "subele_water": [
+        "-25"
+      ]
+    }
+  },
+  "4975": {
+    "id": 4975,
+    "aegisName": "Reactor_T_WATER",
+    "name": "R-Água",
+    "unidName": "Water Resistance Reactor",
+    "resName": "리액토_내성",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "subele_water": [
+        "25"
+      ],
+      "subele_wind": [
+        "-25"
+      ]
+    }
+  },
+  "4976": {
+    "id": 4976,
+    "aegisName": "Reactor_T_GROUND",
+    "name": "R-Terra",
+    "unidName": "Earth Resistance Reactor",
+    "resName": "리액토_내성",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "subele_earth": [
+        "25"
+      ],
+      "subele_fire": [
+        "-25"
+      ]
+    }
+  },
+  "4977": {
+    "id": 4977,
+    "aegisName": "Reactor_T_WIND",
+    "name": "R-Vento",
+    "unidName": "Wind Resistance Reactor",
+    "resName": "리액토_내성",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "subele_wind": [
+        "25"
+      ],
+      "subele_earth": [
+        "-25"
+      ]
+    }
+  },
+  "4978": {
+    "id": 4978,
+    "aegisName": "Reactor_Cure_101",
+    "name": "C-Corpo",
+    "unidName": "Recovery Reactor 101",
+    "resName": "리액토_회복",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "hpRegenPerSecond": [
+        "10",
+        "7===10"
+      ]
+    }
+  },
+  "4979": {
+    "id": 4979,
+    "aegisName": "Reactor_Cure_102",
+    "name": "C-Alma",
+    "unidName": "Recovery Reactor 102",
+    "resName": "리액토_회복",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "spRegenPerSecond": [
+        "0.6",
+        "7===0.4"
+      ]
+    }
+  },
+  "4980": {
+    "id": 4980,
+    "aegisName": "Reactor_Cure_201",
+    "name": "C-Físico",
+    "unidName": "Recovery Reactor 201",
+    "resName": "리액토_회복",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "hpRecovRate": [
+        "50",
+        "7===50"
+      ]
+    }
+  },
+  "4981": {
+    "id": 4981,
+    "aegisName": "Reactor_Cure_202",
+    "name": "C-Mental",
+    "unidName": "Recovery Reactor 202",
+    "resName": "리액토_회복",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 11,
+    "itemSubTypeId": 0,
+    "itemLevel": null,
+    "attack": null,
+    "defense": null,
+    "weight": 0,
+    "requiredLevel": null,
+    "location": null,
+    "compositionPos": 65535,
+    "script": {
+      "spRecovRate": [
+        "50",
+        "7===50"
+      ]
+    }
+  },
+  "310861": {"id":310861,"aegisName":"Mad_Bunny_Enchant_4_1","name":"Pedra Defensora 1","unidName":"Pedra Defensora 1","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["100"]}},
+  "310862": {"id":310862,"aegisName":"Mad_Bunny_Enchant_4_2","name":"Pedra Defensora 2","unidName":"Pedra Defensora 2","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["150"]}},
+  "310863": {"id":310863,"aegisName":"Mad_Bunny_Enchant_4_3","name":"Pedra Defensora 3","unidName":"Pedra Defensora 3","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["200"],"subele_all":["5"]}}
 }

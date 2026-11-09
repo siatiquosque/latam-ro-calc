@@ -1,3 +1,4 @@
+import { DEFAULT_CATALOG } from 'src/app/i18n';
 import { CharacterBase } from 'src/app/jobs/_character-base.abstract';
 import { resolveSkillMeta, SKILL_ID_BY_NAME } from 'src/app/skills';
 import { SkillFormulaVersion } from 'src/app/skills/skill-formula-version';
@@ -23,7 +24,7 @@ function structureOf(skill: ReturnType<typeof findSkill>, level: number) {
     ignoresAspdFloor: skill.ignoreAspdFloor || undefined,
     timingUnknown: skill.timingUnknown || undefined,
     stacks: skill.maxStack !== undefined ? { min: skill.minStack ?? 0, max: skill.maxStack, default: skill.defaultStack } : undefined,
-    secondPacket: skill.part2 ? { label: skill.part2.label, hits: skill.part2.hit, damageType: skill.part2.isMatk ? 'magical' : 'physical', includesMain: skill.part2.isIncludeMain } : undefined,
+    secondPacket: skill.part2 ? { label: skill.part2.labelKey ? DEFAULT_CATALOG[skill.part2.labelKey] : undefined, hits: skill.part2.hit, damageType: skill.part2.isMatk ? 'magical' : 'physical', includesMain: skill.part2.isIncludeMain } : undefined,
     addsFlatDamage: skill.flatDamage ? true : undefined,
     adjustsFinalDamage: skill.finalDmgFormula ? true : undefined,
     adjustsAccuracy: skill.accuracy ? true : undefined,

@@ -189,8 +189,13 @@ esteja equipado; passando, sobra `50` (valor fixo).
 - `skillLevelMode: "highest-learned"` usa o maior entre esse valor e o nível aprendido.
 - `skillLevelMode: "learned-only"` usa exatamente o nível aprendido; sem a perícia, a
   fonte não aparece. Use-o para "no mesmo nível aprendido", não para "ou no maior nível".
-- `trigger` aceita `physical-attack`, `physical-hit`, `melee-physical-hit` ou
-  `ranged-physical-hit`.
+- `trigger` aceita `physical-attack`, `physical-hit`, `melee-physical-attack`,
+  `melee-physical-hit`, `ranged-physical-hit`, `magic-attack` ou `skill-use`.
+- `skill-use` é a cláusula "Ao usar [X] autoconjura [Y]": dispara no uso de uma habilidade
+  específica, e não numa rolagem por ataque. `triggerSkillId` diz qual é essa habilidade e
+  é obrigatório nesse gatilho (proibido nos outros). A fonte só aparece enquanto `[X]` for
+  a habilidade selecionada — nas outras ela fica listada como indisponível, dizendo qual
+  selecionar — e é cobrada uma vez por uso de `[X]`, dentro do teto da Vel.Atq.
 - Cada objeto representa uma ativação independente. Efeitos de rolagem compartilhada ou
   escolha entre várias magias só entram quando essa semântica estiver implementada.
 
@@ -245,7 +250,7 @@ Categorias principais:
 | Avançados            | `pAtk` `sMatk` `cRate` `hplus` `range` |
 | Dano por raça        | `p_race_<raça>` (físico) · `m_race_<raça>` (mágico) |
 | Dano por tamanho     | `p_size_<s\|m\|l>` |
-| Dano por elemento    | `p_element_<e>` · `m_element_<e>` · `m_my_element_<e>` |
+| Dano por elemento    | `p_element_<e>` · `m_element_<e>` · `m_my_element_<e>` — a redação decide a chave: `contra (oponentes de\|as propriedades) X` é a propriedade do **alvo** (`*_element_`, só rende contra monstro daquela propriedade); `de propriedade X` pelada é a propriedade do **atacante** (`m_my_element_`, rende contra qualquer alvo). Guardar uma na via da outra deixa o bônus sem efeito sem quebrar nada (ver `own-element-magic-bonus-key.spec.ts`) |
 | Penetração           | `p_pene_race_<raça>` · `m_pene_race_<raça>` |
 | Dano vs. classe      | `p_class_all` |
 | Dano vs. monstro     | `dmg__<aegisDoMonstro>` |

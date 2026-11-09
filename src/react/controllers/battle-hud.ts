@@ -6,10 +6,11 @@ import { Translate } from '../../app/i18n';
 import { DropdownModel } from '../../app/models/dropdown.model';
 import { dmgTypeLabel as dmgTypeLabelUtil, skillDescHtml } from '../../app/utils';
 import { RotationCycle } from '../../app/core/rotation-schedule';
-import { RotationEntryView, RotationView } from '../../app/layout/pages/ro-calculator/battle-hud/rotation-view';
+import { RotationAutoCastView, RotationEntryView, RotationView } from '../../app/layout/pages/ro-calculator/battle-hud/rotation-view';
 import { DamageBranch } from './rotation-list';
 import { CritRateBreakdown, CritRateStep } from '../../app/core/crit-rate';
 import {
+  buildComponentRows,
   buildDpsSteps,
   buildGraphClusters,
   buildOptimizeInfo,
@@ -18,6 +19,7 @@ import {
   computeTimeToKill,
   CritRateRow,
   CritRateRowCache,
+  DamageComponentRow,
   deltaPercent,
   DpsSide,
   DpsSteps,
@@ -320,6 +322,13 @@ export class BattleHudComponent extends ViewState {
     return entry?.isBasic ? '' : skillDescHtml(entry?.icon);
   }
 
+  /** The parts a split skill's damage is made of, closed by the total they add up to — the
+   *  asteroid and the meteors behind Colisão Astral. Null when the skill has one part,
+   *  which is every skill without a second packet. */
+  get damageComponents(): DamageComponentRow[] | null {
+    return buildComponentRows(this.dmg, this.isComparing ? this.dmg2 : null, this.text);
+  }
+
   /** Per-hit range behind a multi-hit total: the design's "soma de N golpes · X – Y cada". */
   get activePerHit(): { hits: number; min: number; max: number } | null {
     const hits = this.dmg?.skillTotalHit ?? 0;
@@ -416,6 +425,71 @@ export class BattleHudComponent extends ViewState {
       hasSelectedChances: this.hasSelectedChances,
       hasSelectedChances2: this.hasSelectedChances2,
     });
+  }
+
+  /**
+   * The glued proc's own skill details, which is the panel the tiles open for themselves.
+   *
+   * `cast.summary` is what `solveAutoCast()` returned for the proc, and that is the per-skill
+   * summary directly rather than Batalha's full one — so the damage type, the element and
+   * its multiplier sit at the top level here, exactly as the Auto-conjuração tab reads them.
+   */
+  openAutoCastDetails(payload: { index: number; key: string; event: Event }, details: any): void {
+    const found = this.findAutoCast(payload);
+    if (!found) return;
+    const { entry, cast } = found;
+    const summary = cast.summary;
+    details?.open(payload.event, {
+      entry: {
+        name: cast.name,
+        levelLabel: cast.levelLabel,
+        icon: cast.skillId,
+        isBasic: false,
+        dmgTypeLabel: this.dmgTypeLabel(summary?.dmgType ?? ''),
+        element: summary?.skillPropertyAtk,
+        propertyMultiplier: summary?.skillPropertyMultiplier,
+        hasDamageSpread: cast.hasDamageSpread,
+        critWeighted: cast.damageRanges.length > 1,
+      },
+      summary,
+      autoCast: {
+        sourceName: cast.sourceName,
+        // The trigger is this tile, named: on the Auto-conjuração tab the trigger is
+        // whichever skill is selected, so there the label has nothing to name.
+        triggerLabel: this.text('rot.autoTrigger', { trigger: entry.name }),
+        chance: cast.chance,
+        activationsPerSecond: cast.activationsPerSecond,
+        expectedDamagePerActivation: cast.damage,
+        dps: cast.dps,
+        contribution: cast.contributionPercent,
+      },
+    }, payload.event.currentTarget);
+  }
+
+  /** One of the glued proc's rolls was clicked — the same formula popovers the tiles use,
+   *  fed the proc's own solve. */
+  openAutoCastDamage(payload: { index: number; key: string; event: Event; branch: DamageBranch }, popovers: any): void {
+    const found = this.findAutoCast(payload);
+    if (!found) return;
+    const { cast } = found;
+    popovers?.open(payload.event, payload.branch, {
+      entry: {
+        name: cast.name,
+        isBasic: false,
+        hasDamageSpread: cast.hasDamageSpread,
+        critWeighted: cast.damageRanges.length > 1,
+      },
+      summary: cast.summary,
+    });
+  }
+
+  /** The proc is found by key rather than by position: one tile can fire more than one, and
+   *  the order they resolve in is the item's, not the reader's. */
+  private findAutoCast(payload: { index: number; key: string }): { entry: RotationEntryView; cast: RotationAutoCastView } | null {
+    const entry = this.rotationView?.entries?.[payload.index];
+    const cast = entry?.autoCasts?.find((proc) => proc.key === payload.key);
+
+    return entry && cast ? { entry, cast } : null;
   }
 
   trackByIndex(index: number): number {
@@ -702,7 +776,7 @@ export class BattleHudComponent extends ViewState {
     if (!graph) return null;
     const cached = this.graphClusterCache.get(graph);
     if (cached) return cached;
-    const built = { min: buildGraphClusters(graph.min), max: buildGraphClusters(graph.max) };
+    const built = { min: buildGraphClusters(graph.min, this.text), max: buildGraphClusters(graph.max, this.text) };
     this.graphClusterCache.set(graph, built);
     return built;
   }

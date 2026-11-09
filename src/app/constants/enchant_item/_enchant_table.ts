@@ -265,16 +265,19 @@ const illusionBoot = [...illusionNormalDef, ...illusionBootOrbs, '마력석_파�
 /** The four encantos every Ilusión accessory column opens with. */
 const illusionAccShared = [EA._5, Spell._5, AttackDelay._4, Fatal._4];
 const illusionAcc = [...illusionAccShared, ...BaseState._3];
-// U-Mental and U-Vida are the right accessory's alone, U-Mana and U-Alma the left's —
-// the wiki's Ac. D. and Ac. E. columns do not share them, though both used to carry both.
+// S-HPR, U-Vida and U-Mental are the right accessory's alone, S-SPR, U-Alma and U-Mana the
+// left's: each of those módulos names only that side's two pieces in its client description.
+// The six N- attribute módulos name all four pieces, so they go on both sides — the client
+// spells a side out whenever there is one, which the wiki's grid does not. The pools spec
+// holds every entry here against that client text.
 const illusionAccR = [
-  ...illusionAccShared, Str._3, Agi._3, Vit._3, Luk._3,
+  ...illusionAcc,
   '청록색보석', // S-HPR (29529)
   '마법석화', // U-Vida (29543)
   '마법석성', // U-Mental (29545)
 ];
 const illusionAccL = [
-  ...illusionAccShared, Int._3, Dex._3, Vit._3, Luk._3,
+  ...illusionAcc,
   '파란색보석', // S-SPR (29532)
   '마법석풍', // U-Alma (29544)
   '마법석암', // U-Mana (29546)
@@ -400,7 +403,7 @@ const automaticBoot = [
   'Automatic_Orb44',
   'Automatic_Orb45',
 ];
-/** The Escudo column — M-Cura and P-Refletor stay out, see the note above. */
+/** The Escudo column, which takes M-Rapidez at x1 where the Motor takes it at x2. */
 const automaticShield = [
   ...automaticBasicDef, // B-DEF x3, B-DEFM x3
   'Automatic_Orb15', // M-HPMax x2
@@ -428,13 +431,17 @@ const twinCannon = [Fatal._3, AttackDelay._3, Spell._4, EA._3, ...BaseState._3];
 
 const whiteWingSuit = [...tempOpts._1_3, ...BaseState._1_3];
 // Excelion "Diagramas", by the table on browiki's Equipamento Excelion page. The four
-// pieces share one pool of three slots but not the same entries: A-ESQV is armour/garment
-// only, A-FOR and A-INT are the Colete's alone, and the shield and the boot take neither.
-// The E-/I-/R-/C- categories are element, freeze immunity, resistance and regen — none of
-// them exist as items here, so they cannot be offered.
-const excelionGear = ['Reactor_A_DEF', 'Reactor_A_ATK', 'Reactor_A_MATK', 'Reactor_A_MHP', 'Reactor_A_MSP', 'Reactor_A_ASPD'];
-const excelion = ['Reactor_A_AVOI', ...excelionGear];
-const excelionSuit = ['Reactor_A_STR', 'Reactor_A_INT', ...excelion];
+// pieces take three slots each but not the same entries: the C- regen family is the only
+// one all four share, A-ESQV is the Colete's and the Motor's, A-FOR / A-INT / I-Gelo are
+// the Colete's alone, and the R- resistance family is the Motor's alone. The wiki's
+// "x1/x3" column is the NPC's repeat cap, not a restriction on the list.
+// The E- family (element on the armour) stays out: the engine reads `armorElement` from
+// the armour or its card only, never from an enchant, so an entry here would be inert.
+const excelionCure = ['Reactor_Cure_101', 'Reactor_Cure_102', 'Reactor_Cure_201', 'Reactor_Cure_202'];
+const excelionGear = ['Reactor_A_DEF', 'Reactor_A_ATK', 'Reactor_A_MATK', 'Reactor_A_MHP', 'Reactor_A_MSP', 'Reactor_A_ASPD', ...excelionCure];
+const excelionAvoi = ['Reactor_A_AVOI', ...excelionGear];
+const excelionWing = ['Reactor_T_FIRE', 'Reactor_T_WATER', 'Reactor_T_GROUND', 'Reactor_T_WIND', ...excelionAvoi];
+const excelionSuit = ['Reactor_A_STR', 'Reactor_A_INT', 'Reactor_A_FROZ', ...excelionAvoi];
 
 const racingShoes = [...ea45, FS._6, ...sp45, ...aspd34, ...critical34, ...BaseState._1_3];
 
@@ -876,7 +883,7 @@ export const EnchantTable: EntTable[] = [
   { name: 'Fallen Angel Wing [1]', enchants: [null, eaFsSp15, eaFsSp15, eaFsSp15] },
 
   { name: 'Excelion_Suit', enchants: [null, excelionSuit, excelionSuit, excelionSuit] },
-  { name: 'Excelion_Wing', enchants: [null, excelion, excelion, excelion] },
+  { name: 'Excelion_Wing', enchants: [null, excelionWing, excelionWing, excelionWing] },
   { name: 'Excelion_Shield', enchants: [null, excelionGear, excelionGear, excelionGear] },
   { name: 'Excelion_Boots', enchants: [null, excelionGear, excelionGear, excelionGear] },
 

@@ -1,5 +1,6 @@
 import { translate } from 'src/app/core/i18n';
 import { DEFAULT_CATALOG } from 'src/app/i18n';
+import { catalog as en } from 'src/app/i18n/en';
 import { describe, expect, it } from 'vitest';
 import { BASIC_ATTACK_VALUE } from '../../../../core/rotation';
 import { simulateRotationOf } from '../../../../core/rotation-dps';
@@ -122,6 +123,45 @@ describe('buildRotationView', () => {
     expect(result.entries[0].stackCount).toBe(4);
     expect(result.entries[0].damage).toBe(18_000);
   });
+  // Card mkvqph0HW51cDiRaXxKS: Florescer scatters `nível × 4` explosions over random
+  // cells, so the row asks how many landed and the bound follows the tile's own level.
+  it('sizes a scattered skill’s picker by the level the tile is cast at, and names it', () => {
+    const scattered = { minStack: 1, maxStack: (lv: number) => lv * 4, defaultStack: (lv: number) => lv * 4, stackLabelKey: 'rot.hits' as const };
+    const summary = summaryOf({ perHit: 1000, hits: 20 });
+    const view = (value: string, saved?: number) => buildRotationView({
+      text,
+      rotation: [value],
+      summaryByValue: new Map([[value, summary]]),
+      baseSummary: summary,
+      hasSelectedChances: false,
+      atkSkills: [{ value: 'All Bloom==5', values: ['All Bloom==1'], label: 'Florescer Nv5', ...scattered }],
+      rotationStacks: saved === undefined ? undefined : [saved],
+    }).entries[0];
+
+    expect(view('All Bloom==5').stackOptions).toHaveLength(20);
+    expect(view('All Bloom==5').stackCount).toBe(20);
+    expect(view('All Bloom==5').stackLabel).toBe(text('rot.hits'));
+    // The same tile moved down to Nv1 plants four flowers, and a count saved at Nv5
+    // cannot survive the level that allowed it.
+    expect(view('All Bloom==1').stackOptions).toHaveLength(4);
+    expect(view('All Bloom==1', 12).stackCount).toBe(4);
+  });
+
+  it('leaves an accumulation reading "Acúm."', () => {
+    const value = 'Eternal Slash==5';
+    const summary = summaryOf({ perHit: 4500, hits: 4 });
+    const result = buildRotationView({
+      text,
+      rotation: [value],
+      summaryByValue: new Map([[value, summary]]),
+      baseSummary: summary,
+      hasSelectedChances: false,
+      atkSkills: [{ value, label: 'Talho Eterno Nv5', minStack: 1, maxStack: 5, defaultStack: 1 }],
+    });
+
+    expect(result.entries[0].stackLabel).toBe(text('rot.stack'));
+  });
+
   it('cala as leituras de dano de uma habilidade que não bate', () => {
     // Esconderijo e Infiltrar entram na rotação pelo tempo que ocupam, não pelo dano
     // (cards bLnU1DLpGeA2vxQ794I4 e FPpmOoKCq7KzPxV4NUZ3). A linha lia "0" ao lado de um
@@ -584,5 +624,120 @@ describe('the rotation the MCP reads', () => {
     const cycle = simulateRotationOf({ rotation, summaryByValue: blocked, baseSummary, hasSelectedChances: false });
 
     expect(cycle.sustainedDps).toBe(view.cycle.sustainedDps);
+  });
+});
+
+/**
+ * The auto-conjurações glued under the tile that fires them.
+ *
+ * The engine decides *whether* a proc fires and what one activation is worth
+ * (consagrado-skill-use-autocasts.spec.ts covers that); what is checked here is the only
+ * reading that needs the rotation — the per-second figure — and the fact that it is kept
+ * out of the cycle the panel reports.
+ */
+describe('buildRotationView glued auto-conjurações', () => {
+  const PROC: any = {
+    key: 'item-491119-5429',
+    skillId: 5429,
+    name: 'Talismã do Jabuti',
+    skillLevel: 4,
+    chance: 50,
+    sourceName: 'Colar Consagrado do Destino',
+    sourceItemId: 491119,
+    expectedDamagePerActivation: 60_000,
+    damageRanges: [{ kind: 'flat', label: 'dano', min: 55_000, max: 65_000 }],
+    canCrit: false,
+    criticalRate: 0,
+    summary: {},
+  };
+
+  /** A 2s cast with nothing else in the rotation: one use, and one cycle, every 2 seconds. */
+  const trigger = 'Talisman of Red Phoenix==5';
+  const view = (casts?: any[], rotation = [trigger]) => buildRotationView({
+    text,
+    rotation,
+    summaryByValue: new Map([[trigger, summaryOf({ castPeriod: 2, perHit: 10_000 })]]),
+    baseSummary: summaryOf({ castPeriod: 2, perHit: 10_000 }),
+    hasSelectedChances: false,
+    atkSkills: [{ value: trigger, label: 'Talismã da Fênix Nv5', icon: 5428 }],
+    autoCastsByIndex: casts ? new Map([[0, casts]]) : undefined,
+  });
+
+  it('hangs the proc off the tile whose use fires it, priced over that tile’s cycle', () => {
+    const [cast] = view([PROC]).entries[0].autoCasts;
+
+    expect(cast).toMatchObject({
+      key: PROC.key,
+      name: 'Talismã do Jabuti',
+      levelLabel: 'Nv4',
+      icon: 5429,
+      chance: 50,
+      sourceName: 'Colar Consagrado do Destino',
+      damage: 60_000,
+      hasDamageSpread: true,
+    });
+    // 50% of 60.000 once every 2s. Not 60.000/2: the chance is what makes it a rate.
+    expect(cast.dps).toBeCloseTo(15_000, 6);
+  });
+
+  it('counts the proc on the use that fired it, so the cycle and the time to kill carry it', () => {
+    const without = view();
+    const with_ = view([PROC]);
+
+    // A proc waits on no timer, so the schedule is the same one — only richer.
+    expect(with_.cycle.cycleDuration).toBeCloseTo(without.cycle.cycleDuration, 6);
+    expect(with_.cycle.damagePerCycle - without.cycle.damagePerCycle).toBeCloseTo(30_000, 6);
+    expect(with_.ttk.seconds).toBeLessThan(without.ttk.seconds);
+    expect(without.entries[0].autoCasts).toEqual([]);
+  });
+
+  it('shares the cycle between the tiles and the procs, one slice each', () => {
+    const rotation = [trigger, BASIC_ATTACK_VALUE];
+    const without = view(undefined, rotation).entries.map((entry) => entry.contributionPercent);
+    const result = view([PROC], rotation);
+    const [fired, basic] = result.entries.map((entry) => entry.contributionPercent);
+    const [cast] = result.entries[0].autoCasts;
+
+    // A tile reports its skill alone, so the proc dilutes the tile it hangs from exactly as
+    // it dilutes every other row — it never swells the one that fires it.
+    expect(fired).toBeLessThan(without[0]);
+    expect(basic).toBeLessThan(without[1]);
+    // Both kinds of row are slices of the same whole, so the column adds up to 100%.
+    expect(fired + basic + cast.contributionPercent).toBeCloseTo(100, 6);
+  });
+
+  it('reports the proc’s own share beside the tile’s, and its rate per second', () => {
+    const result = view([PROC]);
+    const [cast] = result.entries[0].autoCasts;
+
+    // 50% of one 60.000 activation, over everything the cycle deals — to the tenth of a
+    // percent the row prints, which is where the shares are rounded to total exactly 100.
+    expect(cast.contributionPercent).toBeCloseTo(30_000 / result.cycle.damagePerCycle * 100, 1);
+    // With one tile on the card, the tile and its proc are all of the cycle between them.
+    expect(result.entries[0].contributionPercent + cast.contributionPercent).toBeCloseTo(100, 6);
+    // One use every 2s at 50% — and the DPS is that rate against one activation.
+    expect(cast.activationsPerSecond).toBeCloseTo(0.25, 6);
+    expect(cast.dps).toBeCloseTo(cast.activationsPerSecond * cast.damage, 6);
+  });
+
+  it('tags the proc’s rolls in the reader’s language, not the panel’s pt-BR', () => {
+    // core/auto-cast.ts labels its rolls for the Auto-conjuração panel, which hard-codes
+    // Portuguese; the glued row sits between rows that do not, so it relabels by kind.
+    const english = (key: any, params?: any) => translate({ ...DEFAULT_CATALOG, ...en }, key, params);
+    const crit = { ...PROC, damageRanges: [
+      { kind: 'nocri', label: 'sem crít.', min: 1, max: 2 },
+      { kind: 'cri', label: 'crít.', min: 3, max: 4 },
+    ] };
+    const result = buildRotationView({
+      text: english,
+      rotation: [trigger],
+      summaryByValue: new Map([[trigger, summaryOf({ castPeriod: 2 })]]),
+      baseSummary: summaryOf({ castPeriod: 2 }),
+      hasSelectedChances: false,
+      atkSkills: [{ value: trigger, label: 'Talismã da Fênix Nv5' }],
+      autoCastsByIndex: new Map([[0, [crit as any]]]),
+    });
+
+    expect(result.entries[0].autoCasts[0].damageRanges.map((range) => range.label)).toEqual(['no crit', 'crit']);
   });
 });

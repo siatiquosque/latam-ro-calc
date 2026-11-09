@@ -13,6 +13,16 @@ const timings = new Map(Object.entries(clientDelays).map(([id, row]) => [Number(
   })) as Record<TimingField, number | ((level: number) => number)>,
 ]));
 
+const LEVEL_TOKEN = /\b(?:Lv|Nv)\s*\d+\b/i;
+
+/** The label of one level. A label that already carries its level ("Cart Tornado Attack Lv10", "Tiger Cannon Lv10 (Combo)")
+ * keeps its own wording with the level swapped; otherwise the name, level and suffix are composed. */
+function relabel(skill: AtkSkillModel, level: number, suffix: string): string {
+  const own = skill.label.replace(/^\[V\d\]\s*/, '');
+  if (!skill.labelSuffix && LEVEL_TOKEN.test(own) && own.startsWith(skill.name.split(' ')[0])) return own.replace(LEVEL_TOKEN, `Nv${level}`);
+  return `${skill.name} Nv${level}${suffix ? ` ${suffix}` : ''}`;
+}
+
 /** Supply missing level choices from the definition's declared maximum.
  * Explicit lists (including empty ones and special variants) remain authoritative.
  */
@@ -26,7 +36,7 @@ export function withSelectableSkillLevels(skill: AtkSkillModel): AtkSkillModel {
   const result: AtkSkillModel = {
     ...skill,
     levelList: Array.from({ length: maxLevel }, (_, index) => ({
-      label: `${skill.name} Nv${index + 1}${suffix ? ` ${suffix}` : ''}`, value: `${match[1]}==${index + 1}`,
+      label: relabel(skill, index + 1, suffix), value: `${match[1]}==${index + 1}`,
     })),
   };
   const client = timings.get(SKILL_ID_BY_NAME[skill.name]);

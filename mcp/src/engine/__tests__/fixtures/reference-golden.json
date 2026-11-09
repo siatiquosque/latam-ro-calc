@@ -1001,10 +1001,10 @@
  },
  "skill:Massive Flame Blaster:boss-medium": {
   "skill": {
-   "min": 5095381,
-   "max": 5427311,
+   "min": 9174603,
+   "max": 9174603,
    "hits": 1,
-   "critRate": 0,
+   "critRate": 43,
    "accuracy": 100
   },
   "cast": {
@@ -1026,10 +1026,10 @@
  },
  "skill:Massive Flame Blaster:normal-large": {
   "skill": {
-   "min": 4044801,
-   "max": 4300352,
+   "min": 7269655,
+   "max": 7269655,
    "hits": 1,
-   "critRate": 0,
+   "critRate": 43,
    "accuracy": 100
   },
   "cast": {

@@ -40,10 +40,12 @@ function makeSession(overrides: Partial<Record<DataKey, Promise<unknown>>> = {},
   // The real store, so a test that switches language exercises the same subscription
   // the app does; its only outside effect is `<html lang>`, which is stubbed away.
   const locale = new LocalePreferences(storage, { setDocumentLanguage: () => undefined });
-  const session = new CalculatorSession(new CalculatorData(data), new Messages(), new Confirmations(), new ItemShop(),
+  const messages = new Messages();
+  const confirmations = new Confirmations();
+  const session = new CalculatorSession(new CalculatorData(data), messages, confirmations, new ItemShop(),
     data.descriptions, new SlotColorPreferences(), layout, new CustomItems(storage),
     (key, params) => translate(DEFAULT_CATALOG, key, params), locale);
-  return { session, storage, data, layout, locale };
+  return { session, storage, data, layout, locale, messages, confirmations };
 }
 describe('localizeItemNames', () => {
   const core = {
@@ -683,6 +685,279 @@ describe('rotation tabs', () => {
     expect(session.rotationTabCount).toBe(1);
     expect(session.model.rotation).toEqual(first);
     expect(session.model.rotationTabs).toEqual([]);
+
+    session.dispose();
+  });
+});
+
+
+/**
+ * Saving, through the real session. "Salvar" forks into substituir / nova simulação once
+ * there is something to write over; substituir reuses the Simulações grid as a picker.
+ */
+describe('save dialog — the substituir / nova simulação fork', () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+
+  async function booted() {
+    const made = makeSession();
+    made.session.start();
+    await vi.advanceTimersByTimeAsync(1500);
+    made.session.viewReady();
+    await vi.advanceTimersByTimeAsync(300);
+    return made;
+  }
+
+  /** Answers the one confirmation an overwrite raises. */
+  async function confirmed(confirmations: Confirmations, run: () => Promise<void>, accept = true) {
+    const done = run();
+    await vi.advanceTimersByTimeAsync(0);
+    confirmations.resolve(accept);
+    await done;
+  }
+
+  const saves = (storage: { getItem: (key: string) => string | null }) =>
+    JSON.parse(storage.getItem('ro-saves') ?? '[]') as { id: string; name: string; preset: { level: number } }[];
+
+  /** The first save, made the only way available before there is anything to replace. */
+  async function withOneSave(level: number) {
+    const made = await booted();
+    made.session.openSaveDialog();
+    made.session.saveName = 'Build do Batuta';
+    made.session.model.level = level;
+    await made.session.confirmSave();
+    return { ...made, first: saves(made.storage)[0] };
+  }
+
+  it('goes straight to the name dialog while there is nothing to write over', async () => {
+    const { session, storage } = await booted();
+
+    session.openSaveDialog();
+    expect(session.showSaveChoiceDialog).toBe(false);
+    expect(session.showSaveDialog).toBe(true);
+
+    session.saveName = 'Primeira';
+    await session.confirmSave();
+
+    expect(saves(storage).map(s => s.name)).toEqual(['Primeira']);
+    expect(session.showSaveDialog).toBe(false);
+
+    session.dispose();
+  });
+
+  it('asks which of the two once a save exists, and opens neither dialog by itself', async () => {
+    const { session } = await withOneSave(150);
+
+    session.openSaveDialog();
+
+    expect(session.showSaveChoiceDialog).toBe(true);
+    expect(session.showSaveDialog).toBe(false);
+    expect(session.showSavesDialog).toBe(false);
+
+    session.dispose();
+  });
+
+  it('"nova simulação" on the fork is the name dialog, prefilled as it always was', async () => {
+    const { session } = await withOneSave(150);
+    session.openSaveDialog();
+
+    session.chooseNewSim();
+
+    expect(session.showSaveChoiceDialog).toBe(false);
+    expect(session.showSaveDialog).toBe(true);
+    expect(session.saveName).toBe(translate(DEFAULT_CATALOG, 'cs.saveNameDefault',
+      { label: session.classLabel(session.model.class), level: session.model.level }));
+
+    session.dispose();
+  });
+
+  it('"substituir" on the fork opens the Simulações grid as a picker', async () => {
+    const { session } = await withOneSave(150);
+    session.openSaveDialog();
+
+    session.chooseReplaceSim();
+
+    expect(session.showSaveChoiceDialog).toBe(false);
+    expect(session.showSavesDialog).toBe(true);
+    expect(session.isReplacingSim).toBe(true);
+
+    session.dispose();
+  });
+
+  it('opening Simulações on its own is the ordinary dialog, not the picker', async () => {
+    const { session } = await withOneSave(150);
+    session.openSaveDialog();
+    session.chooseReplaceSim();
+
+    session.openSavesDialog();
+
+    expect(session.isReplacingSim).toBe(false);
+
+    session.dispose();
+  });
+
+  it('writes the build over the picked card, keeping its name and leaving no second save', async () => {
+    const { session, storage, confirmations, first } = await withOneSave(150);
+    expect(first.preset.level).toBe(150);
+
+    session.openSaveDialog();
+    session.chooseReplaceSim();
+    session.model.level = 200;
+    // Nothing is typed in this mode, and the prefill must not leak into the save.
+    session.saveName = '';
+    await confirmed(confirmations, () => session.replaceSavedSim(session.savedSims[0]));
+
+    const after = saves(storage);
+    expect(after).toHaveLength(1);
+    expect(after[0]).toMatchObject({ id: first.id, name: 'Build do Batuta' });
+    expect(after[0].preset.level).toBe(200);
+    expect(session.showSavesDialog).toBe(false);
+
+    session.dispose();
+  });
+
+  it('keeps the save as it was when the overwrite is refused', async () => {
+    const { session, storage, confirmations, first } = await withOneSave(150);
+
+    session.openSaveDialog();
+    session.chooseReplaceSim();
+    session.model.level = 200;
+    await confirmed(confirmations, () => session.replaceSavedSim(session.savedSims[0]), false);
+
+    expect(saves(storage)[0].preset.level).toBe(150);
+    expect(saves(storage)[0].id).toBe(first.id);
+    expect(session.showSavesDialog).toBe(true);
+
+    session.dispose();
+  });
+
+  it('says the save is gone instead of recreating it when it vanished mid-pick', async () => {
+    const { session, storage, messages, confirmations } = await withOneSave(150);
+
+    session.openSaveDialog();
+    session.chooseReplaceSim();
+    const picked = session.savedSims[0];
+    // What another tab deleting it looks like from here: the card is still on screen.
+    storage.setItem('ro-saves', '[]');
+    await confirmed(confirmations, () => session.replaceSavedSim(picked));
+
+    expect(saves(storage)).toHaveLength(0);
+    expect(messages.getSnapshot().at(-1)).toMatchObject({ severity: 'error', summary: translate(DEFAULT_CATALOG, 'cs.replaceGone') });
+
+    session.dispose();
+  });
+
+  it('repaints once the overwrite lands, so the picker does not sit over a written save', async () => {
+    const { session, confirmations } = await withOneSave(150);
+
+    session.openSaveDialog();
+    session.chooseReplaceSim();
+    const before = session.getSnapshot();
+    await confirmed(confirmations, () => session.replaceSavedSim(session.savedSims[0]));
+
+    // The template drops the promise this returns, so the session has to publish the
+    // change itself; without it ro-saves holds the new content behind an open dialog.
+    expect(session.getSnapshot()).toBeGreaterThan(before);
+
+    session.dispose();
+  });
+});
+
+describe('comparing a saved simulation', () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+
+  /** A named save as `SavedSimulationStore.upsert` writes it. */
+  const savedSim = (name: string, classId: number, preset: Record<string, unknown>) =>
+    ({ id: name, name, classId, savedAt: 1, preset: { class: classId, level: 250, jobLevel: 55, ...preset } });
+
+  async function booted(saves: unknown[], current: Record<string, unknown>) {
+    const made = makeSession();
+    made.storage.setItem('ro-saves', JSON.stringify(saves));
+    made.storage.setItem('ro-set', JSON.stringify(current));
+    made.session.start();
+    await vi.advanceTimersByTimeAsync(1500);
+    made.session.openSavesDialog();
+    return made;
+  }
+
+  it('brings the save in as the comparison and leaves the build on screen alone', async () => {
+    const { session } = await booted(
+      [savedSim('Comparada', 4252, { weapon: 1291, weaponRefine: 12, str: 130 })],
+      { class: 4252, level: 250, jobLevel: 55, weapon: 1250, weaponRefine: 0, str: 90 });
+
+    session.compareSavedSim(session.savedSims[0]);
+    await vi.advanceTimersByTimeAsync(1500);
+
+    expect(session.isEnableCompare).toBe(true);
+    expect(session.model2).toMatchObject({ weapon: 1291, weaponRefine: 12, str: 130 });
+    // The build on screen keeps its own weapon and stats: this is a comparison, not a load.
+    expect(session.model).toMatchObject({ weapon: 1250, str: 90 });
+    // And the dialog closes, so the comparison it just applied is visible.
+    expect(session.showSavesDialog).toBe(false);
+
+    session.dispose();
+  });
+
+  it('refuses a save of another class, and the card icon reads the same gate', async () => {
+    const { session } = await booted(
+      [savedSim('Outra classe', 4257, { weapon: 1291 })],
+      { class: 4252, level: 250, jobLevel: 55, weapon: 1250 });
+
+    expect(session.canCompareSavedSim(session.savedSims[0])).toBe(false);
+    session.compareSavedSim(session.savedSims[0]);
+    await vi.advanceTimersByTimeAsync(1500);
+
+    expect(session.isEnableCompare).toBe(false);
+    // The dialog stays open: nothing happened, so there is nothing to go and look at.
+    expect(session.showSavesDialog).toBe(true);
+
+    session.dispose();
+  });
+
+  it('replaces the comparison that was already up instead of merging into it', async () => {
+    const { session } = await booted(
+      [savedSim('Nova', 4252, { weapon: 1291, weaponRefine: 12 }),
+        savedSim('Antiga', 4252, { armor: 15000, armorRefine: 9 })],
+      { class: 4252, level: 250, jobLevel: 55, weapon: 1250 });
+
+    session.compareSavedSim(session.savedSims[1]);
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(session.model2).toMatchObject({ armor: 15000, armorRefine: 9 });
+
+    session.openSavesDialog();
+    session.compareSavedSim(session.savedSims[0]);
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(session.model2).toMatchObject({ weapon: 1291, weaponRefine: 12 });
+    // Every comparable slot comes from the new save, so the old one's armour is gone.
+    expect(session.model2['armor']).toBeNull();
+
+    session.dispose();
+  });
+
+  it('keeps the comparison in the autosave, so a refresh still shows it', async () => {
+    const { session, storage } = await booted(
+      [savedSim('Comparada', 4252, { weapon: 1291, weaponRefine: 12 })],
+      { class: 4252, level: 250, jobLevel: 55, weapon: 1250 });
+
+    session.compareSavedSim(session.savedSims[0]);
+    await vi.advanceTimersByTimeAsync(1500);
+
+    expect(JSON.parse(storage.getItem('ro-set-compare')!).model2).toMatchObject({ weapon: 1291 });
+
+    session.dispose();
+  });
+
+  it('does not offer the off-hand slot to a class that has no off hand', async () => {
+    const { session } = await booted(
+      [savedSim('Comparada', 4252, { weapon: 1291, leftWeapon: 1250 })],
+      { class: 4252, level: 250, jobLevel: 55 });
+
+    session.compareSavedSim(session.savedSims[0]);
+    await vi.advanceTimersByTimeAsync(1500);
+
+    expect(session.isAllowLeftWeaponByClass).toBe(false);
+    expect(session.compareItemNames).not.toContain(ItemTypeEnum.leftWeapon);
 
     session.dispose();
   });
