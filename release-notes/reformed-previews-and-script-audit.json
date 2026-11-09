@@ -1,0 +1,15 @@
+{
+  "type": "patch",
+  "logs": [
+    "Adicionadas como prévia 479 peças reformuladas (Varmundt, equipamentos, armas e sombrios), com os bônus lidos da descrição em inglês. As peças seladas Impressas/Gravadas ficam ocultas.",
+    "Corrigidos os bônus de 66 itens cujo script divergia da descrição do cliente e do rAthena, como dano contra todas as propriedades, tamanhos e raças."
+  ],
+  "logs_es": [
+    "Agregadas como adelanto 479 piezas reformuladas (Varmundt, equipos, armas y sombrías), con los bonos leídos de la descripción en inglés. Las piezas selladas Impresas/Grabadas quedan ocultas.",
+    "Corregidos los bonos de 66 ítems cuyo script divergía de la descripción del cliente y de rAthena, como daño contra todas las propiedades, tamaños y razas."
+  ],
+  "logs_en": [
+    "Added 479 reformed pieces (Varmundt, equipment, weapons and shadow gear) as previews, with bonuses read from the English description. Sealed Printed/Engraved pieces stay hidden.",
+    "Fixed the bonuses of 66 items whose script differed from the client description and rAthena, such as damage against all properties, sizes and races."
+  ]
+}
