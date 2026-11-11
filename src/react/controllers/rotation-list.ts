@@ -1,6 +1,7 @@
 import { ViewState } from '../state/view-state';
 import { Events } from '../services/events';
 import type { SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import type { ItemScriptVersion } from '../../app/core/item-script-version';
 import { moveItemInArray } from '../ui/reorder';
 import { BASIC_ATTACK_VALUE, MAX_ROTATION_LENGTH, splitSkillValue } from '../../app/core/rotation';
 import { buildRotationPickerOptions, elementTagClass as elementTagClassFn, RotationPickerOption } from '../../app/layout/pages/ro-calculator/battle-hud/battle-hud.logic';
@@ -26,7 +27,9 @@ export const BASIC_ATTACK_ICON = 'assets/icons/basic-attack.png';
 
 export class RotationListComponent extends ViewState {
    skillFormulaVersion: SkillFormulaVersion = 'current';
+   itemScriptVersion: ItemScriptVersion = 'latam';
    skillFormulaVersionChange = new Events<SkillFormulaVersion>();
+   itemScriptVersionChange = new Events<ItemScriptVersion>();
    entries: RotationEntryView[] = [];
   /** The compared build's entries, positionally aligned with `entries`. */
    entries2: RotationEntryView[] | null = null;

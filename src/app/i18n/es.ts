@@ -1122,6 +1122,10 @@ export const catalog: TranslatedCatalog = {
   'aspd.atCap': 'En el tope de Vel.Ataque ({cap}), el máximo de {hits} golpes/s.',
   'aspd.gain': '+{plus} de Vel.Ataque (llegar a {aspd}) llevaría a {hits} golpes/s — +{delta}/s, o +{percent}% de golpes.',
 
+  'itemVersion.label': 'Ítems',
+  'itemVersion.selectAria': 'Versión de los bonus de los ítems',
+  'itemVersion.latam': 'Actual (LATAM) — texto del cliente',
+  'itemVersion.kro': 'kRO — script del cliente',
   'formula.label': 'Fórmulas',
   'formula.selectAria': 'Versión de las fórmulas de habilidades',
   'formula.references': 'Referencias de los rebalanceos',

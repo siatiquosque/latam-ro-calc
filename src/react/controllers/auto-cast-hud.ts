@@ -1,6 +1,7 @@
 import { ViewState } from '../state/view-state';
 import { Events } from '../services/events';
 import type { SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import type { ItemScriptVersion } from '../../app/core/item-script-version';
 import { AutoCastActivationBreakdown, AutoCastResult, AutoCastSimulation, autoCastActivationBreakdown, basicAttackDamageRanges, basicDpsBreakdown, BasicDpsBreakdown, ConfigurableAutoCastSlot, extraHitOutcomeRate } from '../../app/core/auto-cast';
 import { MainModel } from '../../app/models/main.model';
 import { BASIC_ATTACK_ICON } from './rotation-list';
@@ -34,6 +35,7 @@ const TRIGGER_RATE_KEY: Record<string, TextKey> = {
 
 export class AutoCastHudComponent extends ViewState {
    skillFormulaVersionChange = new Events<SkillFormulaVersion>();
+   itemScriptVersionChange = new Events<ItemScriptVersion>();
   constructor(
 public readonly itemDescriptions: ItemDescriptionStore,
   private readonly text: Translate,

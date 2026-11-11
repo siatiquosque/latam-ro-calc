@@ -1,4 +1,5 @@
 import { Store } from '../state/store';
+import type { ItemScriptOverlay } from '../../app/core/item-script-version';
 import { Locale } from '../../app/core/i18n';
 import { PreviewPreferences } from './preview-preferences';
 import { StorageLike } from '../../app/core/calc-storage';
@@ -17,6 +18,7 @@ export class CalculatorData {
   getMonsters<T>(): Promise<T> { return this.client.load('monsters'); }
   getHpSpTable<T>(): Promise<T> { return this.client.load('hpsp'); }
   getLatamClasses(): Promise<number[]> { return this.client.load('classes'); }
+  getItemScriptKro(): Promise<ItemScriptOverlay> { return this.client.load('itemScriptKro'); }
   getItemViews(): Promise<Record<string, [number, number]>> { return this.client.load('itemViews'); }
   getItemDescriptions(locale: Locale): Promise<void> { return this.client.loadDescriptions(locale); }
   getItemNames(locale: Locale): Promise<Record<string, string>> { return this.client.loadItemNames(locale); }

@@ -1120,6 +1120,10 @@ export const catalog: TranslatedCatalog = {
   'aspd.atCap': 'At the ASPD cap ({cap}), the maximum of {hits} hits/s.',
   'aspd.gain': '+{plus} ASPD (reaching {aspd}) would take it to {hits} hits/s — +{delta}/s, or +{percent}% more hits.',
 
+  'itemVersion.label': 'Items',
+  'itemVersion.selectAria': 'Item bonus version',
+  'itemVersion.latam': 'Current (LATAM) — client text',
+  'itemVersion.kro': 'kRO — client script',
   'formula.label': 'Formulas',
   'formula.selectAria': 'Skill formula version',
   'formula.references': 'Rebalance references',

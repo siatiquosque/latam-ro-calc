@@ -1,4 +1,4 @@
-.skill-formula-selector { display: inline-flex; align-items: center; gap: 4px; min-width: 0; max-width: 100%; font-size: 12px; }
+.skill-formula-selector { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; min-width: 0; max-width: 100%; font-size: 12px; }
 .skill-formula-field { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
 .skill-formula-info { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 1.75rem; height: 1.75rem; padding: 0; border: 0; border-radius: var(--border-radius); background: transparent; color: var(--text-color-secondary); cursor: pointer; }
 @media (hover: hover){.skill-formula-info:hover{ color: var(--primary-color); background: var(--surface-hover); }}

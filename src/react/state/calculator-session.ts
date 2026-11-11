@@ -2,6 +2,7 @@ import { Store } from '../state/store';
 import { Locale } from '../../app/core/i18n';
 import { normalizeClassLimits } from '../../app/core/class-limits';
 import { normalizeSkillFormulaVersion, SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import { ItemScriptOverlay, ItemScriptVersion, normalizeItemScriptVersion } from '../../app/core/item-script-version';
 import { Lifetime } from '../state/lifetime';
 import { Events, Disposable, listenDebounced } from '../services/events';
 import { Messages as MessageService, Confirmations as ConfirmationService } from '../services/notifications';
@@ -1527,6 +1528,24 @@ await ((_event?: unknown) => {
     this.publish();
   }
 
+  /** LATAM (item.json) or kRO (client script overlay) bonuses; kRO exists only while previews show. */
+  onItemScriptVersionChange(version: ItemScriptVersion) {
+    this.model.itemScriptVersion = this.showPreviews ? normalizeItemScriptVersion(version) : 'latam';
+    this.syncScriptOverlay();
+    this.updateItemEvent.next(true);
+  }
+
+  private kroOverlay?: ItemScriptOverlay;
+
+  /** Fetches the overlay the first time a build asks for kRO, then recalculates with it. */
+  private syncScriptOverlay() {
+    if (this.model.itemScriptVersion !== 'kro' || this.kroOverlay) return;
+    this.allSubs.push(this.lifetime.watch(this.roService.getItemScriptKro(), (overlay) => {
+      this.kroOverlay = overlay;
+      for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2, this.calculatorExtra]) calc.setScriptOverlay(overlay);
+    }, () => { this.updateItemEvent.next(true); this.publish(); }));
+  }
+
   onSkillFormulaVersionChange(version: SkillFormulaVersion) {
     this.model.skillFormulaVersion = this.showPreviews ? normalizeSkillFormulaVersion(version) : 'current';
     this.setClassSkill();
@@ -2875,6 +2894,7 @@ await ((_event?: unknown) => {
   private setClassSkill() {
     if (!this.showPreviews) {
       this.model.skillFormulaVersion = 'current';
+      this.model.itemScriptVersion = 'latam';
       // Keep positional skill arrays intact; hidden buffs must not affect LATAM damage.
       for (const [definitions, values, map] of [
         [this.selectedCharacter.activeSkills, this.model.activeSkills, this.model.activeSkillMap],
@@ -2888,6 +2908,7 @@ await ((_event?: unknown) => {
         });
       }
     }
+    this.syncScriptOverlay();
     // Overlay pt-BR skill names + ragassets skill-icon id (from the GRF skill map)
     // on every skill panel. Skills missing from the map keep their English label
     // and render no icon (the template guards on `icon`).

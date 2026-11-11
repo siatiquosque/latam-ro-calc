@@ -1,4 +1,5 @@
 import { SKILL_FORMULA_VERSION_OPTIONS, SKILL_REBALANCE_REFERENCES, normalizeSkillFormulaVersion, SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import { normalizeItemScriptVersion, ItemScriptVersion } from '../../app/core/item-script-version';
 import { useEffect, useId, useState, useSyncExternalStore } from 'react';
 import { useServices } from '../services/application';
 import { useText } from '../state/use-text';
@@ -6,7 +7,7 @@ import { Icon } from './primitives';
 import { Popover } from './popover';
 import './skill-formula-selector.css';
 
-export function SkillFormulaSelector({ value, onChange, disabled = false }: { value?: SkillFormulaVersion; onChange: (value: SkillFormulaVersion) => void; disabled?: boolean }) {
+export function SkillFormulaSelector({ value, onChange, disabled = false, itemValue, onItemChange }: { value?: SkillFormulaVersion; onChange: (value: SkillFormulaVersion) => void; disabled?: boolean; itemValue?: ItemScriptVersion; onItemChange?: (value: ItemScriptVersion) => void }) {
   const { previews } = useServices().layout;
   const t = useText();
   const visible = useSyncExternalStore(previews.subscribe, previews.getSnapshot);
@@ -23,6 +24,15 @@ export function SkillFormulaSelector({ value, onChange, disabled = false }: { va
         {SKILL_FORMULA_VERSION_OPTIONS.map(option => <option key={option.value} value={option.value}>{t(option.labelKey)}</option>)}
       </select>
     </label>
+    {onItemChange && <label className="skill-formula-field">
+      <span>{t('itemVersion.label')}</span>
+      <select aria-label={t('itemVersion.selectAria')} value={normalizeItemScriptVersion(itemValue)} disabled={disabled}
+        onChange={event => onItemChange(normalizeItemScriptVersion(event.target.value))}
+        style={{ background: 'var(--surface-card)', color: 'var(--text-color)', border: '1px solid var(--surface-border)', borderRadius: 4, padding: '4px 6px', minWidth: 0, maxWidth: '100%', font: 'inherit' }}>
+        <option value="latam">{t('itemVersion.latam')}</option>
+        <option value="kro">{t('itemVersion.kro')}</option>
+      </select>
+    </label>}
     <button type="button" className="skill-formula-info" aria-label={t('formula.references')} title={t('formula.references')}
       aria-expanded={!!anchor} aria-controls={anchor ? id : undefined} onClick={event => setAnchor(anchor ? null : event.currentTarget)}>
       <Icon name="info-circle" />

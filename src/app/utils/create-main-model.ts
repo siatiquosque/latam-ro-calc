@@ -3,6 +3,7 @@ import { DEFAULT_PET_LOYALTY } from '../constants/pet-loyalty';
 
 export const createMainModel = (): MainModel => ({
   skillFormulaVersion: 'current',
+  itemScriptVersion: 'latam',
   class: 1,
   level: 99,
   jobLevel: 1,

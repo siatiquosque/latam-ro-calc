@@ -1155,6 +1155,10 @@ export const ptBR = {
   'aspd.gain': '+{plus} de Vel.Atq (chegar a {aspd}) levaria a {hits} golpes/s — +{delta}/s, ou +{percent}% de golpes.',
 
   // The skill-formula version picker, shown only while previews are on.
+  'itemVersion.label': 'Itens',
+  'itemVersion.selectAria': 'Versão dos bônus dos itens',
+  'itemVersion.latam': 'Atual (LATAM) — texto do cliente',
+  'itemVersion.kro': 'kRO — script do cliente',
   'formula.label': 'Fórmulas',
   'formula.selectAria': 'Versão das fórmulas de habilidades',
   'formula.references': 'Referências dos rebalanceamentos',

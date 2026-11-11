@@ -301,6 +301,7 @@ export async function main() {
   const hpSpTable = readJson(args.src, 'hp_sp_table.json');
   const latamClasses = readJson(args.src, 'latam-classes.json');
   const itemViews = readJson(args.src, 'item-views.json');
+  const itemScriptKro = readJson(args.src, 'item-script-kro.json');
 
   const { core, desc } = buildItems(items, latam, args);
   const es = buildLocaleText(items, latam, latamEs);
@@ -320,6 +321,8 @@ export async function main() {
     ['hpsp', 'hpsp', hpSpTable],
     ['classes', 'classes', latamClasses],
     ['itemViews', 'item-views', itemViews],
+    // kRO client-script overlay, fetched only when the reader picks that item version (docs/script-audit.md).
+    ['itemScriptKro', 'item-script-kro', itemScriptKro],
 
     // MCP-only sidecars. The browser never fetches these — they are not in EAGER_KEYS and
     // nothing in src/app reads them — but they are plain static assets, which is exactly

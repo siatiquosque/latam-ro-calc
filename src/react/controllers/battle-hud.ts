@@ -1,6 +1,7 @@
 import { ViewState } from '../state/view-state';
 import { Events } from '../services/events';
 import type { SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import type { ItemScriptVersion } from '../../app/core/item-script-version';
 import { itemSlotLabelKey } from '../../app/constants/item-slot-i18n';
 import { Translate } from '../../app/i18n';
 import { DropdownModel } from '../../app/models/dropdown.model';
@@ -44,6 +45,7 @@ import { IncomingDamageStep } from '../../app/core/monster-damage-taken';
 
 export class BattleHudComponent extends ViewState {
    skillFormulaVersionChange = new Events<SkillFormulaVersion>();
+   itemScriptVersionChange = new Events<ItemScriptVersion>();
    totalSummary = {} as any;
    totalSummary2 = {} as any;
    isEnableCompare: boolean;
