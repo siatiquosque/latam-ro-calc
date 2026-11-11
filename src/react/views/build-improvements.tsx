@@ -52,6 +52,48 @@ function Feasibility({ report }: { report: Record<string, any> }) {
   </aside>;
 }
 
+interface CoreItem { id: number; name: string; presentInLatam?: boolean }
+const levelStem = (name: string) => {
+  const match = /^(.*\D)\s*(?:Lv\.?\s*)?(\d+)\)?$/.exec(name.trim());
+  return match ? { stem: match[1].replace(/\s*Lv\.?$/i, '').trim(), level: Number(match[2]) } : undefined;
+};
+
+/** Items the search must not use, picked by name: the optimizer takes the ids, the person never has to know them. */
+function ExcludePicker({ value, onChange, services }: { value: string; onChange: (value: string) => void; services: ApplicationServices }) {
+  const t = useText();
+  const [core, setCore] = useState<Record<string, CoreItem>>({});
+  const [query, setQuery] = useState('');
+  useEffect(() => { let live = true; void services.data.load<Record<string, CoreItem>>('itemsCore').then(items => { if (live) setCore(items); }).catch(() => undefined); return () => { live = false; }; }, [services.data]);
+  const chosen = useMemo(() => value.split(/[\s,;]+/).map(Number).filter(id => Number.isSafeInteger(id) && id > 0), [value]);
+  const set = (list: number[]) => onChange([...new Set(list)].join(', '));
+  const nameOf = (id: number) => core[id]?.name ?? String(id);
+  const found = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (needle.length < 2) return [];
+    const rows: CoreItem[] = [];
+    for (const item of Object.values(core)) {
+      if (item.presentInLatam === false || !item.name?.toLowerCase().includes(needle) || chosen.includes(item.id)) continue;
+      rows.push(item);
+      if (rows.length >= 8) break;
+    }
+    return rows;
+  }, [core, query, chosen]);
+  const above = (item: CoreItem) => {
+    const own = levelStem(item.name);
+    if (!own) return [];
+    return Object.values(core).filter(other => { const parsed = levelStem(other.name ?? ''); return parsed?.stem === own.stem && parsed.level > own.level && other.presentInLatam !== false; }).map(other => other.id);
+  };
+
+  return <div className="improve-exclude">
+    <label>{t('improve.exclude')}<input value={query} onChange={e => setQuery(e.target.value)} placeholder={t('improve.excludeSearch')} /></label>
+    {found.length > 0 && <ul className="improve-exclude-results">{found.map(item => <li key={item.id}>
+      <button type="button" onClick={() => { set([...chosen, item.id]); setQuery(''); }}>{item.name}</button>
+      {above(item).length > 0 && <button type="button" onClick={() => { set([...chosen, item.id, ...above(item)]); setQuery(''); }}>{t('improve.excludeAbove', { level: levelStem(item.name)!.level })}</button>}
+    </li>)}</ul>}
+    {chosen.length > 0 && <ul className="improve-exclude-chips">{chosen.map(id => <li key={id}>{nameOf(id)} <button type="button" aria-label={t('improve.excludeRemove')} onClick={() => set(chosen.filter(other => other !== id))}>×</button></li>)}</ul>}
+  </div>;
+}
+
 export default function BuildImprovements({ vm, services, onClose }: { vm: CalculatorSession; services: ApplicationServices; onClose: () => void }) {
   const t = useText();
   const runner = useMemo(() => new BuildAnalysis(services.data), [services.data]);
@@ -196,10 +238,19 @@ export default function BuildImprovements({ vm, services, onClose }: { vm: Calcu
         {mode === 'slot' && <label>{t('improve.query')}<input type="search" value={query} onChange={e => setQuery(e.target.value)} /></label>}
         {mode === 'build' && <>
           {equipmentMode === 'replace' && <label>{t('improve.candidates')}<input value={candidates} onChange={e => setCandidates(e.target.value)} placeholder="560026, 560028" /></label>}
-          <label>{t('improve.exclude')}<input value={exclude} onChange={e => setExclude(e.target.value)} /></label>
+          <ExcludePicker value={exclude} onChange={setExclude} services={services} />
         </>}
         {(mode === 'build' || mode === 'stats') && <label>{t('improve.hp')}<input type="number" min={0} step={1} value={hp} onChange={e => setHp(Number(e.target.value))} /></label>}
         {mode !== 'explain' && <>
+          <label>{t('improve.depth')}<select value={seconds === 20 ? 'fast' : seconds === 300 ? 'deep' : seconds === 60 ? 'normal' : 'custom'} onChange={e => {
+            const [s, n] = ({ fast: [20, 4000], normal: [60, 10000], deep: [300, 40000] } as Record<string, [number, number]>)[e.target.value] ?? [seconds, maxSolves];
+            setSeconds(s); setMaxSolves(n);
+          }}>
+            <option value="fast">{t('improve.depthFast')}</option>
+            <option value="normal">{t('improve.depthNormal')}</option>
+            <option value="deep">{t('improve.depthDeep')}</option>
+            {![20, 60, 300].includes(seconds) && <option value="custom">{seconds} s</option>}
+          </select></label>
           <label>{t('improve.seconds')}<input type="number" min={5} max={300} required value={seconds} onChange={e => setSeconds(Number(e.target.value))} /></label>
           <label>{t(mode === 'build' ? 'improve.searchBudget' : 'improve.solves')}<input type="number" min={10} max={100000} step={1} required value={maxSolves} onChange={e => setMaxSolves(Number(e.target.value))} /></label>
           {mode === 'build' && <label>{t('improve.engineBudget')}<input type="number" min={1} step={1} value={maxEngineCalls} onChange={e => setMaxEngineCalls(e.target.value)} /></label>}

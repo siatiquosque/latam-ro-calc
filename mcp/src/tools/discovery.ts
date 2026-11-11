@@ -86,6 +86,7 @@ const toMonsterRow = (index: Dataset['monsterIndex']) => (m: MonsterRow) =>
     hp: m.hp,
     ...index.labels(m, m.element),
     mvp: m.mvp,
+    redAura: m.redAura,
     hasStats: m.hasStats ? undefined : false,
   });
 
@@ -113,9 +114,15 @@ export function registerDiscoveryTools(server: McpServer, dataset: Dataset): voi
   }, ({ classId, skill, level, formulaVersion }) => json(skillInfo(dataset.classes.newInstance(classId), skill, formulaVersion, level)));
   registerJsonTool(server, 'list_classes', {
     title: 'Listar classes',
-    description: 'Lista as classes jogáveis no RO LATAM, com id interno, nome pt-BR e limites de nível. O id é o que as outras ferramentas esperam em `build.class`.',
-    inputSchema: {},
-  }, () => json({ classes: dataset.classes.list() }));
+    description: 'Lista as classes jogáveis no RO LATAM, com id interno, nome pt-BR, nome em inglês (englishName) e se é 4ª classe (fourthClass: tem atributos de traço). O id é o que as outras ferramentas esperam em `build.class`. O jogador pode usar o nome em inglês ou um apelido: use `query` (parte do nome, sem acento) e confira o englishName antes de assumir uma classe parecida (Guillotine Cross é 3ª; Shadow Cross é 4ª).',
+    inputSchema: { query: z.string().optional().describe('Filtra por parte do nome pt-BR ou em inglês, sem distinção de acento ou caixa.') },
+  }, ({ query }: { query?: string }) => {
+    const fold = (text: string) => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const wanted = query ? fold(query) : '';
+    const classes = dataset.classes.list().filter(info => !wanted || fold(`${info.name} ${info.englishName}`).includes(wanted))
+      .map(({ traitStats, ...info }) => ({ ...info, fourthClass: traitStats }));
+    return json({ classes, ...(query && !classes.length ? { hint: 'Nenhuma classe com esse nome: tente o nome em inglês ou parte dele.' } : {}) });
+  });
 
   registerJsonTool<SearchFilters>(server, 'search_items', {
     title: 'Buscar itens',
@@ -201,7 +208,13 @@ export function registerDiscoveryTools(server: McpServer, dataset: Dataset): voi
     inputSchema: searchMonstersSchema(),
   }, (args) => {
     const { total, rows } = dataset.monsterIndex.search(args);
-    return json(paged('monsters', total, rows, args['offset'] ?? 0, toMonsterRow(dataset.monsterIndex)));
+    const page = paged('monsters', total, rows, args['offset'] ?? 0, toMonsterRow(dataset.monsterIndex)) as Record<string, any>;
+    const list: any[] = Array.isArray(page['monsters']) ? page['monsters'] : [];
+    const names = list.map((m) => String(m?.name ?? m?.nome ?? ''));
+    if (names.some((n, i) => n && names.indexOf(n) !== i)) {
+      page['aviso'] = 'Há monstros com o mesmo nome (versões diferentes, como a clássica e a de instância). Confira id, nível e HP antes de escolher o alvo; na dúvida, pergunte à pessoa qual é.';
+    }
+    return json(page);
   });
 
   registerJsonTool<{ id: number }>(server, 'get_monster', {

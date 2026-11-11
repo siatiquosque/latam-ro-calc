@@ -11,6 +11,7 @@ import { Shortener } from '../engine/share';
 import { BuildPatch, compactPatchSchema } from '../engine/variants';
 import { targetSchema } from './calculate';
 import { json, registerJsonTool } from './helpers';
+import { withBuildNote } from './build-notes';
 import { createOptimizationOperations, requireSchema } from 'src/app/build-analysis/operations/optimize';
 import { compactConstraintSchema, compactSlotConstraintSchema, compactGoalSchema, ConstraintSpec, GoalSpec } from 'src/app/build-analysis/engine/goal-spec';
 import { createSynergyOperations, FindSynergiesArgs } from 'src/app/build-analysis/operations/synergies';
@@ -19,7 +20,7 @@ import { loadAcquisitionOperations } from './acquisition-operations';
 const metricEnum = z.enum(METRICS);
 
 const variantSchema = z.object({
-  label: z.string().min(1).max(80).describe('Nome curto para reconhecer a variante na resposta.'),
+  label: z.string().min(1).max(80).optional().describe('Nome curto para reconhecer a variante na resposta. Padrão: variante N.'),
   patch: compactPatchSchema.describe('Só o que muda em relação à build base. Mapas (gear, stats, skills, options) mesclam por chave.'),
 });
 
@@ -53,7 +54,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     build: BuildInput;
     target?: TargetArg;
     effects?: string[];
-    variants: { label: string; patch: BuildPatch }[];
+    variants: { label?: string; patch: BuildPatch }[];
     targets?: { monsterId: number }[];
     validationMode?: 'strict' | 'hypothetical';
     excludeMvpCards?: boolean;
@@ -67,7 +68,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     title: 'Avaliar variantes de uma build',
     description:
       'Testa hipóteses em lote: peças, cartas, enchants, buffs, atributos e skills. patch mescla overrides de build por chave. Retorna métricas ordenadas e links dos três primeiros. ' +
-      'Padrão: só variantes legais; validationMode:hypothetical permite hipóteses explícitas. require impõe pisos/tetos; rotationDps lê rotation. Para descobrir candidatos: search_items, find_synergies ou scan_slot. ' +
+      'Padrão: só variantes legais; validationMode:hypothetical permite hipóteses explícitas. require impõe pisos/tetos, ex.: require: [{ metric: "hp", min: 40000 }]; rotationDps e burstDps só vêm com `rotation` (sem ela voltam null). deltaPct vem por métrica (dps, max...): leia a chave da que importa. Para descobrir candidatos: search_items, find_synergies ou scan_slot. ' +
       `Máximo de ${config.limits.maxVariants} variantes por chamada.`,
     inputSchema: {
       procHitsPerSecond: z.number().min(0.1).max(30).optional(),
@@ -87,7 +88,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       sortBy: metricEnum.optional().describe('Métrica de ordenação (maior primeiro, exceto hitsToKill: menor primeiro). Padrão: dps.'),
       limit: z.number().int().min(1).max(50).optional().default(10),
     },
-  }, (args) => operations.evaluateVariants(args).then(json));
+  }, (args) => operations.evaluateVariants({ ...args, variants: args.variants.map((variant, index) => ({ ...variant, label: variant.label ?? `variante ${index + 1}` })) }).then(result => json(withBuildNote(dataset, args.build, result))));
 
 
   registerJsonTool<{
@@ -111,7 +112,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     maxSolves?: number;
   }>(server, 'scan_slot', {
     title: 'Varrer um slot inteiro',
-    description: 'Varre itens LATAM legais para o slot e classe, mede peças e ajusta os melhores soquetes. base:tuned ajusta a peça atual; current a preserva. includePatches devolve as configurações medidas. partners indica conjuntos a testar juntos. Busca limitada: confira stopped.',
+    description: 'USE para descobrir quais peças valem um slot: varre os itens LATAM legais da classe, mede peças e ajusta os melhores soquetes. Depois confirme os melhores com optimize_slot. O ranking pode diferir de evaluate_variants (aqui procs e crítico entram na média). base:tuned ajusta a peça atual; current a preserva. includePatches devolve as configurações medidas. partners indica conjuntos a testar juntos. Busca limitada: confira stopped, que diz quais itens ficaram sem medir.',
     inputSchema: {
       procHitsPerSecond: z.number().min(0.1).max(30).optional(),
       procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
@@ -133,7 +134,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       includePatches: z.boolean().optional().describe('Inclui o patch exato de cada linha para testar a sugestão sem reconstruir os soquetes. Padrão false.'),
       excludeMvpCards: z.boolean().optional().describe('Não sugere carta que cai de MVP nos soquetes.'),
     },
-  }, (args) => operations.scanSlot(args).then(json));
+  }, (args) => operations.scanSlot(args).then(result => json(withBuildNote(dataset, args.build, result))));
 
   registerJsonTool<{
     build: BuildInput;
@@ -197,7 +198,7 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
     description:
       'Busca automática de equipamentos pelo mesmo core da UI: subida de encosta, complementos legais e pares de peças. Não redistribui atributos (optimize_stats). ' +
       'combos testa pares citados nos scripts; pairs permite outros pares. targets usa pesos; candidates fixa opções; lock/exclude/require/constraints impõem restrições; goal: guide meta-e-restricoes. Retorna caminho, ganhos e patch para evaluate_variants. ' +
-      'procs mostra efeitos ainda não contados; effects ativa os indicados. Heurística limitada, sem garantia global; confira coverage e stopped. Pools desconhecidos não são inventados. Para hipóteses pontuais use evaluate_variants; para um slot use optimize_slot ou scan_slot.',
+      'procs mostra efeitos ainda não contados; effects ativa os indicados. Pode levar dezenas de segundos: sempre devolve o melhor achado até o limite de tempo (`stopped` diz por quê, `coverage` o que não foi medido). `share` é a build completa resultante: use-o em `build.share` para continuar em outros slots, em vez de remontar o gear a partir do patch. Para um teste rápido, restrinja `slots` ou baixe `maxSolves`. Heurística limitada, sem garantia global. Pools desconhecidos não são inventados. Para hipóteses pontuais use evaluate_variants; para um slot use optimize_slot ou scan_slot.',
     inputSchema: {
       equipmentMode: z.enum(['current', 'replace']).optional().describe('current mantém peças, refino e grau e ajusta só complementos. replace (padrão) procura substituições e upgrades.'),
       procMode: z.enum(['off', 'active', 'average']).optional().describe('off: desligados; active: ativos; average: média por chance/duração. Optimize usa average; demais buscas off. Desconhecidos não são assumidos ativos.'),
@@ -229,13 +230,14 @@ export function registerOptimizationTools(server: McpServer, dataset: Dataset, s
       rounds: z.number().int().min(1).max(4).optional().default(2),
       maxSolves: z.number().int().min(10).optional().describe('Limite legado de cache misses na busca; não limita todas as chamadas ao motor, procs, polish legado ou verificações. Veja budgetUsage.'),
       maxEngineCalls: z.number().int().min(1).optional().describe('Teto rígido por job, inclusive alvos, procs e verificações.'),
+      maxSeconds: z.number().min(5).max(Math.floor(config.limits.maxSearchMs / 1000)).optional().default(Math.min(90, Math.floor(config.limits.maxSearchMs / 1000))).describe(`Tempo máximo da chamada, em segundos (padrão 90, até ${Math.floor(config.limits.maxSearchMs / 1000)}). A troca de peças usa 60% do tempo e os soquetes o resto; devolve o melhor achado ao fim. Suba só se o cliente aguentar esperar.`),
       require: z.array(requireSchema).optional(),
       goal: compactGoalSchema.optional(),
       constraints: compactConstraintSchema.optional(),
       acquisition: z.literal('brief').optional().describe('Anexa `acquisition`: como obter o que a build final muda (rota, LATAM, incertezas). Pós-busca.'),
     },
   }, async ({ acquisition, ...args }) => {
-    const result = await operations.optimizeBuild(args);
+    const result = withBuildNote(dataset, args.build, await operations.optimizeBuild(args));
     if (!acquisition || !result || typeof result !== 'object' || typeof (result as { share?: unknown }).share !== 'string') return json(result);
     // After the search, never inside it; a failure here must not cost the optimization result.
     try {

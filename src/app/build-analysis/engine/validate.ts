@@ -28,7 +28,9 @@ export function headSlotConflicts(model: Record<string, any>, items: Record<numb
     const id = model[slot];
     if (typeof id === 'number' && id > 0 && items[id]) equipped[slot] = items[id];
   }
-  return resolveHeadSlotOccupancy(equipped).toClear;
+  const { toClear, occupiedBy } = resolveHeadSlotOccupancy(equipped);
+  // The replay import repeats a hood in every slot it covers, so each slot keeps its own enchant: that is one piece, not a clash.
+  return toClear.filter((slot) => !(occupiedBy[slot] && model[slot] === model[occupiedBy[slot]!]));
 }
 
 /** True when `patch` creates a head-slot collision the base build did not have. Searches use it to drop such candidates. */

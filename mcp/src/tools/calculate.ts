@@ -9,6 +9,7 @@ import { SLOT_TAGS } from '../data/slot-classifier';
 import { BuildInput, buildInputSchema, compactBuildSchema, stringMap } from '../engine/build-input';
 import { Shortener } from '../engine/share';
 import { json, registerJsonTool } from './helpers';
+import { withBuildNote } from './build-notes';
 import { createCalculationOperations, targetSchema } from 'src/app/build-analysis/operations/calculate';
 import { createBuildContext } from 'src/app/build-analysis/operations/context';
 import { validateBuild, ValidateConstraints } from 'src/app/build-analysis/engine/validate';
@@ -47,7 +48,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
         include: z.array(z.enum(['bonuses', 'tables'])).optional().describe('Seções pesadas opcionais.'),
       },
     },
-    (args) => operations.calculate(args).then(json),
+    (args) => operations.calculate(args).then(result => json(withBuildNote(dataset, args.build, result))),
   );
 
   registerJsonTool<{ build: BuildInput; constraints?: ValidateConstraints }>(server, 'validate_build', {
@@ -116,7 +117,7 @@ export function registerCalculationTools(server: McpServer, dataset: Dataset, sh
       maxGrade: z.enum(['none', 'D', 'C', 'B', 'A']).optional().describe('Grau de cada candidato que aceita grau (e da peça atual). Padrão: A, o ideal; informe só para limitar.'),
       excludeMvpCards: z.boolean().optional().describe('Não sugerir cartas de MVP, nem como candidato nem como complemento.'),
     },
-  }, (args) => operations.optimizeSlot(args).then(json));
+  }, (args) => operations.optimizeSlot(args).then(result => json(withBuildNote(dataset, args.build, result))));
 }
 
 export function registerBridgeTools(server: McpServer, dataset: Dataset, shortener?: Shortener): void {

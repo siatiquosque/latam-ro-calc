@@ -5,7 +5,7 @@
  * agent doesn't pick a target `calculate` would reject.
  */
 import { elementPtBr, monsterTypePtBr, racePtBr, sizePtBr } from 'src/app/constants/monster-i18n';
-import { MVP_IDS } from 'src/app/constants/mvp';
+import { MVP_IDS, RED_AURA_MVP_IDS } from 'src/app/constants/mvp';
 import { ItemMap } from './dataset';
 import { foldAccents, tokenize } from './text';
 
@@ -22,6 +22,8 @@ export interface MonsterRow {
   size?: string;
   boss?: boolean;
   mvp?: boolean;
+  /** Spawns with the red aura: only 0.1% of the damage lands. */
+  redAura?: boolean;
 }
 
 /** Hoisted: a per-sort collator dominated the sort itself. */
@@ -64,6 +66,7 @@ export class MonsterIndex {
         size: s.scaleName,
         boss: s.class === 1 || undefined,
         mvp: MVP_IDS.has(record.id) || undefined,
+        redAura: RED_AURA_MVP_IDS.has(record.id) || undefined,
       };
       this.rows.push(row);
       this.byId.set(row.id, row);
@@ -115,6 +118,7 @@ export class MonsterIndex {
       hp: s.health,
       ...this.labels(row, s.elementName),
       mvp: MVP_IDS.has(id),
+      redAura: RED_AURA_MVP_IDS.has(id) || undefined,
       def: s.defense,
       mdef: s.magicDefense,
       res: s.res,

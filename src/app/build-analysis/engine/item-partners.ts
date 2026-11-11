@@ -6,6 +6,12 @@ interface Partners {
   of(id: number): number[];
   /** The main equipment slot an item goes in, if it has one. */
   slotOf(id: number): string | undefined;
+  /**
+   * The whole set an item belongs to, one piece per slot: the item plus every partner reachable through partners of partners
+   * that `accept` allows (the caller decides what is eligible). A set of three or more pieces can pay only when worn whole.
+   * Slot order is discovery order; `max` caps the walk.
+   */
+  wholeSet(id: number, accept: (partner: number, slot: string) => boolean, max?: number): Map<string, number>;
 }
 
 const partnerIndexes = new WeakMap<Dataset, Partners>();
@@ -56,6 +62,19 @@ export function partnerIndex(dataset: Dataset): Partners {
     // An item LATAM has not shipped is never offered, whatever set it belongs to.
     of: id => (cache.get(id) ?? []).filter(partner => dataset.itemIndex.get(partner)?.latam),
     slotOf: (id) => dataset.itemIndex.get(id)?.slotTags?.find((tag) => MAIN_ITEM_SLOTS.includes(tag)),
+    wholeSet(id, accept, max = 6) {
+      const slot = index.slotOf(id);
+      const whole = new Map<string, number>(slot ? [[slot, id]] : []);
+      const queue = [id];
+      for (let at = 0; at < queue.length && whole.size < max; at++) {
+        for (const partner of index.of(queue[at])) {
+          const partnerSlot = index.slotOf(partner);
+          if (whole.size < max && partnerSlot && !whole.has(partnerSlot) && accept(partner, partnerSlot)) { whole.set(partnerSlot, partner); queue.push(partner); }
+        }
+      }
+
+      return whole;
+    },
   };
   partnerIndexes.set(dataset, index);
 

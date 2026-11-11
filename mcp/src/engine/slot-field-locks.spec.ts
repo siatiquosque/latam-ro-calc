@@ -37,7 +37,8 @@ it('optimize_slot cannot replace a locked socket directly', async () => {
 it('a locked weapon still allows optimize_slot to improve its cards', async () => {
   const withoutCards = { ...start, weaponCard1: 0, weaponCard2: 0 };
   const result = await call('optimize_slot', { build: { preset: withoutCards }, slot: 'weapon', candidates: [start['weapon']], constraints: { lockedFields: ['weapon'] } });
-  const parsed = await call('parse_share_link', { share: result.share });
+  const parsedRes: any = await client.callTool({ name: 'parse_share_link', arguments: { share: result.share } });
+  const parsed = JSON.parse(parsedRes.content[0].text);
   expect(parsed.compare.items.weapon.id).toBe(start['weapon']);
   expect(parsed.compare.items.weaponCard1?.id ?? 0).toBeGreaterThan(0);
 }, 300_000);

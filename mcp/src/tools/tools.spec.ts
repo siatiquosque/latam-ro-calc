@@ -32,7 +32,7 @@ beforeAll(async () => {
 describe('tool surface', () => {
   it('advertises the full build schema once, so the tool list stays small', async () => {
     const list = await client.listTools();
-    expect(JSON.stringify(list).length).toBeLessThan(51_500);
+    expect(JSON.stringify(list).length).toBeLessThan(54_500);
     const withFullBuild = list.tools.filter((tool) => JSON.stringify(tool.inputSchema).includes('"jobLevel"'));
     expect(withFullBuild.map((tool) => tool.name)).toEqual(['calculate']);
   });
@@ -41,6 +41,15 @@ describe('tool surface', () => {
     const result: any = await client.callTool({ name: 'optimize_slot', arguments: { build: { class: 4262, level: 999 }, slot: 'weapon', candidates: [560037] } }).catch((error) => ({ isError: true, content: [{ text: String(error) }] }));
     expect(result.isError).toBe(true);
     expect(JSON.stringify(result.content)).toMatch(/level|300|validation/i);
+  });
+
+  it('rejects an unknown build or target field instead of silently calculating something else', async () => {
+    // `classId` instead of `class` fell back to the default class, and `target: { id }` to the defenseless dummy, both with a plausible result.
+    for (const args of [{ build: { classId: 4255, level: 200 } }, { build: { class: 4255, level: 200 }, target: { id: 1039 } }, { build: { class: 4255, level: 200 }, targets: [{ monsterId: 1039 }] }]) {
+      const result: any = await client.callTool({ name: 'calculate', arguments: args }).catch((error) => ({ isError: true, content: [{ text: String(error) }] }));
+      expect(result.isError).toBe(true);
+      expect(JSON.stringify(result.content)).toMatch(/desconhecido.*(classId|targets|id)\b.*v[aá]lidos/i);
+    }
   });
 
   it('exposes the full set', async () => {
@@ -484,7 +493,7 @@ describe('regressions', () => {
     // The suite runs many workers at once: give the search the time it would have on an idle server.
     const limit = config.limits.maxSearchMs;
     config.limits.maxSearchMs = 100_000;
-    const { data } = await call('optimize_build', { build, slots: ['weapon', 'headMiddle'] }).finally(() => { config.limits.maxSearchMs = limit; });
+    const { data } = await call('optimize_build', { build, slots: ['weapon', 'headMiddle'], maxSeconds: 100 }).finally(() => { config.limits.maxSearchMs = limit; });
     expect(data.stopped).toBeUndefined();
     expect(data.patch.gear.weapon).toBe(560037);
     expect(data.objective).toBe('rotationDps');

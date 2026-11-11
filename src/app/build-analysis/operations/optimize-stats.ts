@@ -1,6 +1,7 @@
 /** Transport-free build operations. Browser UI and MCP call these same implementations. */
 
 import { z } from 'zod';
+import { zeroDamageReason } from '../engine/zero-damage';
 import { BaseStateCalculator } from 'src/app/core/base-state-calculator';
 import { Dataset } from '../data/dataset';
 import { resolveBuild, BuildInput } from '../engine/build-input';
@@ -62,7 +63,7 @@ async function optimizeStats({ build, target, effects = [], objective = 'dps', l
     const memo = evaluationCache();
     const start = memo.evaluate(base, undefined, dataset, monster, effects, wanted);
     const startValue = start.metrics[objective];
-    if (!startValue) throw new Error(`A build não produz ${objective} para otimizar.`);
+    if (!startValue) throw new Error(`A build não produz ${objective} para otimizar: ${zeroDamageReason(start.rb.model)}`);
     const score = (value: number) => objective === 'hitsToKill' ? -value : value;
 
     const model = start.rb.model as unknown as Levels;

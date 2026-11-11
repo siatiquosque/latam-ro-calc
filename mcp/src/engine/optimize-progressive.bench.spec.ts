@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { loadDatasetFromDisk } from '../data/dataset.node';
 import { config } from '../config';
 import { createOptimizationOperations } from '../../../src/app/build-analysis/operations/optimize';
-import { audit, GOAL, gearOnlyStart, MONSTERS, preset, SCENARIO_EXACT, SCENARIO_RULES } from './__tests__/jor-ab02-support';
+import { GOAL, gearOnlyStart, MONSTERS, preset, SCENARIO_EXACT, SCENARIO_RULES } from './__tests__/jor-ab02-support';
 import { magusGeared, METEOR_MONSTERS, METEOR_REFERENCE, METEOR_WEAK } from './__tests__/discovery-builds';
 
 const OUT = 'docs/benchmarks/optimize-progressive';

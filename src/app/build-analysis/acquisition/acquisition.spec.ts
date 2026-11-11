@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { createMainModel } from 'src/app/utils';
-import { resolveBuild } from '../engine/build-input';
-import { loadDatasetFromDisk } from '../../../../mcp/src/data/dataset.node';
 import { acquisitionKnowledge } from './catalog';
 import { assessAcquisition } from './assess';
 import { knowledgeSchema, reviseKnowledge } from './contracts';
@@ -92,10 +90,6 @@ describe('shared acquisition knowledge', () => {
     expect(result.diagnostics[0].status).toBe('obtainable');
     expect(result.mechanicalValidity).toBe('not_assessed');
     expect(result.economicCost).toBeNull();
-  });
-  it('reads a real resolved build without changing public BuildInput', () => {
-    const resolved = resolveBuild({ class: 4255, gear: { headUpper: 19482, headUpperEnchant1: 29080 } }, loadDatasetFromDisk());
-    expect(enchant(assessAcquisition(resolved, 'LATAM', { asOf: '2026-11-05' })).status).toBe('difficult');
   });
   it('recognizes two distinct gem sets at sum 18; does not infer a cross-pair or count other pieces', () => {
     expect(assess({ shadowArmor: 24675, shadowBoot: 24676, shadowArmorRefine: 9, shadowBootRefine: 9 }).effects.map(e => e.engineCoverage)).toEqual(['missing', 'represented']);

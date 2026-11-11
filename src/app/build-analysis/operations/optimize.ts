@@ -1,6 +1,7 @@
 /** Transport-free build operations. Browser UI and MCP call these same implementations. */
 
 import { z } from 'zod';
+import { zeroDamageReason } from '../engine/zero-damage';
 import { ItemOptionMap } from 'src/app/constants/item-options-table';
 import { ExtraOptionTable } from 'src/app/constants/extra-option-table';
 import { randomOptionCatalogFor, randomPoolTier } from 'src/app/core/random-option-catalog';
@@ -14,7 +15,7 @@ import { Dataset } from '../data/dataset';
 import { ItemRow } from '../data/item-index';
 import { SlotTag } from '../data/slot-classifier';
 import { BuildInput, ITEM_ID_KEYS, MAIN_ITEM_SLOTS, relatedItemKeys, resolveBuild, ResolvedBuild } from '../engine/build-input';
-import { rotationCallBound, DEFAULT_METRICS, Metric, METRICS, Metrics, objectiveFor, Profile } from '../engine/metrics';
+import { rotationCallBound, DEFAULT_METRICS, Metric, Metrics, objectiveFor, Profile } from '../engine/metrics';
 import { buildShareUrl, Shortener, toPreset } from '../engine/share';
 import { engineCallCount, evaluate, evaluationCache } from '../engine/evaluate';
 import { JobBudget, minimumEngineCalls } from '../engine/job-budget';
@@ -130,7 +131,7 @@ function contributions(
   max: number,
   config: AnalysisRuntime,
 ) {
-  if (!baseValue) return { error: `A build não produz ${metric} para comparar.` };
+  if (!baseValue) return { error: `A build não produz ${metric} para comparar: ${zeroDamageReason(rb.model)}` };
 
   const all = removals(rb, dataset);
   const limit = Math.min(max, config.limits.maxContributions);
@@ -193,7 +194,7 @@ function enchantLevels(dataset: Dataset, id: number): { id: number; level: numbe
 }
 
 function upgradeGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | undefined, metric: Metric, monster: any, effects: string[], dataset: Dataset, keys: string[]) {
-  if (!baseValue) return { error: `A build não produz ${metric} para comparar.` };
+  if (!baseValue) return { error: `A build não produz ${metric} para comparar: ${zeroDamageReason(rb.model)}` };
   const model: any = rb.model;
   const gain = (patch: BuildPatch) => {
     try { return deltaPct(evaluate(base, patch, dataset, monster, effects, [metric]).metrics[metric], baseValue); } catch { return null; }
@@ -244,7 +245,7 @@ function upgradeGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | u
 }
 
 function refineGains(base: BuildInput, rb: ResolvedBuild, baseValue: number | undefined, metric: Metric, monster: any, effects: string[], dataset: Dataset) {
-  if (!baseValue) return { error: `A build não produz ${metric} para comparar.` };
+  if (!baseValue) return { error: `A build não produz ${metric} para comparar: ${zeroDamageReason(rb.model)}` };
   const model: any = rb.model;
   const rows = MAIN_ITEM_SLOTS.filter((slot) => model[slot] > 0 && `${slot}Refine` in model && (model[`${slot}Refine`] ?? 0) < refineLimitFor(slot, dataset.items[model[slot]])).flatMap((slot) => {
     const refine: number = model[`${slot}Refine`] ?? 0;
@@ -354,6 +355,8 @@ const NEAR_RUNNERS_UP = 5;
 export type OptimizeBuildArgs = {
     /** Optional hard limit on actual engine calls, including final verification. */
     maxEngineCalls?: number;
+    /** Wall-clock allowance of this call, in seconds, at most the server's `maxSearchMs`. The walk over the pieces stops at 60% of it and the socket pass uses the rest, so a short allowance still ends with a tuned build. Absent: the server's allowance, as before. */
+    maxSeconds?: number;
     /** Local worker lifecycle; never sent through the public MCP schema. */
     execution?: { signal?: AbortSignal; onCheckpoint?: (result: Record<string, unknown>) => void };
     /** Internal A/B only. Default preserves the current Greedy walk. */
@@ -500,6 +503,7 @@ async function evaluateVariants(args: EvaluateVariantsArgs) {
       validationMode,
       engineVersion: APP_VERSION,
       baselineValid: baseIssues.valid,
+      basis: 'baseline = a build como veio no link; cada variante muda só o que o patch diz (refino e grau da peça atual ficam, salvo no patch). Ganhos de optimize_slot e scan_slot usam outra base e não são comparáveis.',
       baseline: roundMetrics(baseline.metrics, shown),
       ...(targets ? { baselinePerTarget: aims.map((aim, i) => ({ monsterId: aim.id, metrics: roundMetrics(baselines[i].metrics, shown) })) } : {}),
       ...(baseIssues.errors.length ? { baselineIssues: baseIssues.errors.slice(0, 5).map((issue) => `${issue.code} ${issue.path}: ${issue.message}`) } : {}),
@@ -519,6 +523,7 @@ async function evaluateVariants(args: EvaluateVariantsArgs) {
           share: rank < 3 ? shareOf(entry.rb) : undefined,
         }),
       ),
+      ...(scored.length > limit ? { hidden: `${scored.length - limit} variante(s) além de limit=${limit} não aparecem; suba limit para ver todas.` } : {}),
       discarded: { belowRequire, invalid: errors.length },
       ...(errors.length ? { errors: errors.slice(0, 10) } : {}),
       ...(baseline.rb.warnings.length ? { warnings: baseline.rb.warnings } : {}),
@@ -543,7 +548,7 @@ async function scanSlot({ build, slot, target, effects = [], objective: objectiv
     const wanted: Metric[] = [objective, 'dps', 'max'];
     const baseline = measure(input, undefined, dataset, monster, effects, wanted);
     const baseValue = baseline.metrics[objective];
-    if (!baseValue) throw new Error(`A build não produz ${objective} para varrer.`);
+    if (!baseValue) throw new Error(`A build não produz ${objective} para varrer: ${zeroDamageReason(baseline.rb.model)}`);
 
     const rb = baseline.rb;
     const locks = equipmentLocks(rb.model, constraints);
@@ -724,10 +729,12 @@ async function explainDamage({ build, target, effects = [], parts, metric = 'dps
     return out;
   }
 
-async function searchBuild({ build, target, targets, maxEngineCalls, execution, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', exploration = 'greedy', budgetAccounting = 'legacy', socketReserve = DEFAULT_SOCKET_RESERVE, instrument = false, knownCandidates = [], effortBudget, socketRecheck = 'near', effortParts, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [], goal, constraints }: OptimizeBuildArgs) {
+async function searchBuild({ build, target, targets, maxEngineCalls, maxSeconds, execution, effects = [], objective: objectiveArg, profile = 'sustained', slots, lock = [], exclude = [], excludeMvpCards: avoidMvp = false, strictMvp = false, mvpPolicy, budgetMode = 'legacy', exploration = 'greedy', budgetAccounting = 'legacy', socketReserve = DEFAULT_SOCKET_RESERVE, instrument = false, knownCandidates = [], effortBudget, socketRecheck = 'near', effortParts, candidates, combos = true, pairs = [], countProcs, procMode, procHitsPerSecond, equipmentMode = 'replace', levelChecks = true, detail = false, complements = true, refine, maxGrade, candidatesPerSlot = 12, rounds = 2, maxSolves, require: rules = [], goal, constraints }: OptimizeBuildArgs) {
     if (!(socketReserve >= 0 && socketReserve <= 0.9)) throw new Error('socketReserve deve estar entre 0 e 0,9.');
     const startedAt = Date.now();
-    const pace = pacing(config.limits.maxSearchMs);
+    const limitMs = Math.min(config.limits.maxSearchMs, (maxSeconds ?? Infinity) * 1000);
+    const pace = pacing(limitMs);
+    const searchEnd = maxSeconds === undefined ? Infinity : startedAt + limitMs * 0.6;
     mvpPolicy ??= strictMvp ? 'none' : avoidMvp ? 'exclude-new' : 'allow';
     strictMvp = mvpPolicy === 'none';
     avoidMvp = mvpPolicy !== 'allow';
@@ -824,15 +831,15 @@ async function searchBuild({ build, target, targets, maxEngineCalls, execution, 
     const budget = unified && complements ? Math.floor(requestedBudget * (1 - socketReserve)) : requestedBudget;
     if (effortBudget !== undefined && !(effortBudget > 0)) throw new Error('effortBudget deve ser positivo.');
     const plan = effortBudget ?? budget;
-    const outOfBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= budget && stopFor('search-budget')) || (pace.timeUp() && stopFor('time'));
-    const outOfTotalBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= requestedBudget && stopFor('total-budget')) || (pace.timeUp() && stopFor('time'));
+    const outOfBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= budget && stopFor('search-budget')) || (pace.timeUp() && stopFor('time')) || (Date.now() > searchEnd && stopFor('time'));
+    const outOfTotalBudget = () => (execution?.signal?.aborted && stopFor('cancelled')) || (jobBudget && jobBudget.remainingSearch <= 0 && stopFor('engine-budget')) || (spent() + (targetBudget ? aims.length - 1 : 0) >= requestedBudget && stopFor('total-budget')) || (pace.timeUp() && stopFor('time')) || (Date.now() > searchEnd && stopFor('time'));
     const gradeLimit = maxGrade === 'none' ? 0 : GRADES.indexOf(maxGrade as typeof GRADES[number]);
     if (maxGrade !== undefined) {
       const above = MAIN_ITEM_SLOTS.filter(slot => GRADES.indexOf(baseline.rb.model[`${slot}Grade`] ?? '') > gradeLimit);
       if (above.length) throw new Error(`A build base excede o grau máximo ${maxGrade}: ${above.join(', ')}. Ajuste os graus da base antes da busca; slots travados também devem respeitar o teto.`);
     }
     const baseValue = baseline.metrics[objective];
-    if (!baseValue) throw new Error(`A build não produz ${objective} para otimizar.`);
+    if (!baseValue) throw new Error(`A build não produz ${objective} para otimizar: ${zeroDamageReason(baseline.rb.model)}`);
 
     const locked = new Set(lock);
     // Field locks: the field stays as the base has it and the rest of its slot stays open. A locked card, enchant, refine or grade only makes
@@ -998,6 +1005,10 @@ async function searchBuild({ build, target, targets, maxEngineCalls, execution, 
           const slot = partners.slotOf(partner);
           if (slot && slot !== anchor && walk.includes(slot) && !pinned.has(slot) && eligible(partner, slot) && !banned.has(partner)) add([[anchor, item], [slot, partner]]);
         }
+        // A set of three or more pieces can pay only when worn whole: also try the item with every piece its set names (one per slot).
+        const whole = new Map<string, number>([[anchor, item]]);
+        for (const [slot, partner] of partners.wholeSet(item, (partner, slot) => slot !== anchor && walk.includes(slot) && !pinned.has(slot) && eligible(partner, slot) && !banned.has(partner))) if (slot !== anchor && partner !== item) whole.set(slot, partner);
+        if (whole.size >= 3) add([...whole.entries()]);
       }
 
       return moves;
@@ -1310,7 +1321,8 @@ async function searchBuild({ build, target, targets, maxEngineCalls, execution, 
         slotLog.push({ round, slot, spent: spent(), share, quick: quickEffort, full: fullEffort, discoveryCap: tuning ? null : discoveryCap, moves: moves.length, discovered, selected: selectedCount, best: best ? JSON.stringify(best.move.changes) : null, bestValue: best?.value ?? null, before, accepted });
         if (accepted) {
           improved = true; version++; solvedMoves.clear();
-          if (tuning) { steps[steps.length - 1]['atual'] = true; steps[steps.length - 1]['kind'] = 'ajuste'; }
+          // Raising refine or grade of the worn piece stays `refinoGrau`: folding it into `ajuste` hid it from gainByKind.
+          if (tuning) { steps[steps.length - 1]['atual'] = true; if (steps[steps.length - 1]['kind'] !== 'refinoGrau') steps[steps.length - 1]['kind'] = 'ajuste'; }
         }
         if (exhausted) break;
       }
@@ -1657,6 +1669,7 @@ async function searchBuild({ build, target, targets, maxEngineCalls, execution, 
     const searchable = walk.filter((slot) => (pools.get(slot)?.length ?? 0) > 0);
     const unreached = searchable.filter((slot) => !slotCoverage.has(slot));
     const partial = [...slotCoverage].filter(([, entry]) => entry.measured < entry.available).map(([slot, entry]) => [slot, entry.available - entry.measured] as const);
+    if (unreached.length) alerts.push(`A busca parou antes de olhar ${unreached.length} de ${searchable.length} slots (${unreached.join(', ')}): o resultado é o melhor entre o que foi medido. Para cobrir todos, chame de novo com maxSeconds maior (cerca de 90, a busca leva perto de 1 min) ou use slots para os que faltam.`);
     const total = searchedCalcs;
     const coverage = {
       slots: { searched: searchable.length - unreached.length, total: searchable.length, ...(unreached.length ? { notReached: unreached } : {}) },

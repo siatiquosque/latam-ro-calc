@@ -32,6 +32,13 @@ describe('validate_build', () => {
     expect(codes({ headMiddle: 2203 })).not.toContain('SLOT_OCCUPIED');
   });
 
+  it('accepts a hood repeated in every slot it covers, as the replay import writes it', () => {
+    // 440047 (Máscara de Diabrete, visual) covers Upper, Middle and Lower: the replay puts it in all three so each keeps its enchant.
+    const codes = (gear: Record<string, number>) => validateBuild({ ...fixtures['b1'], gear }, dataset).errors.map((error) => error.code);
+    expect(codes({ costumeUpper: 440047, costumeMiddle: 440047, costumeLower: 440047 })).not.toContain('SLOT_OCCUPIED');
+    expect(codes({ headMiddle: 2278, headLower: 2278 })).not.toContain('SLOT_OCCUPIED');
+  });
+
   it('does not treat an ordinary monster card as MVP', () => {
     expect(MVP_CARD_IDS.has(300220)).toBe(false);
     expect(MVP_CARD_IDS.has(4129)).toBe(false);

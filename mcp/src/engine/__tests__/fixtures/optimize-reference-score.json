@@ -1,0 +1,18 @@
+{
+  "fogueira": {
+    "solves": 600,
+    "final": 148933919
+  },
+  "b1": {
+    "solves": 600,
+    "final": 505716365
+  },
+  "b2": {
+    "solves": 600,
+    "final": 186891193
+  },
+  "weak": {
+    "solves": 600,
+    "final": 426999179
+  }
+}

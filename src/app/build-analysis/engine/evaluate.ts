@@ -4,6 +4,7 @@ import { Dataset } from '../data/dataset';
 import { BuildInput, ResolvedBuild, resolveBuild } from './build-input';
 import { Metric, Metrics, readMetrics } from './metrics';
 import { ProcPolicy, procUptime } from './proc';
+import { Calculator } from 'src/app/core/calculator';
 import { solveWithInput } from './solve';
 import { applyPatch, BuildPatch } from './variants';
 import { countedEngineCall, JobBudget } from './job-budget';
@@ -48,6 +49,15 @@ export function evaluationCache(limit = 4000) {
   // Sort object keys only. Slot sides and array order (buffs, effects, enchants) retain their semantics.
   const canonical = (value: unknown) => JSON.stringify(value, (_key, entry) => entry && typeof entry === 'object' && !Array.isArray(entry)
     ? Object.fromEntries(Object.keys(entry).sort().map(key => [key, entry[key]])) : entry);
+  // Targets and the proc policy are read-only objects shared by every evaluation of a search (the policy's item
+  // table alone is most of the key): each one's part of the key is built once per object.
+  const sharedKeys = new WeakMap<object, string>();
+  const sharedKey = (value: any, build: () => unknown = () => value) => {
+    if (!value || typeof value !== 'object') return canonical(build());
+    let key = sharedKeys.get(value);
+    if (key === undefined) sharedKeys.set(value, key = canonical(build()));
+    return key;
+  };
   const copyProcs = (value: Evaluation['procEvaluation']) => ({ counted: [...value.counted], uncounted: [...value.uncounted] });
   const cache = {
     hits: 0,
@@ -58,10 +68,10 @@ export function evaluationCache(limit = 4000) {
     evaluate(base: BuildInput, patch: BuildPatch | undefined, dataset: Dataset, monster: any, effects: string[], wanted: readonly Metric[], more: { monster: any; weight: number }[] = [], weight = 1, autoProcs: ProcPolicy = false, jobBudget?: JobBudget, forbiddenEffects: readonly string[] = []): Evaluation {
       const rb = resolveBuild(patch ? applyPatch(base, patch) : base, dataset);
       if (!datasetIds.has(dataset)) datasetIds.set(dataset, nextDatasetId++);
-      const policy = typeof autoProcs === 'object'
+      const policy = sharedKey(autoProcs, () => typeof autoProcs === 'object'
         ? { mode: autoProcs.mode, hitsPerSecond: autoProcs.hitsPerSecond, metadata: [...autoProcs.metadata].sort(([a], [b]) => a - b) }
-        : autoProcs;
-      const key = canonical([APP_VERSION, datasetIds.get(dataset), monster, effects, wanted, more, weight, policy, forbiddenEffects, rb.model, rb.customItems ?? []]);
+        : autoProcs);
+      const key = canonical([APP_VERSION, datasetIds.get(dataset), sharedKey(monster), effects, wanted, more.map(entry => [sharedKey(entry.monster), entry.weight]), weight, policy, forbiddenEffects, rb.model, rb.customItems ?? []]);
       const known = store.get(key);
       if (known) {
         cache.hits++;
@@ -78,6 +88,11 @@ export function evaluationCache(limit = 4000) {
   };
 
   return cache;
+}
+
+/** The solved calculator with another set of chances switched on: the pass that applies them, alone. */
+function withChances(calc: Calculator, chances: string[], skillValue: string, jobBudget?: JobBudget): Calculator {
+  return countedEngineCall(jobBudget, () => calc.setSelectedChances(chances).recalcExtraBonus(skillValue));
 }
 
 function evaluateResolved(
@@ -122,9 +137,15 @@ function evaluateResolved(
         probability *= mask & 2 ** index ? uptime : 1 - uptime;
         if (mask & 2 ** index) active.push(chance.name);
       });
-      const state = mask === 0 ? readMetrics(solved, damageMetrics, jobBudget) : readMetrics({ ...solveCounted(jobBudget, rb, dataset, monster, active), rb, effects: active }, damageMetrics, jobBudget);
+      // A proc state differs from the solved build only in the chances it switches on, and only the calculator's
+      // extra-bonus pass reads them: redo that pass on the loaded calculator instead of solving the whole build again.
+      const stateInput = { ...first.input, selectedChances: active };
+      const state = mask === 0 ? readMetrics(solved, damageMetrics, jobBudget)
+        : readMetrics({ calc: withChances(first.calc, active, stateInput.selectedAtkSkill, jobBudget), input: stateInput, rb, effects: active }, damageMetrics, jobBudget);
       for (const metric of damageMetrics) if (state[metric] !== undefined) metrics[metric] += probability * state[metric];
     }
+    // Leave the calculator on the solved build itself, as callers read it.
+    if (counted.length) first.calc.setSelectedChances(effects).recalcExtraBonus(first.input.selectedAtkSkill);
   }
 
   // Further targets re-target the same calculator (the gear pass does not change with the monster), and

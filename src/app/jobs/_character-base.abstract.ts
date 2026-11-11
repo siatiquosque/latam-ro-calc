@@ -330,9 +330,17 @@ export abstract class CharacterBase {
     return skills;
   }
 
+  // The catalog depends only on the class's own skill list (fixed after construction) and the formula version;
+  // the damage loop asks for it several times per solve, so it is built once per version. Callers only read it.
+  private readonly atkSkillCatalog = new Map<SkillFormulaVersion | undefined, AtkSkillModel[]>();
   getAtkSkills(version?: SkillFormulaVersion): AtkSkillModel[] {
-    return rebalancedSkillCatalog([...this.atkSkills, ...previewSkillsForClass(this.className), ...preview285SkillsForClass(this.className)], this.className, version)
-      .map(applyPreviewBuffs).map(withSelectableSkillLevels);
+    let catalog = this.atkSkillCatalog.get(version);
+    if (!catalog) {
+      catalog = rebalancedSkillCatalog([...this.atkSkills, ...previewSkillsForClass(this.className), ...preview285SkillsForClass(this.className)], this.className, version)
+        .map(applyPreviewBuffs).map(withSelectableSkillLevels);
+      this.atkSkillCatalog.set(version, catalog);
+    }
+    return catalog;
   }
 
   get passiveSkills() {
@@ -437,8 +445,10 @@ export abstract class CharacterBase {
     this.activeSkillIds = [...activeSkillIds];
     this.passiveSkillIds = [...passiveSkillIds];
 
+    // The getter rebuilds and sorts the whole list: read it once, not once per skill.
+    const passiveSkills = this.passiveSkills;
     this.passiveSkillIds.forEach((skillLvl, idx) => {
-      this.learnSkillMap.set(this.passiveSkills[idx].name, skillLvl);
+      this.learnSkillMap.set(passiveSkills[idx].name, skillLvl);
     });
 
     return this;

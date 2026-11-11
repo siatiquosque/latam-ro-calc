@@ -39,3 +39,8 @@
 .improve-feasibility.improve-feasible { border-inline-start-color: #3fae6a; }
 .improve-feasibility.improve-invalid, .improve-feasibility.improve-infeasible { border-inline-start-color: #d9534f; }
 @media (max-width: 600px) { .improve-extra { grid-template-columns: minmax(0, 1fr); } }
+
+.improve-exclude-results, .improve-exclude-chips { list-style: none; margin: 0.25rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.improve-exclude-results li { display: flex; gap: 0.25rem; }
+.improve-exclude-chips li { border: 1px solid currentColor; border-radius: 1rem; padding: 0 0.5rem; display: inline-flex; gap: 0.25rem; align-items: center; }
+.improve-exclude-chips button { background: none; border: 0; cursor: pointer; color: inherit; }

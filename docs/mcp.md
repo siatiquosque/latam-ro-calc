@@ -6,6 +6,8 @@ camada compartilhada `src/app/build-analysis`; o MCP adapta essa camada ao proto
 `optimize_build` é opcional: uma IA também pode consultar itens, regras e habilidades
 e medir hipóteses específicas com `evaluate_variants`, sem executar uma busca completa.
 
+Para jogadores: exemplos de pedidos e erros comuns da IA em [Como pedir](mcp-prompts.md).
+
 Na calculadora, o botão **Encontrar melhorias** oferece a busca local, exploração de
 slots, atributos e análise de dano/upgrades, com revisão no painel de comparação.
 
@@ -340,7 +342,7 @@ Configuráveis por variável do Worker (bloco `vars` do `wrangler.jsonc`); o val
 | `MAX_VARIANTS` | 100 | variantes por `evaluate_variants` |
 | `MAX_CONTRIBUTIONS` | 60 | soluções de `explain_damage` |
 | `MAX_SOLVES` | 10000 | avaliações de `optimize_build` e `optimize_stats` |
-| `MAX_SEARCH_MS` | 45000 | tempo máximo de uma busca, em ms; ao esgotar devolve a melhor build até então |
+| `MAX_SEARCH_MS` | 120000 | teto de `maxSeconds`, em ms; ao esgotar devolve a melhor build até então |
 | `MAX_OPTIMIZE_CANDIDATES` | 40 | candidatos de `optimize_slot` |
 | `MAX_COMPARE_BUILDS` | 4 | builds de `compare_builds` |
 | `MAX_TABLE_MONSTERS` | 20 | monstros de `damage_table` |
@@ -359,6 +361,20 @@ passo distinto da rotação), cerca de 2 s. Numa máquina fraca, baixe `MAX_VARI
 A tabela de itens é compartilhada entre requisições e só lida; só uma build com itens personalizados copia o
 dicionário. O `solve` é síncrono de propósito (ver o comentário em `mcp/src/engine/solve.ts`): nada entre
 montar e ler o calculador pode ter `await`, ou duas requisições se misturariam.
+
+### Tempo, fila e erros de argumento
+
+- `optimize_build` aceita `maxSeconds` (padrão 90, de 5 até `MAX_SEARCH_MS`). A troca de peças usa 60% do tempo e os soquetes o resto,
+  então uma chamada curta ainda devolve uma build ajustada. Clientes MCP costumam desistir em ~60 s: suba só se o cliente aguentar.
+- As buscas pesadas (`optimize_build`, `optimize_slot`, `optimize_stats`, `scan_slot`, `find_synergies`) rodam **uma por vez** por processo
+  (`HEAVY_TOOLS` em `mcp/src/tools/helpers.ts`). Entram até 3 na fila; a quarta recebe "Servidor ocupado...". Motivo: com o heap do Node em 256 MB
+  (PM2 da VPS), três buscas intercaladas estouraram a memória e derrubaram o processo, enquanto uma sozinha cabe.
+- Argumentos desconhecidos são **recusados**, no topo da ferramenta, em `build` e em `target`. A mensagem nomeia o campo, sugere o mais próximo
+  ("classId" → "class") e lista os válidos. Antes eram descartados e a ferramenta respondia sobre o padrão (classe errada, alvo sem defesa).
+  Um cliente que envie campos extras agora recebe erro: confira antes de publicar.
+- Build com todos os atributos em 1 devolve `aviso`; e "dano 0" nas buscas diz se a causa são os atributos (use `optimize_stats`).
+- `search_monsters` devolve `aviso` quando há monstros de mesmo nome (versão clássica e de instância): confirme o id com a pessoa.
+- `list_classes` aceita `query` (pt-BR ou inglês, ex.: "Shadow Cross") e devolve `englishName` e `fourthClass`.
 
 ## Confiança nos números
 

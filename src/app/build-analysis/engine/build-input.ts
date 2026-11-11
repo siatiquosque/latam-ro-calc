@@ -12,6 +12,7 @@ import { createMainModel, toRawOptionTxtList } from 'src/app/utils';
 import { ClassInfo } from '../data/class-registry';
 import { Dataset } from '../data/dataset';
 import { applyJobBonus, applySkillMaps, clampLevels, resolveAtkSkill } from './derive';
+import { strictShape } from './strict-object';
 import { applyPreset } from './preset';
 import { parseShare } from './share';
 import { CustomItemDefinition, validateCustomItems } from 'src/app/core/custom-items';
@@ -47,8 +48,7 @@ export const ITEM_ID_KEYS: readonly string[] = [
  */
 export const stringMap = <T extends z.ZodType>(value: T) => z.object({}).catchall(value);
 
-export const buildInputSchema = z
-  .object({
+const buildShape = {
     share: z
       .string()
       .optional()
@@ -100,7 +100,9 @@ export const buildInputSchema = z
       .max(30)
       .optional()
       .describe('Rotação de habilidades, cada passo "Nome==Nível" (ou o ataque básico). Alimenta a métrica rotationDps; sem isso vale a rotação do link, se houver.'),
-  })
+};
+
+export const buildInputSchema = strictShape(buildShape, 'build')
   .describe('Build a calcular. Sem `share`/`preset`, parte de uma build vazia com os overrides aplicados.');
 
 export type BuildInput = z.infer<typeof buildInputSchema>;

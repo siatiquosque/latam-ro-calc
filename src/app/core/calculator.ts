@@ -1313,7 +1313,12 @@ export class Calculator {
 
   private calcScriptEntryValue(params: { itemType: ItemTypeEnum; itemRefine: number; lineScript: string; }): number {
     const { itemType, itemRefine, lineScript } = params;
-    const { isValid, restCondition } = this.validateCondition({ itemType, itemRefine, script: lineScript });
+    // Every condition validateCondition knows opens with `[` or (stat gates) carries a `:`. A line with neither (59% of
+    // item.json: "5", "7===10", "3---2") has nothing to test, so it comes back valid and unchanged — skip the ~25 regexes.
+    // calculator-plain-lines.spec.ts holds this equal to validateCondition over every line of item.json.
+    const { isValid, restCondition } = lineScript.indexOf('[') < 0 && lineScript.indexOf(':') < 0
+      ? { isValid: true, restCondition: lineScript }
+      : this.validateCondition({ itemType, itemRefine, script: lineScript });
     if (!isValid) return 0;
     if (restCondition.includes('===')) return this.calcConstantBonus(itemRefine, restCondition);
     if (restCondition.includes('---')) return this.calcStepBonus(itemRefine, restCondition);

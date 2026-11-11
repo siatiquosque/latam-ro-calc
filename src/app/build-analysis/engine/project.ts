@@ -15,6 +15,7 @@ import {
   buildRaceTables,
   buildSizeTable,
 } from 'src/app/core/summary-tables';
+import { RED_AURA_MVP_IDS } from 'src/app/constants/mvp';
 import { elementPtBr, monsterTypePtBr, racePtBr, sizePtBr } from 'src/app/constants/monster-i18n';
 import { round } from 'src/app/utils';
 import { compact } from '../operations/compact';
@@ -88,6 +89,8 @@ export function projectResult(calc: Calculator, rb: ResolvedBuild, opts: Project
           size: monster.sizeFullUpper ? sizePtBr(monster.sizeFullUpper) : undefined,
           type: monsterTypePtBr(monster.typeUpper),
           mvp: monster.isMvp || undefined,
+          // A red-aura MVP takes 0.1% of the damage: absolute numbers look broken, ratios between options do not change.
+          redAura: RED_AURA_MVP_IDS.has(opts.targetId) ? 'só 0,1% do dano chega (aura vermelha); compare opções em %, não em valor absoluto' : undefined,
           def: num(monster.def),
           mdef: num(monster.mdef),
           res: num(monster.res),

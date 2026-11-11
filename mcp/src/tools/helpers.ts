@@ -1,7 +1,9 @@
 /** Shared plumbing for tool handlers. */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { z } from 'zod';
 import { loadRandomPools } from 'src/app/core/random-option-catalog';
 import { config } from '../config';
+import { strictShape } from 'src/app/build-analysis/engine/strict-object';
 import { Shortener, shortenShareUrl } from '../engine/share';
 
 /** MCP tool results carry text content; ours is always JSON, compact: indentation is tokens the reader never needed. */
@@ -36,6 +38,26 @@ async function shortenShares<R>(result: R, shortener?: Shortener): Promise<R> {
 }
 
 /**
+ * Searches hold tens of MB each while they run (solve memo, candidate pools) and burn CPU for tens of seconds. The VPS caps the Node
+ * heap at 256 MB, and three searches interleaving at an await killed the process (out of memory) while one alone fits. So these run one
+ * at a time; others wait, and past a short queue the call is refused with a message the AI can act on instead of stalling the client.
+ */
+const HEAVY_TOOLS = new Set(['optimize_build', 'optimize_slot', 'optimize_stats', 'scan_slot', 'find_synergies']);
+const MAX_QUEUED = 3;
+let heavyTail: Promise<unknown> = Promise.resolve();
+let heavyWaiting = 0;
+
+async function runHeavy<T>(task: () => Promise<T>): Promise<T> {
+  if (heavyWaiting >= MAX_QUEUED) {
+    throw new Error('Servidor ocupado com outras buscas longas. Tente de novo em instantes, ou use evaluate_variants/calculate, que respondem na hora.');
+  }
+  heavyWaiting++;
+  const run = heavyTail.then(task, task);
+  heavyTail = run.then(() => undefined, () => undefined);
+  try { return await run; } finally { heavyWaiting--; }
+}
+
+/**
  * Register a tool whose errors become readable JSON results. The specs parse
  * `data.error`, which the SDK's default text error would not produce.
  */
@@ -48,10 +70,15 @@ export function registerJsonTool<A>(
   // ChatGPT reads these three hints as required and frames a tool without them as one that writes. Everything here only reads
   // or calculates; a tool that differs says so in its own `annotations`.
   const annotations = { readOnlyHint: true, destructiveHint: false, openWorldHint: false, ...(config as { annotations?: object }).annotations };
-  server.registerTool(name, { ...config, annotations } as any, (async (args: A) => {
+  // A misspelled argument ("targets" for "target", "classId" for "class") used to be dropped without a word and the tool answered about
+  // the default instead. Refusing it names the field, which is the one thing an AI can fix on its own.
+  const shape = (config as { inputSchema?: unknown }).inputSchema;
+  const inputSchema = shape && !(shape as { _zod?: unknown })._zod && typeof shape === 'object' ? strictShape(shape as z.ZodRawShape, `a ferramenta ${name}`) : shape;
+  server.registerTool(name, { ...config, ...(inputSchema ? { inputSchema } : {}), annotations } as any, (async (args: A) => {
     try {
       await loadRandomPools();
-      return await shortenShares(await handler(args), shorteners.get(server));
+      const run = async () => shortenShares(await handler(args), shorteners.get(server));
+      return await (HEAVY_TOOLS.has(name) ? runHeavy(run) : run());
     } catch (error) {
       return fail(error);
     }

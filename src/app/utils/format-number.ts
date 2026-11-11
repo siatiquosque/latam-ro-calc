@@ -12,6 +12,11 @@ const LOCALE = 'pt-BR';
 
 const formatCache = new Map<string, Intl.NumberFormat>();
 
+// The engine builds the same few thousand display strings (formula rows) on every solve, and Intl.format is slow next to a Map
+// lookup. The result depends on nothing but (value, min, max), so it is kept per precision; the cap keeps it bounded.
+const RESULT_LIMIT = 20_000;
+const resultCache = new Map<string, Map<number, string>>();
+
 /**
  * Formats a number in pt-BR: `1234.5` -> `"1.234,5"`. Non-finite input returns "0"
  * rather than "NaN"/"∞" leaking into the UI.
@@ -28,10 +33,17 @@ export const formatNumber = (value: number, min = 0, max = 3): string => {
     fmt = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: min, maximumFractionDigits: max });
     formatCache.set(key, fmt);
   }
+  let results = resultCache.get(key);
+  if (!results) resultCache.set(key, results = new Map());
+  const known = results.get(value);
+  if (known !== undefined) return known;
   // Intl prints negative zero as "-0", and nothing in this app means anything by it: a
   // reduction stat of 0 is negated for display (bonusValueText) and reached the summary
   // panel as "-0%". Zero is zero, whichever side it was approached from.
-  return fmt.format(value === 0 ? 0 : value);
+  const text = fmt.format(value === 0 ? 0 : value);
+  if (results.size >= RESULT_LIMIT) results.clear();
+  results.set(value, text);
+  return text;
 };
 
 /** Same as formatNumber but with an explicit `+` on positives — for values whose whole

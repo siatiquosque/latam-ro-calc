@@ -20,3 +20,18 @@ Os 1627 IDs das prioridades 1 e 2 foram sincronizados com o DivinePride. O campo
 - `itens-sem-metodo.csv`: 3857 listam LATAM e 3654 continuam fora do RagnarokDB (prioridade 3, não sincronizada). 2223 têm drop registrado, 1711 deles em monstro com spawn conhecido, e 31 desses são usados em builds da VPS.
 
 `availableServers` é a informação do DivinePride, não uma confirmação do servidor oficial. Drops do RagnarokDB ainda não entraram na base de conhecimento.
+
+## Cobertura de aquisição dos itens da calculadora (2026-11-07)
+
+`itens-aquisicao.csv` classifica os 11.784 itens de `item.json`. Situação: `latam` (está na lista do cliente LATAM), `prerelease` (marcado `preRelease` na calculadora) ou `other-server` (de outro servidor, sem previsão; ignorar). `origensConhecidas` junta as origens que existem hoje: rota curada, drop (tabela `drops.v1.json`), contêiner de cash, como ovos e caixas (`containedIn` da RagnarokDB), loja, Lapine e decomposição. `lacuna` marca item LATAM sem nenhuma origem conhecida.
+
+| Situação | Na RagnarokDB | Com origem | Lacuna |
+| --- | --- | --- | --- |
+| latam | sim | 3.475 | 1.481 |
+| latam | não sincronizado | 348 | 3.653 |
+| prerelease | sim ou não | 0 | 339 (a tratar como prévia) |
+| other-server | sim ou não | 102 | ignorados (2.488) |
+
+Leitura: 3.653 das lacunas existem porque o item ainda não foi sincronizado na RagnarokDB (a fila tem 16.244 pendentes). As 1.481 restantes já foram sincronizadas e não têm drop, contêiner, loja nem troca nessa fonte: dependem de BroWiki, Hazy Forest, iRO Wiki ou Divine Pride.
+
+Contêineres de cash: a RagnarokDB traz `containedIn` com `chance` (em centésimos de ponto percentual) e `count` para 4.534 itens. Uma tabela de contêineres, no mesmo formato em colunas dos drops, cobriria as chances dos ovos e caixas sem criar rotas.

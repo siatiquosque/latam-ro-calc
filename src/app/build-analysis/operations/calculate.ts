@@ -1,5 +1,6 @@
 /** Transport-free build operations. Browser UI and MCP call these same implementations. */
 
+import { strictShape } from '../engine/strict-object';
 import { z } from 'zod';
 import { CompareState } from 'src/app/core/compare-state';
 import { collectConsumables } from 'src/app/core/calculator-controller';
@@ -25,9 +26,8 @@ import { constraintViolations } from '../engine/feasibility';
 import { introducesHeadConflict } from '../engine/validate';
 import { createBuildContext } from './context';
 
-export const targetSchema = z
-  .object({ monsterId: z.number().int().optional().describe('Id do monstro alvo. Veja search_monsters.') })
-  .optional();
+// A bare id is the common slip; read it as the monster it names.
+export const targetSchema = z.preprocess((value) => (typeof value === 'number' ? { monsterId: value } : value), strictShape({ monsterId: z.number().int().optional().describe('Id do monstro alvo. Veja search_monsters.') }, 'target')).describe('Alvo {"monsterId": id}.').optional();
 
 type TargetArg = z.infer<typeof targetSchema>;
 
@@ -290,6 +290,8 @@ async function optimizeSlot({ build, slot, candidates, slotTag, query, target, l
       current: { id: currentId || null, name: currentId ? dataset.itemIndex.get(currentId)?.name : null, dps: round(baseDps, 2) },
       tested: scored.length,
       testedCandidates: scored.length,
+      // Candidates (and the worn piece's own upgrade) are measured at the ideal refine/grade below, with their best sockets; `current` is the build as it came in the link.
+      basis: `ganho sobre a build como veio no link; cada candidato testado com refino +${refine ?? REACHABLE_REFINE}, grau ${maxGrade ?? 'A'}${complements ? ' e os melhores soquetes' : ' e sem soquetes'}. Não é comparável a scan_slot (peça atual afinada) nem a evaluate_variants (refino e grau da peça atual).`,
       eligibleCandidates: eligible,
       // A best-of-slot claim is only valid when every eligible candidate was measured.
       complete: !stoppedEarly && scored.length === eligible,

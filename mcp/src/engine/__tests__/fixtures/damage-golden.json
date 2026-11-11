@@ -1,0 +1,34 @@
+{
+  "fogueira": {
+    "dps": 29170863,
+    "avgHit": 29170863,
+    "max": 30091036,
+    "min": 28250691,
+    "critRate": 0,
+    "hitChance": 100
+  },
+  "b1": {
+    "dps": 103735509,
+    "avgHit": 103735509,
+    "max": 35635147,
+    "min": 33521860,
+    "critRate": 0,
+    "hitChance": 100
+  },
+  "b2": {
+    "dps": 50794377,
+    "avgHit": 35556074.56682237,
+    "max": 35556075,
+    "min": 35556075,
+    "critRate": 101,
+    "hitChance": 100
+  },
+  "weak": {
+    "dps": 35711559,
+    "avgHit": 35711559,
+    "max": 12263480,
+    "min": 11544227,
+    "critRate": 0,
+    "hitChance": 100
+  }
+}

@@ -12,6 +12,8 @@ export interface ClassInfo {
   id: number;
   /** pt-BR display name, falling back to the English one. */
   name: string;
+  /** English class name ("Shadow Cross", "Guillotine Cross"): what players and guides call the class, and what pt-BR names often miss. */
+  englishName: string;
   /** Sprite/job id; also the key the LATAM release gate is keyed on. */
   icon: number;
   minLevel: number;
@@ -41,6 +43,7 @@ export class ClassRegistry {
       this.info.set(id, {
         id,
         name: ClassNamePtBr[id] ?? ClassID[id],
+        englishName: ClassID[id] ?? ClassNamePtBr[id] ?? String(id),
         icon,
         minLevel: minMaxLevel[0],
         maxLevel: minMaxLevel[1],

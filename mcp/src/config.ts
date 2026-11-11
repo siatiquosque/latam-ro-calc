@@ -41,7 +41,7 @@ const DEFAULTS = {
     /** Solves one `optimize_build` call may spend. Each costs ~4 ms of CPU (more with `rotationDps`). */
     maxSolves: 10_000,
     /** Wall-clock allowance of one search call, in ms. It returns the best build found so far when it runs out. */
-    maxSearchMs: 45_000,
+    maxSearchMs: 120_000,
     maxSearchResults: 50,
   },
 };
