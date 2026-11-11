@@ -49,7 +49,7 @@ describe('health', () => {
     const res = await call(new Request('https://laro-calc.siatiquosque.com.br/mcp/healthz'));
     expect(res.status).toBe(200);
     // 12247 distinct calculator ids + 5993 LATAM-only ids: the raw-data union.
-    await expect(res.json()).resolves.toMatchObject({ ok: true, version: APP_VERSION, items: 18240, classes: 41 });
+    await expect(res.json()).resolves.toMatchObject({ ok: true, version: APP_VERSION, items: 18240, classes: 58 });
   });
 });
 

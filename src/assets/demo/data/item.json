@@ -27295,19 +27295,22 @@
         "1"
       ],
       "atk": [
-        "EQUIP[Giant God Snake Skin]SUM[str==20]---5"
+        "EQUIP_ID[20717||20718]SUM[str==20]---5"
       ],
-      "acd": [
-        "EQUIP[Giant God Snake Skin]SUM[agi==20]---3"
+      "aspdPercent": [
+        "EQUIP_ID[20717||20718]SUM[agi==20]---3"
+      ],
+      "subele_neutral": [
+        "EQUIP_ID[20717||20718]SUM[vit==20]---1"
       ],
       "vct": [
-        "EQUIP[Giant God Snake Skin]SUM[int==20]---4"
+        "EQUIP_ID[20717||20718]SUM[int==20]---4"
       ],
       "range": [
-        "EQUIP[Giant God Snake Skin]SUM[dex==20]---1"
+        "EQUIP_ID[20717||20718]SUM[dex==20]---1"
       ],
       "criDmg": [
-        "EQUIP[Giant God Snake Skin]SUM[luk==20]---3"
+        "EQUIP_ID[20717||20718]SUM[luk==20]---3"
       ]
     }
   },
@@ -53011,6 +53014,9 @@
       "Windhawk"
     ],
     "script": {
+      "hp": [
+        "1---10"
+      ],
       "allTrait": [
         "EQUIP[Master Shadow Shield]===2"
       ],
@@ -53058,6 +53064,9 @@
       "Windhawk"
     ],
     "script": {
+      "hp": [
+        "1---10"
+      ],
       "allTrait": [
         "EQUIP[Master Shadow Shield]===2"
       ],
@@ -53087,6 +53096,9 @@
       "Windhawk"
     ],
     "script": {
+      "hp": [
+        "1---10"
+      ],
       "allTrait": [
         "EQUIP[Master Shadow Weapon]===2"
       ],
@@ -53128,6 +53140,9 @@
       "Windhawk"
     ],
     "script": {
+      "hp": [
+        "1---10"
+      ],
       "allTrait": [
         "EQUIP[Master Shadow Weapon]===2"
       ],
@@ -147107,28 +147122,6 @@
         "EQUIP[Estal]REFINE[weapon==1]---10"
       ]
     }
-  },
-  "400100": {
-    "id": 400100,
-    "aegisName": "C_VIP_Hair_2024",
-    "name": "[Visual] Cabelo de Leon",
-    "unidName": "[Visual] Cabelo de Leon",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 521,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Lower",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {}
   },
   "400105": {
     "id": 400105,
@@ -295039,28 +295032,6 @@
     ],
     "script": {}
   },
-  "420204": {
-    "id": 420204,
-    "aegisName": "C_VIP_Hair_2023",
-    "name": "[Visual] Cabelo de Juncea",
-    "unidName": "[Visual] Cabelo de Juncea",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 521,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Lower",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {}
-  },
   "420207": {
     "id": 420207,
     "aegisName": "C_Eternal_Rose",
@@ -297091,28 +297062,6 @@
     "aegisName": "C_Poring_Swim_Ring",
     "name": "[Visual] Boia de Poring",
     "unidName": "[Visual] Boia de Poring",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 522,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Garment",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {}
-  },
-  "480488": {
-    "id": 480488,
-    "aegisName": "C_Juncea_Wing",
-    "name": "[Visual] Asas de Juncea",
-    "unidName": "[Visual] Asas de Juncea",
     "resName": "",
     "description": "",
     "slots": 0,
@@ -317342,32 +317291,6 @@
     ],
     "script": {}
   },
-  "400325": {
-    "id": 400325,
-    "aegisName": "C_Wondering_Wolf_V",
-    "name": "[Visual] Elmo do Rei do Norte",
-    "unidName": "[Visual] Elmo do Rei do Norte",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 519,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Upper",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {},
-    "locations": [
-      "Upper",
-      "Middle"
-    ]
-  },
   "400327": {
     "id": 400327,
     "aegisName": "C_RA_Hair_PK",
@@ -320013,28 +319936,6 @@
     "aegisName": "C_Divine_Sky_Invite",
     "name": "[Visual] Espelho Malévolo",
     "unidName": "[Visual] Espelho Malévolo",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 521,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Lower",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {}
-  },
-  "420703": {
-    "id": 420703,
-    "aegisName": "C_Aurelie_Hair",
-    "name": "[Visual] Cabelo de Aurelie",
-    "unidName": "[Visual] Cabelo de Aurelie",
     "resName": "",
     "description": "",
     "slots": 0,
@@ -389620,28 +389521,6 @@
     "compositionPos": 0,
     "script": {}
   },
-  "400965": {
-    "id": 400965,
-    "aegisName": "C_Divine_Veil",
-    "name": "[Visual] Véu de Friederike",
-    "unidName": "[Visual] Véu de Friederike",
-    "resName": "",
-    "description": "",
-    "slots": 0,
-    "itemTypeId": 9,
-    "itemSubTypeId": 519,
-    "itemLevel": null,
-    "attack": null,
-    "defense": 0,
-    "weight": 0,
-    "requiredLevel": 1,
-    "location": "Upper",
-    "compositionPos": null,
-    "usableClass": [
-      "all"
-    ],
-    "script": {}
-  },
   "401058": {
     "id": 401058,
     "aegisName": "Sky_Rune_Crown_IG",
@@ -395625,5 +395504,141 @@
   },
   "310861": {"id":310861,"aegisName":"Mad_Bunny_Enchant_4_1","name":"Pedra Defensora 1","unidName":"Pedra Defensora 1","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["100"]}},
   "310862": {"id":310862,"aegisName":"Mad_Bunny_Enchant_4_2","name":"Pedra Defensora 2","unidName":"Pedra Defensora 2","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["150"]}},
-  "310863": {"id":310863,"aegisName":"Mad_Bunny_Enchant_4_3","name":"Pedra Defensora 3","unidName":"Pedra Defensora 3","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["200"],"subele_all":["5"]}}
+  "310863": {"id":310863,"aegisName":"Mad_Bunny_Enchant_4_3","name":"Pedra Defensora 3","unidName":"Pedra Defensora 3","resName":"마력석_검정","description":"","slots":0,"itemTypeId":11,"itemSubTypeId":0,"itemLevel":null,"attack":null,"defense":null,"weight":null,"requiredLevel":null,"location":null,"compositionPos":65535,"script":{"def":["200"],"subele_all":["5"]}},
+  "400100": {
+    "id": 400100,
+    "aegisName": "C_VIP_Hair_2024",
+    "name": "[Visual] Cabelo de Leon",
+    "unidName": "[Visual] Cabelo de Leon",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 521,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Lower",
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  },
+  "400325": {
+    "id": 400325,
+    "aegisName": "C_Wondering_Wolf_V",
+    "name": "[Visual] Elmo do Rei do Norte",
+    "unidName": "[Visual] Elmo do Rei do Norte",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 520,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Middle",
+    "locations": [
+      "Upper",
+      "Middle"
+    ],
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  },
+  "400965": {
+    "id": 400965,
+    "aegisName": "C_Divine_Veil",
+    "name": "[Visual] Véu de Friederike",
+    "unidName": "[Visual] Véu de Friederike",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 519,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Upper",
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  },
+  "420204": {
+    "id": 420204,
+    "aegisName": "C_VIP_Hair_2023",
+    "name": "[Visual] Cabelo de Juncea",
+    "unidName": "[Visual] Cabelo de Juncea",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 521,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Lower",
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  },
+  "420703": {
+    "id": 420703,
+    "aegisName": "C_Aurelie_Hair",
+    "name": "[Visual] Cabelo de Aurelie",
+    "unidName": "[Visual] Cabelo de Aurelie",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 521,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Lower",
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  },
+  "480488": {
+    "id": 480488,
+    "aegisName": "C_Juncea_Wing",
+    "name": "[Visual] Asas de Juncea",
+    "unidName": "[Visual] Asas de Juncea",
+    "resName": "",
+    "description": "",
+    "slots": 0,
+    "itemTypeId": 9,
+    "itemSubTypeId": 522,
+    "itemLevel": null,
+    "attack": null,
+    "defense": 0,
+    "weight": 0,
+    "requiredLevel": 1,
+    "location": "Garment",
+    "compositionPos": null,
+    "usableClass": [
+      "all"
+    ],
+    "script": {}
+  }
 }

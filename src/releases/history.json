@@ -1,5 +1,80 @@
 [
   {
+    "v": "0.1.237-beta",
+    "date": "10-11-2026",
+    "logs": [
+      "Catálogo sincronizado com o cliente de 10/11/2026: 73 itens novos na busca e seis visuais que já podem ser equipados — Cabelo de Leon, Cabelo de Juncea, Cabelo de Aurelie, Elmo do Rei do Norte, Véu de Friederike e Asas de Juncea.",
+      "Os equipamentos do Episódio 19 que ainda apareciam em inglês passam a exibir o nome e a descrição do próprio cliente: as Coroas e Botas Ambivalentes, a Rapieira Infernal, o Punhal Celestial, a Ceifeira Infernal, a Marreta Celestial, o conjunto Magistral dos Falcões e os Dons Celestial e Infernal.",
+      "As quatro peças do conjunto Magistral dos Falcões passam a somar HP máx. +10 por refino, como a descrição promete.",
+      "Itens renomeados pelo cliente foram atualizados, entre eles a Marca de Honra de Schwartz, antes Brasão de Honra."
+    ],
+    "logs_es": [
+      "Catálogo sincronizado con el cliente del 10/11/2026: 73 objetos nuevos en la búsqueda y seis disfraces que ya se pueden equipar — Cabello de Leon, Cabello de Juncea, Cabello de Aurelie, Yelmo de lobo errante decorativo, Velo de Friederike y Alas de Juncea.",
+      "Los equipos del Episodio 19 que todavía aparecían en inglés pasan a mostrar el nombre y la descripción del propio cliente: las Coronas y Botas Ambivalentes, el Estoque Infernal, la Daga Celestial, la Segadora Infernal, el Mazo Celestial, el conjunto Magistral Cazavientos y los Dones Celestial e Infernal.",
+      "Las cuatro piezas del conjunto Magistral Cazavientos pasan a sumar HP máx. +10 por refinamiento, como promete la descripción.",
+      "Se actualizaron los objetos renombrados por el cliente, entre ellos la Marca de Honor de Schwartz, antes Escudo de Honor."
+    ],
+    "logs_en": [
+      "Catalogue synced with the 10 November 2026 client: 73 new items in search and six costumes that can now be equipped — Leon's Hair, Juncea's Hair, Aurelie's Hair, Wondering Wolf Helm, Friederike's Veil and Juncea's Wings.",
+      "The Episode 19 gear that was still listed from its iRO page now carries the client's own name and description: the Crowns and Boots of Good and Evil, the Blood Rapier, the Holy Light Dagger, the Soul Harvest, the Divine Buster, the Master Windhawk set and the Good and Evil Spells.",
+      "The four Master Windhawk pieces now add Max HP +10 per refine, the way their description promises.",
+      "Items the client renamed were updated, among them the Combat Basilisk Card, previously Charge Basilisk Card."
+    ]
+  },
+  {
+    "v": "0.1.236-beta",
+    "date": "10-11-2026",
+    "logs": [
+      "Dezessete classes novas para simular: todas as transclasses, o Justiceiro, o Ninja e a linha Taekwon. Cada uma com os próprios limites — nível de base até 99, nível de classe até 70 (50 na linha Taekwon), atributos até 99 e Vel.Atq. até 190.",
+      "Habilidades de dano do Justiceiro: Rastrear o Alvo, Ferir Alvo, Rajada Certeira, Desperado, Controle de Multidão, Ataque Total, Disparo Espalhado e Mina do Justiceiro.",
+      "Habilidades de dano do Ninja: Arremessar Shuriken, Arremessar Kunai, Arremessar Huuma, Virar Tatami, Corte da Névoa e Descarga Elétrica, além das sete magias ninja que já existiam — e que agora também chegam ao Kagerou e ao Shinkiro.",
+      "Habilidades de dano das transclasses: Golpe Traumático e Ataque Vital no Lorde; Golpe da Palma em Fúria, Punho do Tigre e Combo Esmagador no Mestre; Mammonita no Mestre Ferreiro e no Criador; Flecha Melódica no Menestrel e Estilingue na Cigana.",
+      "Habilidades de dano da linha Taekwon: Chute do Tornado, Patada Voadora, Rasteira, Contrachute e Chute Aéreo no Taekwon; Calor Solar, Calor Lunar e Calor Estelar no Mestre Taekwon; Estin, Estun e Esma no Espiritualista — que também chegam ao Mestre Estelar, ao Mestre Celestial, ao Ceifador de Almas e ao Asceta das Almas.",
+      "Habilidades que estavam declaradas na classe errada voltaram para a dona: Bomba Ácida no Criador, Vulcão de Flechas no Menestrel e na Cigana, Luz Sagrada e Exorcismo Magnus no Sumo Sacerdote.",
+      "Descarga Elétrica conjurada por item passa a usar a tabela do cliente, e a Rotação não trava mais ao calcular o tempo para derrubar um alvo que quase não recebe dano."
+    ],
+    "logs_es": [
+      "Diecisiete clases nuevas para simular: todas las transclases, el Pistolero, el Ninja y la línea Taekwon. Cada una con sus propios límites — nivel de base hasta 99, nivel de clase hasta 70 (50 en la línea Taekwon), atributos hasta 99 y Vel. de Ataque hasta 190.",
+      "Habilidades de daño del Pistolero: Seguimiento, Disparo Lacerante, Secuencia Frenética, Desperado, Disparo Dominante, Explosión Total, Ataque Generalizado y Mina de Pistolero.",
+      "Habilidades de daño del Ninja: Arrojar Shuriken, Arrojar Kunai, Arrojar Huuma Shuriken, Voltear Tatami, Tajo de Niebla y Descarga Relámpago, además de las siete magias ninja que ya existían — y que ahora también llegan al Kagerou y al Shinkiro.",
+      "Habilidades de daño de las transclases: Golpe Traumático y Golpe Vital en el Lord Caballero; Golpe de Palma Furioso, Puño Glaciar y Combo Demoledor en el Campeón; Mammonita en el Maestro Herrero y en el Creador; Ataque Musical en el Juglar y Flecha Honda en la Gitana.",
+      "Habilidades de daño de la línea Taekwon: Patada Torbellino, Patada de Talón, Patada Remolino, Contrapatada y Patada Voladora en el Taekwon; Calor Solar, Calor Lunar y Calor Estelar en el Maestro de Taekwon; Estin, Estun y Esma en el Vinculador de Almas — que también llegan al Emperador Estelar, al Emperador Celestial, al Segador de Almas y al Asceta de Almas.",
+      "Habilidades que estaban declaradas en la clase equivocada volvieron a su dueña: Bomba Ácida en el Creador, Volcán Flecha en el Juglar y en la Gitana, Luz Sagrada y Magnus Exorcismus en el Sumo Sacerdote.",
+      "Descarga Relámpago lanzada por un objeto pasa a usar la tabla del cliente, y la Rotación ya no se traba al calcular el tiempo para derribar a un objetivo que casi no recibe daño."
+    ],
+    "logs_en": [
+      "Seventeen new classes to simulate: every transcendent class, the Gunslinger, the Ninja and the Taekwon line. Each with its own caps — base level up to 99, job level up to 70 (50 on the Taekwon line), stats up to 99 and ASPD up to 190.",
+      "Gunslinger damage skills: Tracking, Wounding Shot, Trigger Happy Shot, Desperado, Crowd Control Shot, Full Blast, Spread Attack and Gunslinger Mine.",
+      "Ninja damage skills: Throw Shuriken, Throw Kunai, Throw Huuma Shuriken, Flip Tatami, Haze Slasher and Lightning Jolt, plus the seven ninja spells that were already there — which now reach the Kagerou and the Shinkiro too.",
+      "Transcendent damage skills: Traumatic Blow and Vital Strike on the Lord Knight; Raging Palm Strike, Glacier Fist and Chain Crush Combo on the Champion; Mammonite on the Whitesmith and the Creator; Melody Strike on the Clown and Slinging Arrow on the Gypsy.",
+      "Taekwon line damage skills: Tornado Kick, Heel Drop, Roundhouse, Counter Kick and Flying Kick on the Taekwon; Solar Heat, Lunar Heat and Stellar Heat on the Taekwon Master; Estin, Estun and Esma on the Soul Linker — which also reach the Star Emperor, the Sky Emperor, the Soul Reaper and the Soul Ascetic.",
+      "Skills declared on the wrong class went back to their owner: Acid Bomb on the Creator, Arrow Vulcan on the Clown and the Gypsy, Holy Light and Magnus Exorcismus on the High Priest.",
+      "Lightning Jolt cast by an item now uses the client's table, and the Rotation no longer freezes while working out how long it takes to bring down a target that barely takes damage."
+    ]
+  },
+  {
+    "v": "0.1.235-beta",
+    "date": "09-11-2026",
+    "logs": [
+      "Renegado e Mandraque agora podem selecionar as sete habilidades de terceira classe do Arco Híbrido que faltavam — Impacto Espiritual, Abalo Sísmico, Meteoro Escarlate, Pó de Diamante, Corrente Elétrica, Judex e Maldição de Jormungand —, todas copiáveis por Mimetismo, em todos os níveis. O bônus de +10% da flecha do conjunto passa a entrar na conta ao selecionar a habilidade que ela nomeia.",
+      "As habilidades [Invocação das Marés] e [Invocação da Selva], que faltavam, entraram na lista Aprenda para ganhar bônus do Invocador e do Animista, ao lado da [Invocação da Fauna] que já estava lá, e o buff [Aliança Animal] entrou na lista de habilidades e efeitos ativos do Animista, dando +3 de P.ATQ e +3 de S.ATQM por nível. As duas Invocações ficam só como nível aprendido, porque nenhuma mexe no dano: uma altera cura, duração e recarga de habilidades de suporte, e a outra vale apenas pelos 3 segundos seguintes a uma habilidade da Floresta. Reportado por YuukiiBr.",
+      "Corrigido o conjunto [Pele da Rainha Verme] do Hálito de Verme com Rosto: o bônus a cada 20 de AGI base agora conta como velocidade de ataque, e não como pós-conjuração.",
+      "Adicionada ao mesmo conjunto a linha que faltava: a cada 20 de VIT base, resistência a propriedade Neutro +1%."
+    ],
+    "logs_es": [
+      "Perseguidor de Sombras y evoluciones ahora pueden seleccionar las siete habilidades de clase 3 del Arco Híbrido que faltaban — Impacto Espiritual, Temblor Sísmico, Roca Carmesí, Polvo Diamantino, Relámpago de Cadena, Judex y Nube Asesina —, todas copiables por Mimetismo, en todos los niveles. El bono de +10% de la flecha del conjunto pasa a entrar en el cálculo al seleccionar la habilidad que ella nombra.",
+      "Las habilidades [Espíritu de Mar] y [Espíritu de Tierra], que faltaban, entraron en la lista Aprende para ganar bonificaciones del Invocador y del Domador de Espíritus, junto al [Espíritu de Vida] que ya estaba allí, y el buff [Comunión temporal] entró en la lista de habilidades y efectos activos del Domador de Espíritus, dando +3 de ATQF y +3 de ATQMH por nivel. Los dos Espíritus quedan solo como nivel aprendido, porque ninguno cambia el daño: uno altera curación, duración y tiempo de espera de habilidades de soporte, y el otro vale únicamente por los 3 segundos siguientes a una habilidad de Planta. Reportado por YuukiiBr.",
+      "Corregido el conjunto [Piel de Reina Gusano] del Aliento de Cara de Gusano: el bono por cada 20 de AGI base ahora cuenta como velocidad de ataque, y no como posconjuración.",
+      "Añadida al mismo conjunto la línea que faltaba: cada 20 de VIT base, resistencia a propiedades neutrales +1%."
+    ],
+    "logs_en": [
+      "Shadow Chaser and evolutions can now select the seven third-class skills of the Hybrid Bow that were missing — Soul Expansion, Earth Strain, Crimson Rock, Diamond Dust, Chain Lightning, Judex and Killing Cloud —, all copyable by Mimetismo, at every level. The set arrow's +10% bonus now counts when the skill it names is selected.",
+      "The [Spirit of Sea] and [Spirit of Land] skills, which were missing, were added to the Learn to get bonuses list of the Summoner and the Spirit Handler, next to the [Spirit of Life] that was already there, and the [Temporary Communion] buff was added to the active skills and effects list of the Spirit Handler, giving +3 P.ATK and +3 S.MATK per level. The two Spirits stay as a learned level only, because neither changes damage: one alters healing, duration and cooldown of support skills, and the other counts only for the 3 seconds following a Plant skill. Reported by YuukiiBr.",
+      "Fixed the [Giant Faceworm Snake Skin] set on Faceworm Breath: the bonus for every 20 base AGI now counts as attack speed, not as after-cast delay.",
+      "Added the line that was missing from the same set: for every 20 base VIT, resistance to Neutral property attacks +1%."
+    ]
+  },
+  {
     "v": "0.1.234-beta",
     "date": "09-11-2026",
     "logs": [
