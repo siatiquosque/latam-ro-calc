@@ -8,8 +8,8 @@ describe('Issgard crown iRO preview bonuses', () => {
     [400107, 'range', 'pow', 'pAtk', 'atkPercent', 'p_size_all'],
   ] as const)('applies base, refine and cumulative grade bonuses for %i', (id, damage, trait, advanced, attack, size) => {
     const base = wornBonus({ headUpper: id });
-    expect(base[trait]).toBe(7);
-    expect(base.con).toBe(7);
+    expect(base[trait]).toBe(0);
+    expect(base.con).toBe(0);
     expect(base[damage]).toBe(10);
     const at6 = wornBonus({ headUpper: id, headUpperRefine: 6 });
     expect(at6.acd).toBe(0);
@@ -22,8 +22,8 @@ describe('Issgard crown iRO preview bonuses', () => {
     expect(at9[attack]).toBe(12);
     expect(at9[size]).toBe(12);
     expect(at9[advanced]).toBe(15);
-    expect(at9[trait]).toBe(12);
-    expect(at9.con).toBe(12);
+    expect(at9[trait]).toBe(5);
+    expect(at9.con).toBe(5);
     expect(at9.def - base.def).toBe(150);
     expect(at9.mdef).toBe(30);
     expect(at9.res).toBe(50);

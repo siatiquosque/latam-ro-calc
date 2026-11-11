@@ -18,7 +18,7 @@ export interface ItemSearchFilters {
 const statKeys = [
   'hp', 'hpPercent', 'sp', 'spPercent', 'expGainPercent', 'healReceived', 'healPower',
   'hpRecovRate', 'spRecovRate', 'hpDrain', 'spDrain', 'reduceDamageReturn',
-  'magicHealHp', 'magicHealSp', 'hpRestoreOnKill', 'spRestoreOnKill', 'spCostPercent',
+  'magicHealHp', 'magicHealSp', 'hpRestoreOnKill', 'spRestoreOnKill', 'spCostPercent', 'noGemCost',
   'hpRegenPerSecond', 'spRegenPerSecond', 'petrificationResist', 'freezeResist',
   'p_monster', 'm_monster', 'submonster',
   'def', 'defPercent', 'softDef', 'softDefPercent', 'mdef', 'mdefPercent', 'softMdef', 'softMdefPercent',

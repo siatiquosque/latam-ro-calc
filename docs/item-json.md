@@ -334,6 +334,8 @@ As que já existem — **reaproveite antes de criar qualquer outra**:
 | proc `[Cura Espiritual]` / `[Cura Mística]` | `magicHealSp` |
 | `Ao derrotar monstros: Regenera N de HP` | `hpRestoreOnKill` |
 | …`de SP` | `spRestoreOnKill` |
+| `Anula o consumo de gema de [Skill]` / `Não consome gema` (efeito fixo ou por refino) | `noGemCost` |
+| `X% de chance de não consumir gema` | `chance__noGemCost` |
 
 **Regra dura: uma chave só de exibição nunca entra no cálculo de dano.** Isto não é um atalho
 para contornar a regra de não inventar modificadores de dano — se o efeito *mudaria* o dano,

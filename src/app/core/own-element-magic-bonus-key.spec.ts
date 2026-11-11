@@ -145,10 +145,10 @@ describe('own-property magic damage reads the caster-side bonus key', () => {
     );
     expect([...new Set(unregistered)].sort((a, b) => Number(a.split(' ')[0]) - Number(b.split(' ')[0])
       || a.localeCompare(b))).toEqual([
-      '2007 wind', '2008 water', '2009 fire', '2010 earth', '2011 wind', '2012 water',
-      '2013 fire', '2014 earth', '2039 dark', '2039 fire', '2039 wind', '2046 fire',
-      '4457 ghost', '19264 holy', '20840 fire', '26119 neutral', '27166 fire', '28255 ghost',
-      '28616 holy', '480683 fire', '480683 water', '550010 poison', '640010 ghost',
+      '2008 water', '2009 fire', '2012 water',
+      '2013 fire', '2039 dark', '2039 fire', '2039 wind',
+      '19264 holy', '20840 fire', '28255 ghost',
+      '480683 fire', '480683 water', '550010 poison', '640010 ghost',
     ]);
   });
 

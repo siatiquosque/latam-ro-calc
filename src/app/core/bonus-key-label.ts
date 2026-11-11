@@ -25,6 +25,7 @@ export const ITEM_BONUS_LABELS: Record<string, string> = {
   submonster: 'Resistência a monstros específicos %',
   petrificationResist: 'Tolerância a Petrificação %', freezeResist: 'Tolerância a Congelamento %',
   spCostPercent: 'Custo de SP das habilidades',
+  noGemCost: 'Anula o consumo de gema',
   movementSpeed: 'Velocidade de movimento %', hpRegenPerSecond: 'Regen. de HP por segundo',
   statusResist: 'Tolerância a efeitos negativos %', wugSkillRatio: 'ATQ base das habilidades de Worg %',
   def: 'DEF', defPercent: 'DEF %', softDef: 'DEF Leve', softDefPercent: 'DEF Leve %',

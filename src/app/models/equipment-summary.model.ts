@@ -78,6 +78,8 @@ export interface EquipmentSummaryModel {
   hpRestoreOnKill: number;
   spRestoreOnKill: number;
   spCostPercent: number;
+  /** "Anula o consumo de gema" — display only, never enters the damage calculation. */
+  noGemCost: number;
   /** Party-song utility values shown in Buffs; movement and recovery are outside damage simulation. */
   movementSpeed?: number;
   hpRegenPerSecond?: number;

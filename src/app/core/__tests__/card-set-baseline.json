@@ -968,7 +968,7 @@
    "with:4312,4293,4185": {
     "271": 10,
     "sp": 80,
-    "atk": 5,
+    "atk": 30,
     "str": 3,
     "int": 1
    }
@@ -988,6 +988,21 @@
      ]
     ],
     "tail": "10"
+   },
+   {
+    "key": "atk",
+    "groups": [
+     [
+      4312
+     ],
+     [
+      4293
+     ],
+     [
+      4185
+     ]
+    ],
+    "tail": "25"
    },
    {
     "key": "str",
@@ -1182,6 +1197,7 @@
     "vct": -20
    },
    "with:4311,4331,4319": {
+    "480": 10,
     "spRecovRate": 10,
     "def": 2,
     "atk": 10,
@@ -1191,6 +1207,21 @@
    }
   },
   "clauses": [
+   {
+    "key": "480",
+    "groups": [
+     [
+      4311
+     ],
+     [
+      4331
+     ],
+     [
+      4319
+     ]
+    ],
+    "tail": "10"
+   },
    {
     "key": "vct",
     "groups": [
@@ -2946,6 +2977,29 @@
    }
   ]
  },
+ "27166": {
+  "scenarios": {
+   "alone": {
+    "subele_fire": 5
+   },
+   "with:27167": {
+    "m_my_element_fire": 10,
+    "subele_neutral": 5,
+    "subele_fire": 5
+   }
+  },
+  "clauses": [
+   {
+    "key": "m_my_element_fire",
+    "groups": [
+     [
+      27167
+     ]
+    ],
+    "tail": "10"
+   }
+  ]
+ },
  "27167": {
   "scenarios": {
    "alone": {
@@ -2954,6 +3008,7 @@
    },
    "with:27166": {
     "m_my_element_water": 45,
+    "m_my_element_fire": 10,
     "subele_neutral": 20
    }
   },
@@ -3056,6 +3111,35 @@
      ]
     ],
     "tail": "15"
+   }
+  ]
+ },
+ "27175": {
+  "scenarios": {
+   "alone": {},
+   "with:27172": {
+    "p_size_s": 10,
+    "m_size_s": 10
+   }
+  },
+  "clauses": [
+   {
+    "key": "p_size_s",
+    "groups": [
+     [
+      27172
+     ]
+    ],
+    "tail": "10"
+   },
+   {
+    "key": "m_size_s",
+    "groups": [
+     [
+      27172
+     ]
+    ],
+    "tail": "10"
    }
   ]
  },
@@ -4226,7 +4310,9 @@
    "alone": {},
    "with:300128": {
     "atkPercent": 5,
-    "matkPercent": 5
+    "matkPercent": 5,
+    "p_size_m": 5,
+    "m_size_m": 5
    }
   },
   "clauses": [
@@ -4241,6 +4327,24 @@
    },
    {
     "key": "matkPercent",
+    "groups": [
+     [
+      300128
+     ]
+    ],
+    "tail": "5"
+   },
+   {
+    "key": "p_size_m",
+    "groups": [
+     [
+      300128
+     ]
+    ],
+    "tail": "5"
+   },
+   {
+    "key": "m_size_m",
     "groups": [
      [
       300128
@@ -7072,6 +7176,28 @@
      ]
     ],
     "tail": "===10"
+   }
+  ]
+ },
+ "300372": {
+  "scenarios": {
+   "alone": {
+    "m_my_element_ghost": 45
+   },
+   "with:300369": {
+    "m_my_element_ghost": 45,
+    "subele_neutral": 5
+   }
+  },
+  "clauses": [
+   {
+    "key": "subele_neutral",
+    "groups": [
+     [
+      300369
+     ]
+    ],
+    "tail": "5"
    }
   ]
  },
