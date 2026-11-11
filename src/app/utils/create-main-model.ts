@@ -3,6 +3,7 @@ import { DEFAULT_PET_LOYALTY } from '../constants/pet-loyalty';
 
 export const createMainModel = (): MainModel => ({
   skillFormulaVersion: 'current',
+  itemScriptVersion: 'latam',
   class: 1,
   level: 99,
   jobLevel: 1,
@@ -47,6 +48,11 @@ export const createMainModel = (): MainModel => ({
   // with a single rotation out of the token entirely.
   rotationTabs: [],
   rotationTab: 0,
+  // Listed for the same reason `rotation` is: normalizeSavedModel only restores keys it
+  // finds here, so without this line the per-tile counts were written to the token and to
+  // the autosave and then dropped on the way back in — a single-tab build reopened with
+  // every tile back at its default. Card mkvqph0HW51cDiRaXxKS.
+  rotationStacks: [],
   skillStacks: {},
   autoCastSelections: {},
   rawOptionTxts: [],

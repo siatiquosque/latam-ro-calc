@@ -56,8 +56,10 @@ import { DragonKnight } from './DragonKnight';
  *    window. Nothing in the file explains it; with DES 5 a crit may still roll (see
  *    GuillotineCross.cross-impact-gear-states.spec.ts), but a roll does not repeat eight
  *    times. The engine lands between the two.
- *  - The engine is 0,3–0,9% over the plateaus it is held to. Tyr's ATQ +20, if it applies
- *    in battle without showing in the window, is worth exactly that.
+ *  - The engine is 1,5–2,1% over the plateaus it is held to, with Solid Claymore Grau C at the
+ *    +10% that the client text, Divine Pride and rAthena all give (the database carried +8%
+ *    to fit this file, which left 0,3–0,9%). The gap differs by window (0,6 points more with
+ *    the Cardinal kit up), so it is not the weapon bonus: it is still unexplained.
  */
 
 const items = JSON.parse(readFileSync('src/assets/demo/data/item.json', 'utf8'));
@@ -266,10 +268,12 @@ describe('Cavaleiro Draconiano — Dilacerar in a 45-buff recording (GvfWS5eND5)
     const perHit = plateau / 5;
     // Every packet is a critical: the non-crit ceiling is a third of the plateau.
     expect(r.noCriMax * 5).toBeLessThan(plateau);
-    // The plateau sits just under the simulated critical — 0,3% in the first window, 0,9% in
-    // the second. Tyr's ATQ +20 is the size of that gap; see the header.
+    // The plateau sits just under the simulated critical — 1,5% in the first window, 2,1% in
+    // the second, with Dilacerar Grau C at +10% as the client text and rAthena say. It was
+    // 0,3% / 0,9% with the +8% the database used to carry; nothing but a replay fit justified
+    // that figure, so the gap is kept open here as an unexplained residual.
     expect(perHit).toBeLessThanOrEqual(r.criMax);
-    expect(perHit / r.criMax).toBeGreaterThan(0.99);
+    expect(perHit / r.criMax).toBeGreaterThan(0.975);
 
     // The rest of the window is the Força Titânica proc on Dilacerar, at a fixed ratio to
     // the plateau that is not the "dobro" the client describes.
@@ -289,7 +293,7 @@ describe('Cavaleiro Draconiano — Dilacerar in a 45-buff recording (GvfWS5eND5)
     expect([top, count]).toEqual([70_549_505, 8]);
     expect(top / 67_461_435).toBeCloseTo(1.0458, 3);
     const r = sim(STATE_3);
-    expect(top / 5 / r.criMax).toBeGreaterThan(1.03);
+    expect(top / 5 / r.criMax).toBeGreaterThan(1.02);
   });
 
   it('leaves the dummy alone once other players start debuffing it', () => {

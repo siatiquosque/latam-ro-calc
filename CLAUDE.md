@@ -24,3 +24,10 @@ Never publish, activate a release or change anything on the VPS (`deploy/vps/dep
 Caddy, the links SQLite file) without the user's explicit permission for that specific change. Preparing the
 artifact, notes and tests locally needs no permission. See `docs/deploy-vps.md` and `docs/releases.md`.
 Always back up `/root/web/Caddyfile` (dated copy beside it) before any change to it, validate before reload, and never print its contents: it holds other sites' `basic_auth` hashes.
+
+## Auditoria e atualização do banco de itens
+
+When asked to update, audit or check the integrity of `src/assets/demo/data/item.json` (new client patch, new items,
+"auditar a base"), follow `docs/script-audit.md` ("Como re-auditar"): run `node tools/audit-item-scripts.mjs`, apply the
+rulings already recorded there, ask the user only about new cases, run the full suite before committing, and add an entry
+to `docs/script-audit-log.md`. Sources outside the RagnarokDB are manual.

@@ -5,12 +5,14 @@ import { SKILL_NAME } from '../constants/skill-name';
 import { WeaponTypeName } from '../constants/weapon-type-mapper';
 import { Weapon } from '../domain';
 import { DamageFormulaCalc } from '../models/damage-summary.model';
+import type { TextKey } from '../i18n';
 import { ClassAutoCastDefinition } from '../models/auto-cast.model';
 import { EquipmentSummaryModel } from '../models/equipment-summary.model';
 import { AdditionalBonusInput, InfoForClass, SkillRef, SkillStateCtx } from '../models/info-for-class.model';
-import { ASPD_CAP, floor, sortSkill } from '../utils';
+import { ASPD_CAP, floor, sortSkill, StackLimits } from '../utils';
 import { AspdTable } from './_aspd-table';
 import { ClassName } from './_class-name';
+import { JOB_TIER_CAPS } from './_job-tier';
 import { rebalancedSkillCatalog } from '../skills/rebalance-2026';
 import { withSelectableSkillLevels } from '../skills/skill-levels';
 import type { SkillFormulaVersion } from '../skills/skill-formula-version';
@@ -36,7 +38,7 @@ export interface DefForCalcModel {
   finalSoftDef: number;
 }
 
-export interface AtkSkillModel {
+export interface AtkSkillModel extends StackLimits {
   preview?: boolean;
   previewVersion?: string;
   previewDescription?: string;
@@ -81,9 +83,18 @@ export interface AtkSkillModel {
       propertyMultiplier: number;
     } & DefForCalcModel,
   ) => number;
+  /** What the skill's own packet is called when a `part2` splits the damage in two —
+   *  Colisão Astral's `Asteroide` against its `Meteoritos`. A catalog key rather than a
+   *  word, because the reader picks the language: each entry carries what the client's
+   *  own description calls that packet in pt-BR, Spanish and English. Without one the
+   *  breakdown falls back to the skill's name. */
+  part1LabelKey?: TextKey;
   part2?: {
     damageRepeat?: number | ((input: AtkSkillFormulaInput) => number);
-    label: string;
+    /** What the client calls this packet, as a catalog key — see `part1LabelKey`. A
+     *  rebalance patch that leaves it out inherits the one the job file gives, see
+     *  resolveRebalancedSkill. */
+    labelKey?: TextKey;
     /** Omitted when the additional packet inherits the main attack's element. */
     element?: ElementType;
     isIncludeMain: boolean;
@@ -96,9 +107,6 @@ export interface AtkSkillModel {
   finalDmgFormula?: (input: AtkSkillFormulaInput & { damage: number; }) => number;
   /** Explains a finalDmgFormula adjustment in the damage graph when the skill has one. */
   finalDmgCalc?: (input: AtkSkillFormulaInput & { damageBefore: number; damageAfter: number }) => DamageFormulaCalc;
-  maxStack?: number;
-  minStack?: number;
-  defaultStack?: number;
   canCri?: boolean | ((input: AtkSkillFormulaInput) => boolean);
   baseCri?: number;
   forceCri?: boolean;
@@ -111,10 +119,24 @@ export interface AtkSkillModel {
    */
   criDmgPercentage?: number;
   /**
+   * How many packets one cast *prints*, when the ratio still lands only once: the cast
+   * deals `formula()` in total and the client splits it N ways. Damage is unchanged by
+   * it — it only floors each packet (see `applyAuraReduction`) and feeds the display.
+   *
    * Will be round down
    */
   hit?: number;
   hitByLevel?: (skillLevel: number) => number;
+  /**
+   * How many times one cast *applies* the ratio: the cast deals `formula()` × N. This is
+   * the "por esfera" / "× N cristais" shape, and the per-second tick of a field.
+   *
+   * Choosing between this and {@link hit} is the whole difference between a skill that
+   * deals its table figure and one that deals N times it, and a client table printing a
+   * single ATQM column does not settle it on its own — bROWiki writes Zero Absoluto's as
+   * "700% × 5 cristais" where the client prints only 700%. Settle it against a recorded
+   * or measured in-game number, as Warlock.jack-frost-hits.spec.ts does.
+   */
   totalHit?: number | ((parmas: AtkSkillFormulaInput) => number);
   /** Apply defenses to each packet before aggregating multipart casts. */
   damageRepeat?: number | ((input: AtkSkillFormulaInput) => number);
@@ -363,18 +385,23 @@ export abstract class CharacterBase {
     return this._initialTraitPoint;
   }
 
+  /** The played job's own caps (see `_job-tier.ts`); no row means the 3rd/4th-job defaults. */
+  private get tierCaps() { return JOB_TIER_CAPS[this.className]; }
+
   get minMaxLevelCap() {
+    const caps = this.tierCaps;
+
     return {
-      minMaxLevel: this.minMaxLevel,
-      maxJob: this.maxJob,
+      minMaxLevel: caps?.minMaxLevel ?? this.minMaxLevel,
+      maxJob: caps?.maxJobLevel ?? this.maxJob,
     };
   }
 
-  get maxBaseStat() { return 130; }
+  get maxBaseStat() { return this.tierCaps?.maxBaseStat ?? 130; }
 
-  get maxAspd() { return ASPD_CAP; }
+  get maxAspd() { return this.tierCaps?.maxAspd ?? ASPD_CAP; }
 
-  get excludedJobLevels(): number[] { return [66, 67, 68, 69]; }
+  get excludedJobLevels(): number[] { return this.tierCaps?.excludedJobLevels ?? [66, 67, 68, 69]; }
 
   /** Older positional saves may precede newly appended class controls. */
   matchesSavedSkillCount(kind: 'active' | 'passive', count: number | undefined): boolean {

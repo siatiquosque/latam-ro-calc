@@ -1,5 +1,331 @@
 [
   {
+    "v": "0.1.238-beta",
+    "date": "10-11-2026",
+    "logs": [
+      "Adicionadas como prévia 479 peças reformuladas (Varmundt, equipamentos, armas e sombrios), com os bônus lidos da descrição em inglês. As peças seladas Impressas/Gravadas ficam ocultas.",
+      "Corrigidos os bônus de 66 itens cujo script divergia da descrição do cliente e do rAthena, como dano contra todas as propriedades, tamanhos e raças.",
+      "Corrigidos os bônus de mais de 200 itens contra a descrição do cliente: penetração de DEF por raça, dano contra propriedades, classes e raças, dano de habilidade, recarga e conjuração por habilidade, penalidade de tamanho e ATQ por nível de base.",
+      "Novo efeito de exibição \"Anula o consumo de gema\" (Carta Abelha-Rainha, conjunto Racing e outros), útil para builds sem gasto de gema. Não altera o dano.",
+      "Ataques básicos mantêm a DEF física leve mesmo com o efeito de ignorar toda a DEF, como nas gravações do Perseguidor; as habilidades continuam ignorando-a.",
+      "Conjuntos de equipamentos sem bônus registrado agora entram na simulação, inclusive os que exigem vários parceiros (por exemplo, medalha e dragona da Mina de Einbech).",
+      "Catálogo atualizado com o cliente de 10/11/2026: 73 itens novos (como o conjunto Magistral dos Falcões) e 161 descrições revisadas.",
+      "Corrigidos bônus de armas e acessórios conferidos com o texto do jogo: o grau era contado duas vezes (Camisa Fofinha, armas Precision, Paenitentia), mais Machado do Apocalipse, Lança Gigante, Grevas de Ur, Cota Perene e várias cartas.",
+      "Vinte e dois itens de prévia (Coroas do Bem e do Mal e outros) passam a ser itens normais, com o texto do cliente.",
+      "Novo seletor \"Itens\" (com as prévias ligadas): escolha entre os bônus do LATAM e os do script do cliente kRO nos itens em que os dois divergem."
+    ],
+    "logs_es": [
+      "Agregadas como adelanto 479 piezas reformuladas (Varmundt, equipos, armas y sombrías), con los bonos leídos de la descripción en inglés. Las piezas selladas Impresas/Grabadas quedan ocultas.",
+      "Corregidos los bonos de 66 ítems cuyo script divergía de la descripción del cliente y de rAthena, como daño contra todas las propiedades, tamaños y razas.",
+      "Corregidos los bonos de más de 200 ítems según la descripción del cliente: penetración de DEF por raza, daño contra propiedades, clases y razas, daño de habilidad, enfriamiento y lanzamiento por habilidad, penalización de tamaño y ATQ por nivel base.",
+      "Nuevo efecto de visualización \"Anula el consumo de gema\" (Carta Abeja Reina, conjunto Racing y otros), útil para builds sin gasto de gema. No altera el daño.",
+      "Los ataques básicos mantienen la DEF física suave incluso con el efecto de ignorar toda la DEF, como en las grabaciones del Acechador; las habilidades siguen ignorándola.",
+      "Los conjuntos de equipamiento sin bono registrado ahora entran en la simulación, incluidos los que exigen varios compañeros (por ejemplo, medalla y charretera de la Mina de Einbech).",
+      "Catálogo actualizado con el cliente del 10/11/2026: 73 ítems nuevos (como el conjunto Magistral de los Halcones) y 161 descripciones revisadas.",
+      "Corregidos bonos de armas y accesorios comprobados con el texto del juego: el grado se contaba dos veces (Camisa Conejito, armas Precision, Paenitentia), además de Hacha del Apocalipsis, Lanza Gigante, Grebas de Ur, Cota Perene y varias cartas.",
+      "Veintidós ítems de vista previa (Coronas del Bien y del Mal y otros) pasan a ser ítems normales, con el texto del cliente.",
+      "Nuevo selector \"Ítems\" (con las vistas previas activadas): elige entre los bonos de LATAM y los del script del cliente kRO en los ítems donde difieren."
+    ],
+    "logs_en": [
+      "Added 479 reformed pieces (Varmundt, equipment, weapons and shadow gear) as previews, with bonuses read from the English description. Sealed Printed/Engraved pieces stay hidden.",
+      "Fixed the bonuses of 66 items whose script differed from the client description and rAthena, such as damage against all properties, sizes and races.",
+      "Fixed the bonuses of more than 200 items against the client description: DEF penetration by race, damage against properties, classes and races, skill damage, per-skill cooldown and cast time, size penalty and ATK per base level.",
+      "New display effect \"Removes gem consumption\" (Queen Bee Card, the Racing set and others), useful for builds with no gem cost. It does not change damage.",
+      "Basic attacks keep soft physical DEF even with the full DEF-ignore effect, as in the Shadow Chaser recordings; skills still ignore it.",
+      "Equipment sets that had no bonus registered now count in the simulation, including those that need several partners (for example, the Einbech Mine medal and epaulet).",
+      "Catalog updated with the 10/11/2026 client: 73 new items (such as the Falcon Magistral set) and 161 revised descriptions.",
+      "Fixed weapon and accessory bonuses checked against the in-game text: grade was counted twice (Rabbit Pattern Shirt, Precision weapons, Paenitentia), plus Apocalypse Axe, Giant Spear, Ur Greaves, Perennial Cuirass and several cards.",
+      "Twenty-two preview items (Crowns of Good and Evil and others) are now regular items, with the client text.",
+      "New \"Items\" selector (with previews on): choose between the LATAM bonuses and the kRO client-script ones on the items where they differ."
+    ]
+  },
+  {
+    "v": "0.1.237-beta",
+    "date": "10-11-2026",
+    "logs": [
+      "Catálogo sincronizado com o cliente de 10/11/2026: 73 itens novos na busca e seis visuais que já podem ser equipados — Cabelo de Leon, Cabelo de Juncea, Cabelo de Aurelie, Elmo do Rei do Norte, Véu de Friederike e Asas de Juncea.",
+      "Os equipamentos do Episódio 19 que ainda apareciam em inglês passam a exibir o nome e a descrição do próprio cliente: as Coroas e Botas Ambivalentes, a Rapieira Infernal, o Punhal Celestial, a Ceifeira Infernal, a Marreta Celestial, o conjunto Magistral dos Falcões e os Dons Celestial e Infernal.",
+      "As quatro peças do conjunto Magistral dos Falcões passam a somar HP máx. +10 por refino, como a descrição promete.",
+      "Itens renomeados pelo cliente foram atualizados, entre eles a Marca de Honra de Schwartz, antes Brasão de Honra."
+    ],
+    "logs_es": [
+      "Catálogo sincronizado con el cliente del 10/11/2026: 73 objetos nuevos en la búsqueda y seis disfraces que ya se pueden equipar — Cabello de Leon, Cabello de Juncea, Cabello de Aurelie, Yelmo de lobo errante decorativo, Velo de Friederike y Alas de Juncea.",
+      "Los equipos del Episodio 19 que todavía aparecían en inglés pasan a mostrar el nombre y la descripción del propio cliente: las Coronas y Botas Ambivalentes, el Estoque Infernal, la Daga Celestial, la Segadora Infernal, el Mazo Celestial, el conjunto Magistral Cazavientos y los Dones Celestial e Infernal.",
+      "Las cuatro piezas del conjunto Magistral Cazavientos pasan a sumar HP máx. +10 por refinamiento, como promete la descripción.",
+      "Se actualizaron los objetos renombrados por el cliente, entre ellos la Marca de Honor de Schwartz, antes Escudo de Honor."
+    ],
+    "logs_en": [
+      "Catalogue synced with the 10 November 2026 client: 73 new items in search and six costumes that can now be equipped — Leon's Hair, Juncea's Hair, Aurelie's Hair, Wondering Wolf Helm, Friederike's Veil and Juncea's Wings.",
+      "The Episode 19 gear that was still listed from its iRO page now carries the client's own name and description: the Crowns and Boots of Good and Evil, the Blood Rapier, the Holy Light Dagger, the Soul Harvest, the Divine Buster, the Master Windhawk set and the Good and Evil Spells.",
+      "The four Master Windhawk pieces now add Max HP +10 per refine, the way their description promises.",
+      "Items the client renamed were updated, among them the Combat Basilisk Card, previously Charge Basilisk Card."
+    ]
+  },
+  {
+    "v": "0.1.236-beta",
+    "date": "10-11-2026",
+    "logs": [
+      "Dezessete classes novas para simular: todas as transclasses, o Justiceiro, o Ninja e a linha Taekwon. Cada uma com os próprios limites — nível de base até 99, nível de classe até 70 (50 na linha Taekwon), atributos até 99 e Vel.Atq. até 190.",
+      "Habilidades de dano do Justiceiro: Rastrear o Alvo, Ferir Alvo, Rajada Certeira, Desperado, Controle de Multidão, Ataque Total, Disparo Espalhado e Mina do Justiceiro.",
+      "Habilidades de dano do Ninja: Arremessar Shuriken, Arremessar Kunai, Arremessar Huuma, Virar Tatami, Corte da Névoa e Descarga Elétrica, além das sete magias ninja que já existiam — e que agora também chegam ao Kagerou e ao Shinkiro.",
+      "Habilidades de dano das transclasses: Golpe Traumático e Ataque Vital no Lorde; Golpe da Palma em Fúria, Punho do Tigre e Combo Esmagador no Mestre; Mammonita no Mestre Ferreiro e no Criador; Flecha Melódica no Menestrel e Estilingue na Cigana.",
+      "Habilidades de dano da linha Taekwon: Chute do Tornado, Patada Voadora, Rasteira, Contrachute e Chute Aéreo no Taekwon; Calor Solar, Calor Lunar e Calor Estelar no Mestre Taekwon; Estin, Estun e Esma no Espiritualista — que também chegam ao Mestre Estelar, ao Mestre Celestial, ao Ceifador de Almas e ao Asceta das Almas.",
+      "Habilidades que estavam declaradas na classe errada voltaram para a dona: Bomba Ácida no Criador, Vulcão de Flechas no Menestrel e na Cigana, Luz Sagrada e Exorcismo Magnus no Sumo Sacerdote.",
+      "Descarga Elétrica conjurada por item passa a usar a tabela do cliente, e a Rotação não trava mais ao calcular o tempo para derrubar um alvo que quase não recebe dano."
+    ],
+    "logs_es": [
+      "Diecisiete clases nuevas para simular: todas las transclases, el Pistolero, el Ninja y la línea Taekwon. Cada una con sus propios límites — nivel de base hasta 99, nivel de clase hasta 70 (50 en la línea Taekwon), atributos hasta 99 y Vel. de Ataque hasta 190.",
+      "Habilidades de daño del Pistolero: Seguimiento, Disparo Lacerante, Secuencia Frenética, Desperado, Disparo Dominante, Explosión Total, Ataque Generalizado y Mina de Pistolero.",
+      "Habilidades de daño del Ninja: Arrojar Shuriken, Arrojar Kunai, Arrojar Huuma Shuriken, Voltear Tatami, Tajo de Niebla y Descarga Relámpago, además de las siete magias ninja que ya existían — y que ahora también llegan al Kagerou y al Shinkiro.",
+      "Habilidades de daño de las transclases: Golpe Traumático y Golpe Vital en el Lord Caballero; Golpe de Palma Furioso, Puño Glaciar y Combo Demoledor en el Campeón; Mammonita en el Maestro Herrero y en el Creador; Ataque Musical en el Juglar y Flecha Honda en la Gitana.",
+      "Habilidades de daño de la línea Taekwon: Patada Torbellino, Patada de Talón, Patada Remolino, Contrapatada y Patada Voladora en el Taekwon; Calor Solar, Calor Lunar y Calor Estelar en el Maestro de Taekwon; Estin, Estun y Esma en el Vinculador de Almas — que también llegan al Emperador Estelar, al Emperador Celestial, al Segador de Almas y al Asceta de Almas.",
+      "Habilidades que estaban declaradas en la clase equivocada volvieron a su dueña: Bomba Ácida en el Creador, Volcán Flecha en el Juglar y en la Gitana, Luz Sagrada y Magnus Exorcismus en el Sumo Sacerdote.",
+      "Descarga Relámpago lanzada por un objeto pasa a usar la tabla del cliente, y la Rotación ya no se traba al calcular el tiempo para derribar a un objetivo que casi no recibe daño."
+    ],
+    "logs_en": [
+      "Seventeen new classes to simulate: every transcendent class, the Gunslinger, the Ninja and the Taekwon line. Each with its own caps — base level up to 99, job level up to 70 (50 on the Taekwon line), stats up to 99 and ASPD up to 190.",
+      "Gunslinger damage skills: Tracking, Wounding Shot, Trigger Happy Shot, Desperado, Crowd Control Shot, Full Blast, Spread Attack and Gunslinger Mine.",
+      "Ninja damage skills: Throw Shuriken, Throw Kunai, Throw Huuma Shuriken, Flip Tatami, Haze Slasher and Lightning Jolt, plus the seven ninja spells that were already there — which now reach the Kagerou and the Shinkiro too.",
+      "Transcendent damage skills: Traumatic Blow and Vital Strike on the Lord Knight; Raging Palm Strike, Glacier Fist and Chain Crush Combo on the Champion; Mammonite on the Whitesmith and the Creator; Melody Strike on the Clown and Slinging Arrow on the Gypsy.",
+      "Taekwon line damage skills: Tornado Kick, Heel Drop, Roundhouse, Counter Kick and Flying Kick on the Taekwon; Solar Heat, Lunar Heat and Stellar Heat on the Taekwon Master; Estin, Estun and Esma on the Soul Linker — which also reach the Star Emperor, the Sky Emperor, the Soul Reaper and the Soul Ascetic.",
+      "Skills declared on the wrong class went back to their owner: Acid Bomb on the Creator, Arrow Vulcan on the Clown and the Gypsy, Holy Light and Magnus Exorcismus on the High Priest.",
+      "Lightning Jolt cast by an item now uses the client's table, and the Rotation no longer freezes while working out how long it takes to bring down a target that barely takes damage."
+    ]
+  },
+  {
+    "v": "0.1.235-beta",
+    "date": "09-11-2026",
+    "logs": [
+      "Renegado e Mandraque agora podem selecionar as sete habilidades de terceira classe do Arco Híbrido que faltavam — Impacto Espiritual, Abalo Sísmico, Meteoro Escarlate, Pó de Diamante, Corrente Elétrica, Judex e Maldição de Jormungand —, todas copiáveis por Mimetismo, em todos os níveis. O bônus de +10% da flecha do conjunto passa a entrar na conta ao selecionar a habilidade que ela nomeia.",
+      "As habilidades [Invocação das Marés] e [Invocação da Selva], que faltavam, entraram na lista Aprenda para ganhar bônus do Invocador e do Animista, ao lado da [Invocação da Fauna] que já estava lá, e o buff [Aliança Animal] entrou na lista de habilidades e efeitos ativos do Animista, dando +3 de P.ATQ e +3 de S.ATQM por nível. As duas Invocações ficam só como nível aprendido, porque nenhuma mexe no dano: uma altera cura, duração e recarga de habilidades de suporte, e a outra vale apenas pelos 3 segundos seguintes a uma habilidade da Floresta. Reportado por YuukiiBr.",
+      "Corrigido o conjunto [Pele da Rainha Verme] do Hálito de Verme com Rosto: o bônus a cada 20 de AGI base agora conta como velocidade de ataque, e não como pós-conjuração.",
+      "Adicionada ao mesmo conjunto a linha que faltava: a cada 20 de VIT base, resistência a propriedade Neutro +1%."
+    ],
+    "logs_es": [
+      "Perseguidor de Sombras y evoluciones ahora pueden seleccionar las siete habilidades de clase 3 del Arco Híbrido que faltaban — Impacto Espiritual, Temblor Sísmico, Roca Carmesí, Polvo Diamantino, Relámpago de Cadena, Judex y Nube Asesina —, todas copiables por Mimetismo, en todos los niveles. El bono de +10% de la flecha del conjunto pasa a entrar en el cálculo al seleccionar la habilidad que ella nombra.",
+      "Las habilidades [Espíritu de Mar] y [Espíritu de Tierra], que faltaban, entraron en la lista Aprende para ganar bonificaciones del Invocador y del Domador de Espíritus, junto al [Espíritu de Vida] que ya estaba allí, y el buff [Comunión temporal] entró en la lista de habilidades y efectos activos del Domador de Espíritus, dando +3 de ATQF y +3 de ATQMH por nivel. Los dos Espíritus quedan solo como nivel aprendido, porque ninguno cambia el daño: uno altera curación, duración y tiempo de espera de habilidades de soporte, y el otro vale únicamente por los 3 segundos siguientes a una habilidad de Planta. Reportado por YuukiiBr.",
+      "Corregido el conjunto [Piel de Reina Gusano] del Aliento de Cara de Gusano: el bono por cada 20 de AGI base ahora cuenta como velocidad de ataque, y no como posconjuración.",
+      "Añadida al mismo conjunto la línea que faltaba: cada 20 de VIT base, resistencia a propiedades neutrales +1%."
+    ],
+    "logs_en": [
+      "Shadow Chaser and evolutions can now select the seven third-class skills of the Hybrid Bow that were missing — Soul Expansion, Earth Strain, Crimson Rock, Diamond Dust, Chain Lightning, Judex and Killing Cloud —, all copyable by Mimetismo, at every level. The set arrow's +10% bonus now counts when the skill it names is selected.",
+      "The [Spirit of Sea] and [Spirit of Land] skills, which were missing, were added to the Learn to get bonuses list of the Summoner and the Spirit Handler, next to the [Spirit of Life] that was already there, and the [Temporary Communion] buff was added to the active skills and effects list of the Spirit Handler, giving +3 P.ATK and +3 S.MATK per level. The two Spirits stay as a learned level only, because neither changes damage: one alters healing, duration and cooldown of support skills, and the other counts only for the 3 seconds following a Plant skill. Reported by YuukiiBr.",
+      "Fixed the [Giant Faceworm Snake Skin] set on Faceworm Breath: the bonus for every 20 base AGI now counts as attack speed, not as after-cast delay.",
+      "Added the line that was missing from the same set: for every 20 base VIT, resistance to Neutral property attacks +1%."
+    ]
+  },
+  {
+    "v": "0.1.234-beta",
+    "date": "09-11-2026",
+    "logs": [
+      "A Rotação agora mostra a autoconjuração logo abaixo da habilidade que a dispara, com a chance do conjunto, o dano médio de cada ativação e a fatia dela no dano do ciclo — a habilidade acima passa a mostrar a fatia dela também. A linha abre os detalhes da habilidade e a conta do dano, como as habilidades acima dela, e anda junto quando a ordem muda; esse dano entra no total do ciclo e no tempo de morte.",
+      "Adicionadas as autoconjurações dos demais Colares Consagrados (Amizade, Confiança, Luz e Amor), cada uma presa à arma do conjunto em +10."
+    ],
+    "logs_es": [
+      "La Rotación ahora muestra la autoconjuración justo debajo de la habilidad que la dispara, con la probabilidad del conjunto, el daño promedio de cada activación y su parte del daño del ciclo — la habilidad de arriba pasa a mostrar la suya también. La línea abre los detalles de la habilidad y el cálculo del daño, como las habilidades encima de ella, y se mueve junto cuando cambia el orden; ese daño entra en el total del ciclo y en el tiempo de muerte.",
+      "Añadidas las autoconjuraciones de los demás Colares Consagrados (Amizade, Confiança, Luz y Amor), cada una sujeta al arma del conjunto en +10."
+    ],
+    "logs_en": [
+      "Rotation now shows the autocast right below the skill that fires it, with the set's chance, the mean damage of one activation and its share of the cycle damage — the skill above it now shows its own share too. The line opens the skill details and the damage breakdown, like the skills above it, and travels with the skill when the order changes; that damage counts towards the cycle total and the time to kill.",
+      "Added the autocasts of the remaining Colares Consagrados (Amizade, Confiança, Luz and Amor), each one gated on the set weapon at +10."
+    ]
+  },
+  {
+    "v": "0.1.233-beta",
+    "date": "08-11-2026",
+    "logs": [
+      "Adicionada a autoconjuração do conjunto Cajado Vivatus Fides [2] +10 com Colar Consagrado: Destino: usar Talismã da Fênix agora conjura Talismã do Jabuti Nv. 4 logo em seguida, e o dano aparece em Auto-conjuração. Reportado por Mascotito."
+    ],
+    "logs_es": [
+      "Añadida la autoconjuración del conjunto Cajado Vivatus Fides [2] +10 con Colar Consagrado: Destino: usar Talismán del Fénix ahora conjura Talismán de la Tortuga Nv. 4 justo después, y el daño aparece en Auto-conjuración. Reportado por Mascotito."
+    ],
+    "logs_en": [
+      "Added the Cajado Vivatus Fides [2] +10 with Colar Consagrado: Destino set auto-cast: using Talisman of Red Phoenix now casts Talisman of Black Tortoise Lv. 4 right after, and the damage shows up under Auto-cast. Reported by Mascotito."
+    ]
+  },
+  {
+    "v": "0.1.232-beta",
+    "date": "07-11-2026",
+    "logs": [
+      "Corrigida a redução de conjuração variável de Feiticeiro (Meio) para 2% por nível de Pó de Diamante, como o jogo aplica — a descrição do cliente em pt-BR diz 1%, e está errada. Reportado por Batuta."
+    ],
+    "logs_es": [
+      "Corregida la reducción de conjuración variable de Brujo (Medio) a 2% por nivel de Polvo Diamantino, como lo aplica el juego — la descripción del cliente dice 1%, y es incorrecta. Reportado por Batuta."
+    ],
+    "logs_en": [
+      "Fixed the variable cast reduction of Warlock (Middle) to 2% per level of Diamond Dust, the way the game applies it — the client description says 1%, and it is wrong. Reported by Batuta."
+    ]
+  },
+  {
+    "v": "0.1.231-beta",
+    "date": "07-11-2026",
+    "logs": [
+      "Salvar agora pergunta Substituir ou Nova simulação quando já existe simulação salva. Em Substituir aparece a lista de simulações salvas e cada uma ganha um botão Substituir: o conteúdo dela é trocado pela build atual, sem precisar digitar o nome de novo, e o nome continua o mesmo. Sem nenhuma simulação salva, Salvar vai direto para a janela de nome, como antes. Reportado por Batuta."
+    ],
+    "logs_es": [
+      "Guardar ahora pregunta Reemplazar o Nueva simulación cuando ya hay alguna simulación guardada. En Reemplazar aparece la lista de simulaciones guardadas y cada una gana un botón Reemplazar: su contenido se cambia por la build actual, sin tener que escribir el nombre de nuevo, y el nombre sigue siendo el mismo. Sin ninguna simulación guardada, Guardar va directo a la ventana de nombre, como antes. Reportado por Batuta."
+    ],
+    "logs_en": [
+      "Save now asks Replace or New simulation once there is a saved simulation. Under Replace the list of saved simulations comes up and each one gains a Replace button: its contents are swapped for the current build, with no name to type again, and the name stays the same. With nothing saved, Save goes straight to the name window, as before. Reported by Batuta."
+    ]
+  },
+  {
+    "v": "0.1.230-beta",
+    "date": "07-11-2026",
+    "logs": [
+      "Florescer e Pilares de Pedra ganharam um seletor de \"Acertos\" na rotação, logo depois do seletor de nível: as flores e os pilares caem em células aleatórias, então dá para dizer quantos dos 20 atingiram o alvo. O padrão continua sendo o jardim inteiro, como já era calculado. Reportado por pazzoLino.",
+      "O mesmo seletor de \"Acertos\" chegou a Colisão Astral (19 meteoritos), Chuva de Meteoros (até 7 meteoros, com os 5 golpes da tabela do cliente como padrão) e Chuva de Meteoritos do Hiperaprendiz (até 6 meteoritos). Nenhum número muda sozinho: o padrão de cada uma é o que já vinha sendo calculado.",
+      "Corrigido o seletor de nível das habilidades da rotação, que mostrava o nome em inglês e o nível duas vezes (\"[V3] All Bloom Lv5 Nv1\" em vez de \"Florescer Nv1\"). Valia para todas as habilidades de 4ª classe.",
+      "Cada card de Simulações salvas ganhou um ícone de comparação no canto direito: ele põe a simulação salva como comparação da build atual, sem substituí-la — os equipamentos, o nível, os atributos e os talentos entram como comparação, e as habilidades e os buffs continuam os da simulação atual. O ícone fica apagado nas simulações de outra classe, e o balão diz por quê. Sugerido por pazzoLino."
+    ],
+    "logs_es": [
+      "Florecer y Pilares de Piedra ganaron un selector de \"Impactos\" en la rotación, justo después del selector de nivel: las flores y los pilares caen en celdas aleatorias, así que se puede indicar cuántos de los 20 alcanzaron al objetivo. El valor por defecto sigue siendo el jardín entero, como ya se calculaba. Reportado por pazzoLino.",
+      "El mismo selector de \"Impactos\" llegó a Golpe Astral (19 meteoritos), Tormenta de Meteoros (hasta 7 meteoros, con los 5 golpes de la tabla del cliente como valor por defecto) y Lluvia de Meteoritos del Hiperaprendiz (hasta 6 meteoritos). Ningún número cambia por sí solo: el valor por defecto de cada una es el que ya se calculaba.",
+      "Corregido el selector de nivel de las habilidades de la rotación, que mostraba el nombre en inglés y el nivel dos veces (\"[V3] All Bloom Lv5 Nv1\" en lugar de \"Florecer Nv1\"). Afectaba a todas las habilidades de 4ª clase.",
+      "Cada tarjeta de Simulaciones guardadas ganó un ícono de comparación en la esquina derecha: pone la simulación guardada como comparación de la build actual, sin reemplazarla — el equipamiento, el nivel, los atributos y los talentos entran como comparación, y las habilidades y los buffs siguen siendo los de la simulación actual. El ícono queda apagado en las simulaciones de otra clase, y el globo dice por qué. Sugerido por pazzoLino."
+    ],
+    "logs_en": [
+      "All Bloom and Violent Quake gained a \"Hits\" picker in the rotation, right after the level picker: the flowers and the pillars land on random cells, so you can say how many of the 20 reached the target. The default is still the whole garden, which is what was being calculated already. Reported by pazzoLino.",
+      "The same \"Hits\" picker reached Astral Strike (19 meteors), Meteor Storm (up to 7 meteors, with the client table's 5 hits as the default) and the Hyper Novice's Meteor Storm Buster (up to 6 meteors). No figure moves on its own: each one defaults to the count that was already being calculated.",
+      "Fixed the level picker of the rotation skills, which showed the English name and the level twice (\"[V3] All Bloom Lv5 Nv1\" instead of \"All Bloom Nv1\"). It affected every 4th-class skill.",
+      "Each Saved simulations card gained a comparison icon in the right corner: it brings the saved simulation in as the comparison of the current build, without replacing it — equipment, level, stats and traits come in as the comparison, and skills and buffs stay the ones of the current simulation. The icon is dimmed on simulations of another class, and its tooltip says why. Suggested by pazzoLino."
+    ]
+  },
+  {
+    "v": "0.1.229-beta",
+    "date": "07-11-2026",
+    "logs": [
+      "Os bônus de \"Dano mágico de propriedade\" de sete itens voltaram a contar no dano. Eles estavam gravados no canal de \"contra oponentes de propriedade\", que só rende quando o monstro é daquela propriedade, ou simplesmente não existiam. Agora a Carta Plaga, o Rutilus-OS e o Rutilus-OSAD somam os +5% e +10% de dano Neutro contra qualquer alvo; a Bota Natalina, o Cajado Dínamo e a Guardiã do Natal ganharam as linhas de refino +11 que faltavam; e a Cruz Real deixou de mandar o bônus do conjunto de Schmidt para o dano físico. Numa build de autoconjuração de Mandraque, a Fenda do Abismo contra alvo de outra propriedade sobe os 5% que a Carta Plaga promete.",
+      "A Espada Alada não segura mais a rotação. A recarga de 150 segundos é o tempo de invocação das espadas — e também quanto elas duram —, não a espera entre os golpes, que saem dos ataques básicos corpo a corpo: uma rotação com a habilidade avisava \"Recarga não fecha\" e media o ciclo em 150 segundos. Reportado por YuukiiBr.",
+      "Espinhos Furiosos passou a usar a conjuração variável de 1 segundo que a janela de Conjuração/Espera do cliente mostra, no lugar de 1,5 segundo.",
+      "O Esquife de Gelo conjurado em alvo sem [Calafrio] simulava quatro vezes o dano real: a porcentagem da tabela valia por golpe em vez de valer pela conjuração inteira. As duas colunas da descrição agora batem com o jogo, e o DPS da rotação acompanha. O mesmo valia para o Esquife de Gelo conjurado pela Malha Sombria de Automagia.",
+      "Garra de Tigre agora pode ser simulada em qualquer nível, e não só no 10: o nível escolhido entra no fator de HP e SP da habilidade (12% de HP + 6% de SP no nível 1 até 30% + 15% no nível 10) e também na conjuração, que vai de 1,1 a 2,0 segundos. No detalhamento do dano, a linha do dano especial da versão em combo, depois de Ruína, passou a mostrar os 500 por nível que ela soma, no lugar dos 240 da versão normal."
+    ],
+    "logs_es": [
+      "Los bonos de \"Daño mágico de propiedad\" de siete ítems vuelven a contar en el daño. Estaban guardados en el canal de \"contra enemigos de propiedad\", que solo rinde cuando el monstruo es de esa propiedad, o simplemente no existían. Ahora la Carta Plaga, el Rutilus-OS y el Rutilus-OSAD suman los +5% y +10% de daño Neutro contra cualquier objetivo; la Bota Natalina, el Cajado Dínamo y la Guardiã do Natal recibieron las líneas de refinamiento +11 que faltaban; y la Cruz Real dejó de enviar el bono del conjunto de Schmidt al daño físico. En una build de autoconjuro de Mandraque, la Fenda do Abismo contra un objetivo de otra propiedad sube el 5% que promete la Carta Plaga.",
+      "La Espada Alada ya no retiene la rotación. La recarga de 150 segundos es el tiempo de invocación de las espadas — y también cuánto duran —, no la espera entre los golpes, que salen de los ataques básicos cuerpo a cuerpo: una rotación con la habilidad avisaba \"La recarga no cierra\" y medía el ciclo en 150 segundos. Reportado por YuukiiBr.",
+      "Espinhos Furiosos pasó a usar la conjuración variable de 1 segundo que muestra la ventana de Conjuración/Espera del cliente, en lugar de 1,5 segundo.",
+      "Jack Escarcha lanzado sobre un objetivo sin [Congelado] simulaba cuatro veces el daño real: el porcentaje de la tabla valía por golpe en lugar de valer por el lanzamiento entero. Las dos columnas de la descripción ya coinciden con el juego, y el DPS de la rotación lo acompaña. Lo mismo ocurría con Jack Escarcha lanzado por la Malha Sombria de Automagia.",
+      "Cañón de Tigre ahora puede simularse en cualquier nivel, y no solo en el 10: el nivel elegido entra en el factor de HP y SP de la habilidad (12% de HP + 6% de SP en el nivel 1 hasta 30% + 15% en el nivel 10) y también en el lanzamiento, que va de 1,1 a 2,0 segundos. En el desglose del daño, la línea del daño especial de la versión en combo, después de Imperio Caído, pasó a mostrar los 500 por nivel que suma, en lugar de los 240 de la versión normal."
+    ],
+    "logs_en": [
+      "The \"magic damage of property\" bonuses on seven items count towards damage again. They were stored in the \"against opponents of property\" channel, which only pays off when the monster is of that property, or were simply absent. The Carta Plaga, Rutilus-OS and Rutilus-OSAD now add their +5% and +10% Neutral damage against any target; Bota Natalina, Cajado Dínamo and Guardiã do Natal gained the missing refine +11 lines; and Cruz Real no longer sends the Schmidt set bonus to physical damage. On a Mandraque auto-cast build, Fenda do Abismo against a target of another property goes up by the 5% the Carta Plaga promises.",
+      "Servant Weapon no longer holds the rotation back. The 150-second cooldown is how long the swords take to summon — and how long they stay out —, not the wait between their hits, which come off basic melee attacks: a rotation with the skill warned \"The cooldown does not close\" and measured the cycle at 150 seconds. Reported by YuukiiBr.",
+      "Espinhos Furiosos now uses the 1-second variable cast the client Cast/Delay window shows, instead of 1.5 seconds.",
+      "Jack Frost cast on a target without [Frozen] was simulating four times the real damage: the table's percentage counted per hit instead of covering the whole cast. Both columns of the description now match the game, and the rotation's DPS follows. The same held for the Jack Frost cast by the Major Auto Spell Shadow Armor.",
+      "Tiger Cannon can now be simulated at any level, not only at 10: the chosen level feeds the skill's HP and SP factor (12% HP + 6% SP at level 1 up to 30% + 15% at level 10) and the cast time as well, which goes from 1.1 to 2.0 seconds. In the damage breakdown, the special damage line of the combo version, after Fallen Empire, now shows the 500 per level it adds instead of the normal version's 240."
+    ]
+  },
+  {
+    "v": "0.1.228-beta",
+    "date": "06-11-2026",
+    "logs": [
+      "Os acessórios Ilusión passaram a oferecer os seis encantos de atributo: DES +3 e INT +3 faltavam no Soquete Ilusión A e na Turbina Ilusión A, e FOR +3 e AGI +3 no Soquete Ilusión B e na Turbina Ilusión B. A descrição dos Módulos no cliente lista as quatro peças para os seis. Os encantos de Excelion e Automatron foram conferidos coluna por coluna e já estavam completos."
+    ],
+    "logs_es": [
+      "Los accesorios Ilusión ahora ofrecen los seis encantos de atributo: DES +3 e INT +3 faltaban en la Ficha de Batalla Ilusión A y en el Potenciador de Ilusión A, y FUE +3 y AGI +3 en la Ficha de Batalla Ilusión B y en el Potenciador de Ilusión B. La descripción de los Módulos en el cliente lista las cuatro piezas para los seis. Los encantos de Excelion y Automatron fueron revisados columna por columna y ya estaban completos."
+    ],
+    "logs_en": [
+      "The Illusion accessories now offer all six attribute enchants: DEX +3 and INT +3 were missing from the Illusion Battle Chip A and the Illusion Booster A, and STR +3 and AGI +3 from the Illusion Battle Chip B and the Illusion Booster B. The Modification Module descriptions in the client list all four pieces for all six. The Excelion and Automatron enchants were checked column by column and were already complete."
+    ]
+  },
+  {
+    "v": "0.1.227-beta",
+    "date": "06-11-2026",
+    "logs": [
+      "A Carta Banshee agora aplica os +20% de dano em [Espíritos Anciões], [Ataque Espiritual] e [Vulcão Napalm] que a descrição dela promete: na simulação do Arcano, o dano de Vulcão Napalm sobe 20% com a carta no elmo. A linha de \"Dano de [perícia]\" nunca era lida em nenhuma carta, e outras 18 passaram a aplicá-la — entre elas a Carta Vento da Colina, a Carta Laurell Weinder, a Carta Ferus Escarlate e a Carta Salamandra, que até agora não faziam nada. Reportado por Bruxula.",
+      "As Pedras Defensoras 1, 2 e 3 do Coelho Macabro-LT entraram no banco de itens e agora aparecem nos encantes do escudo: DEF +100, +150 e +200, e a de nível 3 ainda dá resistência a todas as propriedades +5%. Reportado por iVitor."
+    ],
+    "logs_es": [
+      "La Carta Banshee ahora aplica el +20% de daño en [Golpe de Alma], [Golpe Napalm] y [Volcán de Napalm] que indica su descripción: en la simulación del Arcano, el daño de Volcán de Napalm sube 20% con la carta en el casco. La línea de \"Daño del [habilidad]\" nunca se leía en ninguna carta, y otras 18 pasaron a aplicarla — entre ellas la Carta Viento de la Colina, la Carta Laurell Weinder, la Carta Ferus rojo y la Carta Salamandra, que hasta ahora no hacían nada. Reportado por Bruxula.",
+      "Las piedras Defensa 1Lv, 2Lv y 3Lv del Conejo Macabro-LT entraron en la base de ítems y ya aparecen entre los encantes del escudo: DEF +100, +150 y +200, y la de nivel 3 además da resistencia contra ataques de todos los atributos +5%. Reportado por iVitor."
+    ],
+    "logs_en": [
+      "The Banshee Card now applies the +20% damage on [Elder Spirits], [Spirit Attack] and [Napalm Volcano] its description promises: in the Warlock simulation, Napalm Volcano damage goes up 20% with the card in the headgear. The \"Damage from [skill]\" line was never read on any card, and another 18 now apply it — among them the Hill Wind Card, the Laurell Weinder Card, the Red Ferus Card and the Salamander Card, which until now did nothing at all. Reported by Bruxula.",
+      "The Mad Bunny-LT's Defense 1Lv, 2Lv and 3Lv stones are in the item database and now show up among the shield's enchants: DEF +100, +150 and +200, with the level 3 one also granting +5% resistance to all-attribute attacks. Reported by iVitor."
+    ]
+  },
+  {
+    "v": "0.1.226-beta",
+    "date": "06-11-2026",
+    "logs": [
+      "Schmidt Corrompido passa a ser simulado com a Defesa de Ferro da instância: 10 vezes a DEF no Ruína de Glastheim e 33 vezes no Queda de Glastheim. O dano exibido contra ele era alto demais porque o cálculo usava a DEF do banco de dados, sem a mecânica do salão."
+    ],
+    "logs_es": [
+      "Schmidt Corrompido ahora se simula con la Defensa de Hierro de la instancia: 10 veces la DEF en Ruína de Glastheim y 33 veces en Queda de Glastheim. El daño mostrado contra él era demasiado alto porque el cálculo usaba la DEF de la base de datos, sin la mecánica del salón."
+    ],
+    "logs_en": [
+      "Corrupted Schmidt is now simulated with the instance's Iron Defense: 10 times its DEF in Ruína de Glastheim and 33 times in Queda de Glastheim. The damage shown against him was too high because the calculation used the database DEF, without the hall's mechanic."
+    ]
+  },
+  {
+    "v": "0.1.225-beta",
+    "date": "06-11-2026",
+    "logs": [
+      "Os encantamentos Excelion de resistência (R-Fogo, R-Água, R-Terra, R-Vento) e de recuperação (C-Corpo, C-Alma, C-Físico, C-Mental) foram cadastrados, e o I-Gelo ganhou sua tolerância a Congelamento. Eles agora aparecem em Buscar Item e nas pedras de encantamento do Colete, Motor, Escudo e Perna Excelion. Reportado por leziszi.",
+      "Todas as Manoplas Sombrias com \"ATQ e ATQM +1 por refino\" agora aplicam esse bônus no cálculo. Reportado por Ametsuky."
+    ],
+    "logs_es": [
+      "Los encantamientos Excelion de resistencia (R-Fuego, R-Agua, R-Tierra, R-Viento) y de recuperación (C-Cuerpo, C-Alma, C-Físico, C-Mental) fueron registrados, y el I-Hielo recibió su tolerancia a Congelamiento. Ahora aparecen en Buscar Ítem y en las piedras de encantamiento del Traje, Motor, Escudo y Pierna Excelion. Reportado por leziszi.",
+      "Todos los Guanteletes Sombríos con «ATQ y ATQM +1 por refinación» ahora aplican ese bono en el cálculo. Reportado por Ametsuky."
+    ],
+    "logs_en": [
+      "The Excelion resistance enchantments (R-Fire, R-Water, R-Earth, R-Wind) and the recovery ones (C-Body, C-Soul, C-Physical, C-Mental) are now registered, and I-Freeze gained its Freeze tolerance. They show up in Item Search and in the enchantment stones of the Excelion Suit, Wing, Shield and Leg. Reported by leziszi.",
+      "Every Shadow Weapon with \"ATK and MATK +1 per refine\" now applies that bonus in the calculation. Reported by Ametsuky."
+    ]
+  },
+  {
+    "v": "0.1.224-beta",
+    "date": "05-11-2026",
+    "logs": [
+      "A Carta Conforto só autoconjura [Crux Magnum] em Sacerdotes e evoluções, como diz a descrição do item no jogo; em um Mandraque a autoconjuração não aparece mais. A Carta Grifo (Espadachins e evoluções) e a Lança Gloriosa (Templários e evoluções) estavam sem a mesma restrição e também foram limitadas à linha de classe da descrição. Reportado por Ladrão da ZL."
+    ],
+    "logs_es": [
+      "La Carta Confort solo autolanza [Gran Cruz] en Sacerdotes y evoluciones, como indica la descripción del objeto en el juego; en un Mandraque la autoconjuración ya no aparece. La Carta Grifo (Espadachines y evoluciones) y la Lanza glorificada (Cruzados y evoluciones) estaban sin la misma restricción y también quedaron limitadas a la línea de clase de la descripción. Reportado por Ladrão da ZL."
+    ],
+    "logs_en": [
+      "The Lady Solace Card only auto-casts [Grand Cross] on Priests and their evolutions, as the in-game item description states; on a Mandraque the auto-cast no longer appears. The Gryphon Card (Swordmen and their evolutions) and the Glorious Spear (Crusaders and their evolutions) were missing the same restriction and are now limited to the class line in their description. Reported by Ladrão da ZL."
+    ]
+  },
+  {
+    "v": "0.1.223-beta",
+    "date": "04-11-2026",
+    "logs": [
+      "Destruidor de Almas agora pode ser escolhida como habilidade ofensiva no Algoz, na Batalha e no PVP, do Nv 1 ao Nv 10 — antes só existia na lista de passivas da classe.",
+      "Conjunto do Colar Consagrado: Coragem com a Espada Vivatus Fides: a Recarga de [Crux Tempestas] -0,7 segundos, com a arma refinada no +10, passou a ser aplicada.",
+      "As habilidades que causam dano em duas partes passam a mostrar cada parte em separado. Em Detalhes da habilidade, Colisão Astral lista o Asteroide, os Meteoritos com o dano de cada um e o Dano total; em Como o dano é calculado, cada parte ganhou o seu próprio gráfico, fechados por um nó de Dano total. Vale também para Flecha Escarlate, Cacos de Gelo, Florescer, Tufão Destrutivo e Chamas de Hela. O nome de cada parte segue a descrição do cliente no idioma em que você joga. Reportado por pazzoLino.",
+      "Técnica da Mão Explosiva e Punho Labareda voltaram a causar dano crítico nas fórmulas atuais do LATAM, como diz a descrição das habilidades no jogo. Reportado por Gambetta.",
+      "Os buffs [Proteção da Vanguarda] e [Prestígio Divino], que faltavam, entraram na lista de habilidades e efeitos ativos do Guardião Real e do Guardião Imperial: a Proteção da Vanguarda dá +3% de HP máx. e +2% de DEF dos equipamentos por nível, e o Prestígio Divino dá DEF conforme o nível da habilidade e o nível de base. A chance de bloquear magia e os Pontos de Fúria ficaram de fora, por não entrarem no cálculo de dano."
+    ],
+    "logs_es": [
+      "Destructor de Almas ahora puede elegirse como habilidad ofensiva en el Asesino Cruzado, en la Batalla y en el PVP, del Nv 1 al Nv 10 — antes solo existía en la lista de pasivas de la clase.",
+      "Conjunto del Collar Consagrado: Coraje con la Espada Vivatus Fides: la Recarga de [Crux Tempestas] -0,7 segundos, con el arma refinada en +10, pasó a aplicarse.",
+      "Las habilidades que causan daño en dos partes ahora muestran cada parte por separado. En Detalles de la habilidad, Golpe Astral lista el Asteroide, los Meteoritos con el daño de cada uno y el Daño total; en Cómo se calcula el daño, cada parte tiene su propio gráfico, cerrados por un nodo de Daño total. También vale para Flecha Carmesí, Impacto de Cristal, Explosión Floreciente, Huracán Destructor e Infierno Abismal. El nombre de cada parte sigue la descripción del cliente en el idioma en que juegas. Reportado por pazzoLino.",
+      "Destello Explosivo y Lanzallamas Masivo vuelven a infligir daño crítico con las fórmulas actuales de LATAM, como indica la descripción de las habilidades en el juego. Reportado por Gambetta.",
+      "Los buffs [Fuerza de Vanguardia] y [Prestigio], que faltaban, entraron en la lista de habilidades y efectos activos del Guardia Real y del Guardia Imperial: la Fuerza de Vanguardia da +3% de HP máx. y +2% de DEF de los equipos por nivel, y el Prestigio da DEF según el nivel de la habilidad y el nivel base. La probabilidad de bloquear magia y los contadores de ira quedaron fuera, por no entrar en el cálculo de daño."
+    ],
+    "logs_en": [
+      "Soul Destroyer can now be chosen as an offensive skill on the Assassin Cross, in Battle and in PVP, from Lv 1 to Lv 10 — before, it existed only in the class's passive list.",
+      "Consecrated Necklace: Courage set with the Vivatus Fides Guardian Sword: the [Cross Rain] cooldown -0.7 seconds, with the weapon refined to +10, is now applied.",
+      "Skills that deal damage in two parts now show each part separately. In Skill details, Astral Strike lists the Meteor, the Impacts with the damage of each one and the Total damage; in How the damage is calculated, each part has its own graph, closed by a Total damage node. It also covers Crimson Arrow, Crystal Impact, All Bloom, Destructive Hurricane and Hell Inferno. Each part is named after the client's own description in the language you play in. Reported by pazzoLino.",
+      "Explosion Blaster and Massive Flame Blaster can deal critical damage again under the current LATAM formulas, as the in-game skill descriptions state. Reported by Gambetta.",
+      "The [Vanguard Force] and [Prestige] buffs, which were missing, were added to the active skills and effects list of the Royal Guard and the Imperial Guard: Vanguard Force gives +3% max HP and +2% equipment DEF per level, and Prestige gives DEF according to the skill level and the base level. The chance to block magic and the rage counters were left out, as they do not enter the damage calculation."
+    ]
+  },
+  {
+    "v": "0.1.222-beta",
+    "date": "04-11-2026",
+    "logs": [
+      "Cada habilidade da rotação ganhou um botão de duplicar, ao lado do de remover: a cópia entra logo abaixo da original, com o mesmo nível e o mesmo acúmulo. Sugerido por pazzoLino."
+    ],
+    "logs_es": [
+      "Cada habilidad de la rotación ganó un botón de duplicar, al lado del de quitar: la copia entra justo debajo de la original, con el mismo nivel y la misma acumulación. Sugerido por pazzoLino."
+    ],
+    "logs_en": [
+      "Each rotation skill gained a duplicate button, next to the remove one: the copy goes in right below the original, with the same level and the same stacks. Suggested by pazzoLino."
+    ]
+  },
+  {
     "v": "0.1.221-beta",
     "date": "03-11-2026",
     "logs": [

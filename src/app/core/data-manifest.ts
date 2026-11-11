@@ -25,6 +25,7 @@ export const DATA_KEYS = [
   'classes',
   'itemViews',
   'latamExtra',
+  'itemScriptKro',
   'latamMonsters',
   'itemsDescMcp',
 ] as const;

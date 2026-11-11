@@ -1,7 +1,9 @@
 import type { SkillFormulaVersion } from '../../skills/skill-formula-version';
+import type { ItemScriptVersion } from '../../core/item-script-version';
 
 export interface PresetModel {
   skillFormulaVersion?: SkillFormulaVersion;
+  itemScriptVersion?: ItemScriptVersion;
   class: number;
   level: number;
   jobLevel: number;

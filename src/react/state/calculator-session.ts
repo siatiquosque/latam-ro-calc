@@ -2,6 +2,7 @@ import { Store } from '../state/store';
 import { Locale } from '../../app/core/i18n';
 import { normalizeClassLimits } from '../../app/core/class-limits';
 import { normalizeSkillFormulaVersion, SkillFormulaVersion } from '../../app/skills/skill-formula-version';
+import { ItemScriptOverlay, ItemScriptVersion, normalizeItemScriptVersion } from '../../app/core/item-script-version';
 import { Lifetime } from '../state/lifetime';
 import { Events, Disposable, listenDebounced } from '../services/events';
 import { Messages as MessageService, Confirmations as ConfirmationService } from '../services/notifications';
@@ -86,14 +87,15 @@ import { customOptionScripts, ensureCustomAttachment } from 'src/app/core/custom
 import { CalcStorage } from 'src/app/core/calc-storage';
 import { ElementType } from 'src/app/constants/element-type.const';
 import { CompareState, STATS_COMPARE_KEYS, copyStatsFields } from 'src/app/core/compare-state';
-import { buildComparisonFromImport } from 'src/app/core/import-comparison';
+import { buildComparisonFromImport, buildComparisonFromSavedSim, canCompareSavedPreset } from 'src/app/core/import-comparison';
 import { normalizeSavedModel } from 'src/app/core/saved-model';
 import { parseShareInput, shortenerBaseFor } from 'src/app/core/share-link-input';
 import { ClassSwitchLoss, applyClassSwitch, findClassSwitchLosses, hasBuildToKeep, slotEquipFilter } from 'src/app/core/class-switch';
 import { canUsedByClass } from 'src/app/utils/can-used-by-class';
+import { stackRange } from 'src/app/utils/skill-stack';
 import { SLOTS_BY_KEY } from 'src/app/app-config/equipment-slots';
 import { SlotListBag } from '../../app/layout/pages/ro-calculator/equipment-grid/slot-list-bag.model';
-import { compactRotationForShare, defaultAtkSkill, firstRealSkill, isBasicAttack, isOffensiveSkill, pruneRotationForClass } from 'src/app/core/rotation';
+import { compactRotationForShare, defaultAtkSkill, firstRealSkill, isBasicAttack, isOffensiveSkill, pruneRotationForClass, splitSkillValue } from 'src/app/core/rotation';
 import { MAX_ROTATION_TABS, activeRotationTab, addRotationTab, mapRotationTabs, readRotationTabs, removeRotationTab, selectRotationTab, syncRotationTabs } from 'src/app/core/rotation-tabs';
 import { RotationScheduleStep } from 'src/app/core/rotation-schedule';
 import { optimizeRotation } from 'src/app/core/rotation-optimize';
@@ -122,13 +124,16 @@ import { shareEntryHref } from 'src/app/core/share-entry';
 import { buildSharePath, readShareToken, SHARE_PATH_PREFIX } from 'src/app/core/share-path';
 import { buildCharSpriteUrl, bareJobSprite } from 'src/app/domain/char-sprite-url';
 import { itemAllowsShield } from 'src/app/domain/weapon';
-import { AutoCastSimulation, buildAutoCastSimulation } from 'src/app/core/auto-cast';
+import { AutoCastSimulation, buildAutoCastSimulation, RotationAutoCast, rotationAutoCasts } from 'src/app/core/auto-cast';
 import { CustomItemDefinition, customDefinitionsForBuild, customItemDescriptionHtml, isCustomItem, validateCustomItems } from 'src/app/core/custom-items';
 import { shortenUrl } from 'src/app/core/shorten-url';
 import { defendedDummyRecords } from 'src/app/build-analysis/engine/dummies';
 import { decodeCustomBundle } from 'src/app/core/custom-item-library';
 
 type ImportMode = 'replace' | 'compare';
+
+/** What the Simulações dialog is open for: loading a save, or picking one to write over. */
+type SavesMode = 'open' | 'replace';
 
 /**
  * A build read by the import dialog, waiting for the user to choose how to apply it.
@@ -300,6 +305,23 @@ export class CalculatorSession extends Store<number> {
   showSavesDialog = false;
   showSaveDialog = false;
   saveName = '';
+  /**
+   * The fork "Salvar" opens when there is already something to write over: substituir or
+   * nova simulação. With nothing saved yet there is no fork to offer, and "Salvar" goes
+   * straight to the name dialog as it always did.
+   */
+  showSaveChoiceDialog = false;
+  /**
+   * What the Simulações dialog is open for. 'open' is the dialog as it has always been
+   * (carregar / excluir); 'replace' is the same grid used as a picker — each card offers
+   * Substituir instead, and the header drops "Nova simulação", which would walk out of
+   * the save the reader came here to make.
+   */
+  savesMode: SavesMode = 'open';
+
+  get isReplacingSim(): boolean {
+    return this.savesMode === 'replace';
+  }
 
   // --- PVP -----------------------------------------------------------------
   /** Mode selector for the PVP tab (open PVP / normal castle / TE castle). */
@@ -1393,24 +1415,37 @@ await ((_event?: unknown) => {
   private solveRotation(calc: Calculator, input: CalcChainInput, baseSummary: any): RotationView {
     const summaryByValue = new Map<string, any>();
     const summaryByIndex = new Map<number, any>();
-    const solved = new Map<string, any>();
+    const autoCastsByIndex = new Map<number, RotationAutoCast[]>();
+    const solved = new Map<string, { summary: any; casts: RotationAutoCast[] }>();
     const originalStacks = this.model.skillStacks;
 
     for (const [index, value] of (this.model.rotation ?? []).entries()) {
       if (isBasicAttack(value)) continue;
-      const name = value.split('==')[0];
+      const { name, level } = splitSkillValue(value);
       const stack = this.model.rotationStacks?.[index];
-      const cacheKey = `${value}:${Number.isFinite(stack) ? stack : originalStacks?.[name] ?? ''}`;
+      // Keyed on the count the engine will actually use, not on what was saved: a tile
+      // added today carries the default as a concrete number while one restored from a
+      // token carries none, and a count saved at Nv5 clamps down at Nv1 — all of which
+      // reach the same solve.
+      const { count } = stackRange(this.atkSkills.find((entry) => entry.name === name), Number(level) || 0,
+        Number.isFinite(stack) ? stack : originalStacks?.[name]);
+      const cacheKey = `${value}:${count}`;
       if (solved.has(cacheKey)) {
-        summaryByIndex.set(index, solved.get(cacheKey));
+        const cached = solved.get(cacheKey);
+        summaryByIndex.set(index, cached.summary);
+        autoCastsByIndex.set(index, cached.casts);
         continue;
       }
       calc.setSkillStacks(Number.isFinite(stack)
         ? { ...(originalStacks ?? {}), [name]: stack }
         : originalStacks);
       const summary = this.controller.solveSkill(calc, input, value).getTotalSummary();
+      // Solved here, on the pass that has the calculator on this very skill: a proc that
+      // fires on using it is priced off the same state the tile itself reports.
+      const casts = rotationAutoCasts({ calc, summary, triggerSkillId: SKILL_ID_BY_NAME[name] ?? 0 });
       summaryByIndex.set(index, summary);
-      solved.set(cacheKey, summary);
+      autoCastsByIndex.set(index, casts);
+      solved.set(cacheKey, { summary, casts });
       if (!summaryByValue.has(value)) summaryByValue.set(value, summary);
     }
 
@@ -1431,6 +1466,7 @@ await ((_event?: unknown) => {
       skillStacks: this.model.skillStacks,
       rotationStacks: this.model.rotationStacks,
       summaryByIndex,
+      autoCastsByIndex,
     });
   }
 
@@ -1492,6 +1528,24 @@ await ((_event?: unknown) => {
     this.publish();
   }
 
+  /** LATAM (item.json) or kRO (client script overlay) bonuses; kRO exists only while previews show. */
+  onItemScriptVersionChange(version: ItemScriptVersion) {
+    this.model.itemScriptVersion = this.showPreviews ? normalizeItemScriptVersion(version) : 'latam';
+    this.syncScriptOverlay();
+    this.updateItemEvent.next(true);
+  }
+
+  private kroOverlay?: ItemScriptOverlay;
+
+  /** Fetches the overlay the first time a build asks for kRO, then recalculates with it. */
+  private syncScriptOverlay() {
+    if (this.model.itemScriptVersion !== 'kro' || this.kroOverlay) return;
+    this.allSubs.push(this.lifetime.watch(this.roService.getItemScriptKro(), (overlay) => {
+      this.kroOverlay = overlay;
+      for (const calc of [this.calculator, this.calculator2, this.calculatorPvp, this.calculatorPvp2, this.calculatorExtra]) calc.setScriptOverlay(overlay);
+    }, () => { this.updateItemEvent.next(true); this.publish(); }));
+  }
+
   onSkillFormulaVersionChange(version: SkillFormulaVersion) {
     this.model.skillFormulaVersion = this.showPreviews ? normalizeSkillFormulaVersion(version) : 'current';
     this.setClassSkill();
@@ -1505,10 +1559,13 @@ await ((_event?: unknown) => {
   }
 
   onSkillStackChange(change: { index: number; stack: number }) {
-    const name = this.model.rotation?.[change.index]?.split('==')[0];
+    const { name, level } = splitSkillValue(this.model.rotation?.[change.index] ?? '');
     const skill = this.atkSkills.find((entry) => entry.name === name);
-    if (!skill?.maxStack || !Number.isInteger(change.stack)) return;
-    const stack = Math.max(skill.minStack ?? 0, Math.min(skill.maxStack, change.stack));
+    if (!skill || !Number.isInteger(change.stack)) return;
+    // Clamped at this tile's own level: a ground skill scatters more hits the higher it
+    // is cast, so the bound is read the way the row's picker reads it.
+    const { max, count: stack } = stackRange(skill, Number(level) || 0, change.stack);
+    if (max <= 0) return;
     const stacks = [...(this.model.rotationStacks ?? [])];
     stacks[change.index] = stack;
     this.model.rotationStacks = stacks;
@@ -1968,7 +2025,31 @@ await ((_event?: unknown) => {
     return Characters.find((c) => c.value === classId)?.label ?? '';
   }
 
+  /**
+   * "Salvar" in the band. With saves already there it asks which of the two the reader
+   * means — write over one, or start another — and with none it is the name dialog it
+   * has always been, since there would be nothing to write over.
+   */
   openSaveDialog(): void {
+    this.refreshSavedSims();
+    if (this.savedSims.length) this.showSaveChoiceDialog = true;
+    else this.openNewSimDialog();
+  }
+
+  /** "Nova simulação" on the fork: the name dialog, unchanged. */
+  chooseNewSim(): void {
+    this.showSaveChoiceDialog = false;
+    this.openNewSimDialog();
+  }
+
+  /** "Substituir" on the fork: the Simulações grid as a picker (see `savesMode`). */
+  chooseReplaceSim(): void {
+    this.showSaveChoiceDialog = false;
+    this.savesMode = 'replace';
+    this.showSavesDialog = true;
+  }
+
+  private openNewSimDialog(): void {
     const label = this.classLabel(this.model.class) || this.text('cs.simulation');
     this.saveName = this.text('cs.saveNameDefault', { label, level: this.model.level });
     this.showSaveDialog = true;
@@ -1984,24 +2065,65 @@ await ((_event?: unknown) => {
       const ok = await this.waitConfirm(this.text('cs.nameExists', { name }));
       if (!ok) return;
     }
-    // Cache the build's PVP defensive profile from the already-solved calculator
-    // so it can be picked as an enemy target without re-solving (docs/pvp.md §3).
-    let targetProfile: PlayerTargetProfile | undefined;
+    const saved = this.savedSimStore.upsert(name, ...this.saveContent(name));
+    this.finishSave(saved.name, () => { this.showSaveDialog = false; });
+  }
+
+  /**
+   * A card picked in the picker: that save keeps its id and its name and takes this
+   * build's content, so nothing has to be typed.
+   */
+  async replaceSavedSim(sim: SavedSimulation): Promise<void> {
+    const ok = await this.waitConfirm(this.text('cs.replaceSimConfirm', { name: sim.name }));
+    if (!ok) return;
+    const saved = this.savedSimStore.replace(sim.id, ...this.saveContent(sim.name));
+    // Gone from storage while the picker sat open (another tab deleted it): say so rather
+    // than quietly saving nothing or creating a second save under the same name.
+    if (!saved) {
+      this.refreshSavedSims();
+      this.messageService.add({ severity: 'error', summary: this.text('cs.replaceGone'), detail: this.text('cs.replaceGoneDetail', { name: sim.name }) });
+      this.publish();
+      return;
+    }
+    this.finishSave(saved.name, () => { this.showSavesDialog = false; });
+  }
+
+  /**
+   * What a save stores of the build, in the order both store writers take it. `name` only
+   * reaches the PVP profile, which is cached from the already-solved calculator so the
+   * save can be an enemy target without re-solving (docs/pvp.md §3).
+   */
+  private saveContent(name: string): [PresetModel, PlayerTargetProfile | undefined, CompareState | null, CustomItemDefinition[]] {
+    const preset = this.currentPreset();
+    const compare = this.currentCompareState();
+    let profile: PlayerTargetProfile | undefined;
     try {
-      targetProfile = this.calculator.getAsPlayerTarget(name);
+      profile = this.calculator.getAsPlayerTarget(name);
     } catch (err) {
       console.error('Falha ao computar o perfil de alvo PVP', err);
     }
-    const preset = this.currentPreset();
-    this.savedSimStore.upsert(name, preset, targetProfile, this.currentCompareState(),
-      customDefinitionsForBuild([preset, this.currentCompareState()?.model2 ?? {}], this.items));
-    this.refreshPvpTargets();
-    this.showSaveDialog = false;
+    return [preset, profile, compare, customDefinitionsForBuild([preset, compare?.model2 ?? {}], this.items)];
+  }
+
+  private finishSave(name: string, close: () => void): void {
+    this.refreshSavedSims();
+    close();
     this.messageService.add({ severity: 'success', summary: this.text('cs.simSaved'), detail: name });
+    // Both writers arrive here after awaiting a confirmation, and the template hands
+    // `action` a callback that drops the promise they return — so its own publish has
+    // already fired and nothing else would repaint the dialog just closed.
+    this.publish();
+  }
+
+  /** Re-reads the saves once and hands the same array to the PVP target list. */
+  private refreshSavedSims(): void {
+    this.savedSims = this.savedSimStore.list();
+    this.refreshPvpTargets(this.savedSims);
   }
 
   openSavesDialog(): void {
     this.savedSims = this.savedSimStore.list();
+    this.savesMode = 'open';
     this.showSavesDialog = true;
   }
 
@@ -2021,6 +2143,26 @@ await ((_event?: unknown) => {
         this.messageService.add({ severity: 'error', summary: this.text('cs.loadFailed'), detail: this.text('cs.loadFailedDetail') });
       },
     }, () => this.publish());
+  }
+
+  /** Whether a saved sim's card offers the comparison icon, or dims it and says why. */
+  canCompareSavedSim(sim: SavedSimulation): boolean {
+    return canCompareSavedPreset(sim?.preset, this.model.class);
+  }
+
+  /**
+   * Bring a saved sim in as the comparison instead of loading it over the build, through
+   * the same conversion a share link imported as a comparison goes through. The build on
+   * screen, its skills and its buffs stay untouched.
+   *
+   * The icon is `aria-disabled`, not `disabled` — that is what keeps its tip reachable —
+   * so it still takes a click, and the builder is what turns a sim of another class down.
+   */
+  compareSavedSim(sim: SavedSimulation): void {
+    const state = buildComparisonFromSavedSim(sim.preset, this.model.class, this.compareSlotsForClass());
+    if (!state) return;
+    this.showSavesDialog = false;
+    this.applyComparison(state, sim.name);
   }
 
   async deleteSavedSim(sim: SavedSimulation, event: Event): Promise<void> {
@@ -2067,8 +2209,8 @@ await ((_event?: unknown) => {
   // --- PVP ------------------------------------------------------------------
   /** Every saved sim is a possible PVP target. Ones saved before profiles were
    *  cached get their profile solved on demand when selected (buildProfileFromPreset). */
-  refreshPvpTargets(): void {
-    this.pvpTargets = this.savedSimStore.list();
+  refreshPvpTargets(saves: SavedSimulation[] = this.savedSimStore.list()): void {
+    this.pvpTargets = saves;
     if (this.selectedPvpTargetId && !this.pvpTargets.some((t) => t.id === this.selectedPvpTargetId)) {
       this.selectedPvpTargetId = null;
       this.pvpSummary = null;
@@ -2534,15 +2676,24 @@ await ((_event?: unknown) => {
   }
 
   private applyImportAsComparison(imported: PendingImport) {
-    const state = buildComparisonFromImport(imported.model, this.compareSlotsForClass());
-    this.restoreCompareState(state);
-    this.statsSide = 'main';
     this.replayBusy = false;
     this.showReplayImport = false;
+    this.applyComparison(buildComparisonFromImport(imported.model, this.compareSlotsForClass()),
+      this.importSourceLabel(imported));
+  }
+
+  /**
+   * Put a built comparison up and say so. Shared by the import dialog and the saved-sim
+   * card, which name a different source but promise the reader the same thing — so the
+   * wording, the severity and the stats side it resets live in one place.
+   */
+  private applyComparison(state: CompareState, source: string) {
+    this.restoreCompareState(state);
+    this.statsSide = 'main';
     this.messageService.add({
       severity: 'success',
       summary: this.text('cs.importedAsCompare'),
-      detail: this.text('cs.importedAsCompareDetail', { source: this.importSourceLabel(imported) }),
+      detail: this.text('cs.importedAsCompareDetail', { source }),
       life: 9000,
     });
   }
@@ -2743,6 +2894,7 @@ await ((_event?: unknown) => {
   private setClassSkill() {
     if (!this.showPreviews) {
       this.model.skillFormulaVersion = 'current';
+      this.model.itemScriptVersion = 'latam';
       // Keep positional skill arrays intact; hidden buffs must not affect LATAM damage.
       for (const [definitions, values, map] of [
         [this.selectedCharacter.activeSkills, this.model.activeSkills, this.model.activeSkillMap],
@@ -2756,6 +2908,7 @@ await ((_event?: unknown) => {
         });
       }
     }
+    this.syncScriptOverlay();
     // Overlay pt-BR skill names + ragassets skill-icon id (from the GRF skill map)
     // on every skill panel. Skills missing from the map keep their English label
     // and render no icon (the template guards on `icon`).

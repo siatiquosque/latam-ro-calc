@@ -4,9 +4,12 @@ import { RotationTab } from '../core/rotation-tabs';
 import { SlotColorMap } from '../core/slot-colors';
 import { CustomAttachments } from '../core/custom-attachments';
 import type { SkillFormulaVersion } from '../skills/skill-formula-version';
+import type { ItemScriptVersion } from '../core/item-script-version';
 
 export interface MainModel extends Partial<EquipmentModel> {
   skillFormulaVersion?: SkillFormulaVersion;
+  /** Which server's item bonuses are read; `latam` (item.json) when absent. */
+  itemScriptVersion?: ItemScriptVersion;
   customAttachments?: CustomAttachments;
   class: number;
   level: number;

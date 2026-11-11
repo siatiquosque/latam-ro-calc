@@ -46,7 +46,7 @@ let critRatePanel: any = vm["critRatePanel"]; return <><Render tag="div" props={
 "tooltip": {text: t('ac.onlyHits'), position: "top", className: "auto_cast_tip", showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}><Render tag="span" props={{}}>{t('ac.eligibleAttacks')}</Render>
 <Render tag="strong" props={{}}>{interpolate(["","/s"], [displayPipe("number", vm.simulation?.eligibleAttacksPerSecond, ["1.2-2"], services)])}</Render></Render></>; })()}</Render></Render></Render></Render></Render>
 <Render tag="div" props={{"className": ["sources-head"].filter(Boolean).join(' ')}}><Render tag="span" props={{}}>{t((vm.sourceCount === 1) ? 'ac.oneSource' : 'ac.manySources', { n: vm.sourceCount })}</Render>
-<SkillFormulaSelector value={vm.model?.skillFormulaVersion} onChange={value => vm.action(() => vm.skillFormulaVersionChange.emit(value))} />
+<SkillFormulaSelector value={vm.model?.skillFormulaVersion} onChange={value => vm.action(() => vm.skillFormulaVersionChange.emit(value))} itemValue={vm.model?.itemScriptVersion} onItemChange={value => vm.action(() => vm.itemScriptVersionChange.emit(value))} />
 <Render tag="button" props={{"type": "button",
 "aria-pressed": vm.autoCompareEnabled,
 "click": (event: any) => vm.action(() => { const $event = event; vm.toggleComparisonWithoutScroll($event) }),

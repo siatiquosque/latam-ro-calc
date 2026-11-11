@@ -5,6 +5,8 @@ import { randomOptionReferencesFor } from './random-options';
 
 it('audits every explicit item and every weapon/shadow with generic option fields', () => {
   for (const item of Object.values(items)) {
+    // Imported previews have no random-option reference yet.
+    if ((item as { preRelease?: boolean }).preRelease) continue;
     if (ExtraOptionTable[item.aegisName] || item.itemTypeId === 1 || item.itemTypeId === 10) {
       expect(randomOptionReferencesFor(item.id), String(item.id)).toBeDefined();
     }

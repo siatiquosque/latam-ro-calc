@@ -91,10 +91,34 @@ describe('Colares Consagrados', () => {
     expect(totals({ accLeft: 491119, weapon: 540046, weaponRefine: 10 }, master).spCostPercent).toBe(-10);
   });
 
-  it('does not register skill-use procs as basic-attack sources', () => {
-    for (const id of [491112, 491115, 491116, 491117, 491119]) {
-      expect(db[id].script.autoCast ?? []).toEqual([]);
-    }
+  /**
+   * Every "Ao usar [X] ... autoconjura [Y]" clause the Colar Consagrado line carries, one
+   * row per clause, read off the pt-BR set block. Each is gated on its own Conjunto weapon
+   * at +10, and each fires on one named skill — an attack trigger on any of them would
+   * price it off a rate it has nothing to do with.
+   *
+   * Only Destino's is settled by a recording (`SoulAscetic.fenix-jabuti-autocast.spec.ts`);
+   * the rest carry the level and the chance the client states and nothing beyond it.
+   */
+  const SKILL_USE_CLAUSES: Array<[number, number, number, number, number, string]> = [
+    // item, trigger skill, auto-cast skill, level, chance, Conjunto weapon
+    [491112, 5334, 382, 5, 50, 'EQUIP_ID[700035]'],            // Tiro Crescente -> Tiro Preciso, Arco
+    [491112, 2413, 5356, 3, 50, 'EQUIP_ID[570020||580020]'],   // Ruído Estridente -> Fúria Estridente, Harpa ou Chicote
+    [491115, 5322, 2288, 8, 50, 'EQUIP_ID[700033]'],           // Rajada Frenética -> Disparo Triplo, Besta
+    [491116, 5248, 5252, 4, 100, 'EQUIP_ID[560020]'],          // Palma Fervorosa -> Fogueira Espiritual, Manopla
+    [491117, 3009, 5483, 8, 50, 'EQUIP_ID[650021]'],           // Turbilhão de Pétalas -> Huuma Aderente, Shuriken
+    [491117, 5477, 5486, 4, 50, 'EQUIP_ID[650022]'],           // Infiltrar -> Kunai Rotatória, Huuma
+    [491119, 5428, 5429, 4, 100, 'EQUIP_ID[550064]'],          // Talismã da Fênix -> Talismã do Jabuti, Cajado
+  ];
+
+  it('registers every Consagrado skill-use proc on the skill that fires it, never on a basic attack', () => {
+    const stored = [491111, 491112, 491113, 491114, 491115, 491116, 491117, 491118, 491119]
+      .flatMap((id) => (db[id].script.autoCast ?? []).map((rule: any) => [id, rule] as const));
+
+    expect(stored.filter(([, rule]) => rule.trigger === 'skill-use')
+      .map(([id, rule]) => [id, rule.triggerSkillId, rule.skillId, rule.skillLevel[0], rule.chance[0]]))
+      .toEqual(SKILL_USE_CLAUSES.map(([item, trigger, skill, level, chance, weapon]) =>
+        [item, trigger, skill, `${weapon}REFINE[weapon==10]${level}`, `${weapon}REFINE[weapon==10]${chance}`]));
   });
 });
 

@@ -19,8 +19,8 @@ it('the same build without its weapon reproduces Fogueira 5 at 8.364.528 damage'
   const summary = solve(build, dataset, dataset.monsters['21077']).getTotalSummary();
   expect(summary.dmg.skillMinDamage).toBe(8364528);
   expect(summary.dmg.skillMaxDamage).toBe(8364528);
-  expect(summary.dmg.basicMinDamage).toBe(8190);
-  expect(summary.dmg.basicMaxDamage).toBe(8190);
-  expect(summary.dmg.criMinDamage).toBe(15649);
-  expect(summary.dmg.criMaxDamage).toBe(15649);
+  expect(summary.dmg.basicMinDamage).toBe(8140);
+  expect(summary.dmg.basicMaxDamage).toBe(8140);
+  expect(summary.dmg.criMinDamage).toBe(15576);
+  expect(summary.dmg.criMaxDamage).toBe(15576);
 });

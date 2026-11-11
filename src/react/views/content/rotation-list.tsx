@@ -6,7 +6,7 @@ export function Content({vm, services}: {vm: any; services: any}) {
 const t = useText();
 return <><Render tag="div" props={{"className": ["rot"].filter(Boolean).join(' ')}}><Render tag="div" props={{"className": ["rot-head"].filter(Boolean).join(' ')}}><Render tag="span" props={{"className": ["cap2"].filter(Boolean).join(' ')}}>{t('rot.cap')}
 {(() => { const __condition1 = vm.rotation.length;  return __condition1 ? <><>{interpolate([" · ",""], [t((vm.rotation.length === 1) ? 'rot.oneSkill' : 'rot.manySkills', { n: vm.rotation.length })])}</></> : null; })()}</Render>
-<Render tag="span" props={{"className": ["rot-head-actions"].filter(Boolean).join(' ')}}><SkillFormulaSelector value={vm.skillFormulaVersion} disabled={vm.isInProcessingPreset} onChange={value => vm.action(() => vm.skillFormulaVersionChange.emit(value))} /><Render tag="button" props={{"type": "button",
+<Render tag="span" props={{"className": ["rot-head-actions"].filter(Boolean).join(' ')}}><SkillFormulaSelector value={vm.skillFormulaVersion} disabled={vm.isInProcessingPreset} onChange={value => vm.action(() => vm.skillFormulaVersionChange.emit(value))} itemValue={vm.itemScriptVersion} onItemChange={value => vm.action(() => vm.itemScriptVersionChange.emit(value))} /><Render tag="button" props={{"type": "button",
 "icon": "trash",
 "label": t('calc.clear'),
 "tooltipPosition": "top",
@@ -31,7 +31,7 @@ return <><Render tag="div" props={{"className": ["rot"].filter(Boolean).join(' '
 "click": (event: any) => vm.action(() => { const $event = event; vm.startAdding() }),
 "button": true}}></Render></Render></> : null; })()}
 <Render tag="div" props={{"className": ["rot-rows"].filter(Boolean).join(' ')}}>{(vm.entries ?? []).map((__entry3: any, __index3: number, __array3: any[]) => { const entry = __entry3;
-const i = __index3; return <Fragment key={identityKey(vm.trackByIndex(__index3, __entry3))}><Render tag="div" props={{"className": ["rot-row"].filter(Boolean).join(' ')}}>{(() => { const skillIcon = (context: any) => {  return <><Render tag="img" props={{"role": "button",
+const i = __index3; return <Fragment key={identityKey(vm.trackByIndex(__index3, __entry3))}><div className="rot-item"><Render tag="div" props={{"className": ["rot-row"].filter(Boolean).join(' ')}}>{(() => { const skillIcon = (context: any) => {  return <><Render tag="img" props={{"role": "button",
 "tabIndex": "0",
 "tooltipPosition": "top",
 "src": displayPipe("iconUrl", entry.icon, ["skill"], services),
@@ -71,7 +71,7 @@ const i = __index3; return <Fragment key={identityKey(vm.trackByIndex(__index3, 
 "onModelChange": (value: any, event: any) => vm.action(() => { ((event: any) => vm.action(() => { const $event = event; vm.changeLevel(i,$event.value) }))({value, originalEvent: event}); }),
 "template_selectedItem": (context: any) => {  return <><Render tag="span" props={{"className": ["rot-level"].filter(Boolean).join(' ')}}>{interpolate(["",""], [entry.levelLabel])}</Render></>; }}}></Render></> : levelText({}); })()}
 
-{(() => { const __condition7 = entry.stackOptions.length;  return __condition7 ? <><Render tag="div" props={{"className": ["rot-stack"].filter(Boolean).join(' ')}}><Render tag="span" props={{}}>{t('rot.stack')}</Render>
+{(() => { const __condition7 = entry.stackOptions.length;  return __condition7 ? <><Render tag="div" props={{"className": ["rot-stack"].filter(Boolean).join(' ')}}><Render tag="span" props={{}}>{entry.stackLabel}</Render>
 <Render tag="app-ui-dropdown" props={{"styleClass": "rot-stack-dd",
 "optionLabel": "label",
 "optionValue": "value",
@@ -154,6 +154,16 @@ const i = __index3; return <Fragment key={identityKey(vm.trackByIndex(__index3, 
 <Render tag="app-icon" props={{"role": "button",
 "tabIndex": "0",
 "tooltipPosition": "top",
+"name": "copy",
+"aria-disabled": (vm.isFull ? "true" : undefined),
+"label": t('rot.duplicateLabel', { name: entry.name }),
+"click": (event: any) => vm.action(() => { const $event = event; vm.duplicate(i) }),
+"className": "rot-duplicate",
+"tooltip": {text: (vm.isFull ? t('rot.full', { max: vm.maxLength }) : t('rot.duplicateTooltip')), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false},
+"activateWithKeys": true}}></Render>
+<Render tag="app-icon" props={{"role": "button",
+"tabIndex": "0",
+"tooltipPosition": "top",
 "name": "times",
 "label": t('rot.removeLabel', { name: entry.name }),
 "click": (event: any) => vm.action(() => { const $event = event; vm.remove(i) }),
@@ -170,7 +180,72 @@ const i = __index3; return <Fragment key={identityKey(vm.trackByIndex(__index3, 
 "aria-label": t('rot.moveDown', { name: entry.name }),
 "disabled": i === vm.entries.length - 1,
 "click": (event: any) => vm.action(() => { const $event = event; vm.moveBy(i,1,$event) }),
-"className": ["rot-move"].filter(Boolean).join(' ')}}><Render tag="app-icon" props={{"name": "chevron-down"}}></Render></Render></> : null; })()}</>; })()}</Render></Fragment>; })}</Render>
+"className": ["rot-move"].filter(Boolean).join(' ')}}><Render tag="app-icon" props={{"name": "chevron-down"}}></Render></Render></> : null; })()}</>; })()}</Render>
+{/* The auto-conjurações this tile's skill fires, glued under it: they ride the use that
+    fires them, so they carry no step number, no handle and no place of their own. The
+    group wrapper is what the drag moves, which is what keeps them attached. */}
+{(entry.autoCasts ?? []).map((cast: any) => <div className="rot-row rot-auto-row" key={cast.key}><span className="rot-auto-tee" aria-hidden="true"></span>
+<Render tag="img" props={{"role": "button",
+"tabIndex": "0",
+"tooltipPosition": "top",
+"alt": cast.name,
+"src": displayPipe("iconUrl", cast.icon, ["skill"], services),
+"click": (event: any) => vm.action(() => { const $event = event; vm.autoCastDetailsClick.emit({"index": i,"key": cast.key,"event": $event}) }),
+"className": ["rot-icon rot-icon--btn"].filter(Boolean).join(' '),
+"tooltip": {text: t('tl.skillDetails'), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false},
+"activateWithKeys": true,
+"missingIcon": true}}></Render>
+<div className="rot-body"><div className="rot-line1"><Render tag="span" props={{"tooltipPosition": "top",
+"className": ["rot-name"].filter(Boolean).join(' '),
+"tooltip": {text: cast.name, position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}>{cast.name}</Render>
+{cast.levelLabel ? <span className="rot-level rot-level--static">{cast.levelLabel}</span> : null}
+<Render tag="span" props={{"tooltipPosition": "top",
+"className": ["rot-auto-chance"].filter(Boolean).join(' '),
+"tooltip": {text: vm.autoCastChanceTooltip(entry), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}>{t('rot.autoChance', { pct: displayPipe("number", cast.chance, ["1.0-1"], services) })}</Render></div>
+<div className="rot-line2"><span className="rot-auto-from">{t('rot.autoFrom', { source: cast.sourceName })}</span>
+{/* No "sem crít." counterpart: a magic proc never crits, and the solve carries no damage
+    type to tell the two apart — so the row states the rate it has and nothing else. */}
+{cast.canCrit ? <span className="rot-crit">{' '}{t('rot.critLabel')}{' '}<b>{interpolate(["","%"], [displayPipe("number", cast.critRate, ["1.1-1"], services)])}</b></span> : null}</div></div>
+{/* The row reads like the tiles above it: the rolls where there is a spread to show, then
+    the mean of one activation — the figure that opens how that damage is calculated. The
+    per-second reading is the DPS do combo card's, not this row's. */}
+<span className="rot-dmg">{cast.hasDamageSpread ? <span className="rot-dmg-split">{(cast.damageRanges ?? []).map((range: any) => <Fragment key={identityKey(range.kind)}><Render tag="span" props={{"role": "button",
+"tabIndex": "0",
+"tooltipPosition": "top",
+"tooltipStyleClass": "auto_cast_tip",
+"click": (event: any) => vm.action(() => { const $event = event; vm.autoCastDamageClick.emit({"index": i,"key": cast.key,"event": $event,"branch": range.kind}) }),
+"className": ["rot-auto-range rot-dmg-branch"].filter(Boolean).join(' '),
+"tooltip": {text: t('rot.howDamage'), position: "top", className: "auto_cast_tip", showDelay: 0, hideDelay: 0, escape: true, disabled: false},
+"activateWithKeys": true}}>{displayPipe("number", range.min, ["1.0-0"], services)}{range.max !== range.min ? interpolate([" – ",""], [displayPipe("number", range.max, ["1.0-0"], services)]) : null}</Render>
+<Render tag="span" props={{"tooltipPosition": "top",
+"className": ["rot-tag rot-tag--sm",classNames(("rot-tag--" + range.kind))].filter(Boolean).join(' '),
+"tooltip": {text: vm.rangeTagTooltip(range), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}>{range.label}</Render></Fragment>)}</span> : null}
+<span className="rot-dmg-main"><span className="rot-dmg-figs"><Render tag="span" props={{"role": "button",
+"tabIndex": "0",
+"tooltipPosition": "top",
+"click": (event: any) => vm.action(() => { const $event = event; vm.autoCastDamageClick.emit({"index": i,"key": cast.key,"event": $event,"branch": "mean"}) }),
+"className": ["rot-dmg-val"].filter(Boolean).join(' '),
+"tooltip": {text: vm.damageTooltip(cast), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false},
+"activateWithKeys": true}}>{displayPipe("number", cast.damage, ["1.0-0"], services)}</Render></span>
+<span className="rot-dmg-meta">{cast.hasDamageSpread ? <Render tag="span" props={{"tooltipPosition": "top",
+"className": ["rot-tag rot-tag--mean"].filter(Boolean).join(' '),
+"tooltip": {text: vm.autoCastMeanTagTooltip(cast), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}>{t('rot.mean')}</Render> : null}
+{/* The proc's own slice of the cycle, beside the firing tile's rather than inside it — so
+    the two rows read as parts of one 100%. */}
+<span className="rot-sep">{"·"}</span>
+<Render tag="span" props={{"tooltipPosition": "top",
+"className": ["rot-pct"].filter(Boolean).join(' '),
+"tooltip": {text: vm.autoCastContributionTooltip(cast), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false}}}>{interpolate(["","%"], [displayPipe("number", cast.contributionPercent, ["1.1-1"], services)])}</Render></span></span></span>
+<Render tag="app-icon" props={{"role": "button",
+"tabIndex": "0",
+"tooltipPosition": "top",
+"name": "info-circle",
+"label": t('tl.skillDetails'),
+"click": (event: any) => vm.action(() => { const $event = event; vm.autoCastDetailsClick.emit({"index": i,"key": cast.key,"event": $event}) }),
+"className": ["rot-info"].filter(Boolean).join(' '),
+"tooltip": {text: t('tl.skillDetails'), position: "top", className: '', showDelay: 0, hideDelay: 0, escape: true, disabled: false},
+"activateWithKeys": true}}></Render></div>)}
+</div></Fragment>; })}</Render>
 {(() => { const __condition23 = (vm.addingAt !== null);  return __condition23 ? <><Render tag="div" props={{"className": ["rot-row rot-row--adding"].filter(Boolean).join(' ')}}><Render tag="app-icon" props={{"aria-hidden": "true",
 "name": "bars",
 "className": ["rot-handle rot-handle--spacer"].filter(Boolean).join(' ')}}></Render>

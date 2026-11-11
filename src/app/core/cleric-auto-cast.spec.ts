@@ -55,7 +55,7 @@ describe('native cleric autocasts', () => {
         expect(light.source).toMatchObject({ skillLevel: level, chance: 10 + 2 * level, trigger: 'melee-physical-hit' });
         expect(light.activationsPerSecond).toBeCloseTo(result.eligibleAttacksPerSecond * (10 + 2 * level) / 100);
         expect(light.expectedDamagePerActivation).toBeGreaterThan(0);
-        expect(light.summary.skillBonusFromEquipment).toBe(35); // Bíblia Adulter Fides +9; both use 2054.
+        expect(light.summary.skillBonusFromEquipment).toBe(40); // Bíblia Adulter Fides +9: 15 base + 25 (+7); both use 2054.
       }
       expect(lights.map(({ summary }) => summary.dmgType)).toEqual(['Range', 'Magical']);
     }

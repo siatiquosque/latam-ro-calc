@@ -33,6 +33,7 @@ import { isEventRunning, readUntilCondition } from './event-window';
 import { HpSpCalculator } from './hp-sp-calculator';
 import { ensureCustomAttachment } from './custom-attachments';
 import { isCustomItem } from './custom-items';
+import { applyItemScriptOverlay, ItemScriptOverlay } from './item-script-version';
 
 // const getItem = (id: number) => items[id] as ItemModel;
 const refinableItemTypes = [
@@ -382,7 +383,25 @@ export class Calculator {
     // setup that was skipped. Every instance must be seeded before a model is loaded.
     if (!this.items) throw new Error(`Calculator: setMasterItems() was never called, so item ${id} cannot be resolved.`);
 
-    return this.items[id];
+    const item = this.items[id];
+    if (this.model?.itemScriptVersion !== 'kro' || !this.scriptOverlay?.[id]) return item;
+    let patched = this.patchedItems.get(id);
+    if (!patched || patched.source !== item) {
+      patched = { source: item, item: applyItemScriptOverlay(item, this.scriptOverlay[id]) };
+      this.patchedItems.set(id, patched);
+    }
+    return patched.item;
+  }
+
+  private scriptOverlay?: ItemScriptOverlay;
+  private patchedItems = new Map<number, { source: any; item: any }>();
+
+  /** The kRO bonuses laid over item.json when the model asks for `itemScriptVersion: 'kro'`. */
+  setScriptOverlay(overlay?: ItemScriptOverlay) {
+    this.scriptOverlay = overlay;
+    this.patchedItems.clear();
+
+    return this;
   }
 
   private isUsedSkill(skillName: string) {
@@ -697,7 +716,7 @@ export class Calculator {
         seenHeadGear.add(itemId);
       }
 
-      const parent = this.items[itemId];
+      const parent = this.getItem(itemId);
       const custom = isCustomItem(parent) ? ensureCustomAttachment(model, mainItemType, parent) : undefined;
       const refine = custom?.refine ?? model[`${mainItemType}Refine`];
       const grade = custom?.grade ?? model[`${mainItemType}Grade`];
@@ -710,7 +729,7 @@ export class Calculator {
       }
 
       if (mainItemType === ItemTypeEnum.leftWeapon && itemId) {
-        this.leftWeaponData.set({ itemData: this.items[itemId], refineLevel: refine, grade });
+        this.leftWeaponData.set({ itemData: this.getItem(itemId), refineLevel: refine, grade });
       }
 
       if (custom) {
@@ -1331,6 +1350,7 @@ export class Calculator {
         skillLevel,
         chance,
         trigger: definition.trigger,
+        triggerSkillId: definition.triggerSkillId,
         requiredEffect: definition.requiredEffect,
       });
     });

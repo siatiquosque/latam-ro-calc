@@ -5,6 +5,7 @@ import { normalizeRotation } from './rotation';
 import { normalizeRotationTabs } from './rotation-tabs';
 import { sanitizeSlotColors } from './slot-colors';
 import { normalizeSkillFormulaVersion } from '../skills/skill-formula-version';
+import { normalizeItemScriptVersion } from './item-script-version';
 
 /**
  * Turn a stored build — a share token's sparse delta, the `ro-set` autosave, a named
@@ -75,6 +76,7 @@ export function normalizeSavedModel(savedData: Record<string, any> | null | unde
   // not draw or a colour outside the palette is dropped rather than stored.
   rawModel.slotColors = sanitizeSlotColors(rawModel.slotColors);
   rawModel.skillFormulaVersion = normalizeSkillFormulaVersion(rawModel.skillFormulaVersion);
+  rawModel.itemScriptVersion = normalizeItemScriptVersion(rawModel.itemScriptVersion);
 
   return rawModel;
 }

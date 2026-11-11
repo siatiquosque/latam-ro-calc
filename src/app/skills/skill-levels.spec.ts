@@ -35,7 +35,7 @@ describe('Shared offensive skill levels', () => {
 
   it('preserves the Tiger Cannon combo prefix at lower levels', () => {
     const skill = new Inquisitor().getAtkSkills().find(s => s.value === 'Tiger Cannon Combo==10')!;
-    expect(skill.levelList?.find(s => s.value === 'Tiger Cannon Combo==3')?.label).toContain('(Combo)');
+    expect(skill.levelList?.find(s => s.value === 'Tiger Cannon Combo==3')?.label).toContain('Combo');
     expect(skill.levelList?.some(s => s.value === 'Tiger Cannon==3')).toBe(false);
   });
 

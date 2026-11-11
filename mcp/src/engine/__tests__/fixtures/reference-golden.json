@@ -1,4 +1,154 @@
 {
+ "skill:Palm Strike:boss-medium": {
+  "skill": {
+   "min": 146674,
+   "max": 156229,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0.3,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Palm Strike:normal-large": {
+  "skill": {
+   "min": 116438,
+   "max": 123794,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0.3,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Tiger Fist:boss-medium": {
+  "skill": {
+   "min": 432689,
+   "max": 460875,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Tiger Fist:normal-large": {
+  "skill": {
+   "min": 343494,
+   "max": 365193,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Chain Crush Combo:boss-medium": {
+  "skill": {
+   "min": 692302,
+   "max": 737401,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
+ "skill:Chain Crush Combo:normal-large": {
+  "skill": {
+   "min": 549591,
+   "max": 584309,
+   "hits": 1,
+   "critRate": 0,
+   "accuracy": 100
+  },
+  "cast": {
+   "vct": 0,
+   "fct": 0,
+   "acd": 0,
+   "cd": 0
+  },
+  "stats": {
+   "atk": 844,
+   "matk": 280,
+   "hit": 659,
+   "crit": 46,
+   "aspd": 177,
+   "maxHp": 201168,
+   "def": 704,
+   "mdef": 103
+  }
+ },
  "skill:Asura Strike:boss-medium": {
   "skill": {
    "min": 5894029,
@@ -1001,10 +1151,10 @@
  },
  "skill:Massive Flame Blaster:boss-medium": {
   "skill": {
-   "min": 5095381,
-   "max": 5427311,
+   "min": 9174603,
+   "max": 9174603,
    "hits": 1,
-   "critRate": 0,
+   "critRate": 43,
    "accuracy": 100
   },
   "cast": {
@@ -1026,10 +1176,10 @@
  },
  "skill:Massive Flame Blaster:normal-large": {
   "skill": {
-   "min": 4044801,
-   "max": 4300352,
+   "min": 7269655,
+   "max": 7269655,
    "hits": 1,
-   "critRate": 0,
+   "critRate": 43,
    "accuracy": 100
   },
   "cast": {

@@ -47,6 +47,23 @@ const NO_CLIENT_ROW = new Set([
   2243, // Investida de Worg (Wug Strike)
   2308, // Toque do Oblívio (Banishing Point)
   2593, // Chute Solar (Blaze Kick)
+  // The five Taekwon kicks: not cast at all, they fire off an ordinary attack once their
+  // stance procs, so the client ships no Conjuração/Espera row for any of them.
+  413, // Chute do Tornado (Tornado Kick)
+  415, // Patada Voadora (Heel Drop)
+  417, // Rasteira (Roundhouse)
+  419, // Contrachute (Counter Kick)
+  421, // Chute Aéreo (Flying Kick)
+  // The Mestre Taekwon's three heat fields: toggled, not cast — the client's table prints
+  // only their duration.
+  428, // Calor Solar (Solar Heat)
+  429, // Calor Lunar (Lunar Heat)
+  430, // Calor Estelar (Stellar Heat)
+  // Three pre-rebirth skills the feed simply does not carry a row for. Their job files
+  // model all four fields as 0, so nothing but Vel. de Atq. paces them.
+  42, // Mammonita (Mammonite)
+  371, // Punho do Tigre (Tiger Fist)
+  372, // Golpe Combinado (Chain Crush Combo)
 ]);
 
 const at = (value: number | number[], level: number): number => (Array.isArray(value) ? value[level - 1] : value);
@@ -68,11 +85,11 @@ const selectableLevels = (skill: AtkSkillModel): number[] => {
  * "Queda" and "Explosão" parts) — and each copy carries its own delay numbers. Checking
  * one copy per name would let the others drift.
  */
-const atkSkillLevels = () => {
+const atkSkillLevels = (pick: (instance: InstanceType<(typeof CLASS_CTOR_BY_ID)[string]>) => AtkSkillModel[]) => {
   const rows: { classId: string; skill: AtkSkillModel; level: number; }[] = [];
 
   for (const [classId, Ctor] of Object.entries(CLASS_CTOR_BY_ID)) {
-    for (const skill of new Ctor().atkSkills) {
+    for (const skill of pick(new Ctor())) {
       for (const level of selectableLevels(skill)) rows.push({ classId, skill, level });
     }
   }
@@ -80,7 +97,18 @@ const atkSkillLevels = () => {
   return rows;
 };
 
-const ROWS = atkSkillLevels();
+const ROWS = atkSkillLevels((instance) => instance.atkSkills);
+
+/**
+ * The same rows after `getAtkSkills`, which is what the calculator actually offers: the
+ * rebalance resolver rewrites all four delay fields from its reference table, so a job
+ * file's deliberate divergence only survives if the skill's patch restates it. Servant
+ * Weapon's did not, and the rotation ended up waiting on the 150s summon cooldown.
+ *
+ * Only the LATAM baseline: `rebalance-2026-02` is the February 2026 kRO bundle, which
+ * this client does not run, so its retuned delays are supposed to differ from the window.
+ */
+const RESOLVED_ROWS = atkSkillLevels((instance) => instance.getAtkSkills('current'));
 
 describe('atk skill cast/delay values', () => {
   it('covers every attack skill the calculator offers', () => {
@@ -108,25 +136,45 @@ describe('atk skill cast/delay values', () => {
   });
 
   it('matches the client conjuração/espera table', () => {
-    const wrong: string[] = [];
+    expect(mismatches(ROWS)).toEqual([]);
+  });
 
-    for (const { classId, skill, level } of ROWS) {
-      const id = SKILL_ID_BY_NAME[skill.name];
-      const row = TABLE[id];
-      if (!row || level > row.maxLevel) continue;
+  it('still matches it after the rebalance resolver rewrites the delays', () => {
+    expect(mismatches(RESOLVED_ROWS)).toEqual([]);
+  });
 
-      const exempt = EXCEPTIONS[skill.name]?.fields ?? [];
-      for (const field of FIELDS) {
-        if (exempt.includes(field)) continue;
+  /**
+   * An exempt field has to stay on the value the job file chose — the exception says the
+   * client's number is the wrong one to model, so falling back to it is not "no opinion".
+   */
+  it('keeps the exempt fields off the client value', () => {
+    const servant = RESOLVED_ROWS.find(({ skill, level }) => skill.name === 'Servant Weapon' && level === 5);
 
-        const ours = resolve(skill[field], level);
-        const client = at(row[field], level) / 1000;
-        if (Math.abs(ours - client) > 1e-9) {
-          wrong.push(`[${classId}] ${skill.name} (id ${id}) Lv${level} ${field}: ${ours} should be ${client}`);
-        }
-      }
-    }
-
-    expect(wrong).toEqual([]);
+    expect(resolve(servant?.skill.cd, 5)).toBe(0);
+    expect(at(TABLE[SKILL_ID_BY_NAME['Servant Weapon']].cd, 5) / 1000).toBe(150);
   });
 });
+
+/** Every (skill, level, field) whose value is not the client's, exemptions aside. */
+function mismatches(rows: { classId: string; skill: AtkSkillModel; level: number; }[]): string[] {
+  const wrong: string[] = [];
+
+  for (const { classId, skill, level } of rows) {
+    const id = SKILL_ID_BY_NAME[skill.name];
+    const row = TABLE[id];
+    if (!row || level > row.maxLevel) continue;
+
+    const exempt = EXCEPTIONS[skill.name]?.fields ?? [];
+    for (const field of FIELDS) {
+      if (exempt.includes(field)) continue;
+
+      const ours = resolve(skill[field], level);
+      const client = at(row[field], level) / 1000;
+      if (Math.abs(ours - client) > 1e-9) {
+        wrong.push(`[${classId}] ${skill.name} (id ${id}) Lv${level} ${field}: ${ours} should be ${client}`);
+      }
+    }
+  }
+
+  return wrong;
+}

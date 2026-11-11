@@ -1,6 +1,7 @@
 import { AtkSkillModel } from '../jobs';
 import {
   AutoCastSource,
+  AutoCastTrigger,
   BlockedAutoCastSource,
   ConfigurableAutoCastSlot,
   ExtraHitOutcome,
@@ -8,6 +9,7 @@ import {
 } from '../models/auto-cast.model';
 import { MainModel } from '../models/main.model';
 import { resolveSkillById, SKILL_ID_BY_NAME } from '../skills';
+import { splitSkillValue } from './rotation';
 import { ITEM_AUTO_CAST_SKILLS } from '../skills/item-auto-cast-skills';
 import { ITEM_CLASS_AUTO_CAST_SKILLS } from '../skills/item-class-auto-cast-skills';
 import {
@@ -154,6 +156,21 @@ function itemRuleEnabled(calc: Calculator, rule: ResolvedItemAutoCast): boolean 
   return !rule.requiredEffect || calc.isChanceSelected(rule.requiredEffect);
 }
 
+/**
+ * Whether the trigger skill is one this class can actually select. `skillForId` is not the
+ * test: it falls back to the shared auto-cast catalog, where a skill can have a formula
+ * without ever appearing in the picker — and a proc that waits on an unpickable skill is
+ * waiting forever.
+ */
+function triggerIsSelectable(calc: Calculator, triggerSkillId: number): boolean {
+  return calc.atkSkills.some((skill) => SKILL_ID_BY_NAME[skill.name] === triggerSkillId);
+}
+
+/** The skill a `skill-use` rule waits on, named the way the panel shows it. */
+function triggerSkillName(rule: ResolvedItemAutoCast): string {
+  return resolveSkillById(rule.triggerSkillId)?.name ?? rule.itemName;
+}
+
 function itemSources(calc: Calculator): AutoCastSource[] {
   return calc.resolvedItemAutoCasts.filter((rule) => itemRuleEnabled(calc, rule)).map((rule) => ({
     key: rule.key,
@@ -162,9 +179,12 @@ function itemSources(calc: Calculator): AutoCastSource[] {
     skillLevel: rule.skillLevel,
     chance: rule.chance,
     trigger: rule.trigger,
+    triggerSkillId: rule.triggerSkillId,
     sourceItemId: rule.itemId,
     sourceName: rule.itemName,
-    chanceBreakdown: [{ label: `${rule.chance}% ${rule.itemName}`, value: 'por ataque elegível' }],
+    chanceBreakdown: [{ label: `${rule.chance}% ${rule.itemName}`, value: rule.trigger === 'skill-use'
+      ? `por uso de ${triggerSkillName(rule)}`
+      : 'por ataque elegível' }],
   }));
 }
 
@@ -193,23 +213,51 @@ function doubleAttackSources(calc: Calculator, summary: any): { sources: AutoCas
   }] };
 }
 
-function itemBlockedSources(calc: Calculator): BlockedAutoCastSource[] {
+/**
+ * Why a stored rule fires nothing right now, or `null` while it does. A rule the panel
+ * drops without a row reads as "not modelled", so every reason the engine has is here —
+ * and here only, since {@link triggerMatches} decides the same question for the sources.
+ */
+function itemRuleBlockedReason(calc: Calculator, rule: ResolvedItemAutoCast, selectedSkillId: number): string | null {
+  if (!itemRuleEnabled(calc, rule)) {
+    return `Selecione ${rule.requiredEffect} em Efeitos para ativar ${rule.chance}% de chance.`;
+  }
+  if (rule.trigger === 'skill-use' && rule.triggerSkillId !== selectedSkillId) {
+    // Telling the player to select a skill this class cannot select is worse than saying
+    // nothing: the row has to say which of the two it is.
+    if (!triggerIsSelectable(calc, rule.triggerSkillId ?? 0)) {
+      return `${triggerSkillName(rule)} ainda não é uma habilidade ofensiva no simulador.`;
+    }
+    // Otherwise the proc simply is not the one being solved right now.
+    return `Selecione ${triggerSkillName(rule)} como habilidade para ativar.`;
+  }
+  return null;
+}
+
+function itemBlockedSources(calc: Calculator, selectedSkillId: number): BlockedAutoCastSource[] {
   const pending = (calc.resolvedItemAutoCastPending ?? []).map((source) => ({
     key: source.key,
     name: source.skillName,
     icon: source.skillId ?? 0,
     reason: `${source.itemName}: ${source.reason}`,
   }));
-  const locked = calc.resolvedItemAutoCasts.filter((rule) => !itemRuleEnabled(calc, rule)).map((rule) => ({
-    key: rule.key,
-    name: resolveSkillById(rule.skillId)?.name ?? rule.itemName,
-    icon: rule.skillId,
-    reason: `Selecione ${rule.requiredEffect} em Efeitos para ativar ${rule.chance}% de chance.`,
-  }));
-  return [...pending, ...locked];
+  const blocked: BlockedAutoCastSource[] = [];
+  for (const rule of calc.resolvedItemAutoCasts) {
+    const reason = itemRuleBlockedReason(calc, rule, selectedSkillId);
+    if (reason) {
+      blocked.push({ key: rule.key, name: resolveSkillById(rule.skillId)?.name ?? rule.itemName, icon: rule.skillId, reason });
+    }
+  }
+  return [...pending, ...blocked];
 }
 
-function triggerMatches(source: AutoCastSource, summary: any): boolean {
+/** The id of the single skill the engine is solving against (`model.selectedAtkSkill`). */
+function selectedSkillIdOf(model: MainModel): number {
+  return SKILL_ID_BY_NAME[splitSkillValue(String(model?.selectedAtkSkill ?? '')).name] ?? 0;
+}
+
+function triggerMatches(source: AutoCastSource, summary: any, selectedSkillId: number): boolean {
+  if (source.trigger === 'skill-use') return !!source.triggerSkillId && source.triggerSkillId === selectedSkillId;
   if (source.trigger === 'magic-attack') return summary?.calcSkill?.dmgType === 'Magical';
   const ranged = summary?.weapon?.rangeType === 'range';
   if (source.trigger === 'melee-physical-hit' || source.trigger === 'melee-physical-attack') return !ranged;
@@ -302,6 +350,103 @@ export function autoCastActivationBreakdown(input: {
   return { ...perHit, totalHit, expectedDamagePerActivation: perHit.totalDamage * totalHit };
 }
 
+/**
+ * One activation of a proc that casts a skill: the skill the engine will solve, the solve
+ * itself, and what a single activation is worth.
+ *
+ * `'unsupported'` means the skill has no formula here, which is a blocked row rather than
+ * silence; `null` means the build cannot cast it at all (a weapon requirement), which is
+ * the pre-existing silent skip. Shared by the Auto-conjuração panel and the rotation's
+ * glued tiles, so one proc cannot be worth two different numbers in two places.
+ */
+function solveCastSource(calc: Calculator, source: AutoCastSource, summary: any):
+  { skill: AtkSkillModel; solved: any; expectedDamagePerActivation: number } | 'unsupported' | null {
+  const skill = source.skillData ?? skillForId(calc, source.skillId);
+  if (!skill) return 'unsupported';
+  // Item-granted Sonic Blow works with any weapon; only its learned version
+  // requires a katar (https://browiki.org/wiki/Lâminas_Destruidoras).
+  const autoCastSkill = source.skillId === 136 ? { ...skill, verifyItemFn: undefined } : skill;
+  const solved = calc.solveAutoCast(`${skill.name}==${source.skillLevel}`, autoCastSkill);
+  if (!solved.skillTotalHit || solved.requireTxt) return null;
+  const perHit = calcDmgDpsDetailed({
+    min: solved.skillDpsInputMin,
+    max: solved.skillDpsInputMax,
+    cri: solved.skillCriRateToMonster,
+    criDmg: solved.skillDpsInputCriDmg,
+    hitsPerSec: 1,
+    accRate: solved.skillAccuracy,
+  }).oneHitDps;
+  let expectedDamagePerActivation = perHit * solved.skillTotalHit;
+  if (source.skillId === 77 && summary?.monster?.race === 'undead'
+    && summary.monster.type !== 'boss' && !summary.monster.isMvp) {
+    // Esconjurar's successful roll defeats the target; the ordinary formula is its failed roll.
+    const killChance = Math.min(1, source.skillLevel * 0.02);
+    expectedDamagePerActivation = killChance * Number(summary.monster.hp ?? 0)
+      + (1 - killChance) * expectedDamagePerActivation;
+  }
+  if (source.skillId === 5006) {
+    // LATAM: one fixed hit every 0.5s during the 5s eruption.
+    expectedDamagePerActivation += 10 * (800 + 200 * source.skillLevel);
+  }
+  return { skill, solved, expectedDamagePerActivation };
+}
+
+/**
+ * A proc the rotation draws under the tile that fires it: everything about one activation,
+ * with no rate of its own. The rotation knows how often that tile is used — the panel's
+ * "uses per second" is the solo case and is not the rate inside a cycle — so the
+ * per-second figure is finished by the rotation once the cycle length is known.
+ */
+export interface RotationAutoCast {
+  key: string;
+  skillId: number;
+  name: string;
+  skillLevel: number;
+  /** Percent, as the set clause states it. */
+  chance: number;
+  /** The equipment whose clause grants the proc. */
+  sourceName: string;
+  sourceItemId?: number;
+  expectedDamagePerActivation: number;
+  damageRanges: AutoCastDamageRange[];
+  canCrit: boolean;
+  criticalRate: number;
+  summary: any;
+}
+
+/**
+ * The item procs that fire on *using* `triggerSkillId`, solved against the build `calc`
+ * currently holds. The rotation calls this once per tile, with that tile's own skill.
+ */
+export function rotationAutoCasts(input: {
+  calc: Calculator; summary: any; triggerSkillId: number;
+}): RotationAutoCast[] {
+  const { calc, summary, triggerSkillId } = input;
+  if (!triggerSkillId) return [];
+
+  const casts: RotationAutoCast[] = [];
+  for (const source of itemSources(calc)) {
+    if (source.trigger !== 'skill-use' || source.triggerSkillId !== triggerSkillId) continue;
+    const cast = solveCastSource(calc, source, summary);
+    if (!cast || cast === 'unsupported') continue;
+    casts.push({
+      key: source.key,
+      skillId: source.skillId,
+      name: resolveSkillById(source.skillId)?.name ?? cast.skill.label,
+      skillLevel: source.skillLevel,
+      chance: source.chance,
+      sourceName: source.sourceName,
+      sourceItemId: source.sourceItemId,
+      expectedDamagePerActivation: cast.expectedDamagePerActivation,
+      damageRanges: rangesOf(cast.solved),
+      canCrit: !!cast.solved.skillCanCri,
+      criticalRate: Number(cast.solved.skillCriRateToMonster ?? 0),
+      summary: cast.solved,
+    });
+  }
+  return casts;
+}
+
 export function buildAutoCastSimulation(input: {
   calc: Calculator;
   model: MainModel;
@@ -318,14 +463,26 @@ export function buildAutoCastSimulation(input: {
   const basicAttackDps = Number((hasSelectedEffects && dmg.effectedBasicDps) || dmg.basicDps || 0);
   const classResult = classSources(calc, model, summary);
   const doubleAttack = doubleAttackSources(calc, summary);
-  const sourceDefs = [...classResult.sources, ...itemSources(calc), ...doubleAttack.sources].filter((source) => triggerMatches(source, summary));
+  const selectedSkillId = selectedSkillIdOf(model);
+  const sourceDefs = [...classResult.sources, ...itemSources(calc), ...doubleAttack.sources]
+    .filter((source) => triggerMatches(source, summary, selectedSkillId));
+  // Uses per second of the skill being solved, under the same ASPD cap the engine applies
+  // to that skill's own DPS (damage-calculator.ts).
+  const skillUsesPerSecond = Math.min(attacksPerSecond, Number(summary?.calcSkill?.totalHitPerSec ?? 0));
+  // What each trigger is priced off: a roll per swing, per landed swing, or per skill use.
+  const rateOfTrigger: Record<AutoCastTrigger, number> = {
+    'physical-attack': attacksPerSecond,
+    'melee-physical-attack': attacksPerSecond,
+    'physical-hit': eligibleAttacksPerSecond,
+    'melee-physical-hit': eligibleAttacksPerSecond,
+    'ranged-physical-hit': eligibleAttacksPerSecond,
+    'magic-attack': skillUsesPerSecond,
+    'skill-use': skillUsesPerSecond,
+  };
   const sources: AutoCastResult[] = [];
 
   for (const source of sourceDefs) {
-    const triggerRate = source.trigger === 'magic-attack'
-      ? Math.min(attacksPerSecond, Number(summary?.calcSkill?.totalHitPerSec ?? 0))
-      : source.trigger === 'physical-attack' || source.trigger === 'melee-physical-attack'
-        ? attacksPerSecond : eligibleAttacksPerSecond;
+    const triggerRate = rateOfTrigger[source.trigger];
     const activationsPerSecond = Math.min(triggerRate * source.chance / 100,
       source.maxActivationsPerSecond ?? Infinity);
 
@@ -351,8 +508,8 @@ export function buildAutoCastSimulation(input: {
       continue;
     }
 
-    const skill = source.skillData ?? skillForId(calc, source.skillId);
-    if (!skill) {
+    const cast = solveCastSource(calc, source, summary);
+    if (cast === 'unsupported') {
       classResult.blocked.push({
         key: source.key,
         name: resolveSkillById(source.skillId)?.name ?? source.sourceName,
@@ -361,31 +518,8 @@ export function buildAutoCastSimulation(input: {
       });
       continue;
     }
-    // Item-granted Sonic Blow works with any weapon; only its learned version
-    // requires a katar (https://browiki.org/wiki/Lâminas_Destruidoras).
-    const autoCastSkill = source.skillId === 136 ? { ...skill, verifyItemFn: undefined } : skill;
-    const solved = calc.solveAutoCast(`${skill.name}==${source.skillLevel}`, autoCastSkill);
-    if (!solved.skillTotalHit || solved.requireTxt) continue;
-    const perHit = calcDmgDpsDetailed({
-      min: solved.skillDpsInputMin,
-      max: solved.skillDpsInputMax,
-      cri: solved.skillCriRateToMonster,
-      criDmg: solved.skillDpsInputCriDmg,
-      hitsPerSec: 1,
-      accRate: solved.skillAccuracy,
-    }).oneHitDps;
-    let expectedDamagePerActivation = perHit * solved.skillTotalHit;
-    if (source.skillId === 77 && summary?.monster?.race === 'undead'
-      && summary.monster.type !== 'boss' && !summary.monster.isMvp) {
-      // Esconjurar's successful roll defeats the target; the ordinary formula is its failed roll.
-      const killChance = Math.min(1, source.skillLevel * 0.02);
-      expectedDamagePerActivation = killChance * Number(summary.monster.hp ?? 0)
-        + (1 - killChance) * expectedDamagePerActivation;
-    }
-    if (source.skillId === 5006) {
-      // LATAM: one fixed hit every 0.5s during the 5s eruption.
-      expectedDamagePerActivation += 10 * (800 + 200 * source.skillLevel);
-    }
+    if (!cast) continue;
+    const { skill, solved, expectedDamagePerActivation } = cast;
     const dps = activationsPerSecond * expectedDamagePerActivation;
     sources.push({
       source,
@@ -423,6 +557,6 @@ export function buildAutoCastSimulation(input: {
     timeToKillSeconds: totalDps > 0 && hp > 0 ? hp / totalDps : null,
     sources,
     slots: classResult.slots,
-    blockedSources: [...classResult.blocked, ...itemBlockedSources(calc), ...doubleAttack.blocked],
+    blockedSources: [...classResult.blocked, ...itemBlockedSources(calc, selectedSkillId), ...doubleAttack.blocked],
   };
 }
