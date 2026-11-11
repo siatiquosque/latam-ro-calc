@@ -1,5 +1,21 @@
 [
   {
+    "v": "0.1.239-beta",
+    "date": "11-11-2026",
+    "logs": [
+      "Melhorar build: a busca ficou mais rápida e usa menos memória, e agora dá para excluir itens por nome ou por nível e escolher a profundidade da busca (Rápida, Normal ou Profunda).",
+      "MCP: o otimizador cobre mais slots por padrão (90 s), avisa quando o tempo não alcançou todos os slots e recusa argumentos com nome errado, sugerindo o nome certo."
+    ],
+    "logs_es": [
+      "Mejorar build: la búsqueda es más rápida y usa menos memoria, y ahora se pueden excluir ítems por nombre o por nivel y elegir la profundidad de la búsqueda (Rápida, Normal o Profunda).",
+      "MCP: el optimizador cubre más slots por defecto (90 s), avisa cuando el tiempo no alcanzó todos los slots y rechaza argumentos con nombre incorrecto, sugiriendo el nombre correcto."
+    ],
+    "logs_en": [
+      "Improve build: the search is faster and uses less memory, and you can now exclude items by name or by level and choose the search depth (Fast, Normal or Deep).",
+      "MCP: the optimizer covers more slots by default (90 s), warns when the time did not reach every slot, and rejects misspelled arguments while suggesting the right name."
+    ]
+  },
+  {
     "v": "0.1.238-beta",
     "date": "10-11-2026",
     "logs": [
