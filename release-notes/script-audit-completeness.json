@@ -1,0 +1,33 @@
+{
+  "type": "patch",
+  "logs": [
+    "Corrigidos os bônus de mais de 200 itens contra a descrição do cliente: penetração de DEF por raça, dano contra propriedades, classes e raças, dano de habilidade, recarga e conjuração por habilidade, penalidade de tamanho e ATQ por nível de base.",
+    "Novo efeito de exibição \"Anula o consumo de gema\" (Carta Abelha-Rainha, conjunto Racing e outros), útil para builds sem gasto de gema. Não altera o dano.",
+    "Ataques básicos mantêm a DEF física leve mesmo com o efeito de ignorar toda a DEF, como nas gravações do Perseguidor; as habilidades continuam ignorando-a.",
+    "Conjuntos de equipamentos sem bônus registrado agora entram na simulação, inclusive os que exigem vários parceiros (por exemplo, medalha e dragona da Mina de Einbech).",
+    "Catálogo atualizado com o cliente de 10/11/2026: 73 itens novos (como o conjunto Magistral dos Falcões) e 161 descrições revisadas.",
+    "Corrigidos bônus de armas e acessórios conferidos com o texto do jogo: o grau era contado duas vezes (Camisa Fofinha, armas Precision, Paenitentia), mais Machado do Apocalipse, Lança Gigante, Grevas de Ur, Cota Perene e várias cartas.",
+    "Vinte e dois itens de prévia (Coroas do Bem e do Mal e outros) passam a ser itens normais, com o texto do cliente.",
+    "Novo seletor \"Itens\" (com as prévias ligadas): escolha entre os bônus do LATAM e os do script do cliente kRO nos itens em que os dois divergem."
+  ],
+  "logs_es": [
+    "Corregidos los bonos de más de 200 ítems según la descripción del cliente: penetración de DEF por raza, daño contra propiedades, clases y razas, daño de habilidad, enfriamiento y lanzamiento por habilidad, penalización de tamaño y ATQ por nivel base.",
+    "Nuevo efecto de visualización \"Anula el consumo de gema\" (Carta Abeja Reina, conjunto Racing y otros), útil para builds sin gasto de gema. No altera el daño.",
+    "Los ataques básicos mantienen la DEF física suave incluso con el efecto de ignorar toda la DEF, como en las grabaciones del Acechador; las habilidades siguen ignorándola.",
+    "Los conjuntos de equipamiento sin bono registrado ahora entran en la simulación, incluidos los que exigen varios compañeros (por ejemplo, medalla y charretera de la Mina de Einbech).",
+    "Catálogo actualizado con el cliente del 10/11/2026: 73 ítems nuevos (como el conjunto Magistral de los Halcones) y 161 descripciones revisadas.",
+    "Corregidos bonos de armas y accesorios comprobados con el texto del juego: el grado se contaba dos veces (Camisa Conejito, armas Precision, Paenitentia), además de Hacha del Apocalipsis, Lanza Gigante, Grebas de Ur, Cota Perene y varias cartas.",
+    "Veintidós ítems de vista previa (Coronas del Bien y del Mal y otros) pasan a ser ítems normales, con el texto del cliente.",
+    "Nuevo selector \"Ítems\" (con las vistas previas activadas): elige entre los bonos de LATAM y los del script del cliente kRO en los ítems donde difieren."
+  ],
+  "logs_en": [
+    "Fixed the bonuses of more than 200 items against the client description: DEF penetration by race, damage against properties, classes and races, skill damage, per-skill cooldown and cast time, size penalty and ATK per base level.",
+    "New display effect \"Removes gem consumption\" (Queen Bee Card, the Racing set and others), useful for builds with no gem cost. It does not change damage.",
+    "Basic attacks keep soft physical DEF even with the full DEF-ignore effect, as in the Shadow Chaser recordings; skills still ignore it.",
+    "Equipment sets that had no bonus registered now count in the simulation, including those that need several partners (for example, the Einbech Mine medal and epaulet).",
+    "Catalog updated with the 10/11/2026 client: 73 new items (such as the Falcon Magistral set) and 161 revised descriptions.",
+    "Fixed weapon and accessory bonuses checked against the in-game text: grade was counted twice (Rabbit Pattern Shirt, Precision weapons, Paenitentia), plus Apocalypse Axe, Giant Spear, Ur Greaves, Perennial Cuirass and several cards.",
+    "Twenty-two preview items (Crowns of Good and Evil and others) are now regular items, with the client text.",
+    "New \"Items\" selector (with previews on): choose between the LATAM bonuses and the kRO client-script ones on the items where they differ."
+  ]
+}
