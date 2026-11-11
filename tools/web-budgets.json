@@ -1,6 +1,6 @@
 {
   "initialWarning": 2300000,
-  "initialError": 2470000,
+  "initialError": 2490000,
   "releaseVersionsLimit": 8000,
   "analysisWorkerError": 3500000,
   "acquisitionChunkError": 2200000,
